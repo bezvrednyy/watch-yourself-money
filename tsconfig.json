@@ -21,6 +21,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": "../my-app",
 		"allowJs": true,
+		"noImplicitAny": true,
 		"checkJs": true,
 		"paths": {
 			"$lib": ["src/lib"],
