@@ -18,8 +18,11 @@ let GetPokemonResponse
 
 const pokemonStore = writable(/** @type {Array<PokemonData>} */([]))
 
-const fetchPokemon = async () => {
-    const url = 'https://pokeapi.co/api/v2/pokemon?limit=150'
+/**
+ * @param {number} count
+ */
+const fetchPokemon = async (count) => {
+    const url = `https://pokeapi.co/api/v2/pokemon?limit=${count}`
     const res = await fetch(url)
     /** @type {unknown} */
     const data = await res.json()
@@ -35,7 +38,9 @@ const fetchPokemon = async () => {
     pokemonStore.set(loadedPokemon)
 }
 
-fetchPokemon()
+setTimeout(() => {
+    fetchPokemon(5)
+}, 2000)
 
 /**
  * @param {number} id
