@@ -39,7 +39,7 @@ const fetchPokemon = async (count) => {
 }
 
 setTimeout(() => {
-    fetchPokemon(5)
+    fetchPokemon(12)
 }, 2000)
 
 /**

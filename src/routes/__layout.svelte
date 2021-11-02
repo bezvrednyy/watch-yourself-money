@@ -3,8 +3,10 @@
 </script>
 <div>
     <Nav/>
+    <div class="p-8 max-w-6xl mx-auto">
+        <slot></slot>
+    </div>
 </div>
-<slot></slot>
 <style>
     @tailwind base;
     @tailwind components;
