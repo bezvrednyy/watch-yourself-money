@@ -52,4 +52,5 @@ function getPokemonImageUrlById(id) {
 
 export {
     pokemonStore,
+    PokemonData,
 }
