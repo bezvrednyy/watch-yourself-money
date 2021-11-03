@@ -22,6 +22,8 @@ const pokemonStore = writable(/** @type {Array<PokemonData>} */([]))
  * @param {number} count
  */
 const fetchPokemon = async (count) => {
+    //Сперва отдаётся страничка, потом запрашиваются данные, и после их загрузки они отображаются. Как при SPA
+    // writable - массив с подписчиками, при обновлении которого обнавляются компоненты использующие его.
     const url = `https://pokeapi.co/api/v2/pokemon?limit=${count}`
     const res = await fetch(url)
     /** @type {unknown} */
@@ -53,4 +55,5 @@ function getPokemonImageUrlById(id) {
 export {
     pokemonStore,
     PokemonData,
+    GetPokemonResponse,
 }
