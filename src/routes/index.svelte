@@ -1,5 +1,5 @@
 <script>
-	import {isCaseInsensitiveSubstr} from '../../common/string.js'
+	import {isCaseInsensitiveSubstr} from '../../common/string.ts'
 	import {pokemonStore, PokemonData} from '../stores/pokestore.js'
 	import PokemanCard from '../components/pokemanCard.svelte'
 
