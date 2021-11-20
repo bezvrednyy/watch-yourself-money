@@ -1,4 +1,5 @@
 import {AppProps} from 'next/app'
+import 'tailwindcss/tailwind.css'
 
 export default function MyApp({
     Component,
@@ -6,5 +7,5 @@ export default function MyApp({
 }: AppProps) {
     return <>
         <Component {...pageProps} />
-    </> //Can add global styles
+    </>
 }
