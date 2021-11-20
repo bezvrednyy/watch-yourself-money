@@ -1,6 +1,6 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import {ReactChild} from 'react'
+import {NavigationPanel} from './navigation/NavigationPanel'
 
 type MainLayoutProps = {
     title: string,
@@ -17,11 +17,7 @@ function MainLayout({
             <meta name="keywords" content="ключевые слова"/>
             <meta name="description" content="описание"/>
         </Head>
-        <nav>
-           <Link href='/'>Home</Link>
-           <Link href='/about'>About</Link>
-           <Link href='/posts'>Posts</Link>
-        </nav>
+        <NavigationPanel/>
         <main>
             {children}
         </main>
