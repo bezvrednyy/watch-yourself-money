@@ -4,11 +4,15 @@ import Document, {Html, NextScript, Head, Main} from 'next/document'
 export default class MyDocument extends Document {
 	render() {
 		return (
-			<Html>
+			<Html className='h-full'>
 				<Head>
-
+					<style jsx global>{`
+						#__next {
+						  height: 100%;
+						}
+					`}</style>
 				</Head>
-				<body>
+				<body className='h-full'>
 					<Main />
 					<NextScript />
 				</body>
