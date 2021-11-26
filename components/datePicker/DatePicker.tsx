@@ -11,15 +11,24 @@ import {
 } from "date-fns"
 
 type DatepickerType = "date" | "month";
+type DatePickerProps = {
+	selected: Date,
+	label?: string,
+	type?: DatepickerType,
+}
 
-function DatePicker() {
+function DatePicker({
+	selected,
+	label,
+	type: initType = 'date'
+}: DatePickerProps) {
 	const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 	const [dayCount, setDayCount] = useState<Array<number>>([]);
 	const [blankDays, setBlankDays] = useState<Array<number>>([]);
 	const [showDatepicker, setShowDatepicker] = useState(false);
 	const [datepickerHeaderDate, setDatepickerHeaderDate] = useState(new Date());
-	const [selectedDate, setSelectedDate] = useState(new Date());
-	const [type, setType] = useState<DatepickerType>("month");
+	const [selectedDate, setSelectedDate] = useState(selected);
+	const [type, setType] = useState<DatepickerType>(initType);
 
 	const decrement = () => {
 		switch (type) {
@@ -111,12 +120,7 @@ function DatePicker() {
 	<div>
 		<div className="container mx-auto px-4 py-2 md:py-10">
 			<div className="mb-5 w-64">
-				<label
-					htmlFor="datepicker"
-					className="font-bold mb-1 text-gray-700 block"
-				>
-					Select Date
-				</label>
+				{label && <Label text={label} />}
 				<div className="relative">
 					<input type="hidden" name="date" />
 					<input
@@ -293,6 +297,19 @@ function DatePicker() {
 		</div>
 	</div>
 </div>)
+}
+
+type LabelProps = {
+	text: string,
+}
+
+function Label({ text }: LabelProps) {
+	return <label
+		htmlFor="datepicker"
+		className="font-bold mb-1 text-gray-700 block"
+	>
+		{text}
+	</label>
 }
 
 export {

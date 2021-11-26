@@ -6,6 +6,6 @@ export default function Index() {
 	return <MainLayout title={'Home page'}>
 		<Tabs items={['Расходы', 'Доходы']}/>
 		<h1>Content</h1>
-		<DatePicker />
+		<DatePicker selected={new Date()}/>
 	</MainLayout>
 }
