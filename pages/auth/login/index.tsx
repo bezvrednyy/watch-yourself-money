@@ -1,7 +1,7 @@
 import {useState} from 'react'
-import {Button} from '../../components/button/Button'
-import {TextField} from '../../components/TextField'
-import {AuthFormHeader} from '../auth/common/FormHeader'
+import {Button} from '../../../components/button/Button'
+import {TextField} from '../../../components/TextField'
+import {AuthFormHeader} from '../FormHeader'
 
 export default function LoginPage() {
 	const [email, setEmail] = useState('')
@@ -14,7 +14,7 @@ export default function LoginPage() {
 			<AuthFormHeader
 				text='Sign in to your account'
 				linkInfo={{
-					link: '/signup',
+					link: '/auth/signup',
 					text: 'create new',
 				}}
 			/>

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import {LogoIcon} from '../../../components/icons/LogoIcon'
+import {LogoIcon} from '../../components/icons/LogoIcon'
 
 type AuthFormHeaderProps = {
 	text: string,

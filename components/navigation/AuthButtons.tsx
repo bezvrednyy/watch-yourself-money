@@ -2,8 +2,8 @@ import Link from 'next/link'
 
 function AuthButtons() {
 	return <div className="flex space-x-3">
-		<Button text='Login' link={'/login'}/>
-		<Button text='Sign up' link={'/signup'}/>
+		<Button text='Login' link={'/auth/login'}/>
+		<Button text='Sign up' link={'/auth/signup'}/>
 	</div>
 }
 
