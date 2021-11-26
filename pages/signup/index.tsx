@@ -3,24 +3,32 @@ import {Button} from '../../components/button/Button'
 import {TextField} from '../../components/TextField'
 import {AuthFormHeader} from '../auth/common/FormHeader'
 
-export default function LoginPage() {
+export default function SignUpPage() {
+	const [username, setUsername] = useState('')
 	const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
+	const [firstPassword, setFirstPassword] = useState('')
+	const [secondPassword, setSecondPassword] = useState('')
 
 	return (
 <>
 	<div className="min-h-full flex items-center justify-center pb-12 px-4 sm:px-6 lg:px-8">
 		<div className="max-w-md w-full space-y-8">
 			<AuthFormHeader
-				text='Sign in to your account'
+				text='Sign up to your account'
 				linkInfo={{
-					link: '/signup',
-					text: 'create new',
+					link: '/login',
+					text: 'log in',
 				}}
 			/>
 			<form className="mt-8 space-y-6" action="#" method="POST">
 				<input type="hidden" name="remember" defaultValue="true" />
 				<div className="rounded-md shadow-sm space-y-4">
+					<TextField
+						value={username}
+						onInput={value => setUsername(value)}
+						placeholder='Username'
+						required={true}
+					/>
 					<TextField
 						value={email}
 						onInput={value => setEmail(value)}
@@ -29,44 +37,27 @@ export default function LoginPage() {
 						type={'email'}
 					/>
 					<TextField
-						value={password}
-						onInput={value => setPassword(value)}
+						value={firstPassword}
+						onInput={value => setFirstPassword(value)}
 						placeholder='Password'
 						required={true}
 						type={'password'}
 					/>
+					<TextField
+						value={secondPassword}
+						onInput={value => setSecondPassword(value)}
+						placeholder='Repeat the password'
+						required={true}
+						type={'password'}
+					/>
 				</div>
-				<AdditionalSection />
 				<Button
 					style='primary'
 					structure='text'
-					text='Log in'
+					text='Sign up'
 				/>
 			</form>
 		</div>
 	</div>
 </>)
-}
-
-function AdditionalSection() {
-	return (
-<div className="flex items-center justify-between">
-	<div className="flex items-center">
-		<input
-			id="remember-me"
-			name="remember-me"
-			type="checkbox"
-			className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-		/>
-		<label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-			Remember me
-		</label>
-	</div>
-
-	<div className="text-sm">
-		<a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-			Forgot your password?
-		</a>
-	</div>
-</div>)
 }
