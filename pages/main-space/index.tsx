@@ -5,7 +5,6 @@ import {Tabs} from './Tabs'
 export default function Index() {
 	return <MainLayout title={'Home page'}>
 		<Tabs items={['Расходы', 'Доходы']}/>
-		<h1>Content</h1>
 		<DatePicker selected={new Date()}/>
 	</MainLayout>
 }
