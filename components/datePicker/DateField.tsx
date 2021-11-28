@@ -1,43 +1,36 @@
 import {ReactElement} from 'react'
 import {format} from 'date-fns'
+import {DatePickerInputStyle} from './model/DatePickerData'
 
 type DateFieldProps = {
     date: Date,
     onClick: () => void,
     icon?: ReactElement,
-    label?: string,
+    style: DatePickerInputStyle,
 }
 
 function DateField({
     date,
     onClick,
     icon,
-    label,
+    style,
 }: DateFieldProps) {
     return (
-<div>
-    {label && <Label text={label} />}
+<div className='flex items-center'>
     <input
-        type="text"
+        type='text'
         readOnly
-        className="cursor-pointer w-full pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm focus:outline-none focus:shadow-outline text-gray-600 font-medium"
+        className={`cursor-pointer w-full p-2 leading-none rounded-lg focus:outline-none text-gray-600 font-medium ${
+            style === 'block'
+                ? 'bg-white shadow-sm focus:shadow-outline'
+                : 'bg-transparent'
+        }`}
         placeholder="Select date"
         value={format(date, "yyyy-MM-dd")}
         onClick={onClick}
     />
     {icon && <Icon icon={icon} onClick={onClick} />}
 </div>)
-}
-
-type LabelProps = {
-    text: string,
-}
-
-function Label({ text }: LabelProps) {
-    return (
-<label htmlFor="datepicker" className="font-bold mb-1 text-gray-700 block">
-    {text}
-</label>)
 }
 
 type IconProps = {

@@ -10,30 +10,41 @@ function DatePicker({
 	type = 'date',
 	icon,
 	className,
+	inputStyle = 'block',
 }: DatePickerProps) {
 	const [showDatepicker, setShowDatepicker] = useState(false);
 	const [selectedDate, setSelectedDate] = useState(selected);
 	const toggleDatepicker = () => setShowDatepicker((prev) => !prev);
 
 	return (
-<div className={joinClassNames('mb-5 w-64', className)}>
-	<div className='relative'>
-		<DateField
-			date={selectedDate}
-			onClick={toggleDatepicker}
-			label={label}
-			icon={icon}
-		/>
-		{showDatepicker && <DatePickerPopover
-			selectedDate={selectedDate}
-			onSelectedChanged={date => {
-				setSelectedDate(date)
-				setShowDatepicker(false)
-			}}
-			type={type}
-		/>}
-	</div>
+<div className={joinClassNames('relative', className)}>
+	{label && <Label text={label} />}
+	<DateField
+		date={selectedDate}
+		onClick={toggleDatepicker}
+		icon={icon}
+		style={inputStyle}
+	/>
+	{showDatepicker && <DatePickerPopover
+		selectedDate={selectedDate}
+		onSelectedChanged={date => {
+			setSelectedDate(date)
+			setShowDatepicker(false)
+		}}
+		type={type}
+	/>}
 </div>)
+}
+
+type LabelProps = {
+	text: string,
+}
+
+function Label({ text }: LabelProps) {
+	return (
+<label htmlFor="datepicker" className="font-bold mb-1 text-gray-700 block">
+	{text}
+</label>)
 }
 
 export {
