@@ -5,11 +5,13 @@ import {NavigationPanel} from './navigation/NavigationPanel'
 type MainLayoutProps = {
     title: string,
     children: Array<ReactChild>,
+    className?: string,
 }
 
 function MainLayout({
     children,
     title,
+    className,
 }: MainLayoutProps) {
     return <>
         <Head>
@@ -18,7 +20,7 @@ function MainLayout({
             <meta name="description" content="описание"/>
         </Head>
         <NavigationPanel/>
-        <main>
+        <main className={className}>
             {children}
         </main>
     </>

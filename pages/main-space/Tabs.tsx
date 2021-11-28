@@ -32,12 +32,13 @@ function Tab({
 	selected,
 	onClick,
 }: TabProps) {
-	return <li
-		onClick={onClick}
-		className={`cursor-pointer py-2 px-4 text-gray-500 border-b-8${selected ? ' text-purple-500 border-purple-500' : ''}`}
-	>
-		{text}
-	</li>
+	return (
+<li
+	onClick={onClick}
+	className={`cursor-pointer py-2 px-4 text-gray-500 border-b-8${selected ? ' text-purple-500 border-purple-500' : ''}`}
+>
+	{text}
+</li>)
 }
 
 export {
