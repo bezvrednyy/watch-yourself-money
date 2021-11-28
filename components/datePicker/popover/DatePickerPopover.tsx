@@ -11,58 +11,58 @@ type DatePickerPopoverProps = {
 }
 
 function DatePickerPopover({
-    selectedDate,
-    onSelectedChanged,
-    type: initType,
+	selectedDate,
+	onSelectedChanged,
+	type: initType,
 }: DatePickerPopoverProps) {
-    const [newSelectedDate, setNewSelectedDate] = useState(selectedDate)
-    const [type, setType] = useState<DatepickerType>(initType)
+	const [newSelectedDate, setNewSelectedDate] = useState(selectedDate)
+	const [type, setType] = useState<DatepickerType>(initType)
 
-    const onMonthChanged = (month: number) => {
-        setNewSelectedDate(
-            new Date(
-                newSelectedDate.getFullYear(),
-                month,
-                newSelectedDate.getDate()
-            )
-        )
-        setType('date')
-    }
+	const onMonthChanged = (month: number) => {
+		setNewSelectedDate(
+			new Date(
+				newSelectedDate.getFullYear(),
+				month,
+				newSelectedDate.getDate(),
+			),
+		)
+		setType('date')
+	}
 
-    function getContent(type: DatepickerType): JSX.Element | null {
-        switch (type) {
-            case 'date':
-                return <DateBody
-                    selectedDate={selectedDate}
-                    newSelectedDate={newSelectedDate}
-                    onSelectedChanged={onSelectedChanged}
-                />
-            case 'month':
-                return <MonthsBody
-                    selectedDate={selectedDate}
-                    newSelectedDate={newSelectedDate}
-                    onMonthChanged={onMonthChanged}
-                />
-            default:
-                return null
-        }
-    }
+	function getContent(): JSX.Element | null {
+		switch (type) {
+			case 'date':
+				return <DateBody
+					selectedDate={selectedDate}
+					newSelectedDate={newSelectedDate}
+					onSelectedChanged={onSelectedChanged}
+				/>
+			case 'month':
+				return <MonthsBody
+					selectedDate={selectedDate}
+					newSelectedDate={newSelectedDate}
+					onMonthChanged={onMonthChanged}
+				/>
+			default:
+				return null
+		}
+	}
 
-    return (
-<div
-    className='bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0'
-    style={{ width: "17rem" }}
->
-    <DatePickerPopoverHeader
-        date={newSelectedDate}
-        type={type}
-        onDateChange={setNewSelectedDate}
-        onTypeChange={setType}
-    />
-    {getContent(type)}
-</div>)
+	return (
+		<div
+			className='bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0'
+			style={{width: '17rem'}}
+		>
+			<DatePickerPopoverHeader
+				date={newSelectedDate}
+				type={type}
+				onDateChange={setNewSelectedDate}
+				onTypeChange={setType}
+			/>
+			{getContent()}
+		</div>)
 }
 
 export {
-    DatePickerPopover,
+	DatePickerPopover,
 }

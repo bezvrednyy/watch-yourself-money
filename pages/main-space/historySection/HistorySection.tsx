@@ -1,10 +1,10 @@
 function HistorySection() {
-    return (
-<div className='w-4/12 bg-gray-100'>
+	return (
+		<div className='w-4/12 bg-gray-100'>
 
-</div>)
+		</div>)
 }
 
 export {
-    HistorySection,
+	HistorySection,
 }

@@ -14,7 +14,7 @@ type DatePickerProps = {
 }
 
 export type {
-    DatepickerType,
-    DatePickerProps,
-    DatePickerInputStyle,
+	DatepickerType,
+	DatePickerProps,
+	DatePickerInputStyle,
 }

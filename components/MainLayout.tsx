@@ -9,23 +9,23 @@ type MainLayoutProps = {
 }
 
 function MainLayout({
-    children,
-    title,
-    className,
+	children,
+	title,
+	className,
 }: MainLayoutProps) {
-    return <>
-        <Head>
-            <title>{`${title} | Next course`}</title>
-            <meta name="keywords" content="ключевые слова"/>
-            <meta name="description" content="описание"/>
-        </Head>
-        <NavigationPanel/>
-        <main className={className}>
-            {children}
-        </main>
-    </>
+	return <>
+		<Head>
+			<title>{`${title} | Next course`}</title>
+			<meta name='keywords' content='ключевые слова'/>
+			<meta name='description' content='описание'/>
+		</Head>
+		<NavigationPanel/>
+		<main className={className}>
+			{children}
+		</main>
+	</>
 }
 
 export {
-    MainLayout,
+	MainLayout,
 }
