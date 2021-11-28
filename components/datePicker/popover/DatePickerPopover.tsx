@@ -1,7 +1,8 @@
-import {useEffect, useState} from 'react'
-import {format, getDay, getDaysInMonth, isEqual} from 'date-fns'
+import {useState} from 'react'
+import {format, isEqual} from 'date-fns'
 import type {DatepickerType} from '../model/DatePickerData'
-import {DatePickerPopoverHeader} from './DatePickerPopoverHeader'
+import {DatePickerPopoverHeader} from './content/DatePickerPopoverHeader'
+import {DateBody} from './content/DateBody'
 
 type DatePickerPopoverProps = {
     selectedDate: Date,
@@ -14,66 +15,25 @@ function DatePickerPopover({
     onSelectedChanged,
     type: initType,
 }: DatePickerPopoverProps) {
-    const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    const [dayCount, setDayCount] = useState<Array<number>>([])
-    const [blankDays, setBlankDays] = useState<Array<number>>([])
-    const [datepickerHeaderDate, setDatepickerHeaderDate] = useState(selectedDate)
+    const [newSelectedDate, setNewSelectedDate] = useState(selectedDate)
     const [type, setType] = useState<DatepickerType>(initType)
-
-    const isToday = (date: number) =>
-        isEqual(
-            new Date(selectedDate.getFullYear(), selectedDate.getMonth(), date),
-            selectedDate
-        )
-
-    const setDateValue = (day: number) => () => {
-        const newDate = new Date(
-            datepickerHeaderDate.getFullYear(),
-            datepickerHeaderDate.getMonth(),
-            day,
-        )
-        onSelectedChanged(newDate)
-    }
 
     const isSelectedMonth = (month: number) =>
         isEqual(
             new Date(selectedDate.getFullYear(), month, selectedDate.getDate()),
             selectedDate
-        );
+        )
 
     const setMonthValue = (month: number) => () => {
-        setDatepickerHeaderDate(
+        setNewSelectedDate(
             new Date(
-                datepickerHeaderDate.getFullYear(),
+                newSelectedDate.getFullYear(),
                 month,
-                datepickerHeaderDate.getDate()
+                newSelectedDate.getDate()
             )
-        );
+        )
         setType('date')
     }
-
-    const getDayCount = (date: Date) => {
-        let daysInMonth = getDaysInMonth(date);
-
-        // find where to start calendar day of week
-        let dayOfWeek = getDay(new Date(date.getFullYear(), date.getMonth(), 1));
-        let blankdaysArray = [];
-        for (let i = 1; i <= dayOfWeek; i++) {
-            blankdaysArray.push(i);
-        }
-
-        let daysArray = [];
-        for (let i = 1; i <= daysInMonth; i++) {
-            daysArray.push(i);
-        }
-
-        setBlankDays(blankdaysArray);
-        setDayCount(daysArray);
-    };
-
-    useEffect(() => {
-        getDayCount(datepickerHeaderDate)
-    }, [datepickerHeaderDate])
 
     return (
 <div
@@ -81,55 +41,16 @@ function DatePickerPopover({
     style={{ width: "17rem" }}
 >
     <DatePickerPopoverHeader
-        date={datepickerHeaderDate}
+        date={newSelectedDate}
         type={type}
-        onDateChange={setDatepickerHeaderDate}
+        onDateChange={setNewSelectedDate}
         onTypeChange={setType}
     />
-    {type === "date" && (
-        <>
-            <div className="flex flex-wrap mb-3 -mx-1">
-                {DAYS.map((day, i) => (
-                    <div
-                        key={i}
-                        style={{ width: "14.26%" }}
-                        className="px-1"
-                    >
-                        <div className="text-gray-800 font-medium text-center text-xs">
-                            {day}
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <div className="flex flex-wrap -mx-1">
-                {blankDays.map((_, i) => (
-                    <div
-                        key={i}
-                        style={{ width: "14.26%" }}
-                        className="text-center border p-1 border-transparent text-sm"
-                    ></div>
-                ))}
-                {dayCount.map((d, i) => (
-                    <div
-                        key={i}
-                        style={{ width: "14.26%" }}
-                        className="px-1 mb-1"
-                    >
-                        <div
-                            onClick={setDateValue(d)}
-                            className={`cursor-pointer text-center text-sm leading-none rounded-full leading-loose transition ease-in-out duration-100 ${
-                                isToday(d)
-                                    ? "bg-blue-500 text-white"
-                                    : "text-gray-700 hover:bg-blue-200"
-                            }`}
-                        >
-                            {d}
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </>
-    )}
+    {type === "date" && <DateBody
+        selectedDate={selectedDate}
+        newSelectedDate={newSelectedDate}
+        onSelectedChanged={onSelectedChanged}
+    />}
     {type === "month" && (
         <div className="flex flex-wrap -mx-1">
             {Array(12)
@@ -149,9 +70,9 @@ function DatePickerPopover({
                         >
                             {format(
                                 new Date(
-                                    datepickerHeaderDate.getFullYear(),
+                                    newSelectedDate.getFullYear(),
                                     i,
-                                    datepickerHeaderDate.getDate()
+                                    newSelectedDate.getDate()
                                 ),
                                 "MMM"
                             )}

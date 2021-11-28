@@ -1,6 +1,6 @@
 import {addMonths, addYears, format, subMonths, subYears} from 'date-fns'
 import {ChevronLeftIcon, ChevronRightIcon} from '@heroicons/react/outline'
-import type {DatepickerType} from '../model/DatePickerData'
+import type {DatepickerType} from '../../model/DatePickerData'
 
 type DatePickerPopoverHeaderProps = {
     date: Date,
