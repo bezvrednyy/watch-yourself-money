@@ -1,4 +1,4 @@
-import {getDay, getDaysInMonth, isEqual} from 'date-fns'
+import {getDay, getDaysInMonth, getMonth, getYear} from 'date-fns'
 import {useEffect, useState} from 'react'
 
 const ITEM_WIDTH = '14.26%'
@@ -18,12 +18,12 @@ function DateBody({
     const [blankDays, setBlankDays] = useState<Array<number>>([])
 
     const isToday = (day: number) =>
-        isEqual(
-            new Date(selectedDate.getFullYear(), selectedDate.getMonth(), day),
-            newSelectedDate
-        )
+        getYear(selectedDate) === getYear(newSelectedDate)
+        && getMonth(selectedDate) === getMonth(newSelectedDate)
+        && day === selectedDate.getDate() //Т. к. в date-fns нет нужного метода. getDay возвращает день относительно НЕДЕЛИ
 
     const setDateValue = (day: number) => () => {
+        console.log(day)
         const newDate = new Date(
             newSelectedDate.getFullYear(),
             newSelectedDate.getMonth(),
@@ -64,7 +64,7 @@ function DateBody({
                 key={i}
                 style={{ width: ITEM_WIDTH }}
                 className="text-center border p-1 border-transparent text-sm"
-            ></div>
+            />
         ))}
         {dayCount.map((day, i) => <DayItem
             key={i}
