@@ -4,7 +4,8 @@ type DatepickerType = 'date' | 'month'
 type DatePickerInputStyle = 'block' | 'string'
 
 type DatePickerProps = {
-    selected: Date,
+    date: Date,
+    onSelectedChanged: (date: Date) => void,
     label?: string,
     type?: DatepickerType,
     icon?: ReactElement,

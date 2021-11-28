@@ -5,7 +5,8 @@ import {DatePickerPopover} from './popover/DatePickerPopover'
 import type {DatePickerProps} from './model/DatePickerData'
 
 function DatePicker({
-	selected,
+	date,
+	onSelectedChanged,
 	label,
 	type = 'date',
 	icon,
@@ -13,22 +14,21 @@ function DatePicker({
 	inputStyle = 'block',
 }: DatePickerProps) {
 	const [showDatepicker, setShowDatepicker] = useState(false);
-	const [selectedDate, setSelectedDate] = useState(selected);
 	const toggleDatepicker = () => setShowDatepicker((prev) => !prev);
 
 	return (
 <div className={joinClassNames('relative', className)}>
 	{label && <Label text={label} />}
 	<DateField
-		date={selectedDate}
+		date={date}
 		onClick={toggleDatepicker}
 		icon={icon}
 		style={inputStyle}
 	/>
 	{showDatepicker && <DatePickerPopover
-		selectedDate={selectedDate}
+		selectedDate={date}
 		onSelectedChanged={date => {
-			setSelectedDate(date)
+			onSelectedChanged(date)
 			setShowDatepicker(false)
 		}}
 		type={type}
