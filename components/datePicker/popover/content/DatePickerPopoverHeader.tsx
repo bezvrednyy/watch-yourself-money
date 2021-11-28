@@ -42,28 +42,28 @@ function DatePickerPopoverHeader({
     }
 
     return (
-        <div className='flex justify-between items-center mb-2'>
-            <ArrowButton type='left' onClick={decrement} />
-            {type === 'date' && (
-                <div
-                    onClick={showMonthPicker}
-                    className='flex-grow p-1 text-lg font-bold text-gray-800 cursor-pointer hover:bg-gray-200 rounded-lg'
-                >
-                    <p className='text-center'>
-                        {format(date, "MMMM")}
-                    </p>
-                </div>
-            )}
-            <div
-                onClick={showYearPicker}
-                className="flex-grow p-1 text-lg font-bold text-gray-800 cursor-pointer hover:bg-gray-200 rounded-lg"
-            >
-                <p className="text-center">
-                    {format(date, "yyyy")}
-                </p>
-            </div>
-            <ArrowButton type='right' onClick={increment} />
+<div className='flex justify-between items-center mb-2'>
+    <ArrowButton type='left' onClick={decrement} />
+    {type === 'date' && (
+        <div
+            onClick={showMonthPicker}
+            className='flex-grow p-1 text-lg font-bold text-gray-800 cursor-pointer hover:bg-gray-200 rounded-lg'
+        >
+            <p className='text-center'>
+                {format(date, "MMMM")}
+            </p>
         </div>
+    )}
+    <div
+        onClick={showYearPicker}
+        className="flex-grow p-1 text-lg font-bold text-gray-800 cursor-pointer hover:bg-gray-200 rounded-lg"
+    >
+        <p className="text-center">
+            {format(date, "yyyy")}
+        </p>
+    </div>
+    <ArrowButton type='right' onClick={increment} />
+</div>
     )
 }
 
@@ -83,13 +83,13 @@ function ArrowButton({
         ? <ChevronLeftIcon className={iconClassName} />
         : <ChevronRightIcon className={iconClassName} />
     return (
-        <button
-            type='button'
-            className='transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full'
-            onClick={onClick}
-        >
-            {iconComponent}
-        </button>
+<button
+    type='button'
+    className='transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full'
+    onClick={onClick}
+>
+    {iconComponent}
+</button>
     )
 }
 

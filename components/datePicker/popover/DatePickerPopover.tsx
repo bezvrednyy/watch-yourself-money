@@ -29,6 +29,25 @@ function DatePickerPopover({
         setType('date')
     }
 
+    function getContent(type: DatepickerType): JSX.Element | null {
+        switch (type) {
+            case 'date':
+                return <DateBody
+                    selectedDate={selectedDate}
+                    newSelectedDate={newSelectedDate}
+                    onSelectedChanged={onSelectedChanged}
+                />
+            case 'month':
+                return <MonthsBody
+                    selectedDate={selectedDate}
+                    newSelectedDate={newSelectedDate}
+                    onMonthChanged={onMonthChanged}
+                />
+            default:
+                return null
+        }
+    }
+
     return (
 <div
     className='bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0'
@@ -40,16 +59,7 @@ function DatePickerPopover({
         onDateChange={setNewSelectedDate}
         onTypeChange={setType}
     />
-    {type === "date" && <DateBody
-        selectedDate={selectedDate}
-        newSelectedDate={newSelectedDate}
-        onSelectedChanged={onSelectedChanged}
-    />}
-    {type === "month" && <MonthsBody
-        selectedDate={selectedDate}
-        newSelectedDate={newSelectedDate}
-        onMonthChanged={onMonthChanged}
-    />}
+    {getContent(type)}
 </div>)
 }
 

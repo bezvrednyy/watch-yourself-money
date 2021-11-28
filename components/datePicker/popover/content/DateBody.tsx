@@ -1,5 +1,5 @@
 import {getDay, getDaysInMonth, getMonth, getYear} from 'date-fns'
-import {useEffect, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 
 const ITEM_WIDTH = '14.26%'
 
@@ -31,7 +31,7 @@ function DateBody({
         onSelectedChanged(newDate)
     }
 
-    const getDayCount = (date: Date) => {
+    const getDayCount = useCallback((date: Date) => {
         let daysInMonth = getDaysInMonth(date);
 
         // find where to start calendar day of week
@@ -48,7 +48,7 @@ function DateBody({
 
         setBlankDays(blankdaysArray);
         setDayCount(daysArray);
-    };
+    }, [])
 
     useEffect(() => {
         getDayCount(newSelectedDate)
@@ -114,7 +114,6 @@ function DayItem({
     </div>
 </div>)
 }
-
 
 export {
     DateBody,
