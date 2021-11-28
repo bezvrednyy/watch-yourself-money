@@ -49,7 +49,7 @@ function DatePickerPopover({
         selectedDate={selectedDate}
         newSelectedDate={newSelectedDate}
         onMonthChanged={onMonthChanged}
-    />}{" "}
+    />}
 </div>)
 }
 

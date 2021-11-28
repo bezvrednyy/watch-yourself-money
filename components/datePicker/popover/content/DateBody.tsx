@@ -23,7 +23,6 @@ function DateBody({
         && day === selectedDate.getDate() //Т. к. в date-fns нет нужного метода. getDay возвращает день относительно НЕДЕЛИ
 
     const setDateValue = (day: number) => () => {
-        console.log(day)
         const newDate = new Date(
             newSelectedDate.getFullYear(),
             newSelectedDate.getMonth(),
@@ -107,7 +106,7 @@ function DayItem({
         onClick={onClick}
         className={`cursor-pointer text-center text-sm leading-none rounded-full leading-loose transition ease-in-out duration-100 ${
             isToday
-                ? "bg-blue-500 text-white"
+                ? "bg-purple-400 text-white"
                 : "text-gray-700 hover:bg-blue-200"
         }`}
     >

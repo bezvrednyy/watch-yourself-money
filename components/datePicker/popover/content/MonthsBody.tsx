@@ -46,13 +46,12 @@ function MonthItem({
 <div onClick={onMonthChanged} style={{ width: "25%" }}>
     <div className={`cursor-pointer p-5 font-semibold text-center text-sm rounded-lg hover:bg-gray-200 ${
         isSelectedMonth
-            ? "bg-blue-500 text-white"
-            : "text-gray-700 hover:bg-blue-200"
+            ? 'bg-purple-400 text-white'
+            : 'text-gray-700 hover:bg-blue-200'
     }`}>
         {title}
     </div>
-</div>
-    )
+</div>)
 }
 
 export {
