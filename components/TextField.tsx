@@ -21,24 +21,24 @@ function TextField({
 	errorMessage,
 	placeholder,
 	required,
-	type = 'text'
+	type = 'text',
 }: TextField) {
 	const descriptionText = errorMessage || description
 
 	return (
-<div>
-	{label && <Label text={label} />}
-	<input
-		value={value}
-		onInput={event => onInput(event.currentTarget.value)}
-		required={required}
-		className="appearance-none rounded-md relative block w-full px-3 py-2 border-2 border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-		placeholder={placeholder}
-		maxLength={maxLength}
-		type={type}
-	/>
-	{descriptionText && <Description text={descriptionText} isError={!!errorMessage}/>}
-</div>)
+		<div>
+			{label && <Label text={label} />}
+			<input
+				value={value}
+				onInput={event => onInput(event.currentTarget.value)}
+				required={required}
+				className='appearance-none rounded-md relative block w-full px-3 py-2 border-2 border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+				placeholder={placeholder}
+				maxLength={maxLength}
+				type={type}
+			/>
+			{descriptionText && <Description text={descriptionText} isError={!!errorMessage}/>}
+		</div>)
 }
 
 type LabelProps = {

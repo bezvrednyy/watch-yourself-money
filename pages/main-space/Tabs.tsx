@@ -8,15 +8,13 @@ function Tabs({
 	items,
 }: TabsProps) {
 	const [selectedTab, setSelectedTab] = useState(0)
-	return <ul className="flex justify-center items-center my-4">
-		{items.map((text, index) => {
-			return <Tab
-				key={index}
-				text={text}
-				selected={selectedTab === index}
-				onClick={() => setSelectedTab(index)}
-			/>
-		})}
+	return <ul className='flex justify-center items-center my-4'>
+		{items.map((text, index) => <Tab
+			key={index}
+			text={text}
+			selected={selectedTab === index}
+			onClick={() => setSelectedTab(index)}
+		/>)}
 	</ul>
 }
 
@@ -32,12 +30,13 @@ function Tab({
 	selected,
 	onClick,
 }: TabProps) {
-	return <li
-		onClick={onClick}
-		className={`cursor-pointer py-2 px-4 text-gray-500 border-b-8${selected ? ' text-purple-500 border-purple-500' : ''}`}
-	>
-		{text}
-	</li>
+	return (
+		<li
+			onClick={onClick}
+			className={`cursor-pointer py-2 px-4 text-gray-500 border-b-8${selected ? ' text-purple-500 border-purple-500' : ''}`}
+		>
+			{text}
+		</li>)
 }
 
 export {

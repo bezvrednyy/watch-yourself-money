@@ -1,10 +1,16 @@
-import {DatePicker} from '../../components/datePicker/DatePicker'
 import {MainLayout} from '../../components/MainLayout'
-import {Tabs} from './Tabs'
+import {CardsSection} from './cardsSection/CardsSection'
+import {CategoriesSection} from './categoriesSection/CategoriesSection'
+import {HistorySection} from './historySection/HistorySection'
+import {joinClassNames} from '../../common/joinClassNames'
+
+import styles from './index.module.css'
 
 export default function Index() {
-	return <MainLayout title={'Home page'}>
-		<Tabs items={['Расходы', 'Доходы']}/>
-		<DatePicker selected={new Date()}/>
-	</MainLayout>
+	return (
+		<MainLayout title={'Home page'} className={joinClassNames('flex', styles.container)}>
+			<CardsSection/>
+			<CategoriesSection/>
+			<HistorySection/>
+		</MainLayout>)
 }
