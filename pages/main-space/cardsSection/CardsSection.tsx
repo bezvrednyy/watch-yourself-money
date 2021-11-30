@@ -9,7 +9,7 @@ function CardsSection() {
 	const cards = ['1', '2', '3', '4', '5', '6']
 
 	return (
-		<div className='flex flex-col items-center w-3/12 bg-green-100'>
+		<div className='flex flex-col items-center w-96 bg-green-100'>
 			<DatePicker
 				date={selectedDate}
 				onSelectedChanged={setSelectedDate}
