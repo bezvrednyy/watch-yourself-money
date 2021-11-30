@@ -5,7 +5,7 @@ function BankCard() {
 	return (
 		<div
 			className='bg-white shadow-md rounded-3xl mx-3 w-72 h-40
-				flex flex-row justify-around items-center overflow-hidden'
+				flex flex-row flex-shrink-0 justify-around items-center overflow-hidden'
 		>
 			<img className='w-1/2 h-full object-cover' src={imageUrl} alt='image'/>
 			<div className='w-full pl-6 h-1/2 flex flex-col flex-1 items-baseline justify-around space-y-2'>
