@@ -3,5 +3,17 @@
     {"id": 1, "name": "Развлечения", "type": 0, "id_icon": 13, "color": "#FFFF00", "id_user": 333},
     {"id": 2, "name": "Продукты", "type": 0, "id_icon": 14, "color": "#00bfff", "id_user": 333},
     {"id": 3, "name": "Инвестиции", "type": 1, "id_icon": 15, "color": "#00FF00", "id_user": 333}
+  ],
+  "accounts": [
+    {"id": 1, "name": "Сбербанк", "money": 0, "description": "Основная карта для покупок", "color": "#FFFF00", "id_user": 333, "id_currency": 1},
+    {"id": 2, "name": "Тинькоф", "money": 0, "description": "Карта для МАГНИТА", "color": "#00bfff", "id_user": 333, "id_currency": 1}
+  ],
+  "transactions": [
+    {"id": 1, "id_category": 1, "id_account": 1, "comment": "#Spider-man: no way home", "money": 250, "date":  1200000034555},
+    {"id": 2, "id_category": 1, "id_account": 1, "comment": "#Spider-man: no way home", "money": 250, "date":  1200000034555},
+    {"id": 3, "id_category": 1, "id_account": 1, "comment": "#Spider-man: no way home", "money": 250, "date":  1200000034555},
+    {"id": 4, "id_category": 1, "id_account": 1, "comment": "#Spider-man: no way home", "money": 250, "date":  1200000034555},
+    {"id": 5, "id_category": 1, "id_account": 1, "comment": "#Spider-man: no way home", "money": 250, "date":  1200000034555},
+    {"id": 6, "id_category": 1, "id_account": 1, "comment": "#Spider-man: no way home", "money": 250, "date":  1200000034555}
   ]
 }
