@@ -22,11 +22,10 @@ export default function Index(props: MainSpaceProps) {
 
 export async function getServerSideProps({ query, req }: NextPageContext): Promise<GetServerSidePropsResult<MainSpaceProps>> {
 	const response = await fetch('http://localhost:3000/api/categories/get_categories')
-	const rawCategories = await response.json()
-	//TODO
+	const data = await response.json()
 	return {
 		props: {
-			categories: [],
+			categories: data.categories,
 		}
 	}
 }
