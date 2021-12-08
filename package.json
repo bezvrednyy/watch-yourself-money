@@ -14,21 +14,21 @@
     "@heroicons/react": "^1.0.5",
     "@reatom/react": "^2.0.0-rc5",
     "babel-plugin-styled-components": "^2.0.2",
-    "date-fns": "^2.26.0",
-    "json-server": "^0.17.0",
-    "next": "12.0.4",
+    "date-fns": "^2.27.0",
+    "next": "^12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "@types/node": "16.11.9",
-    "@types/react": "17.0.35",
+    "@types/node": "^16.11.9",
+    "@types/react": "^17.0.35",
     "@types/react-dom": "^17.0.11",
     "autoprefixer": "^10.4.0",
-    "eslint": "7",
-    "eslint-config-next": "12.0.4",
-    "postcss": "^8.3.11",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^12.0.4",
+    "json-server": "^0.17.0",
+    "postcss": "^8.4.4",
     "tailwindcss": "^2.2.19",
-    "typescript": "4.5.2"
+    "typescript": "^4.5.2"
   }
 }
