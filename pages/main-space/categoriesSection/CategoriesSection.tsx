@@ -22,7 +22,7 @@ function CategoriesSection({
 						title={item.title}
 						onClick={ () => console.log(`Open "${item.title}" category popover`) }
 						bgHexColor={item.hexColor}
-						className='mx-2 my-2'
+						className='mx-2.5 my-2.5'
 					/>
 				})}
 			</div>

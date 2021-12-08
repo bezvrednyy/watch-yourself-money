@@ -20,6 +20,7 @@ function RoundedSquare({
 			onClick={onClick}
 			className={joinClassNames(className, 'flex flex-col items-center opacity-90 transform transition'
 				+ ' hover:scale-105 cursor-pointer hover:opacity-100')}
+			title={title}
 		>
 			<div
 				className='w-12 h-12 flex justify-center items-center rounded shadow'
@@ -27,7 +28,6 @@ function RoundedSquare({
 			>
 				{icon}
 			</div>
-			{title && <div className='text-base font-normal text-gray-700 font-sans'>{title}</div>}
 		</div>
 	)
 }
