@@ -14,7 +14,7 @@ function CategoriesSection() {
 	return (
 		<div className='w-6/12 bg-red-100'>
 			<Tabs items={['Расходы', 'Доходы']}/>
-			<div className='flex py-10 px-32'>
+			<div className='flex flex-wrap py-10 px-32'>
 				{categories.map(item => {
 					const Icon = getOutlineIconById(item.iconId)
 					return <RoundedSquare
@@ -23,6 +23,7 @@ function CategoriesSection() {
 						title={item.title}
 						onClick={ () => console.log(`Open "${item.title}" category popover`) }
 						bgHexColor={item.hexColor}
+						className='mx-2 my-2'
 					/>
 				})}
 			</div>
