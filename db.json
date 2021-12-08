@@ -1,8 +1,8 @@
 {
   "categories": [
-    {"id": 1, "name": "Развлечения", "type": 0, "id_icon": 13, "color": "#FFFF00", "id_user": 333},
-    {"id": 2, "name": "Продукты", "type": 0, "id_icon": 14, "color": "#00bfff", "id_user": 333},
-    {"id": 3, "name": "Инвестиции", "type": 1, "id_icon": 15, "color": "#00FF00", "id_user": 333}
+    {"id": 1, "name": "Подарки", "type": 0, "id_icon": "outline-gift", "color": "#FFFF00", "id_user": 333},
+    {"id": 2, "name": "Продукты", "type": 0, "id_icon": "outline-gift", "color": "#00bfff", "id_user": 333},
+    {"id": 3, "name": "Инвестиции", "type": 1, "id_icon": "outline-gift", "color": "#00FF00", "id_user": 333}
   ],
   "accounts": [
     {"id": 1, "name": "Сбербанк", "money": 0, "description": "Основная карта для покупок", "color": "#FFFF00", "id_user": 333, "id_currency": 1},

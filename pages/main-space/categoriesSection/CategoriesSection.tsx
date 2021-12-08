@@ -3,14 +3,13 @@ import {RoundedSquare} from '../../../components/RoundedSquare'
 import {Tabs} from '../Tabs'
 import {CategoryData} from './model/CategoryData'
 
-function CategoriesSection() {
-	const categories: Array<CategoryData> = [{
-		id: '1',
-		title: 'Подарки',
-		type: 0,
-		iconId: 'outline-gift',
-		hexColor: '#00FF00',
-	}]
+interface CategoriesSectionProps {
+	categories: Array<CategoryData>,
+}
+
+function CategoriesSection({
+	categories,
+}: CategoriesSectionProps) {
 	return (
 		<div className='w-6/12 bg-red-100'>
 			<Tabs items={['Расходы', 'Доходы']}/>
