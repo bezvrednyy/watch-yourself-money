@@ -5,9 +5,16 @@ dev:
 		-d \
 		--rm \
 		--name money-service \
-		-v C:\Git-repositories\_volgatech-repositories\watch-yourself-money:/app \
+		-v /home/pschester/chester-env/repositories/watch-yourself-money:/app \
 		-v /app/node_modules \
 		--env-file ./config/development.env \
 		money-service-image
+postgres:
+	docker run -p 5432:5432 \
+		-d \
+		--rm \
+		--name money-postgres \
+		--env-file ./config/development.env \
+		postgres
 stop:
 	docker stop money-service
