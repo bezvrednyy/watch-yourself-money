@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  postgresdb:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    env_file:
+      - ./config/development.env
+  app:
+    image: "money-service-image"
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    env_file:
+      - ./config/development.env
+    depends_on:
+      - postgresdb
