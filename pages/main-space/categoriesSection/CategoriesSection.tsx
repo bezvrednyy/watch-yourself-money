@@ -17,7 +17,7 @@ function CategoriesSection({
 				{categories.map(item => {
 					const Icon = getOutlineIconById(item.iconId)
 					return <RoundedSquare
-						key={item.id}
+						key={`${item.id}`}
 						icon={<Icon className='w-8 h-8 overflow-hidden'/>}
 						title={item.title}
 						onClick={ () => console.log(`Open "${item.title}" category popover`) }

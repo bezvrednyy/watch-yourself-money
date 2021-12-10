@@ -1,8 +1,8 @@
 import {OutlineIconId} from '../../../../components/icons/getOutlineIconById'
 
 type CategoryData = {
-	id: string,
-	parentCategoryId?: string,
+	id: bigint,
+	parentCategoryId?: bigint,
 	title: string,
 	type: number, //0 - расходы, 1 - доходы
 	iconId: OutlineIconId,

@@ -1,4 +1,6 @@
 import {NextPageContext, GetServerSidePropsResult} from 'next'
+import {OutlineIconId} from '../../components/icons/getOutlineIconById'
+import prisma from '../../prisma/prisma'
 import {CategoryData} from './categoriesSection/model/CategoryData.js'
 import styles from './index.module.css'
 import {MainLayout} from '../../components/MainLayout'
@@ -21,11 +23,18 @@ export default function Index(props: MainSpaceProps) {
 }
 
 export async function getServerSideProps({ query, req }: NextPageContext): Promise<GetServerSidePropsResult<MainSpaceProps>> {
-	const response = await fetch('http://localhost:3000/api/categories/get_categories')
-	const data = await response.json()
+	const categories = await prisma.category.findMany()
+
 	return {
 		props: {
-			categories: data.categories,
-		}
+			categories: categories.map(x => ({
+				id: x.id,
+				parentCategoryId: x.parentCategoryId || undefined,
+				title: x.name,
+				type: x.type,
+				iconId: x.iconId as OutlineIconId,
+				hexColor: x.color,
+			})),
+		},
 	}
 }
