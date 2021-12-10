@@ -34,6 +34,6 @@
     "typescript": "^4.5.2"
   },
   "prisma": {
-    "schema": "environment/schema.prisma"
+    "schema": "prisma/schema.prisma"
   }
 }

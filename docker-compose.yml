@@ -1,11 +1,16 @@
 version: "3.3"
 services:
   postgresdb:
+    container_name: postgres
     image: "postgres"
     ports:
       - "5432:5432"
+    volumes:
+      - .:/var/lib/postgresql/data
     env_file:
-      - environment/.env
+      - prisma/.env
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "ckan" ]
     deploy:
       resources:
         limits:
@@ -13,13 +18,14 @@ services:
           memory: 4G
   app:
     image: "money-service-image"
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
     volumes:
       - .:/app
-      - /app/node_modules
     env_file:
-      - environment/.env
+      - prisma/.env
     depends_on:
       - postgresdb
