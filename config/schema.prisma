@@ -3,7 +3,7 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-generator client { //TODO: Что за generator-client?
+generator client {
     provider = "prisma-client-js"
 }
 
@@ -18,14 +18,15 @@ model User {
 }
 
 model Category {
-    id             BigInt     @id @default(autoincrement()) @map("id_category")
-    user           User       @relation(fields: [userId], references: [id])
-    userId         BigInt     @map("id_user")
-    parentCategory Category?  @relation(fields: [parentId], references: [id])
-    parentId       BigInt?    @map("id_parent_category")
-    name           String
-    type           Int        @db.SmallInt
-    iconId         String     @map("id_icon")
-    color          String
+    id                BigInt     @id @default(autoincrement()) @map("id_category")
+    user              User       @relation(fields: [userId], references: [id])
+    userId            BigInt     @map("id_user")
+    parentCategoryId  BigInt?    @map("id_parent_category")
+    parentCategory    Category?  @relation("Subcategories", fields: [parentCategoryId], references: [id])
+    subCategories     Category[] @relation("Subcategories")
+    name              String
+    type              Int        @db.SmallInt
+    iconId            String     @map("id_icon")
+    color             String
     @@map("category")
 }
