@@ -4,8 +4,16 @@ services:
     image: "postgres"
     ports:
       - "5432:5432"
+    volumes:
+      - ./config/bd-init-scripts:/docker-entrypoint-initdb.d
+      - ./config/bd-init-scripts:/var/lib/postgresql/data
     env_file:
-      - ./config/development.env
+      - config/.env
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 4G
   app:
     image: "money-service-image"
     build: .
@@ -15,6 +23,6 @@ services:
       - .:/app
       - /app/node_modules
     env_file:
-      - ./config/development.env
+      - config/.env
     depends_on:
       - postgresdb
