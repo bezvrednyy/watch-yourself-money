@@ -9,13 +9,6 @@ services:
       - .:/var/lib/postgresql/data
     env_file:
       - prisma/.env
-    healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "ckan" ]
-    deploy:
-      resources:
-        limits:
-          cpus: '1'
-          memory: 4G
   app:
     image: "money-service-image"
     build:
@@ -23,6 +16,7 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
+      - "5555:5555"
     volumes:
       - .:/app
     env_file:

@@ -14,13 +14,13 @@ model User {
     password    String
     avatarUrl   String?
     categories  Category[]
-    @@map(name: "user")
+    @@map("user")
 }
 
 model Category {
     id                BigInt     @id @default(autoincrement()) @map("id_category")
-    user              User       @relation(fields: [userId], references: [id])
     userId            BigInt     @map("id_user")
+    user              User       @relation(fields: [userId], references: [id])
     parentCategoryId  BigInt?    @map("id_parent_category")
     parentCategory    Category?  @relation("Subcategories", fields: [parentCategoryId], references: [id])
     subCategories     Category[] @relation("Subcategories")
@@ -28,5 +28,37 @@ model Category {
     type              Int        @db.SmallInt
     iconId            String     @map("id_icon")
     color             String
+    transactions      Transaction[]
     @@map("category")
+}
+
+model Account {
+    id              BigInt      @id @default(autoincrement()) @map("id_account")
+    name            String
+    description     String?
+    iconId          String      @map("id_icon")
+    color           String
+    transactions    Transaction[]
+    @@map("account")
+}
+
+model Currency {
+    id              BigInt  @id @default(autoincrement()) @map("id_currency")
+    name            String
+    transactions    Transaction[]
+    @@map("currency")
+}
+
+model Transaction {
+    id          BigInt      @id @default(autoincrement()) @map("id_transaction")
+    category    Category    @relation(fields: [categoryId], references: [id])
+    categoryId  BigInt
+    account     Account     @relation(fields: [accountId], references: [id])
+    accountId   BigInt
+    currency    Currency    @relation(fields: [currencyId], references: [id])
+    currencyId  BigInt
+    comment     String?
+    money       Decimal
+    date        DateTime
+    @@map("transaction")
 }
