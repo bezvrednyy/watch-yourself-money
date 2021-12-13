@@ -27,14 +27,19 @@ export async function getServerSideProps({ query, req }: NextPageContext): Promi
 
 	return {
 		props: {
-			categories: categories.map(x => ({
-				id: x.id,
-				parentCategoryId: x.parentCategoryId || undefined,
-				title: x.name,
-				type: x.type,
-				iconId: x.iconId as OutlineIconId,
-				hexColor: x.color,
-			})),
+			categories: categories.map(x => {
+				const remappedValue: CategoryData = {
+					id: `${x.id}`,
+					title: x.name,
+					type: x.type,
+					iconId: x.iconId as OutlineIconId,
+					hexColor: x.color,
+				}
+				if (x.parentCategoryId) {
+					remappedValue.parentCategoryId = x.parentCategoryId
+				}
+				return remappedValue
+			}),
 		},
 	}
 }

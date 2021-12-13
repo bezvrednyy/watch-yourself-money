@@ -7,26 +7,37 @@ generator client {
     provider = "prisma-client-js"
 }
 
+enum Theme {
+    DEFAULT
+    BLACK
+}
+
+enum CategoryType {
+    EXPENSES
+    INCOMES
+}
+
 model User {
-    id          BigInt      @id @default(autoincrement()) @map("id_user")
-    name        String
-    email       String      @unique
-    password    String
-    avatarUrl   String?
-    categories  Category[]
+    id            BigInt      @id @default(autoincrement()) @map("id_user")
+    name          String
+    email         String      @unique
+    password      String
+    avatarUrl     String?
+    categories    Category[]
+    userSettings  UserSettings[]
     @@map("user")
 }
 
 model Category {
-    id                BigInt     @id @default(autoincrement()) @map("id_category")
-    userId            BigInt     @map("id_user")
-    user              User       @relation(fields: [userId], references: [id])
-    parentCategoryId  BigInt?    @map("id_parent_category")
-    parentCategory    Category?  @relation("Subcategories", fields: [parentCategoryId], references: [id])
-    subCategories     Category[] @relation("Subcategories")
+    id                BigInt        @id @default(autoincrement()) @map("id_category")
+    userId            BigInt        @map("id_user")
+    user              User          @relation(fields: [userId], references: [id])
+    parentCategoryId  BigInt?       @map("id_parent_category")
+    parentCategory    Category?     @relation("Subcategories", fields: [parentCategoryId], references: [id])
+    subCategories     Category[]    @relation("Subcategories")
     name              String
-    type              Int        @db.SmallInt
-    iconId            String     @map("id_icon")
+    type              CategoryType
+    iconId            String        @map("id_icon")
     color             String
     transactions      Transaction[]
     @@map("category")
@@ -46,6 +57,7 @@ model Currency {
     id              BigInt  @id @default(autoincrement()) @map("id_currency")
     name            String
     transactions    Transaction[]
+    userSettings    UserSettings[]
     @@map("currency")
 }
 
@@ -61,4 +73,22 @@ model Transaction {
     money       Decimal
     date        DateTime
     @@map("transaction")
+}
+
+model Language {
+    id            BigInt          @id @default(autoincrement()) @map("id_language")
+    name          String
+    userSettings  UserSettings[]
+    @@map("language")
+}
+
+model UserSettings {
+    user        User      @relation(fields: [userId], references: [id])
+    userId      BigInt    @id @map("id_user_settings")
+    theme       Theme     @default(DEFAULT)
+    language    Language  @relation(fields: [languageId], references: [id])
+    languageId  BigInt
+    currency    Currency  @relation(fields: [currencyId], references: [id])
+    currencyId  BigInt
+    @@map("user_settings")
 }
