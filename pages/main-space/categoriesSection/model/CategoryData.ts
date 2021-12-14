@@ -3,8 +3,8 @@ import {OutlineIconId} from '../../../../components/icons/getOutlineIconById'
 type CategoryType = 'EXPENSES'|'INCOMES'
 
 type CategoryData = {
-	id: string,
-	parentCategoryId?: bigint,
+	id: number,
+	parentCategoryId?: number,
 	title: string,
 	type: CategoryType,
 	iconId: OutlineIconId,

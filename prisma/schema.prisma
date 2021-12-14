@@ -18,23 +18,24 @@ enum CategoryType {
 }
 
 model User {
-    id            BigInt      @id @default(autoincrement()) @map("id_user")
+    id            Int               @id @default(autoincrement()) @map("id_user")
     name          String
-    email         String      @unique
+    email         String            @unique
     password      String
-    avatarUrl     String?
+    avatarUrl     String?           @map("avatar_url")
     categories    Category[]
     userSettings  UserSettings[]
+    accounts      Account[]
     @@map("user")
 }
 
 model Category {
-    id                BigInt        @id @default(autoincrement()) @map("id_category")
-    userId            BigInt        @map("id_user")
+    id                Int           @id @default(autoincrement()) @map("id_category")
+    userId            Int           @map("id_user")
     user              User          @relation(fields: [userId], references: [id])
-    parentCategoryId  BigInt?       @map("id_parent_category")
-    parentCategory    Category?     @relation("Subcategories", fields: [parentCategoryId], references: [id])
-    subCategories     Category[]    @relation("Subcategories")
+    parentCategoryId  Int?          @map("id_parent_category")
+    parentCategory    Category?     @relation("subcategories", fields: [parentCategoryId], references: [id])
+    subCategories     Category[]    @relation("subcategories")
     name              String
     type              CategoryType
     iconId            String        @map("id_icon")
@@ -44,17 +45,19 @@ model Category {
 }
 
 model Account {
-    id              BigInt      @id @default(autoincrement()) @map("id_account")
+    id              Int             @id @default(autoincrement()) @map("id_account")
     name            String
     description     String?
-    iconId          String      @map("id_icon")
+    iconId          String          @map("id_icon")
     color           String
+    user            User            @relation(fields: [userId], references: [id])
+    userId          Int             @map("id_user")
     transactions    Transaction[]
     @@map("account")
 }
 
 model Currency {
-    id              BigInt  @id @default(autoincrement()) @map("id_currency")
+    id              Int             @id @default(autoincrement()) @map("id_currency")
     name            String
     transactions    Transaction[]
     userSettings    UserSettings[]
@@ -62,13 +65,13 @@ model Currency {
 }
 
 model Transaction {
-    id          BigInt      @id @default(autoincrement()) @map("id_transaction")
+    id          Int         @id @default(autoincrement()) @map("id_transaction")
     category    Category    @relation(fields: [categoryId], references: [id])
-    categoryId  BigInt
+    categoryId  Int         @map("id_category")
     account     Account     @relation(fields: [accountId], references: [id])
-    accountId   BigInt
+    accountId   Int         @map("id_account")
     currency    Currency    @relation(fields: [currencyId], references: [id])
-    currencyId  BigInt
+    currencyId  Int         @map("id_currency")
     comment     String?
     money       Decimal
     date        DateTime
@@ -76,19 +79,19 @@ model Transaction {
 }
 
 model Language {
-    id            BigInt          @id @default(autoincrement()) @map("id_language")
+    id            Int               @id @default(autoincrement()) @map("id_language")
     name          String
     userSettings  UserSettings[]
     @@map("language")
 }
 
 model UserSettings {
-    user        User      @relation(fields: [userId], references: [id])
-    userId      BigInt    @id @map("id_user_settings")
-    theme       Theme     @default(DEFAULT)
-    language    Language  @relation(fields: [languageId], references: [id])
-    languageId  BigInt
-    currency    Currency  @relation(fields: [currencyId], references: [id])
-    currencyId  BigInt
+    user        User        @relation(fields: [userId], references: [id])
+    userId      Int         @id @map("id_user_settings")
+    theme       Theme       @default(DEFAULT)
+    language    Language    @relation(fields: [languageId], references: [id])
+    languageId  Int         @map("id_language")
+    currency    Currency    @relation(fields: [currencyId], references: [id])
+    currencyId  Int         @map("id_currency")
     @@map("user_settings")
 }
