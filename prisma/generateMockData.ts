@@ -23,7 +23,7 @@ async function generateMockData() {
 
 	await prisma.account.createMany({data: [
 		{id: 1, userId: 1, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: '#00FF00'},
-		{id: 1, userId: 2, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: '#00FF00'},
+		{id: 2, userId: 2, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: '#00FF00'},
 	]})
 
 	const fiveCategories: Array<Category> = [
@@ -37,15 +37,15 @@ async function generateMockData() {
 		{id: 8, userId: 1, name: 'Сайты', iconId: 'outline-cloud', type: 'INCOMES', color: '#3f63ec', parentCategoryId: null},
 	]
 	await prisma.category.createMany({data: fiveCategories.concat(
-		fiveCategories.map(x => ({...x, userId: 2})),
+		fiveCategories.map(x => ({...x, id: x.id + fiveCategories.length, userId: 2})),
 	)})
 
 	await prisma.transaction.createMany({data: [
 		{id: 1, date: new Date(), money: 802, currencyId: 1, accountId: 1, categoryId: 1, comment: 'Весы для тёти Тани'},
-		{id: 1, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
-		{id: 1, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
-		{id: 1, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
-		{id: 1, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
+		{id: 2, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
+		{id: 3, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
+		{id: 4, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
+		{id: 5, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
 	]})
 }
 

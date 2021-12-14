@@ -5,6 +5,7 @@ import {
 	TranslateIcon,
 	UserGroupIcon,
 	PuzzleIcon,
+	RefreshIcon,
 } from '@heroicons/react/outline'
 import * as React from 'react'
 import {checkNever} from '../../common/checkNever'
@@ -14,7 +15,8 @@ export type OutlineIconId = 'outline-gift'|
 	'outline-cloud'|
 	'outline-translate'|
 	'outline-user-group'|
-	'outline-puzzle'
+	'outline-puzzle'|
+	'outline-refresh'
 
 export function getOutlineIconById(id: OutlineIconId): React.FC<React.ComponentProps<'svg'>> {
 	switch (id) {
@@ -30,6 +32,8 @@ export function getOutlineIconById(id: OutlineIconId): React.FC<React.ComponentP
 			return UserGroupIcon
 		case 'outline-puzzle':
 			return PuzzleIcon
+		case 'outline-refresh':
+			return RefreshIcon
 		default:
 			checkNever(id, `Unknown icon id: ${id}`)
 			throw new Error()
