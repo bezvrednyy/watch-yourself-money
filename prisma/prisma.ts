@@ -1,10 +1,10 @@
 // @ts-nocheck
-import { PrismaClient } from '@prisma/client'
+import {PrismaClient} from '@prisma/client'
 
-let prisma: PrismaClient;
+let prisma: PrismaClient
 
 if (process.env.NODE_ENV === 'production') {
-	prisma = new PrismaClient();
+	prisma = new PrismaClient()
 }
 else {
 	//Чтобы при hot-reloading не создавались новые экземпляры клиентов

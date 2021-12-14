@@ -1,9 +1,9 @@
-import {NextPageContext, GetServerSidePropsResult} from 'next'
+import {GetServerSidePropsResult} from 'next'
 import {OutlineIconId} from '../../components/icons/getOutlineIconById'
 import prisma from '../../prisma/prisma'
 import {CategoryData} from './categoriesSection/model/CategoryData.js'
 import styles from './index.module.css'
-import {MainLayout} from '../../components/MainLayout'
+import {MainLayout} from '../../components/layouts/MainLayout'
 import {CardsSection} from './cardsSection/CardsSection'
 import {CategoriesSection} from './categoriesSection/CategoriesSection'
 import {HistorySection} from './historySection/HistorySection'
@@ -22,14 +22,14 @@ export default function Index(props: MainSpaceProps) {
 		</MainLayout>)
 }
 
-export async function getServerSideProps({ query, req }: NextPageContext): Promise<GetServerSidePropsResult<MainSpaceProps>> {
+export async function getServerSideProps(): Promise<GetServerSidePropsResult<MainSpaceProps>> {
 	const categories = await prisma.category.findMany()
 
 	return {
 		props: {
 			categories: categories.map(x => {
 				const remappedValue: CategoryData = {
-					id: `${x.id}`,
+					id: x.id,
 					title: x.name,
 					type: x.type,
 					iconId: x.iconId as OutlineIconId,

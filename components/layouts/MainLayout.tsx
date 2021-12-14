@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import {ReactChild} from 'react'
-import {NavigationPanel} from './navigation/NavigationPanel'
+import {NavigationPanel} from '../navigation/NavigationPanel'
 
 type MainLayoutProps = {
     title: string,
