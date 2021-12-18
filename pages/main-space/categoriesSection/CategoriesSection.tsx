@@ -3,7 +3,7 @@ import {EditCategoryPopup} from './EditCategoryPopup'
 import {getOutlineIconById} from '../../../components/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../components/RoundedSquare'
 import {Tabs} from '../Tabs'
-import {CategoryData} from './model/CategoryData'
+import {CategoryData} from './model/categoriesAtom'
 
 interface CategoriesSectionProps {
 	categories: Array<CategoryData>,

@@ -1,6 +1,6 @@
 import {Category} from '@prisma/client'
 import {generateRandomInt} from '../common/generateRandom'
-import {CategoryData} from '../pages/main-space/categoriesSection/model/CategoryData'
+import {CategoryData} from '../pages/main-space/categoriesSection/model/categoriesAtom'
 import prisma from './prisma'
 
 async function generateMockData() {
