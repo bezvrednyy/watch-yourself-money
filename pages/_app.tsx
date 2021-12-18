@@ -1,3 +1,5 @@
+import {createStore} from '@reatom/core'
+import {reatomContext} from '@reatom/react'
 import {AppProps} from 'next/app'
 import 'tailwindcss/tailwind.css'
 import {useEffect} from 'react'
@@ -12,7 +14,11 @@ export default function MyApp({
 		const rootElement = document.getElementById('__next')
 		rootElement && rootElement.classList.add('h-full') //tailwind-css
 	}, [])
+
+	const store = createStore()
 	return <>
-		<Component {...pageProps} />
+		<reatomContext.Provider value={store}>
+			<Component {...pageProps} />
+		</reatomContext.Provider>
 	</>
 }

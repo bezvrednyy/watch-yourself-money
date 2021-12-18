@@ -1,7 +1,8 @@
+import {useAction} from '@reatom/react'
 import {GetServerSidePropsResult} from 'next'
 import {OutlineIconId} from '../../components/icons/getOutlineIconById'
 import prisma from '../../prisma/prisma'
-import {CategoryData} from './categoriesSection/model/categoriesAtom.js'
+import {CategoryData, categoriesAtom} from './categoriesSection/model/categoriesAtom'
 import styles from './index.module.css'
 import {MainLayout} from '../../components/layouts/MainLayout'
 import {CardsSection} from './cardsSection/CardsSection'
@@ -14,10 +15,12 @@ interface MainSpaceProps {
 }
 
 export default function Index(props: MainSpaceProps) {
+	const handleSetCategories = useAction(categoriesAtom.set)
+	handleSetCategories(props.categories)
 	return (
 		<MainLayout title={'Home page'} className={joinClassNames('flex', styles.container)}>
 			<CardsSection/>
-			<CategoriesSection categories={props.categories} />
+			<CategoriesSection />
 			<HistorySection/>
 		</MainLayout>)
 }

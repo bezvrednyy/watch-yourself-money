@@ -1,18 +1,14 @@
+import {useAtom} from '@reatom/react'
 import {useState} from 'react'
 import {EditCategoryPopup} from './EditCategoryPopup'
 import {getOutlineIconById} from '../../../components/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../components/RoundedSquare'
 import {Tabs} from '../Tabs'
-import {CategoryData} from './model/categoriesAtom'
+import {categoriesAtom} from './model/categoriesAtom'
 
-interface CategoriesSectionProps {
-	categories: Array<CategoryData>,
-}
-
-function CategoriesSection({
-	categories,
-}: CategoriesSectionProps) {
+function CategoriesSection() {
 	const [openedCategoryId, setOpenedCategoryId] = useState<number|null>(null)
+	const [categories] = useAtom(categoriesAtom)
 	return (
 		<div className='w-6/12 bg-red-100'>
 			<EditCategoryPopup
