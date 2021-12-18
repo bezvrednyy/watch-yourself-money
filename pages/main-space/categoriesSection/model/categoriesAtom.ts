@@ -1,4 +1,5 @@
 import {createAtom} from '@reatom/core'
+import {createPrimitiveAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../components/icons/getOutlineIconById'
 
 type CategoryType = 'EXPENSES'|'INCOMES'
@@ -21,3 +22,5 @@ export const categoriesAtom = createAtom(
 		return state
 	},
 )
+
+export const editableCategoryIdAtom = createPrimitiveAtom(<null|number>(null))

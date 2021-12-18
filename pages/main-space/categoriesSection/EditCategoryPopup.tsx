@@ -1,5 +1,5 @@
 import {ExternalLayer} from '../../../components/layers/ExternalLayer'
-import {Dialog} from '@headlessui/react'
+import {TextField} from '../../../components/TextField'
 
 type EditCategoryPopupProps = {
 	show: boolean,
@@ -23,18 +23,28 @@ function EditCategoryPopupContent({
 }: EditCategoryPopupProps) {
 	return (
 		<div className='inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl'>
-			<Dialog.Title>Редактирвоание категории</Dialog.Title>
-			<Dialog.Description>
-				This will permanently deactivate your account
-			</Dialog.Description>
+			<TextField
+				value={'f'}
+				onInput={() => {}}
+				placeholder={'Username'}
+				required={true}
+			/>
+			<div className='mt-2'>
+				<p className='text-sm text-gray-500'>
+					Your payment has been successfully submitted. We’ve sent you
+					an email with all of the details of your order.
+				</p>
+			</div>
 
-			<p>
-				Are you sure you want to deactivate your account? All of your data will
-				be permanently removed. This action cannot be undone.
-			</p>
-
-			<button onClick={onClose}>Deactivate</button>
-			<button onClick={onClose}>Cancel</button>
+			<div className='mt-4'>
+				<button
+					type='button'
+					className='inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500'
+					onClick={onClose}
+				>
+					Got it, thanks!
+				</button>
+			</div>
 		</div>
 	)
 }

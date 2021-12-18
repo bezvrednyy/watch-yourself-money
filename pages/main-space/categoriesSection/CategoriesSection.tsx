@@ -1,23 +1,23 @@
-import {useAtom} from '@reatom/react'
-import {useState} from 'react'
+import {useAtom, useAction} from '@reatom/react'
 import {EditCategoryPopup} from './EditCategoryPopup'
 import {getOutlineIconById} from '../../../components/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../components/RoundedSquare'
 import {Tabs} from '../Tabs'
-import {categoriesAtom} from './model/categoriesAtom'
+import {categoriesAtom, editableCategoryIdAtom} from './model/categoriesAtom'
 
 function CategoriesSection() {
-	const [openedCategoryId, setOpenedCategoryId] = useState<number|null>(null)
+	const [editableCategoryId] = useAtom(editableCategoryIdAtom)
+	const handleSetEditableCategoryId = useAction(editableCategoryIdAtom.set)
 	const [categories] = useAtom(categoriesAtom)
 	return (
 		<div className='w-6/12 bg-red-100'>
 			<EditCategoryPopup
-				show={openedCategoryId !== null}
-				categoryId={openedCategoryId}
-				onClose={() => setOpenedCategoryId(null)}
+				show={editableCategoryId !== null}
+				categoryId={editableCategoryId}
+				onClose={() => handleSetEditableCategoryId(null)}
 				onSave={() => {
-					console.log(`Saving category: ${openedCategoryId}`)
-					setOpenedCategoryId(null)
+					console.log(`Saving category: ${editableCategoryId}`)
+					handleSetEditableCategoryId(null)
 				}}
 			/>
 			<Tabs items={['Расходы', 'Доходы']}/>
@@ -28,7 +28,7 @@ function CategoriesSection() {
 						key={item.id}
 						icon={<Icon className='w-8 h-8 overflow-hidden'/>}
 						title={item.title}
-						onClick={() => setOpenedCategoryId(item.id)}
+						onClick={() => handleSetEditableCategoryId(item.id)}
 						bgHexColor={item.hexColor}
 						className='mx-2.5 my-2.5'
 					/>

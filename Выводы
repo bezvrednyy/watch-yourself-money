@@ -36,3 +36,6 @@
 
 11. "npx prisma generate && npx prisma studio & npm run dev" -- во втором случае один &, чтобы запустить команды параллельно
     В этом кейсе это требуется, т. к. иначе npm run devбудет запущен только после того, как выключу сервер studio.
+
+12. createPrimitiveAtom и аналогичные creater`ы нужно импортрировать из общей папки '@reatom/core/primitives', а не
+        из конкретного файла'@reatom/core/primitives/createPrimitiveAtom' и подобных
