@@ -1,3 +1,5 @@
+import {useState} from 'react'
+import {EditCategoryPopup} from './EditCategoryPopup'
 import {getOutlineIconById} from '../../../components/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../components/RoundedSquare'
 import {Tabs} from '../Tabs'
@@ -10,8 +12,18 @@ interface CategoriesSectionProps {
 function CategoriesSection({
 	categories,
 }: CategoriesSectionProps) {
+	const [openedCategoryId, setOpenedCategoryId] = useState<number|null>(null)
 	return (
 		<div className='w-6/12 bg-red-100'>
+			<EditCategoryPopup
+				show={openedCategoryId !== null}
+				categoryId={openedCategoryId}
+				onClose={() => setOpenedCategoryId(null)}
+				onSave={() => {
+					console.log(`Saving category: ${openedCategoryId}`)
+					setOpenedCategoryId(null)
+				}}
+			/>
 			<Tabs items={['Расходы', 'Доходы']}/>
 			<div className='flex flex-wrap py-10 px-32'>
 				{categories.map(item => {
@@ -20,7 +32,7 @@ function CategoriesSection({
 						key={item.id}
 						icon={<Icon className='w-8 h-8 overflow-hidden'/>}
 						title={item.title}
-						onClick={ () => console.log(`Open "${item.title}" category popover`) }
+						onClick={() => setOpenedCategoryId(item.id)}
 						bgHexColor={item.hexColor}
 						className='mx-2.5 my-2.5'
 					/>
