@@ -1,5 +1,5 @@
 import {useAtom, useAction} from '@reatom/react'
-import {EditCategoryPopup} from './EditCategoryPopup'
+import {EditCategoryPopup} from './view/editCategoryPopup/EditCategoryPopup'
 import {getOutlineIconById} from '../../../components/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../components/RoundedSquare'
 import {Tabs} from '../Tabs'
@@ -13,7 +13,6 @@ function CategoriesSection() {
 		<div className='w-6/12 bg-red-100'>
 			<EditCategoryPopup
 				show={editableCategoryId !== null}
-				categoryId={editableCategoryId}
 				onClose={() => handleSetEditableCategoryId(null)}
 				onSave={() => {
 					console.log(`Saving category: ${editableCategoryId}`)

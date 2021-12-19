@@ -1,4 +1,3 @@
-import {createAtom} from '@reatom/core'
 import {createPrimitiveAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../components/icons/getOutlineIconById'
 
@@ -13,14 +12,5 @@ export type CategoryData = {
 	hexColor: string,
 }
 
-export const categoriesAtom = createAtom(
-	{
-		set: (categories: Array<CategoryData>) => categories,
-	},
-	(track, state: Array<CategoryData> = []) => {
-		track.onAction('set', categories => (state = categories))
-		return state
-	},
-)
-
+export const categoriesAtom = createPrimitiveAtom<Array<CategoryData>>([])
 export const editableCategoryIdAtom = createPrimitiveAtom(<null|number>(null))

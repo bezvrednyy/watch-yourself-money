@@ -1,9 +1,10 @@
-import {ExternalLayer} from '../../../components/layers/ExternalLayer'
-import {TextField} from '../../../components/TextField'
+import {ExternalLayer} from '../../../../../components/layers/ExternalLayer'
+import {TextField} from '../../../../../components/TextField'
+import {useAtom} from '@reatom/react'
+import {editableCategoryAtom} from './model/editableCategoryAtom'
 
 type EditCategoryPopupProps = {
 	show: boolean,
-	categoryId: number|null,
 	onClose: () => void,
 	onSave: () => void,
 }
@@ -17,16 +18,19 @@ function EditCategoryPopup(props: EditCategoryPopupProps) {
 }
 
 function EditCategoryPopupContent({
-	categoryId,
 	onClose,
 	onSave,
 }: EditCategoryPopupProps) {
+	const [{
+		title,
+	}] = useAtom(editableCategoryAtom)
+
 	return (
 		<div className='inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl'>
 			<TextField
-				value={'f'}
+				value={title}
 				onInput={() => {}}
-				placeholder={'Username'}
+				placeholder={'Category name'}
 				required={true}
 			/>
 			<div className='mt-2'>
