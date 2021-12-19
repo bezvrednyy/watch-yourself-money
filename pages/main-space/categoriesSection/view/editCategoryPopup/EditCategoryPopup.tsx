@@ -1,7 +1,10 @@
 import {ExternalLayer} from '../../../../../components/layers/ExternalLayer'
 import {TextField} from '../../../../../components/TextField'
-import {useAtom} from '@reatom/react'
-import {editableCategoryAtom} from './model/editableCategoryAtom'
+import {useAction, useAtom} from '@reatom/react'
+import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
+import {categoriesAtom, editableCategoryIdAtom} from '../../model/categoriesAtom'
+import {verify} from '../../../../../common/verify'
+import {useEffect} from 'react'
 
 type EditCategoryPopupProps = {
 	show: boolean,
@@ -10,6 +13,8 @@ type EditCategoryPopupProps = {
 }
 
 function EditCategoryPopup(props: EditCategoryPopupProps) {
+	useInitPopupAtoms()
+
 	return <ExternalLayer
 		show={props.show}
 		onClose={props.onClose}
@@ -17,19 +22,46 @@ function EditCategoryPopup(props: EditCategoryPopupProps) {
 	/>
 }
 
+function useInitPopupAtoms() {
+	const [categories] = useAtom(categoriesAtom)
+	const [editableCategoryId] = useAtom(editableCategoryIdAtom)
+	const handleSetTitle = useAction(editCategoryPopupAtoms.titleAtom.set)
+	const handleSetSubcategories = useAction(editCategoryPopupAtoms.subcategoriesAtom.set)
+
+	useEffect(() => {
+		if (editableCategoryId === null) {
+			return
+		}
+
+		const category = verify(
+			categories.find(x => x.id === editableCategoryId),
+			`Unexpected error: category not found`,
+		)
+		handleSetTitle(category.title)
+		handleSetSubcategories(
+			categories.filter(x => x.parentCategoryId === category.id),
+		)
+	}, [
+		categories,
+		editableCategoryId,
+		handleSetSubcategories,
+		handleSetTitle,
+	])
+}
+
+
 function EditCategoryPopupContent({
 	onClose,
 	onSave,
 }: EditCategoryPopupProps) {
-	const [{
-		title,
-	}] = useAtom(editableCategoryAtom)
+	const [title] = useAtom(editCategoryPopupAtoms.titleAtom)
+	const handleSetTitle = useAction(editCategoryPopupAtoms.titleAtom.set)
 
 	return (
 		<div className='inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl'>
 			<TextField
 				value={title}
-				onInput={() => {}}
+				onInput={handleSetTitle}
 				placeholder={'Category name'}
 				required={true}
 			/>

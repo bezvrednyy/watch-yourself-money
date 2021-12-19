@@ -1,6 +1,7 @@
 import {createAtom} from '@reatom/core'
 import {verify} from '../../../../../../common/verify'
 import {categoriesAtom, CategoryData, editableCategoryIdAtom} from '../../../model/categoriesAtom'
+import {createPrimitiveAtom, createStringAtom} from '@reatom/core/primitives'
 
 type EditableCategoryData = CategoryData & {
 	subCategories: Array<CategoryData>,
@@ -30,3 +31,11 @@ export const editableCategoryAtom = createAtom(
 		return state
 	},
 )
+
+const titleAtom = createStringAtom('')
+const subcategoriesAtom = createPrimitiveAtom<Array<CategoryData>>([])
+
+export const editCategoryPopupAtoms = {
+	titleAtom,
+	subcategoriesAtom,
+}
