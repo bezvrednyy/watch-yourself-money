@@ -1,7 +1,7 @@
 import {joinClassNames} from '../common/joinClassNames'
 
 type RoundedSquareProps = {
-	icon?: JSX.Element,
+	createIcon?: () => JSX.Element,
 	title?: string,
 	onClick?: () => void,
 	bgHexColor?: string,
@@ -9,7 +9,7 @@ type RoundedSquareProps = {
 }
 
 function RoundedSquare({
-	icon,
+	createIcon,
 	title,
 	onClick,
 	bgHexColor,
@@ -18,16 +18,29 @@ function RoundedSquare({
 	return (
 		<div
 			onClick={onClick}
-			className={joinClassNames(className, 'flex flex-col items-center opacity-90 transform transition'
-				+ ' hover:scale-105 cursor-pointer hover:opacity-100')}
+			className={joinClassNames(className, 'flex flex-col items-center')}
 			title={title}
 		>
-			<div
-				className='w-12 h-12 flex justify-center items-center rounded shadow'
-				style={bgHexColor ? {'backgroundColor': bgHexColor} : undefined}
-			>
-				{icon}
-			</div>
+			{createIcon && <Icon createIcon={createIcon} bgHexColor={bgHexColor} />}
+		</div>
+	)
+}
+
+type IconProps = {
+	createIcon: () => JSX.Element,
+	bgHexColor?: string,
+}
+
+function Icon({
+	createIcon,
+	bgHexColor,
+}: IconProps) {
+	return (
+		<div
+			className='flex justify-center items-center rounded shadow'
+			style={bgHexColor ? {'backgroundColor': bgHexColor} : undefined}
+		>
+			{createIcon()}
 		</div>
 	)
 }

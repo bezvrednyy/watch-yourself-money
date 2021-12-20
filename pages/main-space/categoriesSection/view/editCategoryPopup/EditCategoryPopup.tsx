@@ -27,7 +27,7 @@ function useInitPopupAtoms() {
 	const handleSetTitle = useAction(editCategoryPopupAtoms.titleAtom.set)
 	const handleSetSubcategories = useAction(editCategoryPopupAtoms.subcategoriesAtom.set)
 	const handleSetColor = useAction(editCategoryPopupAtoms.colorAtom.set)
-	const handleSetIcon = useAction(editCategoryPopupAtoms.iconAtom.set)
+	const handleSetIcon = useAction(editCategoryPopupAtoms.iconIdAtom.set)
 
 	useEffect(() => {
 		if (editableCategoryId === null) {

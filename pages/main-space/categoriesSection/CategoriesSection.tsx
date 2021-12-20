@@ -25,11 +25,11 @@ function CategoriesSection() {
 					const Icon = getOutlineIconById(item.iconId)
 					return <RoundedSquare
 						key={item.id}
-						icon={<Icon className='w-8 h-8 overflow-hidden'/>}
+						createIcon={() => <Icon className='m-2 w-8 h-8 overflow-hidden'/>}
 						title={item.title}
 						onClick={() => handleSetEditableCategoryId(item.id)}
 						bgHexColor={item.hexColor}
-						className='mx-2.5 my-2.5'
+						className='mx-2.5 my-2.5 opacity-90 transform transition hover:scale-105 cursor-pointer hover:opacity-100'
 					/>
 				})}
 			</div>

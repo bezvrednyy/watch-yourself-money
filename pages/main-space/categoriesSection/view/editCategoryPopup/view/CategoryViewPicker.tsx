@@ -1,20 +1,35 @@
-import {Button} from '../../../../../../components/button/Button'
 import {PopoverDefault} from '../../../../../../components/popovers/PopoverDefault'
 import {ButtonWithPopover} from '../../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
 import {Tab} from '@headlessui/react'
 import {joinClassNames} from '../../../../../../common/joinClassNames'
+import {RoundedSquare} from '../../../../../../components/RoundedSquare'
+import {useAtom} from '@reatom/react'
+import {editCategoryPopupAtoms} from '../model/editableCategoryAtom'
+import {getOutlineIconById} from '../../../../../../components/icons/getOutlineIconById'
 
 export function CategoryViewPicker() {
+	const [selectedIcon] = useAtom(editCategoryPopupAtoms.iconIdAtom)
+	const [selectedColor] = useAtom(editCategoryPopupAtoms.colorAtom)
+	const IconFC = getOutlineIconById(selectedIcon)
+
 	return <ButtonWithPopover
-		createButton={() => <Button
-			style='primary'
-			structure='text'
-			text='Sign up'
+		createButton={() => <RoundedSquare
+			createIcon={() => <IconFC className='m-1 w-7 h-7 overflow-hidden' />}
+			bgHexColor={selectedColor}
+			className='transform transition hover:scale-105 cursor-pointer hover:opacity-100'
 		/>}
 		createPopover={() => <PopoverDefault
 			createContent={() => <PopoverContent/>}
 		/>}
 	/>
+}
+
+function PickerButton() {
+	return (
+		<button>
+
+		</button>
+	)
 }
 
 function PopoverContent() {

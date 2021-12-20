@@ -35,12 +35,12 @@ export const editableCategoryAtom = createAtom(
 
 const titleAtom = createStringAtom('')
 const subcategoriesAtom = createPrimitiveAtom<Array<CategoryData>>([])
-const iconAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
+const iconIdAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
 const colorAtom = createStringAtom('') //hex
 
 export const editCategoryPopupAtoms = {
 	titleAtom,
 	subcategoriesAtom,
-	iconAtom,
+	iconIdAtom,
 	colorAtom,
 }
