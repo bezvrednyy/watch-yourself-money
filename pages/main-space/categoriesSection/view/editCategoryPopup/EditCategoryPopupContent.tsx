@@ -17,13 +17,15 @@ function EditCategoryPopupContent({
 
 	return (
 		<div className='inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl'>
-			<CategoryViewPicker/>
-			<TextField
-				value={title}
-				onInput={handleSetTitle}
-				placeholder={'Category name'}
-				required={true}
-			/>
+			<div className='flex space-x-3 items-center'>
+				<CategoryViewPicker/>
+				<TextField
+					value={title}
+					onInput={handleSetTitle}
+					placeholder={'Category name'}
+					required={true}
+				/>
+			</div>
 
 			<div className='mt-4'>
 				<button

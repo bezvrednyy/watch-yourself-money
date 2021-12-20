@@ -16,7 +16,7 @@ export function CategoryViewPicker() {
 		createButton={() => <RoundedSquare
 			createIcon={() => <IconFC className='m-1 w-7 h-7 overflow-hidden' />}
 			bgHexColor={selectedColor}
-			className='transform transition hover:scale-105 cursor-pointer hover:opacity-100'
+			className='transform transition hover:scale-105 cursor-pointer'
 		/>}
 		createPopover={() => <PopoverDefault
 			createContent={() => <PopoverContent/>}
