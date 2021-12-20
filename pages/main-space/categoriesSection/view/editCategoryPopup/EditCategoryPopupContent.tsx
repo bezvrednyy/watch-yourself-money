@@ -1,7 +1,7 @@
 import {useAction, useAtom} from '@reatom/react'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
 import {TextField} from '../../../../../components/TextField'
-import {ViewPicker} from './view/ViewPicker'
+import {CategoryViewPicker} from './view/CategoryViewPicker'
 
 function EditCategoryPopupContent() {
 	const [title] = useAtom(editCategoryPopupAtoms.titleAtom)
@@ -9,7 +9,7 @@ function EditCategoryPopupContent() {
 
 	return (
 		<div className='inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl'>
-			<ViewPicker/>
+			<CategoryViewPicker/>
 			<TextField
 				value={title}
 				onInput={handleSetTitle}
