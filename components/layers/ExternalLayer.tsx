@@ -5,20 +5,20 @@ import {joinClassNames} from '../../common/joinClassNames'
 
 type ExternalLayerProps = {
 	show: boolean,
-	onClose: () => void,
+	onOverlayClick?: () => void,
 	createJSX: () => JSX.Element,
 }
 
 export function ExternalLayer({
 	show,
-	onClose,
+	onOverlayClick,
 	createJSX,
 }: ExternalLayerProps) {
 	return (
 		<Transition appear show={show} as={Fragment}>
 			<Dialog
 				open={show}
-				onClose={onClose}
+				onClose={() => onOverlayClick && onOverlayClick()}
 				className='fixed z-10 inset-0 overflow-y-auto'
 			>
 				<div className='flex items-center justify-center min-h-screen'>

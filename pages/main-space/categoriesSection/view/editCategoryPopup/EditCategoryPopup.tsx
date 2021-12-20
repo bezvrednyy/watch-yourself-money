@@ -17,8 +17,7 @@ export function EditCategoryPopup(props: EditCategoryPopupProps) {
 
 	return <ExternalLayer
 		show={props.show}
-		onClose={props.onClose}
-		createJSX={() => <EditCategoryPopupContent />}
+		createJSX={() => <EditCategoryPopupContent {...props} />}
 	/>
 }
 
@@ -27,6 +26,8 @@ function useInitPopupAtoms() {
 	const [editableCategoryId] = useAtom(editableCategoryIdAtom)
 	const handleSetTitle = useAction(editCategoryPopupAtoms.titleAtom.set)
 	const handleSetSubcategories = useAction(editCategoryPopupAtoms.subcategoriesAtom.set)
+	const handleSetColor = useAction(editCategoryPopupAtoms.colorAtom.set)
+	const handleSetIcon = useAction(editCategoryPopupAtoms.iconAtom.set)
 
 	useEffect(() => {
 		if (editableCategoryId === null) {
@@ -41,10 +42,7 @@ function useInitPopupAtoms() {
 		handleSetSubcategories(
 			categories.filter(x => x.parentCategoryId === category.id),
 		)
-	}, [
-		categories,
-		editableCategoryId,
-		handleSetSubcategories,
-		handleSetTitle,
-	])
+		handleSetColor(category.hexColor)
+		handleSetIcon(category.iconId)
+	}, [categories, editableCategoryId, handleSetColor, handleSetIcon, handleSetSubcategories, handleSetTitle])
 }

@@ -2,6 +2,7 @@ import {createAtom} from '@reatom/core'
 import {verify} from '../../../../../../common/verify'
 import {categoriesAtom, CategoryData, editableCategoryIdAtom} from '../../../model/categoriesAtom'
 import {createPrimitiveAtom, createStringAtom} from '@reatom/core/primitives'
+import {OutlineIconId} from '../../../../../../components/icons/getOutlineIconById'
 
 type EditableCategoryData = CategoryData & {
 	subCategories: Array<CategoryData>,
@@ -34,8 +35,12 @@ export const editableCategoryAtom = createAtom(
 
 const titleAtom = createStringAtom('')
 const subcategoriesAtom = createPrimitiveAtom<Array<CategoryData>>([])
+const iconAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
+const colorAtom = createStringAtom('') //hex
 
 export const editCategoryPopupAtoms = {
 	titleAtom,
 	subcategoriesAtom,
+	iconAtom,
+	colorAtom,
 }
