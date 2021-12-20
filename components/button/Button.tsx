@@ -1,6 +1,6 @@
 import {Logger} from '../../common/Logger'
 import type {ButtonProps} from './buttonProps'
-import {ButtonWithText} from './ButtonWithText'
+import {ButtonWithText} from './buttons/ButtonWithText'
 
 function Button(props: ButtonProps) {
 	switch (props.structure) {

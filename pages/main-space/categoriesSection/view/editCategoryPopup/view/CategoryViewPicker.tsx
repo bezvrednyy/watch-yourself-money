@@ -1,6 +1,6 @@
 import {Button} from '../../../../../../components/button/Button'
 import {PopoverDefault} from '../../../../../../components/popovers/PopoverDefault'
-import {ButtonWithPopover} from '../../../../../../components/button/buttonWithPopover/ButtonWithPopover'
+import {ButtonWithPopover} from '../../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
 import {Tab} from '@headlessui/react'
 import {joinClassNames} from '../../../../../../common/joinClassNames'
 

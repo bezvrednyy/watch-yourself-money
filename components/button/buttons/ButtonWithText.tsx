@@ -1,4 +1,4 @@
-import type {ButtonWithTextProps} from './buttonProps'
+import type {ButtonWithTextProps} from '../buttonProps'
 
 function ButtonWithText({
 	style,
