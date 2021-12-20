@@ -328,7 +328,12 @@
         "before": false
       }
     ],
-    "sort-imports": "off",
+    "sort-imports": ["error", {
+      "ignoreCase": false,
+      "ignoreDeclarationSort": true,
+      "ignoreMemberSort": false,
+      "memberSyntaxSortOrder": ["none", "all", "single", "multiple"]
+    }],
     "sort-keys": "off",
     "sort-vars": "off",
     "space-before-blocks": "error",

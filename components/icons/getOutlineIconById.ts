@@ -1,11 +1,11 @@
 import {
-	ShoppingBagIcon,
-	GiftIcon,
 	CloudIcon,
-	TranslateIcon,
-	UserGroupIcon,
+	GiftIcon,
 	PuzzleIcon,
 	RefreshIcon,
+	ShoppingBagIcon,
+	TranslateIcon,
+	UserGroupIcon,
 } from '@heroicons/react/outline'
 import * as React from 'react'
 import {checkNever} from '../../common/checkNever'

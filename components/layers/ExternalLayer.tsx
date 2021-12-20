@@ -1,5 +1,5 @@
 import styles from './ExternalLayer.module.css'
-import {Transition, Dialog} from '@headlessui/react'
+import {Dialog, Transition} from '@headlessui/react'
 import {Fragment} from 'react'
 import {joinClassNames} from '../../common/joinClassNames'
 

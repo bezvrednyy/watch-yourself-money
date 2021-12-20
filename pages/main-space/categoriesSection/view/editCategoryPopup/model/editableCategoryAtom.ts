@@ -1,6 +1,6 @@
 import {createAtom} from '@reatom/core'
 import {verify} from '../../../../../../common/verify'
-import {categoriesAtom, CategoryData, editableCategoryIdAtom} from '../../../model/categoriesAtom'
+import {CategoryData, categoriesAtom, editableCategoryIdAtom} from '../../../model/categoriesAtom'
 import {createPrimitiveAtom, createStringAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../../../components/icons/getOutlineIconById'
 

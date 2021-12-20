@@ -1,4 +1,4 @@
-import {useAtom, useAction} from '@reatom/react'
+import {useAction, useAtom} from '@reatom/react'
 import {EditCategoryPopup} from './view/editCategoryPopup/EditCategoryPopup'
 import {getOutlineIconById} from '../../../components/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../components/RoundedSquare'

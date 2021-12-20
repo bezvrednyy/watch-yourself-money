@@ -1,4 +1,4 @@
-import Document, {Html, NextScript, Head, Main} from 'next/document'
+import Document, {Head, Html, Main, NextScript} from 'next/document'
 
 //Теперь лайауты body можем делать разные. Напр. админка и клиент
 export default class MyDocument extends Document {
