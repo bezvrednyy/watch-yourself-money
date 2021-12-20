@@ -8,7 +8,10 @@ export function PopoverDefault({
 	createContent,
 }: PopoverDefaultProps) {
 	return (
-		<div className='rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white p-7'>
+		<div
+			className='rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 bg-white p-7'
+			onMouseDown={e => e.stopPropagation()}
+		>
 			{createContent()}
 		</div>
 	)
