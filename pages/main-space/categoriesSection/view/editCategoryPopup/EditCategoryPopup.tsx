@@ -56,5 +56,12 @@ function useInitPopupAtoms() {
 		)
 		handleSetColor(category.hexColor)
 		handleSetIcon(category.iconId)
-	}, [categories, editableCategoryId, handleSetColor, handleSetIcon, handleSetSubcategories, handleSetTitle])
+	}, [
+		categories,
+		editableCategoryId,
+		handleSetColor,
+		handleSetIcon,
+		handleSetSubcategories,
+		handleSetTitle,
+	])
 }
