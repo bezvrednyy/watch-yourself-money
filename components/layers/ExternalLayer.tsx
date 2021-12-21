@@ -6,13 +6,13 @@ import {joinClassNames} from '../../common/joinClassNames'
 type ExternalLayerProps = {
 	show: boolean,
 	onOverlayClick?: () => void,
-	createJSX: () => JSX.Element,
+	createComponent: () => JSX.Element,
 }
 
 export function ExternalLayer({
 	show,
 	onOverlayClick,
-	createJSX,
+	createComponent,
 }: ExternalLayerProps) {
 	return (
 		<Transition appear show={show} as={Fragment}>
@@ -33,7 +33,7 @@ export function ExternalLayer({
 					>
 						<Dialog.Overlay className={joinClassNames(styles.overlay, 'fixed inset-0')} />
 					</Transition.Child>
-					<Content createJSX={createJSX} />
+					<Content createComponent={createComponent} />
 				</div>
 			</Dialog>
 		</Transition>
@@ -41,11 +41,11 @@ export function ExternalLayer({
 }
 
 type ContentProps = {
-	createJSX: () => JSX.Element,
+	createComponent: () => JSX.Element,
 }
 
 function Content({
-	createJSX,
+	createComponent,
 }: ContentProps) {
 	//Используется не как Fragment, т. к. нужен DOM-узел, к которому применять эффекты
 	return (
@@ -57,7 +57,7 @@ function Content({
 			leaveFrom='opacity-100 scale-100'
 			leaveTo='opacity-0 scale-95'
 		>
-			{createJSX()}
+			{createComponent()}
 		</Transition.Child>
 	)
 }

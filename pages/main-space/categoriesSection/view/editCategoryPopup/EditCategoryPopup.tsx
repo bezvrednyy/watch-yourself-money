@@ -1,5 +1,5 @@
-import {ExternalLayer} from '../../../../../components/layers/ExternalLayer'
 import {useAction, useAtom} from '@reatom/react'
+import {PopupDefault} from '../../../../../components/PopupDefault'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
 import {categoriesAtom, editableCategoryIdAtom} from '../../model/categoriesAtom'
 import {verify} from '../../../../../common/verify'
@@ -9,15 +9,27 @@ import {EditCategoryPopupContent} from './EditCategoryPopupContent'
 type EditCategoryPopupProps = {
 	show: boolean,
 	onClose: () => void,
-	onSave: () => void,
 }
 
-export function EditCategoryPopup(props: EditCategoryPopupProps) {
+export function EditCategoryPopup({
+	show,
+	onClose,
+}: EditCategoryPopupProps) {
 	useInitPopupAtoms()
 
-	return <ExternalLayer
-		show={props.show}
-		createJSX={() => <EditCategoryPopupContent {...props} />}
+	return <PopupDefault
+		show={show}
+		createContent={() => <EditCategoryPopupContent />}
+		buttons={[
+			<button
+				key={'close'}
+				type='button'
+				className='inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500'
+				onClick={onClose}
+			>
+				Save
+			</button>,
+		]}
 	/>
 }
 
