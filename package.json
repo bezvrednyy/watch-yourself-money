@@ -11,6 +11,7 @@
     "docker-dev": "npx prisma db push && npx prisma generate && (npx prisma studio & npm run dev)"
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.6.2",
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@popperjs/core": "^2.11.0",

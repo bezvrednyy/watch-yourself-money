@@ -1,11 +1,19 @@
+import {useUser} from '@auth0/nextjs-auth0'
 import Link from 'next/link'
 import {joinClassNames} from '../../common/joinClassNames'
 
 function AuthButtons() {
-	return <div className='flex space-x-3'>
-		<Button text='Login' link={'/auth/login'}/>
-		<Button text='Sign up' link={'/auth/signup'}/>
-	</div>
+	const {user} = useUser()
+
+	const button = user
+		? <Button text='Log out' link={'/api/auth/logout?returnTo=/api/auth/login'}/>
+		: <Button text='Log in' link={'/api/auth/login?returnTo=/main-space'}/>
+
+	return (
+		<div className='flex space-x-3'>
+			{button}
+		</div>
+	)
 }
 
 type ButtonProps = {
