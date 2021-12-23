@@ -4,10 +4,11 @@ import {AppProps} from 'next/app'
 import 'tailwindcss/tailwind.css'
 import {useEffect} from 'react'
 import {initEnvironment} from '../prisma/environment'
+import {SessionProvider} from 'next-auth/react'
 
 export default function MyApp({
 	Component,
-	pageProps,
+	pageProps: {session, ...pageProps},
 }: AppProps) {
 	initEnvironment()
 	useEffect(() => {
@@ -17,8 +18,10 @@ export default function MyApp({
 
 	const store = createStore()
 	return <>
-		<reatomContext.Provider value={store}>
-			<Component {...pageProps} />
-		</reatomContext.Provider>
+		<SessionProvider session={session}>
+			<reatomContext.Provider value={store}>
+				<Component {...pageProps} />
+			</reatomContext.Provider>
+		</SessionProvider>
 	</>
 }
