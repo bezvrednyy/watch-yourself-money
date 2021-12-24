@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "lint-fix": "eslint --fix --ext .js,.ts,.tsx, .",
-    "docker-dev": "npx prisma db push --force-reset && npx prisma generate && (npx prisma studio & npm run dev)"
+    "docker-dev": "npx prisma db push && npx prisma generate && (npx prisma studio & npm run dev)"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
