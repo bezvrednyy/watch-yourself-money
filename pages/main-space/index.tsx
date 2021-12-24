@@ -1,5 +1,7 @@
 import {useAction} from '@reatom/react'
 import {GetServerSidePropsResult} from 'next'
+import {Session} from 'next-auth'
+import {GetSessionParams, getSession} from 'next-auth/react'
 import {OutlineIconId} from '../../components/icons/getOutlineIconById'
 import prisma from '../../prisma/prisma'
 import {CategoryData, categoriesAtom} from './categoriesSection/model/categoriesAtom'
@@ -25,11 +27,14 @@ export default function Index(props: MainSpaceProps) {
 		</MainLayout>)
 }
 
-export async function getServerSideProps(): Promise<GetServerSidePropsResult<MainSpaceProps>> {
+export async function getServerSideProps(context: GetSessionParams): Promise<GetServerSidePropsResult<MainSpaceProps & {
+	session: Session | null,
+}>> {
 	const categories = await prisma.category.findMany()
 
 	return {
 		props: {
+			session: await getSession(context),
 			categories: categories.map(x => {
 				const remappedValue: CategoryData = {
 					id: x.id,

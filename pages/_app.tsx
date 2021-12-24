@@ -4,11 +4,11 @@ import {AppProps} from 'next/app'
 import 'tailwindcss/tailwind.css'
 import {useEffect} from 'react'
 import {initEnvironment} from '../prisma/environment'
-import {UserProvider} from '@auth0/nextjs-auth0'
+import {SessionProvider} from 'next-auth/react'
 
 export default function MyApp({
 	Component,
-	pageProps,
+	pageProps: {session, ...pageProps},
 }: AppProps) {
 	initEnvironment()
 	useEffect(() => {
@@ -16,13 +16,12 @@ export default function MyApp({
 		rootElement && rootElement.classList.add('h-full') //tailwind-css
 	}, [])
 
-	const {user} = pageProps
 	const store = createStore()
 	return <>
-		<UserProvider user={user} loginUrl='/api/auth/login'>
+		<SessionProvider session={session}>
 			<reatomContext.Provider value={store}>
 				<Component {...pageProps} />
 			</reatomContext.Provider>
-		</UserProvider>
+		</SessionProvider>
 	</>
 }

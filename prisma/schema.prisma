@@ -19,13 +19,15 @@ enum CategoryType {
 
 model User {
     id            Int               @id @default(autoincrement()) @map("id_user")
-    name          String
+    name          String?
     email         String            @unique
-    password      String
-    avatarUrl     String?           @map("avatar_url")
+    emailVerified DateTime?         @map(name: "email_verified")
+    image         String?
     categories    Category[]
     userSettings  UserSettings[]
+    bankAccounts  BankAccount[]
     accounts      Account[]
+    sessions      Session[]
     @@map("user")
 }
 
@@ -44,8 +46,8 @@ model Category {
     @@map("category")
 }
 
-model Account {
-    id              Int             @id @default(autoincrement()) @map("id_account")
+model BankAccount {
+    id              Int             @id @default(autoincrement()) @map("id_bank_account")
     name            String
     description     String?
     iconId          String          @map("id_icon")
@@ -53,7 +55,7 @@ model Account {
     user            User            @relation(fields: [userId], references: [id])
     userId          Int             @map("id_user")
     transactions    Transaction[]
-    @@map("account")
+    @@map("bank_account")
 }
 
 model Currency {
@@ -65,16 +67,16 @@ model Currency {
 }
 
 model Transaction {
-    id          Int         @id @default(autoincrement()) @map("id_transaction")
-    category    Category    @relation(fields: [categoryId], references: [id])
-    categoryId  Int         @map("id_category")
-    account     Account     @relation(fields: [accountId], references: [id])
-    accountId   Int         @map("id_account")
-    currency    Currency    @relation(fields: [currencyId], references: [id])
-    currencyId  Int         @map("id_currency")
-    comment     String?
-    money       Decimal
-    date        DateTime
+    id              Int         @id @default(autoincrement()) @map("id_transaction")
+    category        Category    @relation(fields: [categoryId], references: [id])
+    categoryId      Int         @map("id_category")
+    bankAccount     BankAccount @relation(fields: [bankAccountId], references: [id])
+    bankAccountId   Int         @map("id_bank_account")
+    currency        Currency    @relation(fields: [currencyId], references: [id])
+    currencyId      Int         @map("id_currency")
+    comment         String?
+    money           Decimal
+    date            DateTime
     @@map("transaction")
 }
 
@@ -94,4 +96,43 @@ model UserSettings {
     currency    Currency    @relation(fields: [currencyId], references: [id])
     currencyId  Int         @map("id_currency")
     @@map("user_settings")
+}
+
+model Account {
+  id                 Int     @id @default(autoincrement())
+  userId             Int     @map("id_user")
+  type               String
+  provider           String
+  providerAccountId  String  @map("id_provider_account")
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("account")
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique @map("session_token")
+  userId       Int      @map("id_user")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_token")
 }
