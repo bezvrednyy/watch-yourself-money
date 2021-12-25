@@ -1,4 +1,4 @@
-function joinClassNames(...classes: (string|undefined)[]): string {
+function joinClassNames(...classes: (string|undefined|null)[]): string {
 	return classes.filter(Boolean).join(' ')
 }
 
