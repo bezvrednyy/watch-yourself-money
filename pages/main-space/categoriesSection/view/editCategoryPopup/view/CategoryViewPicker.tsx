@@ -28,7 +28,7 @@ export function CategoryViewPicker() {
 function PopoverContent() {
 	const tabs = ['Icon', 'Color']
 	return (
-		<>
+		<div className='w-44'>
 			<Tab.Group>
 				<Tab.List className='flex space-x-4 p-1'>
 					{tabs.map(category => (
@@ -49,12 +49,12 @@ function PopoverContent() {
 					<Tab.Panel>
 						<IconSelections/>
 					</Tab.Panel>
-					<Tab.Panel>
+					<Tab.Panel className='flex justify-between flex-wrap max-h-64 overflow-y-scroll pt-1 pr-1 relative left-1 scrollbar'>
 						<ColorSelections/>
 					</Tab.Panel>
 				</Tab.Panels>
 			</Tab.Group>
-		</>
+		</div>
 	)
 }
 
@@ -73,8 +73,8 @@ function ColorSelections() {
 			{colorIds.map(id => <RoundedSquare
 				key={id}
 				bgHexColor={getColorById(id)}
-				className={'transform transition hover:scale-105 cursor-pointer w-7 h-7'}
-				rounded={'full'}
+				className='transform transition hover:scale-105 cursor-pointer w-7 h-7 mb-1'
+				rounded='full'
 			/>)}
 		</>
 	)

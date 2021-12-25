@@ -14,7 +14,7 @@ function getAvailableColorIds(): Array<ColorId> {
 		'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose',
 	]
 	const colorsSaturation: Array<ColorsVariation> = [
-		100, 200, 300, 400, 500, 600, 700, 800, 900,
+		300, 400, 500, 600, 700,
 	]
 
 	return colorGroups.flatMap(group => colorsSaturation.map(x => createColorId(group, x)))
