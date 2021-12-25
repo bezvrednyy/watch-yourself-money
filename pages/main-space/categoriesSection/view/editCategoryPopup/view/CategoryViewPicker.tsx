@@ -1,10 +1,11 @@
+import {getColorById} from '../../../../../../common/colors/theme'
 import {PopoverDefault} from '../../../../../../components/popovers/PopoverDefault'
 import {ButtonWithPopover} from '../../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
 import {Tab} from '@headlessui/react'
 import {joinClassNames} from '../../../../../../common/joinClassNames'
 import {RoundedSquare} from '../../../../../../components/RoundedSquare'
 import {useAtom} from '@reatom/react'
-import {editCategoryPopupAtoms} from '../model/editableCategoryAtom'
+import {editCategoryPopupAtoms, getAvailableColorIds} from '../model/editableCategoryAtom'
 import {getOutlineIconById} from '../../../../../../components/icons/getOutlineIconById'
 
 export function CategoryViewPicker() {
@@ -22,14 +23,6 @@ export function CategoryViewPicker() {
 			createContent={() => <PopoverContent/>}
 		/>}
 	/>
-}
-
-function PickerButton() {
-	return (
-		<button>
-
-		</button>
-	)
 }
 
 function PopoverContent() {
@@ -74,9 +67,15 @@ function IconSelections() {
 }
 
 function ColorSelections() {
+	const colorIds = getAvailableColorIds()
 	return (
 		<>
-			Colors
+			{colorIds.map(id => <RoundedSquare
+				key={id}
+				bgHexColor={getColorById(id)}
+				className={'transform transition hover:scale-105 cursor-pointer w-7 h-7'}
+				rounded={'full'}
+			/>)}
 		</>
 	)
 }
