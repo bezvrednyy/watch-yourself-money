@@ -25,7 +25,7 @@ function CategoriesSection() {
 						title={item.title}
 						onClick={() => handleSetEditableCategoryId(item.id)}
 						bgHexColor={item.hexColor}
-						className='mx-2.5 my-2.5 opacity-90 transform transition hover:scale-105 cursor-pointer hover:opacity-100'
+						className='mx-2.5 my-2.5 opacity-90 transform transition hover:scale-105 cursor-pointer hover:opacity-100 shadow'
 					/>
 				})}
 			</div>

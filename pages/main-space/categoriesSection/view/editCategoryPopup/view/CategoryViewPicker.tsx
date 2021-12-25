@@ -1,10 +1,11 @@
+import {CheckIcon} from '@heroicons/react/outline'
 import {getColorById} from '../../../../../../common/colors/theme'
 import {PopoverDefault} from '../../../../../../components/popovers/PopoverDefault'
 import {ButtonWithPopover} from '../../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
 import {Tab} from '@headlessui/react'
 import {joinClassNames} from '../../../../../../common/joinClassNames'
 import {RoundedSquare} from '../../../../../../components/RoundedSquare'
-import {useAtom} from '@reatom/react'
+import {useAction, useAtom} from '@reatom/react'
 import {editCategoryPopupAtoms, getAvailableColorIds} from '../model/editableCategoryAtom'
 import {getOutlineIconById} from '../../../../../../components/icons/getOutlineIconById'
 
@@ -17,7 +18,7 @@ export function CategoryViewPicker() {
 		createButton={() => <RoundedSquare
 			createIcon={() => <IconFC className='m-1 w-7 h-7 overflow-hidden' />}
 			bgHexColor={selectedColor}
-			className='transform transition hover:scale-105 cursor-pointer'
+			className='transform transition hover:scale-105 cursor-pointer shadow'
 		/>}
 		createPopover={() => <PopoverDefault
 			createContent={() => <PopoverContent/>}
@@ -68,6 +69,8 @@ function IconSelections() {
 
 function ColorSelections() {
 	const colorIds = getAvailableColorIds()
+	const [selectedColor] = useAtom(editCategoryPopupAtoms.colorAtom)
+	const handleSetColor = useAction(editCategoryPopupAtoms.colorAtom.set)
 	return (
 		<>
 			{colorIds.map(id => <RoundedSquare
@@ -75,6 +78,11 @@ function ColorSelections() {
 				bgHexColor={getColorById(id)}
 				className='transform transition hover:scale-105 cursor-pointer w-7 h-7 mb-1'
 				rounded='full'
+				createIcon={selectedColor === id
+					? () => <CheckIcon className='w-6 h-6 text-white shadow-none' />
+					: undefined
+				}
+				onClick={() => handleSetColor(id)}
 			/>)}
 		</>
 	)

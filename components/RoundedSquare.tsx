@@ -24,7 +24,7 @@ function RoundedSquare({
 			onClick={onClick}
 			className={joinClassNames(
 				className,
-				'flex flex-col items-center',
+				'flex items-center justify-center',
 				getRoundedClass(rounded),
 			)}
 			style={bgHexColor ? {'backgroundColor': bgHexColor} : undefined}
@@ -47,7 +47,7 @@ function Icon({
 	return (
 		<div
 			className={joinClassNames(
-				'flex justify-center items-center shadow',
+				'flex justify-center items-center',
 				getRoundedClass(rounded),
 			)}
 		>
