@@ -4,4 +4,13 @@ module.exports = {
 	images: {
 	  domains: ['tailwindui.com'],
 	},
+	async redirects() {
+		return [
+			{
+				source: '/',
+				destination: '/main-space',
+				permanent: true,
+			},
+		]
+	},
 }

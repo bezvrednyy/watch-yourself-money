@@ -14,10 +14,6 @@ function CategoriesSection() {
 			<EditCategoryPopup
 				show={editableCategoryId !== null}
 				onClose={() => handleSetEditableCategoryId(null)}
-				onSave={() => {
-					console.log(`Saving category: ${editableCategoryId}`)
-					handleSetEditableCategoryId(null)
-				}}
 			/>
 			<Tabs items={['Расходы', 'Доходы']}/>
 			<div className='flex flex-wrap py-10 px-32'>
