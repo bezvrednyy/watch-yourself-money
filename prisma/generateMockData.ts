@@ -13,15 +13,15 @@ async function generateMockData() {
 		{id: 2, name: 'Английский'},
 	]})
 	await prisma.user.createMany({data: [
-		{id: 1, name: 'Валера', email: 'valera@gmail.com', password: '12345'},
-		{id: 2, name: 'Дима', email: 'dima@gmail.com', password: '12345'},
+		{id: 1, name: 'Валера', email: 'bezvrednyy@gmail.com'},
+		{id: 2, name: 'Дима', email: 'algaev18@gmail.com'},
 	]})
 	await prisma.userSettings.createMany({data: [
 		{userId: 1, currencyId: 1, languageId: 1, theme: 'DEFAULT'},
 		{userId: 2, currencyId: 2, languageId: 2, theme: 'BLACK'},
 	]})
 
-	await prisma.account.createMany({data: [
+	await prisma.bankAccount.createMany({data: [
 		{id: 1, userId: 1, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: '#00FF00'},
 		{id: 2, userId: 2, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: '#00FF00'},
 	]})
@@ -41,11 +41,11 @@ async function generateMockData() {
 	)})
 
 	await prisma.transaction.createMany({data: [
-		{id: 1, date: new Date(), money: 802, currencyId: 1, accountId: 1, categoryId: 1, comment: 'Весы для тёти Тани'},
-		{id: 2, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
-		{id: 3, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
-		{id: 4, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
-		{id: 5, date: new Date(), money: generateRandomInt(), currencyId: 1, accountId: 1, categoryId: 1},
+		{id: 1, date: new Date(), money: 802, currencyId: 1, bankAccountId: 1, categoryId: 1, comment: 'Весы для тёти Тани'},
+		{id: 2, date: new Date(), money: generateRandomInt(), currencyId: 1, bankAccountId: 1, categoryId: 1},
+		{id: 3, date: new Date(), money: generateRandomInt(), currencyId: 1, bankAccountId: 1, categoryId: 1},
+		{id: 4, date: new Date(), money: generateRandomInt(), currencyId: 1, bankAccountId: 1, categoryId: 1},
+		{id: 5, date: new Date(), money: generateRandomInt(), currencyId: 1, bankAccountId: 1, categoryId: 1},
 	]})
 }
 
