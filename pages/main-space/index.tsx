@@ -2,6 +2,7 @@ import {useAction} from '@reatom/react'
 import {GetServerSidePropsResult} from 'next'
 import {Session} from 'next-auth'
 import {GetSessionParams, getSession} from 'next-auth/react'
+import {verify} from '../../common/verify'
 import {OutlineIconId} from '../../components/icons/getOutlineIconById'
 import prisma from '../../prisma/prisma'
 import {CategoryData, categoriesAtom} from './categoriesSection/model/categoriesAtom'
@@ -40,7 +41,13 @@ export async function getServerSideProps(context: GetSessionParams): Promise<Get
 		}
 	}
 
-	const categories = await prisma.category.findMany()
+	const categories = await prisma.category.findMany({
+		where: {
+			user: {
+				email: verify(session.user.email, 'Server error: email not found'),
+			},
+		},
+	})
 	return {
 		props: {
 			session: await getSession(context),
