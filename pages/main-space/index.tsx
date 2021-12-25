@@ -2,6 +2,7 @@ import {useAction} from '@reatom/react'
 import {GetServerSidePropsResult} from 'next'
 import {Session} from 'next-auth'
 import {GetSessionParams, getSession} from 'next-auth/react'
+import {ColorId} from '../../common/colors/colors'
 import {verify} from '../../common/verify'
 import {OutlineIconId} from '../../components/icons/getOutlineIconById'
 import prisma from '../../prisma/prisma'
@@ -57,7 +58,7 @@ export async function getServerSideProps(context: GetSessionParams): Promise<Get
 					title: x.name,
 					type: x.type,
 					iconId: x.iconId as OutlineIconId,
-					hexColor: x.color,
+					colorId: x.color as ColorId,
 				}
 				if (x.parentCategoryId) {
 					remappedValue.parentCategoryId = x.parentCategoryId

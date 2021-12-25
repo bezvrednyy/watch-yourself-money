@@ -10,14 +10,14 @@ import {editCategoryPopupAtoms, getAvailableColorIds} from '../model/editableCat
 import {getOutlineIconById} from '../../../../../../components/icons/getOutlineIconById'
 
 export function CategoryViewPicker() {
-	const [selectedIcon] = useAtom(editCategoryPopupAtoms.iconIdAtom)
-	const [selectedColor] = useAtom(editCategoryPopupAtoms.colorAtom)
-	const IconFC = getOutlineIconById(selectedIcon)
+	const [selectedIconId] = useAtom(editCategoryPopupAtoms.iconIdAtom)
+	const [selectedColorId] = useAtom(editCategoryPopupAtoms.colorIdAtom)
+	const IconFC = getOutlineIconById(selectedIconId)
 
 	return <ButtonWithPopover
 		createButton={() => <RoundedSquare
 			createIcon={() => <IconFC className='m-1 w-7 h-7 overflow-hidden' />}
-			bgHexColor={selectedColor}
+			bgHexColor={getColorById(selectedColorId)}
 			className='transform transition hover:scale-105 cursor-pointer shadow'
 		/>}
 		createPopover={() => <PopoverDefault
@@ -69,8 +69,8 @@ function IconSelections() {
 
 function ColorSelections() {
 	const colorIds = getAvailableColorIds()
-	const [selectedColor] = useAtom(editCategoryPopupAtoms.colorAtom)
-	const handleSetColor = useAction(editCategoryPopupAtoms.colorAtom.set)
+	const [selectedColor] = useAtom(editCategoryPopupAtoms.colorIdAtom)
+	const handleSetColor = useAction(editCategoryPopupAtoms.colorIdAtom.set)
 	return (
 		<>
 			{colorIds.map(id => <RoundedSquare

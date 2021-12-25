@@ -1,4 +1,5 @@
 import {useAction, useAtom} from '@reatom/react'
+import {getColorById} from '../../../common/colors/theme'
 import {EditCategoryPopup} from './view/editCategoryPopup/EditCategoryPopup'
 import {getOutlineIconById} from '../../../components/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../components/RoundedSquare'
@@ -24,7 +25,7 @@ function CategoriesSection() {
 						createIcon={() => <Icon className='m-2 w-8 h-8 overflow-hidden'/>}
 						title={item.title}
 						onClick={() => handleSetEditableCategoryId(item.id)}
-						bgHexColor={item.hexColor}
+						bgHexColor={getColorById(item.colorId)}
 						className='mx-2.5 my-2.5 opacity-90 transform transition hover:scale-105 cursor-pointer hover:opacity-100 shadow'
 					/>
 				})}

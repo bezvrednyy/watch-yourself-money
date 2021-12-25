@@ -6,7 +6,7 @@ import {OutlineIconId} from '../../../../../../components/icons/getOutlineIconBy
 const titleAtom = createStringAtom('')
 const subcategoriesAtom = createPrimitiveAtom<Array<CategoryData>>([])
 const iconIdAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
-const colorAtom = createStringAtom('') //hex
+const colorIdAtom = createStringAtom<ColorId>('white')
 
 function getAvailableColorIds(): Array<ColorId> {
 	const colorGroups: Array<ColorName> = [
@@ -24,7 +24,7 @@ export const editCategoryPopupAtoms = {
 	titleAtom,
 	subcategoriesAtom,
 	iconIdAtom,
-	colorAtom,
+	colorIdAtom,
 }
 
 export {

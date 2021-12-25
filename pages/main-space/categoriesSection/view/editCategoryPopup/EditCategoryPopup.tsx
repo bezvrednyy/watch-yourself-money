@@ -38,7 +38,7 @@ function useInitPopupAtoms() {
 	const [editableCategoryId] = useAtom(editableCategoryIdAtom)
 	const handleSetTitle = useAction(editCategoryPopupAtoms.titleAtom.set)
 	const handleSetSubcategories = useAction(editCategoryPopupAtoms.subcategoriesAtom.set)
-	const handleSetColor = useAction(editCategoryPopupAtoms.colorAtom.set)
+	const handleSetColor = useAction(editCategoryPopupAtoms.colorIdAtom.set)
 	const handleSetIcon = useAction(editCategoryPopupAtoms.iconIdAtom.set)
 
 	useEffect(() => {
@@ -54,7 +54,7 @@ function useInitPopupAtoms() {
 		handleSetSubcategories(
 			categories.filter(x => x.parentCategoryId === category.id),
 		)
-		handleSetColor(category.hexColor)
+		handleSetColor(category.colorId)
 		handleSetIcon(category.iconId)
 	}, [
 		categories,
