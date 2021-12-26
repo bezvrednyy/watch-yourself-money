@@ -47,12 +47,8 @@ function PopoverContent() {
 					))}
 				</Tab.List>
 				<Tab.Panels>
-					<Tab.Panel>
-						<IconSelections/>
-					</Tab.Panel>
-					<Tab.Panel className='flex justify-between flex-wrap max-h-64 overflow-y-scroll pt-1 pr-1 relative left-1 scrollbar'>
-						<ColorSelections/>
-					</Tab.Panel>
+					<IconSelections/>
+					<ColorSelections/>
 				</Tab.Panels>
 			</Tab.Group>
 		</div>
@@ -64,7 +60,7 @@ function IconSelections() {
 	const [selectedIcon] = useAtom(editCategoryPopupAtoms.iconIdAtom)
 	const handleSetIconId = useAction(editCategoryPopupAtoms.iconIdAtom.set)
 	return (
-		<>
+		<Tab.Panel className={getPanelClassName()}>
 			{iconIds.map(id => <RoundedSquare
 				key={id}
 				bgHexColor={getColorById('white')}
@@ -72,11 +68,11 @@ function IconSelections() {
 				rounded='full'
 				createIcon={() => {
 					const IconFC = getOutlineIconById(id)
-					return <IconFC className='w-6 h-6 text-white shadow-none' />
+					return <IconFC className='w-6 h-6 text-black shadow-none' />
 				}}
 				onClick={() => handleSetIconId(id)}
 			/>)}
-		</>
+		</Tab.Panel>
 	)
 }
 
@@ -85,7 +81,7 @@ function ColorSelections() {
 	const [selectedColor] = useAtom(editCategoryPopupAtoms.colorIdAtom)
 	const handleSetColorId = useAction(editCategoryPopupAtoms.colorIdAtom.set)
 	return (
-		<>
+		<Tab.Panel className={getPanelClassName()}>
 			{colorIds.map(id => <RoundedSquare
 				key={id}
 				bgHexColor={getColorById(id)}
@@ -97,6 +93,10 @@ function ColorSelections() {
 				}
 				onClick={() => handleSetColorId(id)}
 			/>)}
-		</>
+		</Tab.Panel>
 	)
+}
+
+function getPanelClassName(): string {
+	return 'flex justify-between flex-wrap max-h-64 overflow-y-scroll pt-1 pr-1 relative left-1 scrollbar'
 }
