@@ -3,6 +3,7 @@ import {Badge} from '../../../../../components/Badge'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
 import {TextField} from '../../../../../components/TextField'
 import {CategoryViewPicker} from './view/CategoryViewPicker'
+import {getOutlineIconById} from '../../../../../components/icons/getOutlineIconById'
 
 function EditCategoryPopupContent() {
 	const [title] = useAtom(editCategoryPopupAtoms.titleAtom)
@@ -20,11 +21,16 @@ function EditCategoryPopupContent() {
 					required={true}
 				/>
 			</div>
-			<div>
+			<div className='flex'>
 				{subcategories.map(x => <Badge
 					key={x.id}
 					label={x.title}
-					className='tag'
+					className='bg-purple-300 rounded-full'
+					createIcon={() => {
+						const IconFC = getOutlineIconById(x.iconId)
+						return <IconFC className='w-5 h-5' />
+					}}
+					onClick={() => console.log('Open popup or popover')}
 				/>)}
 			</div>
 		</>

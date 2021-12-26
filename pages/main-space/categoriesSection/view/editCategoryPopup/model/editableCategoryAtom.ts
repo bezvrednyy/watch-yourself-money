@@ -1,12 +1,34 @@
 import {ColorId, ColorName, ColorsVariation, createColorId} from '../../../../../../common/colors/colors'
-import {CategoryData} from '../../../model/categoriesAtom'
-import {createPrimitiveAtom, createStringAtom} from '@reatom/core/primitives'
+import {CategoryData, editableCategoryIdAtom} from '../../../model/categoriesAtom'
+import {createEnumAtom, createPrimitiveAtom, createStringAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../../../components/icons/getOutlineIconById'
+import {UpdateCategoriesInfoRequest} from '../../../../../api/categories/update_categories_info'
+import {verify} from '../../../../../../common/verify'
 
 const titleAtom = createStringAtom('')
 const subcategoriesAtom = createPrimitiveAtom<Array<CategoryData>>([])
 const iconIdAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
 const colorIdAtom = createStringAtom<ColorId>('white')
+const removedSubcategoryIdsAtom = createPrimitiveAtom<Array<string>>([])
+const haveBecomeMainCategoriesIdsAtom = createPrimitiveAtom<Array<string>>([])
+const newSubcategoriesAtom = createPrimitiveAtom<Array<CategoryData>>([])
+const statusesAtom = createEnumAtom(['init', 'saving'])
+
+statusesAtom.subscribe(status => {
+	if (status === 'init') {
+		return undefined
+	}
+	const data: UpdateCategoriesInfoRequest = {
+		id: verify(editableCategoryIdAtom.getState()),
+		iconId: iconIdAtom.getState(),
+		colorId: colorIdAtom.getState(),
+		name: titleAtom.getState(),
+		newSubcategories: newSubcategoriesAtom.getState(),
+		removedSubcategoryIds: removedSubcategoryIdsAtom.getState(),
+		haveBecomeMainCategoriesIds: haveBecomeMainCategoriesIdsAtom.getState(),
+	}
+	console.log(data) //TODO:Сделать апи, куда отправлять данные.
+})
 
 function getAvailableColorIds(): Array<ColorId> {
 	const colorGroups: Array<ColorName> = [
@@ -25,6 +47,9 @@ export const editCategoryPopupAtoms = {
 	subcategoriesAtom,
 	iconIdAtom,
 	colorIdAtom,
+	removedSubcategoryIds: removedSubcategoryIdsAtom,
+	newSubcategories: newSubcategoriesAtom,
+	haveBecomeMainCategoriesIds: haveBecomeMainCategoriesIdsAtom,
 }
 
 export {
