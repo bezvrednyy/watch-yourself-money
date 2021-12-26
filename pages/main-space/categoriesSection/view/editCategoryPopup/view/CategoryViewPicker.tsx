@@ -6,7 +6,7 @@ import {Tab} from '@headlessui/react'
 import {joinClassNames} from '../../../../../../common/joinClassNames'
 import {RoundedSquare} from '../../../../../../components/RoundedSquare'
 import {useAction, useAtom} from '@reatom/react'
-import {editCategoryPopupAtoms, getAvailableColorIds} from '../model/editableCategoryAtom'
+import {editCategoryPopupAtoms, getAvailableColorIds, getAvailableIconIds} from '../model/editableCategoryAtom'
 import {getOutlineIconById} from '../../../../../../components/icons/getOutlineIconById'
 
 export function CategoryViewPicker() {
@@ -60,9 +60,22 @@ function PopoverContent() {
 }
 
 function IconSelections() {
+	const iconIds = getAvailableIconIds()
+	const [selectedIcon] = useAtom(editCategoryPopupAtoms.iconIdAtom)
+	const handleSetIconId = useAction(editCategoryPopupAtoms.iconIdAtom.set)
 	return (
 		<>
-			Icons
+			{iconIds.map(id => <RoundedSquare
+				key={id}
+				bgHexColor={getColorById('white')}
+				className='transform transition hover:scale-105 cursor-pointer w-7 h-7 mb-1'
+				rounded='full'
+				createIcon={() => {
+					const IconFC = getOutlineIconById(id)
+					return <IconFC className='w-6 h-6 text-white shadow-none' />
+				}}
+				onClick={() => handleSetIconId(id)}
+			/>)}
 		</>
 	)
 }
@@ -70,7 +83,7 @@ function IconSelections() {
 function ColorSelections() {
 	const colorIds = getAvailableColorIds()
 	const [selectedColor] = useAtom(editCategoryPopupAtoms.colorIdAtom)
-	const handleSetColor = useAction(editCategoryPopupAtoms.colorIdAtom.set)
+	const handleSetColorId = useAction(editCategoryPopupAtoms.colorIdAtom.set)
 	return (
 		<>
 			{colorIds.map(id => <RoundedSquare
@@ -82,7 +95,7 @@ function ColorSelections() {
 					? () => <CheckIcon className='w-6 h-6 text-white shadow-none' />
 					: undefined
 				}
-				onClick={() => handleSetColor(id)}
+				onClick={() => handleSetColorId(id)}
 			/>)}
 		</>
 	)
