@@ -6,7 +6,7 @@ import {ColorId} from '../../common/colors/colors'
 import {verify} from '../../common/verify'
 import {OutlineIconId} from '../../components/icons/getOutlineIconById'
 import prisma from '../../prisma/prisma'
-import {CategoryData, categoriesAtom} from './categoriesSection/model/categoriesAtom'
+import {CategoryData, MainCategoryData, SubCategoryData, categoriesAtom} from './categoriesSection/model/categoriesAtom'
 import styles from './index.module.css'
 import {MainLayout} from '../../components/layouts/MainLayout'
 import {CardsSection} from './cardsSection/CardsSection'
@@ -20,7 +20,12 @@ interface MainSpaceProps {
 
 export default function Index(props: MainSpaceProps) {
 	const handleSetCategories = useAction(categoriesAtom.set)
-	handleSetCategories(props.categories)
+	const [mainCategories, subCategories] = devideArray(props.categories, x => x.parentCategoryId === undefined)
+
+	handleSetCategories({
+		mainCategories: mainCategories as Array<MainCategoryData>,
+		subCategories: subCategories as Array<SubCategoryData>,
+	})
 	return (
 		<MainLayout title={'Home page'} className={joinClassNames('flex', styles.container)}>
 			<CardsSection/>

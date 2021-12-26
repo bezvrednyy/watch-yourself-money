@@ -35,6 +35,7 @@ export function EditCategoryPopup({
 
 function useInitPopupAtoms() {
 	const [categories] = useAtom(categoriesAtom)
+	const {mainCategories, subCategories} = categories
 	const [editableCategoryId] = useAtom(editableCategoryIdAtom)
 	const handleSetTitle = useAction(editCategoryPopupAtoms.titleAtom.set)
 	const handleSetSubcategories = useAction(editCategoryPopupAtoms.subcategoriesAtom.set)
@@ -47,17 +48,18 @@ function useInitPopupAtoms() {
 		}
 
 		const category = verify(
-			categories.find(x => x.id === editableCategoryId),
+			mainCategories.find(x => x.id === editableCategoryId),
 			`Unexpected error: category not found`,
 		)
 		handleSetTitle(category.title)
 		handleSetSubcategories(
-			categories.filter(x => x.parentCategoryId === category.id),
+			subCategories.filter(x => x.parentCategoryId === category.id),
 		)
 		handleSetColor(category.colorId)
 		handleSetIcon(category.iconId)
 	}, [
-		categories,
+		mainCategories,
+		subCategories,
 		editableCategoryId,
 		handleSetColor,
 		handleSetIcon,

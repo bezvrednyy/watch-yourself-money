@@ -18,7 +18,7 @@ function CategoriesSection() {
 			/>
 			<Tabs items={['Расходы', 'Доходы']}/>
 			<div className='flex flex-wrap py-10 px-32'>
-				{categories.map(item => {
+				{categories.mainCategories.map(item => {
 					const Icon = getOutlineIconById(item.iconId)
 					return <RoundedSquare
 						key={item.id}

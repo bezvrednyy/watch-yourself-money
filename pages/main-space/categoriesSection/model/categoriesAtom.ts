@@ -13,5 +13,21 @@ export type CategoryData = {
 	colorId: ColorId,
 }
 
-export const categoriesAtom = createPrimitiveAtom<Array<CategoryData>>([])
+export type MainCategoryData = CategoryData & {
+	parentCategoryId: undefined,
+}
+
+export type SubCategoryData = CategoryData & {
+	parentCategoryId: number,
+}
+
+type CategoriesAtomData = {
+	mainCategories: Array<MainCategoryData>,
+	subCategories: Array<SubCategoryData>,
+}
+
+export const categoriesAtom = createPrimitiveAtom<CategoriesAtomData>({
+	mainCategories: [],
+	subCategories: [],
+})
 export const editableCategoryIdAtom = createPrimitiveAtom(<null|number>(null))
