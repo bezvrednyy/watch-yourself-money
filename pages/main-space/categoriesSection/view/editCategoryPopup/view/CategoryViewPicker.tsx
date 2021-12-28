@@ -57,14 +57,17 @@ function PopoverContent() {
 
 function IconSelections() {
 	const iconIds = getAvailableIconIds()
-	const [selectedIcon] = useAtom(editCategoryPopupAtoms.iconIdAtom)
+	const [selectedIconId] = useAtom(editCategoryPopupAtoms.iconIdAtom)
 	const handleSetIconId = useAction(editCategoryPopupAtoms.iconIdAtom.set)
 	return (
 		<Tab.Panel className={getPanelClassName()}>
 			{iconIds.map(id => <RoundedSquare
 				key={id}
 				bgHexColor={getColorById('white')}
-				className='transform transition hover:scale-105 cursor-pointer w-7 h-7 mb-1'
+				className={joinClassNames(
+					'transform transition hover:scale-105 cursor-pointer w-7 h-7 mb-1',
+					selectedIconId === id ? 'border-2 border-purple-600 rounded-full' : null,
+				)}
 				rounded='full'
 				createIcon={() => {
 					const IconFC = getOutlineIconById(id)
@@ -78,7 +81,7 @@ function IconSelections() {
 
 function ColorSelections() {
 	const colorIds = getAvailableColorIds()
-	const [selectedColor] = useAtom(editCategoryPopupAtoms.colorIdAtom)
+	const [selectedColorId] = useAtom(editCategoryPopupAtoms.colorIdAtom)
 	const handleSetColorId = useAction(editCategoryPopupAtoms.colorIdAtom.set)
 	return (
 		<Tab.Panel className={getPanelClassName()}>
@@ -87,7 +90,7 @@ function ColorSelections() {
 				bgHexColor={getColorById(id)}
 				className='transform transition hover:scale-105 cursor-pointer w-7 h-7 mb-1'
 				rounded='full'
-				createIcon={selectedColor === id
+				createIcon={selectedColorId === id
 					? () => <CheckIcon className='w-6 h-6 text-white shadow-none' />
 					: undefined
 				}
