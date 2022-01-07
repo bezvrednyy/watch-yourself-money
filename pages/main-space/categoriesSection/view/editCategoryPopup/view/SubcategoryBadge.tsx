@@ -1,13 +1,14 @@
 import {useAction} from '@reatom/react'
+import {useState} from 'react'
 import {getColorById} from '../../../../../../common/colors/theme'
 import {joinClassNames} from '../../../../../../common/joinClassNames'
 import {Badge} from '../../../../../../components/Badge'
-import {ButtonWithPopover} from '../../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
 import {
+	OutlineIconId,
 	getDefaultIconIds,
 	getOutlineIconById,
 } from '../../../../../../components/icons/getOutlineIconById'
-import {PopoverDefault} from '../../../../../../components/popovers/PopoverDefault'
+import {PopupDefault} from '../../../../../../components/PopupDefault'
 import {RoundedSquare} from '../../../../../../components/RoundedSquare'
 import {TextField} from '../../../../../../components/TextField'
 import {CategoryData} from '../../../model/categoriesAtom'
@@ -15,41 +16,76 @@ import {editCategoryPopupAtoms} from '../model/editableCategoryAtom'
 import styles from './SubcategoryBadge.module.css'
 
 export function SubcategoryBadge(props: CategoryData) {
-	return <ButtonWithPopover
-		createButton={() => <Badge
-			label={props.title}
+	const {
+		title: initTitle,
+		iconId: initIconId,
+	} = props
+	const [show, setShow] = useState(false)
+	const [iconId, setIconId] = useState(initIconId)
+	const [title, setTitle] = useState(initTitle)
+	const handleUpdateSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.updateSubcategory)
+	const handleAddEditedSubcategoryId = useAction(editCategoryPopupAtoms.editedSubcategoryIdsSetAtom.add)
+	return <>
+		<Badge
+			label={title}
 			className={joinClassNames(
 				'bg-purple-300 rounded-full mr-1 mt-2',
 				styles.badge,
 			)}
 			createIcon={() => {
-				const IconFC = getOutlineIconById(props.iconId)
+				const IconFC = getOutlineIconById(iconId)
 				return <IconFC className='w-5 h-5' />
 			}}
-			onClick={() => console.log('Open popup or popover')}
+			onClick={() => setShow(true)}
 			cornerType='rounded'
-		/>}
-		createPopover={() => <PopoverDefault
-			createContent={() => <PopoverContent {...props} />}
-		/>}
-	/>
+		/>
+		<PopupDefault
+			show={show}
+			createContent={() => <PopoverContent
+				iconId={iconId}
+				setIconId={setIconId}
+				title={title}
+				setTitle={setTitle}
+			/>}
+			buttons={[
+				<button
+					key={'close'}
+					type='button'
+					className='inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500'
+					onClick={() => {
+						handleUpdateSubcategory({
+							...props,
+							iconId,
+							title,
+						})
+						handleAddEditedSubcategoryId(props.id)
+					}}
+				>
+					Save
+				</button>,
+			]}
+		/>
+	</>
 }
 
-function PopoverContent(categoryData: CategoryData) {
-	const {id: subcategoryId, iconId, title} = categoryData
-	const handleUpdateSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.updateSubcategory)
-	const handleAddEditedSubcategoryId = useAction(editCategoryPopupAtoms.editedSubcategoryIdsSetAtom.add)
+type PopoverContentProps = {
+	iconId: OutlineIconId,
+	setIconId: (v: OutlineIconId) => void,
+	title: string,
+	setTitle: (v: string) => void,
+}
+
+function PopoverContent({
+	iconId,
+	setIconId,
+	title,
+	setTitle,
+}: PopoverContentProps) {
 	return (
 		<div className='w-44'>
 			<TextField
 				value={title}
-				onInput={value => {
-					handleUpdateSubcategory({
-						...categoryData,
-						title: value,
-					})
-					handleAddEditedSubcategoryId(subcategoryId)
-				}}
+				onInput={setTitle}
 				placeholder={'Category name'}
 				required={true}
 			/>
@@ -66,13 +102,7 @@ function PopoverContent(categoryData: CategoryData) {
 						const IconFC = getOutlineIconById(id)
 						return <IconFC className='w-6 h-6 text-black shadow-none' />
 					}}
-					onClick={() => {
-						handleUpdateSubcategory({
-							...categoryData,
-							iconId: id,
-						})
-						handleAddEditedSubcategoryId(subcategoryId)
-					}}
+					onClick={() => setIconId(id)}
 				/>)}
 			</div>
 		</div>
