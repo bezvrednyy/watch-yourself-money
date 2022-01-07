@@ -39,3 +39,6 @@
 
 12. createPrimitiveAtom и аналогичные creater`ы нужно импортрировать из общей папки '@reatom/core/primitives', а не
         из конкретного файла'@reatom/core/primitives/createPrimitiveAtom' и подобных
+
+13. sudo chmod ugo+rwx pgdata -R
+       Рекурсивно(-R) дать(+) пользователю(u) группе(g) и владельцу(o -- owner) права на чтение(), запись(w), выполнение(x -- eXecute) для папки pgdate

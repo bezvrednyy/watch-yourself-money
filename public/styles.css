@@ -1,4 +1,4 @@
-@layer utilities {
+@layer whatch-money-utilities {
     .scrollbar::-webkit-scrollbar {
         width: 16px;
         height: 16px;

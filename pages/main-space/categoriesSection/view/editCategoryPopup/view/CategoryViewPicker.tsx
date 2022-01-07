@@ -6,8 +6,8 @@ import {Tab} from '@headlessui/react'
 import {joinClassNames} from '../../../../../../common/joinClassNames'
 import {RoundedSquare} from '../../../../../../components/RoundedSquare'
 import {useAction, useAtom} from '@reatom/react'
-import {editCategoryPopupAtoms, getAvailableColorIds, getAvailableIconIds} from '../model/editableCategoryAtom'
-import {getOutlineIconById} from '../../../../../../components/icons/getOutlineIconById'
+import {editCategoryPopupAtoms, getAvailableColorIds} from '../model/editableCategoryAtom'
+import {getDefaultIconIds, getOutlineIconById} from '../../../../../../components/icons/getOutlineIconById'
 
 export function CategoryViewPicker() {
 	const [selectedIconId] = useAtom(editCategoryPopupAtoms.iconIdAtom)
@@ -56,7 +56,7 @@ function PopoverContent() {
 }
 
 function IconSelections() {
-	const iconIds = getAvailableIconIds()
+	const iconIds = getDefaultIconIds()
 	const [selectedIconId] = useAtom(editCategoryPopupAtoms.iconIdAtom)
 	const handleSetIconId = useAction(editCategoryPopupAtoms.iconIdAtom.set)
 	return (

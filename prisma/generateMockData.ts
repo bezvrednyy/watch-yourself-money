@@ -12,33 +12,29 @@ async function generateMockData() {
 		{id: 1, name: 'Русский'},
 		{id: 2, name: 'Английский'},
 	]})
-	await prisma.user.createMany({data: [
-		{id: 1, name: 'Валера', email: 'bezvrednyy@gmail.com'},
-		{id: 2, name: 'Дима', email: 'algaev18@gmail.com'},
-	]})
+
 	await prisma.userSettings.createMany({data: [
 		{userId: 1, currencyId: 1, languageId: 1, theme: 'DEFAULT'},
-		{userId: 2, currencyId: 2, languageId: 2, theme: 'BLACK'},
 	]})
 
 	await prisma.bankAccount.createMany({data: [
 		{id: 1, userId: 1, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
-		{id: 2, userId: 2, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
+		{id: 2, userId: 1, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
 	]})
 
 	const fiveCategories: Array<Category> = [
 		{id: 1, userId: 1, name: 'Подарки', iconId: 'outline-gift', type: 'EXPENSES', color: 'green#500', parentCategoryId: null},
-		{id: 2, userId: 1, name: 'Развлечения', iconId: 'outline-puzzle', type: 'EXPENSES', color: '#cyan#500', parentCategoryId: null},
+		{id: 2, userId: 1, name: 'Развлечения', iconId: 'outline-puzzle', type: 'EXPENSES', color: 'cyan#500', parentCategoryId: null},
 		{id: 3, userId: 1, name: 'Общественные дела', iconId: 'outline-user-group', type: 'EXPENSES', color: 'blue#500', parentCategoryId: null},
-		{id: 4, userId: 1, name: 'Стройка', iconId: 'outline-user-group', type: 'EXPENSES', color: '#yellow#500', parentCategoryId: 3},
-		{id: 5, userId: 1, name: 'Волонтёрство', iconId: 'outline-translate', type: 'INCOMES', color: '#gray#500', parentCategoryId: 3},
+		{id: 4, userId: 1, name: 'Стройка', iconId: 'outline-user-group', type: 'EXPENSES', color: 'yellow#500', parentCategoryId: 3},
+		{id: 5, userId: 1, name: 'Волонтёрство', iconId: 'outline-translate', type: 'INCOMES', color: 'gray#500', parentCategoryId: 3},
 		{id: 6, userId: 1, name: 'Раздача еды', iconId: 'outline-cloud', type: 'INCOMES', color: 'blue#500', parentCategoryId: 3},
 		{id: 7, userId: 1, name: 'Репетиторство', iconId: 'outline-translate', type: 'INCOMES', color: 'pink#500', parentCategoryId: null},
 		{id: 8, userId: 1, name: 'Сайты', iconId: 'outline-cloud', type: 'INCOMES', color: 'blue#500', parentCategoryId: null},
 	]
-	await prisma.category.createMany({data: fiveCategories.concat(
-		fiveCategories.map(x => ({...x, id: x.id + fiveCategories.length, userId: 2})),
-	)})
+	await prisma.category.createMany({
+		data: fiveCategories,
+	})
 
 	await prisma.transaction.createMany({data: [
 		{id: 1, date: new Date(), money: 802, currencyId: 1, bankAccountId: 1, categoryId: 1, comment: 'Весы для тёти Тани'},

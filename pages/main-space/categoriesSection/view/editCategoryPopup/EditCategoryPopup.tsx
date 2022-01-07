@@ -30,6 +30,7 @@ export function EditCategoryPopup({
 				Save
 			</button>,
 		]}
+		className='w-full max-w-sm'
 	/>
 }
 

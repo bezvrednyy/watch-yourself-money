@@ -1,9 +1,8 @@
 import {useAction, useAtom} from '@reatom/react'
-import {Badge} from '../../../../../components/Badge'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
 import {TextField} from '../../../../../components/TextField'
 import {CategoryViewPicker} from './view/CategoryViewPicker'
-import {getOutlineIconById} from '../../../../../components/icons/getOutlineIconById'
+import {SubcategoryBadge} from './view/SubcategoryBadge'
 
 function EditCategoryPopupContent() {
 	const [title] = useAtom(editCategoryPopupAtoms.titleAtom)
@@ -21,16 +20,11 @@ function EditCategoryPopupContent() {
 					required={true}
 				/>
 			</div>
-			<div className='flex'>
-				{subcategories.map(x => <Badge
+			<div className='flex flex-wrap'>
+				{subcategories.map(x => <SubcategoryBadge
 					key={x.id}
-					label={x.title}
-					className='bg-purple-300 rounded-full'
-					createIcon={() => {
-						const IconFC = getOutlineIconById(x.iconId)
-						return <IconFC className='w-5 h-5' />
-					}}
-					onClick={() => console.log('Open popup or popover')}
+					title={x.title}
+					iconId={x.iconId}
 				/>)}
 			</div>
 		</>
