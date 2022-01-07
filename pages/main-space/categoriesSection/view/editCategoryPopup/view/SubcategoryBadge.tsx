@@ -27,13 +27,13 @@ export function SubcategoryBadge(props: CategoryData) {
 	const handleAddEditedSubcategoryId = useAction(editCategoryPopupAtoms.editedSubcategoryIdsSetAtom.add)
 	return <>
 		<Badge
-			label={title}
+			label={initTitle}
 			className={joinClassNames(
 				'bg-purple-300 rounded-full mr-1 mt-2',
 				styles.badge,
 			)}
 			createIcon={() => {
-				const IconFC = getOutlineIconById(iconId)
+				const IconFC = getOutlineIconById(initIconId)
 				return <IconFC className='w-5 h-5' />
 			}}
 			onClick={() => setShow(true)}
@@ -41,7 +41,7 @@ export function SubcategoryBadge(props: CategoryData) {
 		/>
 		<PopupDefault
 			show={show}
-			createContent={() => <PopoverContent
+			createContent={() => <PopupContent
 				iconId={iconId}
 				setIconId={setIconId}
 				title={title}
@@ -59,6 +59,7 @@ export function SubcategoryBadge(props: CategoryData) {
 							title,
 						})
 						handleAddEditedSubcategoryId(props.id)
+						setShow(false)
 					}}
 				>
 					Save
@@ -75,21 +76,21 @@ type PopoverContentProps = {
 	setTitle: (v: string) => void,
 }
 
-function PopoverContent({
+function PopupContent({
 	iconId,
 	setIconId,
 	title,
 	setTitle,
 }: PopoverContentProps) {
 	return (
-		<div className='w-44'>
+		<div className='w-60'>
 			<TextField
 				value={title}
 				onInput={setTitle}
 				placeholder={'Category name'}
 				required={true}
 			/>
-			<div className='flex justify-between flex-wrap max-h-64 overflow-y-scroll pt-1 pr-1 relative left-1 scrollbar'>
+			<div className='flex justify-between flex-wrap max-h-44 overflow-y-scroll mt-4 pr-1 relative left-1 scrollbar'>
 				{getDefaultIconIds().map(id => <RoundedSquare
 					key={id}
 					bgHexColor={getColorById('white')}
