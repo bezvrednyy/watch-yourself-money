@@ -20,6 +20,7 @@ const subcategoriesAtom = createAtom(
 		remove: (id: number) => id,
 		turnInMain: (id: number) => id,
 		set: (value: Array<CategoryData>) => value,
+		add: (value: CategoryData) => value,
 	},
 	({onAction, onChange, create, schedule, get}, state = [] as Array<CategoryData>) => {
 		onAction('set', value => (state = value))
@@ -50,6 +51,12 @@ const subcategoriesAtom = createAtom(
 		onAction('turnInMain', id => {
 			schedule(dispatch => {
 				dispatch(haveBecomeMainCategoriesIdsSetAtom.add(id))
+			})
+		})
+		onAction('add', value => {
+			state = state.concat(value)
+			schedule(dispatch => {
+				dispatch(newSubcategoriesIdsSetAtom.add(value.id))
 			})
 		})
 		return state

@@ -58,12 +58,12 @@ import {
 	PaperClipIcon,
 	PauseIcon,
 	PhoneIcon,
-	PhotographIcon, PlayIcon, PrinterIcon,
+	PhotographIcon, PlayIcon, PlusSmIcon,
+	PrinterIcon,
 	PuzzleIcon,
-	ShareIcon,
-	ShoppingBagIcon, ShoppingCartIcon, SpeakerphoneIcon, StarIcon, SunIcon,
-	TranslateIcon, TrashIcon, TruckIcon,
-	UserGroupIcon, UsersIcon, VolumeUpIcon, WifiIcon,
+	ShareIcon, ShoppingBagIcon, ShoppingCartIcon, SpeakerphoneIcon, StarIcon,
+	SunIcon, TranslateIcon, TrashIcon,
+	TruckIcon, UserGroupIcon, UsersIcon, VolumeUpIcon, WifiIcon,
 } from '@heroicons/react/outline'
 import * as React from 'react'
 import {checkNever} from '../../common/checkNever'
@@ -128,6 +128,7 @@ export type OutlineIconId = 'outline-academic-cap'|
 	'outline-pause'|
 	'outline-phone'|
 	'outline-photograph'|
+	'outline-plus-sm' |
 	'outline-play'|
 	'outline-printer'|
 	'outline-puzzle'|
@@ -268,6 +269,8 @@ export function getOutlineIconById(id: OutlineIconId): React.FC<React.ComponentP
 			return PhoneIcon
 		case 'outline-photograph':
 			return PhotographIcon
+		case 'outline-plus-sm':
+			return PlusSmIcon
 		case 'outline-play':
 			return PlayIcon
 		case 'outline-printer':

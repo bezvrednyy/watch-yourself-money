@@ -62,7 +62,7 @@ function SubcategoryBadge(props: CategoryData) {
 		/>
 		<PopupDefault
 			show={show}
-			createContent={() => <PopupContent
+			createContent={() => <SubcategoryBadgePopupContent
 				iconId={iconId}
 				setIconId={setIconId}
 				title={title}
@@ -80,7 +80,7 @@ type PopoverContentProps = {
 	setTitle: (v: string) => void,
 }
 
-function PopupContent({
+function SubcategoryBadgePopupContent({
 	iconId,
 	setIconId,
 	title,
@@ -116,5 +116,6 @@ function PopupContent({
 
 export {
 	SubcategoryBadge,
+	SubcategoryBadgePopupContent,
 	useSubcategoryType,
 }
