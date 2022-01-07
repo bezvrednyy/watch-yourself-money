@@ -1,20 +1,20 @@
 import {useAtom} from '@reatom/react'
 import {useState} from 'react'
-import {getColorById} from '../../../../../../common/colors/theme'
-import {joinClassNames} from '../../../../../../common/joinClassNames'
-import {Badge} from '../../../../../../components/Badge'
+import {getColorById} from '../../../../../../../common/colors/theme'
+import {joinClassNames} from '../../../../../../../common/joinClassNames'
+import {Badge} from '../../../../../../../components/Badge'
 import {
 	OutlineIconId,
 	getDefaultIconIds,
 	getOutlineIconById,
-} from '../../../../../../components/icons/getOutlineIconById'
-import {PopupDefault} from '../../../../../../components/PopupDefault'
-import {RoundedSquare} from '../../../../../../components/RoundedSquare'
-import {TextField} from '../../../../../../components/TextField'
-import {CategoryData} from '../../../model/categoriesAtom'
-import {editCategoryPopupAtoms} from '../model/editableCategoryAtom'
+} from '../../../../../../../components/icons/getOutlineIconById'
+import {PopupDefault} from '../../../../../../../components/PopupDefault'
+import {RoundedSquare} from '../../../../../../../components/RoundedSquare'
+import {TextField} from '../../../../../../../components/TextField'
+import {CategoryData} from '../../../../model/categoriesAtom'
+import {editCategoryPopupAtoms} from '../../model/editableCategoryAtom'
 import styles from './SubcategoryBadge.module.css'
-import {useBadgePopupButtons} from './subcategoryBadge/useBadgePopupButtons'
+import {useBadgePopupButtons} from './useBadgePopupButtons'
 
 type SubcategoryType = 'default'|'removed'|'turnInMain'
 

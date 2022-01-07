@@ -2,7 +2,7 @@ import {useAction, useAtom} from '@reatom/react'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
 import {TextField} from '../../../../../components/TextField'
 import {CategoryViewPicker} from './view/CategoryViewPicker'
-import {SubcategoryBadge} from './view/SubcategoryBadge'
+import {SubcategoryBadge} from './view/subcategoryBadge/SubcategoryBadge'
 
 function EditCategoryPopupContent() {
 	const [title] = useAtom(editCategoryPopupAtoms.titleAtom)

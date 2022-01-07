@@ -3,7 +3,7 @@ import {Button} from '../../../../../../../components/button/Button'
 import {OutlineIconId} from '../../../../../../../components/icons/getOutlineIconById'
 import {CategoryData} from '../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from '../../model/editableCategoryAtom'
-import {useSubcategoryType} from '../SubcategoryBadge'
+import {useSubcategoryType} from './SubcategoryBadge'
 
 type UseBadgePopupButtonsParams = CategoryData & {
 	iconId: OutlineIconId,
