@@ -1,4 +1,5 @@
 import {useAction, useAtom} from '@reatom/react'
+import {useAsyncAction} from '../../../../../common/declareAsyncAction'
 import {Button} from '../../../../../components/button/Button'
 import {PopupDefault} from '../../../../../components/PopupDefault'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
@@ -6,6 +7,7 @@ import {categoriesAtom, editableCategoryIdAtom} from '../../model/categoriesAtom
 import {verify} from '../../../../../common/verify'
 import {useEffect} from 'react'
 import {EditCategoryPopupContent} from './EditCategoryPopupContent'
+import {editCategoryPopupSaveData} from './model/externalHandlers'
 
 type EditCategoryPopupProps = {
 	show: boolean,
@@ -17,6 +19,7 @@ export function EditCategoryPopup({
 	onClose,
 }: EditCategoryPopupProps) {
 	useInitPopupAtoms()
+	const handleSaveData = useAsyncAction(editCategoryPopupSaveData)
 
 	return <PopupDefault
 		show={show}
@@ -25,7 +28,11 @@ export function EditCategoryPopup({
 			<Button
 				key={'close'}
 				style='blue-default'
-				onClick={onClose}
+				onClick={() => {
+					handleSaveData({
+						onClose,
+					})
+				}}
 				structure='text'
 				text='Save'
 			/>,

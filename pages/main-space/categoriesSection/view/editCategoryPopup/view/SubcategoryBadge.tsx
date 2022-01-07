@@ -26,6 +26,8 @@ export function SubcategoryBadge(props: CategoryData) {
 	const [title, setTitle] = useState(initTitle)
 	const handleUpdateSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.updateSubcategory)
 	const handleAddEditedSubcategoryId = useAction(editCategoryPopupAtoms.editedSubcategoryIdsSetAtom.add)
+	const handleRemoveSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.remove)
+
 	return <>
 		<Badge
 			label={initTitle}
@@ -50,7 +52,7 @@ export function SubcategoryBadge(props: CategoryData) {
 			/>}
 			buttons={[
 				<Button
-					key={'close'}
+					key='save'
 					style='blue-default'
 					onClick={() => {
 						handleUpdateSubcategory({
@@ -63,6 +65,16 @@ export function SubcategoryBadge(props: CategoryData) {
 					}}
 					structure='text'
 					text='Save'
+				/>,
+				<Button
+					key='remove'
+					style='destructure'
+					onClick={() => {
+						handleRemoveSubcategory(props.id)
+						setShow(false)
+					}}
+					structure='text'
+					text='Remove'
 				/>,
 			]}
 		/>
