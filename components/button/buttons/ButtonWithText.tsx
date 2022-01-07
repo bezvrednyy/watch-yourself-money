@@ -37,6 +37,12 @@ function getClassByStyle(style: ButtonWithTextStyle): string {
 				'bg-red-100 border border-transparent rounded-md',
 				' hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-red-500',
 			)
+		case 'secondary':
+			return joinClassNames(
+				'inline-flex justify-center px-4 py-2 text-sm font-medium text-gray-900',
+				'bg-gray-100 border border-transparent rounded-md',
+				' hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gray-500',
+			)
 		default:
 			checkNever(style, `Unknown style: ${style}`)
 			return ''

@@ -18,6 +18,8 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>((sto
 	const editedSubcategoryIds = store.getState(editedSubcategoryIdsSetAtom)
 	const newSubcategoriesIds = store.getState(newSubcategoriesIdsSetAtom)
 
+	//TODO:если новая или существующая категория, переведена в самостоятельную, ту у неё нужно выставить parentCategoryId: null и убрать из haveBecomeMainCategoriesIds
+	//TODO:если удаляем новую, просто не посылаем её.
 	const data: UpdateCategoriesInfoRequest = {
 		id: verify(store.getState(editableCategoryIdAtom)),
 		iconId: store.getState(iconIdAtom),

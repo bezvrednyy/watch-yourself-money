@@ -15,11 +15,10 @@ const iconIdAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
 const colorIdAtom = createStringAtom<ColorId>('white')
 const subcategoriesAtom = createAtom(
 	{
-		removedSubcategoryIdsSetAtom,
-		editedSubcategoryIdsSetAtom,
 		newSubcategoriesIdsSetAtom,
 		updateSubcategory: (value: CategoryData) => value,
 		remove: (id: number) => id,
+		turnInMain: (id: number) => id,
 		set: (value: Array<CategoryData>) => value,
 	},
 	({onAction, onChange, create, schedule, get}, state = [] as Array<CategoryData>) => {
@@ -30,16 +29,28 @@ const subcategoriesAtom = createAtom(
 				if (!newSubcategoriesIdsSetAtom.getState().has(value.id)) {
 					dispatch(editedSubcategoryIdsSetAtom.add(value.id))
 				}
+				dispatch(removedSubcategoryIdsSetAtom.delete(value.id))
+				dispatch(haveBecomeMainCategoriesIdsSetAtom.delete(value.id))
 			})
 		})
 		onAction('remove', id => {
-			console.log('schedule remove')
+			const newSubcategoriesIdsSet = get('newSubcategoriesIdsSetAtom')
 			schedule(dispatch => {
-				dispatch(removedSubcategoryIdsSetAtom.add(id))
+				if (newSubcategoriesIdsSet.has(id)) {
+					dispatch(newSubcategoriesIdsSetAtom.delete(id))
+					state = state.filter(x => x.id !== id)
+				}
+				else {
+					dispatch(removedSubcategoryIdsSetAtom.add(id))
+				}
 				dispatch(editedSubcategoryIdsSetAtom.delete(id))
-				dispatch(newSubcategoriesIdsSetAtom.delete(id))
+				dispatch(haveBecomeMainCategoriesIdsSetAtom.delete(id))
 			})
-			state = state.filter(x => x.id !== id)
+		})
+		onAction('turnInMain', id => {
+			schedule(dispatch => {
+				dispatch(haveBecomeMainCategoriesIdsSetAtom.add(id))
+			})
 		})
 		return state
 	},

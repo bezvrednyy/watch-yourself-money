@@ -1,4 +1,4 @@
-type ButtonWithTextStyle = 'primary'|'blue-default'|'destructure'
+type ButtonWithTextStyle = 'primary'|'blue-default'|'destructure'|'secondary'
 
 type ButtonWithTextProps = {
 	style: ButtonWithTextStyle,

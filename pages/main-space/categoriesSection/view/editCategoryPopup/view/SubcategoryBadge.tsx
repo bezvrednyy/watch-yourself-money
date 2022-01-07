@@ -1,9 +1,8 @@
-import {useAction} from '@reatom/react'
+import {useAtom} from '@reatom/react'
 import {useState} from 'react'
 import {getColorById} from '../../../../../../common/colors/theme'
 import {joinClassNames} from '../../../../../../common/joinClassNames'
 import {Badge} from '../../../../../../components/Badge'
-import {Button} from '../../../../../../components/button/Button'
 import {
 	OutlineIconId,
 	getDefaultIconIds,
@@ -15,8 +14,19 @@ import {TextField} from '../../../../../../components/TextField'
 import {CategoryData} from '../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from '../model/editableCategoryAtom'
 import styles from './SubcategoryBadge.module.css'
+import {useBadgePopupButtons} from './subcategoryBadge/useBadgePopupButtons'
 
-export function SubcategoryBadge(props: CategoryData) {
+type SubcategoryType = 'default'|'removed'|'turnInMain'
+
+function useSubcategoryType(id: number): SubcategoryType {
+	const [haveBecomeMainCategoriesIdsSet] = useAtom(editCategoryPopupAtoms.haveBecomeMainCategoriesIdsSetAtom)
+	const [removedSubcategoryIdsSet] = useAtom(editCategoryPopupAtoms.removedSubcategoryIdsSetAtom)
+	return haveBecomeMainCategoriesIdsSet.has(id)
+		? 'turnInMain'
+		: (removedSubcategoryIdsSet.has(id) ? 'removed' : 'default')
+}
+
+function SubcategoryBadge(props: CategoryData) {
 	const {
 		title: initTitle,
 		iconId: initIconId,
@@ -24,16 +34,24 @@ export function SubcategoryBadge(props: CategoryData) {
 	const [show, setShow] = useState(false)
 	const [iconId, setIconId] = useState(initIconId)
 	const [title, setTitle] = useState(initTitle)
-	const handleUpdateSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.updateSubcategory)
-	const handleAddEditedSubcategoryId = useAction(editCategoryPopupAtoms.editedSubcategoryIdsSetAtom.add)
-	const handleRemoveSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.remove)
+	const type = useSubcategoryType(props.id)
+	const badgeColorClass = type === 'turnInMain'
+		? 'bg-gray-300'
+		: (type === 'removed' ? 'bg-red-300' : 'bg-purple-300')
+	const buttons = useBadgePopupButtons({
+		...props,
+		title,
+		iconId,
+		setShow,
+	})
 
 	return <>
 		<Badge
 			label={initTitle}
 			className={joinClassNames(
-				'bg-purple-300 rounded-full mr-1 mt-2',
+				'rounded-full mr-1 mt-2',
 				styles.badge,
+				badgeColorClass,
 			)}
 			createIcon={() => {
 				const IconFC = getOutlineIconById(initIconId)
@@ -50,33 +68,7 @@ export function SubcategoryBadge(props: CategoryData) {
 				title={title}
 				setTitle={setTitle}
 			/>}
-			buttons={[
-				<Button
-					key='save'
-					style='blue-default'
-					onClick={() => {
-						handleUpdateSubcategory({
-							...props,
-							iconId,
-							title,
-						})
-						handleAddEditedSubcategoryId(props.id)
-						setShow(false)
-					}}
-					structure='text'
-					text='Save'
-				/>,
-				<Button
-					key='remove'
-					style='destructure'
-					onClick={() => {
-						handleRemoveSubcategory(props.id)
-						setShow(false)
-					}}
-					structure='text'
-					text='Remove'
-				/>,
-			]}
+			buttons={buttons}
 		/>
 	</>
 }
@@ -95,14 +87,14 @@ function PopupContent({
 	setTitle,
 }: PopoverContentProps) {
 	return (
-		<div className='w-60'>
+		<div className='w-80'>
 			<TextField
 				value={title}
 				onInput={setTitle}
 				placeholder={'Category name'}
 				required={true}
 			/>
-			<div className='flex justify-between flex-wrap max-h-44 overflow-y-scroll mt-4 pr-1 relative left-1 scrollbar'>
+			<div className='flex justify-between flex-wrap max-h-40 overflow-y-scroll mt-4 pr-1 relative left-1 scrollbar'>
 				{getDefaultIconIds().map(id => <RoundedSquare
 					key={id}
 					bgHexColor={getColorById('white')}
@@ -120,4 +112,9 @@ function PopupContent({
 			</div>
 		</div>
 	)
+}
+
+export {
+	SubcategoryBadge,
+	useSubcategoryType,
 }
