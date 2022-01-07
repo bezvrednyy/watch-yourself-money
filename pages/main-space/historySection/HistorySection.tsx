@@ -31,7 +31,7 @@ function HistorySection() {
 	}, {
 		dayDate: new Date(),
 		transitions: [{
-			id: 'id-1',
+			id: 'id-3',
 			categoryId: 1,
 			bankCardName: 'Сбербанк',
 			moneyInfo: {
@@ -40,7 +40,7 @@ function HistorySection() {
 			},
 			comment: '#Аня',
 		}, {
-			id: 'id-2',
+			id: 'id-4',
 			categoryId: 2,
 			bankCardName: 'Сбербанк',
 			moneyInfo: {
@@ -51,7 +51,7 @@ function HistorySection() {
 	}, {
 		dayDate: new Date(),
 		transitions: [{
-			id: 'id-1',
+			id: 'id-5',
 			categoryId: 1,
 			bankCardName: 'Сбербанк',
 			moneyInfo: {
@@ -60,7 +60,7 @@ function HistorySection() {
 			},
 			comment: '#Аня',
 		}, {
-			id: 'id-2',
+			id: 'id-6',
 			categoryId: 2,
 			bankCardName: 'Сбербанк',
 			moneyInfo: {

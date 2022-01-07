@@ -6,8 +6,9 @@ type ColorName = 'warmGray'|'trueGray'|'gray'|'coolGray'|'blueGray'|'red'|'orang
 type ColorsVariation = 50|100|200|300|400|500|600|700|800|900
 
 type MainColors = {
-	'black': string
-	'white': string
+	black: string
+	white: string
+	transparent: string
 }
 
 type Colors = MainColors & Record<ColorName, {
@@ -18,6 +19,7 @@ type ColorDelimiter = '#'
 type ColorId = `${ColorName}${ColorDelimiter}${ColorsVariation}`
 	|'black'
 	|'white'
+	|'transparent'
 
 interface DefaultTheme {
 	colors: Colors

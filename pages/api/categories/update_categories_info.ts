@@ -7,7 +7,8 @@ export type UpdateCategoriesInfoRequest = {
 	name: string,
 	iconId: OutlineIconId,
 	colorId: ColorId,
+	editedSubcategories: Array<CategoryData>,
 	newSubcategories: Array<CategoryData>,
-	removedSubcategoryIds: Array<string>,
-	haveBecomeMainCategoriesIds: Array<string>,
+	removedSubcategoryIds: Array<number>,
+	haveBecomeMainCategoriesIds: Array<number>,
 }
