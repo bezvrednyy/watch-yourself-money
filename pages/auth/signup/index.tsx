@@ -1,5 +1,4 @@
 import {useState} from 'react'
-import {Button} from '../../../components/button/Button'
 import {TextField} from '../../../components/TextField'
 import {AuthFormHeader} from '../FormHeader'
 
@@ -51,11 +50,6 @@ export default function SignUpPage() {
 								type={'password'}
 							/>
 						</div>
-						<Button
-							style='primary'
-							structure='text'
-							text='Sign up'
-						/>
 					</form>
 				</div>
 			</div>
