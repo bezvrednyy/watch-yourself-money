@@ -1,5 +1,6 @@
 import {useAtom} from '@reatom/react'
 import {useState} from 'react'
+import {checkNever} from '../../../../../../../common/checkNever'
 import {getColorById} from '../../../../../../../common/colors/theme'
 import {joinClassNames} from '../../../../../../../common/joinClassNames'
 import {Badge} from '../../../../../../../components/Badge'
@@ -16,14 +17,33 @@ import {editCategoryPopupAtoms} from '../../model/editableCategoryAtom'
 import styles from './SubcategoryBadge.module.css'
 import {useBadgePopupButtons} from './useBadgePopupButtons'
 
-type SubcategoryType = 'default'|'removed'|'turnInMain'
+type SubcategoryType = 'default'|'removed'|'turnInMain'|'new'
 
 function useSubcategoryType(id: number): SubcategoryType {
 	const [haveBecomeMainCategoriesIdsSet] = useAtom(editCategoryPopupAtoms.haveBecomeMainCategoriesIdsSetAtom)
 	const [removedSubcategoryIdsSet] = useAtom(editCategoryPopupAtoms.removedSubcategoryIdsSetAtom)
-	return haveBecomeMainCategoriesIdsSet.has(id)
-		? 'turnInMain'
-		: (removedSubcategoryIdsSet.has(id) ? 'removed' : 'default')
+	const [newSubcategoriesIdsSet] = useAtom(editCategoryPopupAtoms.newSubcategoriesIdsSetAtom)
+
+	if (removedSubcategoryIdsSet.has(id)) return 'default'
+	if (newSubcategoriesIdsSet.has(id)) return 'new'
+	if (haveBecomeMainCategoriesIdsSet.has(id)) return 'turnInMain'
+	return 'default'
+}
+
+function getBgColorByType(type: SubcategoryType): string {
+	switch (type) {
+		case 'default':
+			return 'bg-purple-300'
+		case 'new':
+			return 'bg-green-300'
+		case 'removed':
+			return 'bg-red-300'
+		case 'turnInMain':
+			return 'bg-gray-300'
+		default:
+			checkNever(type, `Unknown type: ${type}`)
+			return ''
+	}
 }
 
 function SubcategoryBadge(props: CategoryData) {
@@ -35,9 +55,7 @@ function SubcategoryBadge(props: CategoryData) {
 	const [iconId, setIconId] = useState(initIconId)
 	const [title, setTitle] = useState(initTitle)
 	const type = useSubcategoryType(props.id)
-	const badgeColorClass = type === 'turnInMain'
-		? 'bg-gray-300'
-		: (type === 'removed' ? 'bg-red-300' : 'bg-purple-300')
+	const badgeColorClass = getBgColorByType(type)
 	const buttons = useBadgePopupButtons({
 		...props,
 		title,
