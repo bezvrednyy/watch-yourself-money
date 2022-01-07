@@ -16,7 +16,7 @@ function CategoriesSection() {
 				show={editableCategoryId !== null}
 				onClose={() => handleSetEditableCategoryId(null)}
 			/>
-			<Tabs items={['Расходы', 'Доходы']}/>
+			<Tabs items={['Расходы']}/>
 			<div className='flex flex-wrap py-10 px-32'>
 				{categories.mainCategories.map(item => {
 					const Icon = getOutlineIconById(item.iconId)

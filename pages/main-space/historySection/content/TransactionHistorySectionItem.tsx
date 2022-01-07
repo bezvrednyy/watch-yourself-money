@@ -31,8 +31,8 @@ function TransactionHistorySectionItem({
 	comment,
 	onClick,
 }: TransitionHistorySectionItemProps) {
-	const hintClassName = 'text-sm font-normal font-sans text-gray-400'
-	const titleClassName = 'text-xl font-normal font-sans'
+	const hintClassName = 'text-sm font-light font-sans text-gray-500'
+	const titleClassName = 'text-lg font-light font-sans'
 	const [categories] = useAtom(categoriesAtom)
 	const category = verify(
 		categories.mainCategories.find(x => x.id === categoryId) || categories.subCategories.find(x => x.id === categoryId),
@@ -41,7 +41,7 @@ function TransactionHistorySectionItem({
 	const Icon = getOutlineIconById(category.iconId)
 
 	return (
-		<div className='flex items-center cursor-pointer px-10 py-1.5 hover:bg-gray-100' onClick={() => onClick(id)}>
+		<div className='flex items-center cursor-pointer px-4 py-1.5 hover:bg-gray-100' onClick={() => onClick(id)}>
 			<RoundedSquare
 				createIcon={() => <Icon className='m-2 w-7 h-7 overflow-hidden'/>}
 				bgHexColor={getColorById(category.colorId)}
