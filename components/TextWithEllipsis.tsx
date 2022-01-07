@@ -15,6 +15,7 @@ function TextWithEllipsis({
 				'overflow-hidden text-ellipsis whitespace-nowrap',
 				className,
 			)}
+			title={text}
 		>
 			{text}
 		</span>

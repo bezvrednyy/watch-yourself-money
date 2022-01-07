@@ -20,7 +20,7 @@ function EditCategoryPopupContent() {
 					required={true}
 				/>
 			</div>
-			<div className='flex flex-wrap'>
+			<div className='flex flex-wrap pt-1'>
 				{subcategories.map(x => <SubcategoryBadge
 					key={x.id}
 					title={x.title}

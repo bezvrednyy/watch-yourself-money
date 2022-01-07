@@ -26,7 +26,7 @@ function TextField({
 	const descriptionText = errorMessage || description
 
 	return (
-		<div>
+		<div className='w-full'>
 			{label && <Label text={label} />}
 			<input
 				value={value}
