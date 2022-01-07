@@ -12,7 +12,7 @@ function HistorySection() {
 		dayDate: new Date(),
 		transitions: [{
 			id: 'id-1',
-			categoryName: 'Подарки',
+			categoryId: 1,
 			bankCardName: 'Сбербанк',
 			moneyInfo: {
 				value: 1200,
@@ -21,7 +21,7 @@ function HistorySection() {
 			comment: '#Аня',
 		}, {
 			id: 'id-2',
-			categoryName: 'Зарплата',
+			categoryId: 2,
 			bankCardName: 'Сбербанк',
 			moneyInfo: {
 				value: 700,
@@ -30,7 +30,7 @@ function HistorySection() {
 		}],
 	}]
 	return (
-		<div className='w-4/12 bg-gray-100'>
+		<div className='w-4/12 bg-white'>
 			{transactionsByDays.map(x => <DayTransactionsHistorySection
 				key={getMilliseconds(x.dayDate)}
 				dayDate={x.dayDate}

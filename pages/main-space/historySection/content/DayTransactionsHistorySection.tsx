@@ -17,9 +17,9 @@ function DayTransactionsHistorySection({
 	return (
 		<div>
 			<p className=''>
-				{format(dayDate, 'yyyy-MM-dd')}
+				{format(dayDate, 'd MMMM yyyy')}
 			</p>
-			<div className='flex flex-col p-5 space-y-2'>
+			<div className='flex flex-col p-5'>
 				{transitions.map(x => <TransactionHistorySectionItem
 					key={x.id}
 					{...x}

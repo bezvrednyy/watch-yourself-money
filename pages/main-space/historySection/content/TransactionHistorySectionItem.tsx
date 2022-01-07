@@ -1,5 +1,10 @@
-import {XIcon} from '@heroicons/react/outline'
 import {joinClassNames} from '../../../../common/joinClassNames'
+import {categoriesAtom} from '../../categoriesSection/model/categoriesAtom'
+import {useAtom} from '@reatom/react'
+import {verify} from '../../../../common/verify'
+import {RoundedSquare} from '../../../../components/RoundedSquare'
+import {getOutlineIconById} from '../../../../components/icons/getOutlineIconById'
+import {getColorById} from '../../../../common/colors/theme'
 
 type MoneyInfo = {
 	value: number,
@@ -8,7 +13,7 @@ type MoneyInfo = {
 
 type ViewTransactionInfo = {
 	id: string,
-	categoryName: string,
+	categoryId: number,
 	bankCardName: string,
 	moneyInfo: MoneyInfo,
 	comment?: string,
@@ -21,31 +26,37 @@ type TransitionHistorySectionItemProps = ViewTransactionInfo & {
 function TransactionHistorySectionItem({
 	id,
 	bankCardName,
-	categoryName,
+	categoryId,
 	moneyInfo,
 	comment,
 	onClick,
 }: TransitionHistorySectionItemProps) {
-	const hintClassName = 'text-sm font-normal font-sans text-gray-500'
-		+ ' group-hover:text-purple-600'
-	const titleClassName = 'text-xl font-medium font-sans'
-		+ ' transition group-hover:text-purple-600'
+	const hintClassName = 'text-sm font-normal font-sans text-gray-400'
+	const titleClassName = 'text-xl font-normal font-sans'
+	const [categories] = useAtom(categoriesAtom)
+	const category = verify(
+		categories.mainCategories.find(x => x.id === categoryId) || categories.subCategories.find(x => x.id === categoryId),
+		'Error, in category not found!',
+	)
+	const Icon = getOutlineIconById(category.iconId)
+
 	return (
-		<div className='group flex cursor-pointer px-10' onClick={() => onClick(id)}>
+		<div className='flex items-center cursor-pointer px-10 py-1.5 hover:bg-gray-100' onClick={() => onClick(id)}>
+			<RoundedSquare
+				createIcon={() => <Icon className='m-2 w-7 h-7 overflow-hidden'/>}
+				bgHexColor={getColorById(category.colorId)}
+				rounded='full'
+				className='mr-5 opacity-90 transform transition hover:opacity-100 shadow'
+			/>
 			<div>
 				<p className={joinClassNames('text-gray-800', titleClassName)}>
-					{categoryName}
+					{category.title}
 				</p>
-				<p className={hintClassName}>{bankCardName}</p>
+				<p className={hintClassName}>{comment ? `${bankCardName} | ${comment}` : bankCardName}</p>
 			</div>
-			<div className='flex-grow'>
-				<p className={joinClassNames('flex flex-row-reverse text-green-500', titleClassName)}>
-					{moneyInfo.value}
-				</p>
-				{comment && <p className={joinClassNames('flex flex-row-reverse', hintClassName)}>
-					{comment}
-				</p>}
-			</div>
+			<p className={joinClassNames('flex flex-row-reverse text-purple-500 font-factor self-start flex-grow', titleClassName)}>
+				{moneyInfo.value}
+			</p>
 		</div>
 	)
 }
