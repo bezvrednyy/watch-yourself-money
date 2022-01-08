@@ -26,4 +26,10 @@ export default NextAuth({
 			},
 		}),
 	],
+	callbacks: {
+		session: ({session, user}) => {
+			session.user = user
+			return session
+		},
+	},
 })

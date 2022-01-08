@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
+import {verify} from '../../../common/verify'
 import {OutlineIconId} from '../../../components/icons/getOutlineIconById'
 import {ColorId} from '../../../common/colors/colors'
 import prisma from '../../../prisma/prisma'
@@ -18,7 +19,7 @@ export type UpdateCategoriesInfoRequest = {
 type UpdateCategoriesApiRequest = NextApiRequest & {
 	body: {
 		data: UpdateCategoriesInfoRequest,
-	}
+	},
 }
 
 export default async function updateCategories(req: UpdateCategoriesApiRequest, res: NextApiResponse) {
@@ -26,7 +27,7 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
 	}
-	const {removedSubcategoryIds} = req.body.data
+	const {removedSubcategoryIds, newSubcategories} = req.body.data as UpdateCategoriesInfoRequest
 
 	try {
 		await prisma.category.deleteMany({
@@ -35,6 +36,19 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 					in: removedSubcategoryIds,
 				},
 			},
+		})
+		await prisma.category.createMany({
+			data: newSubcategories.map(x => ({
+				id: x.id,
+				parentCategoryId: x.parentCategoryId,
+				color: x.colorId,
+				name: x.title,
+				iconId: x.iconId,
+				type: x.type,
+				userId: Number(
+					verify(session?.user.id),
+				),
+			})),
 		})
 		res.status(200).send({})
 	}

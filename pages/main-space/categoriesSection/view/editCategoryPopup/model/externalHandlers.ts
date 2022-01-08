@@ -58,6 +58,7 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 	}
 
 	if (res.ok) {
+		//TODO: добавить тостер и обновление категорий
 		onClose()
 	}
 })
