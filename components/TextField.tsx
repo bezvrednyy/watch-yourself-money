@@ -1,4 +1,4 @@
-type TextFieldType = 'text'|'password'|'email'
+type TextFieldType = 'text'|'password'|'email'|'number'
 
 type TextField = {
 	value: string,

@@ -2,6 +2,7 @@ import {MinusIcon, PlusIcon} from '@heroicons/react/solid'
 import {getMilliseconds} from 'date-fns'
 import {joinClassNames} from '../../../common/joinClassNames'
 import DisclosureDefault from '../../../components/DisclosureDefault'
+import {AddTransactionPanel} from './content/addTransactionSection/AddTransactionPanel'
 import {ViewTransactionInfo} from './content/TransactionHistorySectionItem'
 import {DayTransactionsHistorySection} from './content/DayTransactionsHistorySection'
 
@@ -28,7 +29,7 @@ function HistorySection() {
 					<span>Add new transaction</span>
 					{open ? <MinusIcon className={iconClass} /> : <PlusIcon className={iconClass} />}
 				</div>}
-				createPanel={() => <div>Hello</div>}
+				createPanel={() => <AddTransactionPanel />}
 			/>
 		</div>)
 }

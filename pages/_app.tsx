@@ -11,13 +11,14 @@ export default function MyApp({
 	Component,
 	pageProps: {session, ...pageProps},
 }: AppProps) {
-	useInitEnvironment()
+	const store = createStore()
+
+	useInitEnvironment(store)
 	useEffect(() => {
 		const rootElement = document.getElementById('__next')
 		rootElement && rootElement.classList.add('h-full') //tailwind-css
 	}, [])
 
-	const store = createStore()
 	return <>
 		<SessionProvider session={session}>
 			<reatomContext.Provider value={store}>

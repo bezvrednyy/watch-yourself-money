@@ -16,7 +16,7 @@ export default function DisclosureDefault({
 				<Disclosure>
 					{({open}) => (
 						<>
-							<Disclosure.Panel as={Fragment}>
+							<Disclosure.Panel>
 								{createPanel()}
 							</Disclosure.Panel>
 							<Disclosure.Button as={Fragment}>
