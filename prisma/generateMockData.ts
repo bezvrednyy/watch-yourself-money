@@ -1,47 +1,58 @@
 import {Category} from '@prisma/client'
+import {randomUUID} from 'crypto'
 import {generateRandomInt} from '../common/generateRandom'
 import {CategoryData} from '../pages/main-space/categoriesSection/model/categoriesAtom'
 import prisma from './prisma'
 
 async function generateMockData() {
+	const userId = randomUUID()
+	const currencyId = randomUUID()
+	const languageId = randomUUID()
+	const bankAccountId = randomUUID()
+	const categoryId = randomUUID()
+
+	await prisma.user.create({
+		data: {id: userId, email: 'algaev18@gmail.com'},
+	})
+
 	await prisma.currency.createMany({data: [
-		{id: 1, name: 'Рубль'},
-		{id: 2, name: 'Доллар'},
+		{id: currencyId, name: 'Рубль'},
+		{id: randomUUID(), name: 'Доллар'},
 	]})
 	await prisma.language.createMany({data: [
-		{id: 1, name: 'Русский'},
-		{id: 2, name: 'Английский'},
+		{id: languageId, name: 'Русский'},
+		{id: randomUUID(), name: 'Английский'},
 	]})
 
-	await prisma.userSettings.createMany({data: [
-		{userId: 1, currencyId: 1, languageId: 1, theme: 'DEFAULT'},
-	]})
+	await prisma.userSettings.create({
+		data: {userId, currencyId, languageId, theme: 'DEFAULT'},
+	})
 
 	await prisma.bankAccount.createMany({data: [
-		{id: 1, userId: 1, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
-		{id: 2, userId: 1, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
+		{id: bankAccountId, userId, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
+		{id: randomUUID(), userId, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
 	]})
 
 	const fiveCategories: Array<Category> = [
-		{id: 1, userId: 1, name: 'Подарки', iconId: 'outline-gift', type: 'EXPENSES', color: 'green#500', parentCategoryId: null},
-		{id: 2, userId: 1, name: 'Развлечения', iconId: 'outline-puzzle', type: 'EXPENSES', color: 'cyan#500', parentCategoryId: null},
-		{id: 3, userId: 1, name: 'Общественные дела', iconId: 'outline-user-group', type: 'EXPENSES', color: 'blue#500', parentCategoryId: null},
-		{id: 4, userId: 1, name: 'Стройка', iconId: 'outline-user-group', type: 'EXPENSES', color: 'yellow#500', parentCategoryId: 3},
-		{id: 5, userId: 1, name: 'Волонтёрство', iconId: 'outline-translate', type: 'INCOMES', color: 'gray#500', parentCategoryId: 3},
-		{id: 6, userId: 1, name: 'Раздача еды', iconId: 'outline-cloud', type: 'INCOMES', color: 'blue#500', parentCategoryId: 3},
-		{id: 7, userId: 1, name: 'Репетиторство', iconId: 'outline-translate', type: 'INCOMES', color: 'pink#500', parentCategoryId: null},
-		{id: 8, userId: 1, name: 'Сайты', iconId: 'outline-cloud', type: 'INCOMES', color: 'blue#500', parentCategoryId: null},
+		{id: categoryId, userId, name: 'Подарки', iconId: 'outline-gift', type: 'EXPENSES', color: 'green#500', parentCategoryId: null},
+		{id: randomUUID(), userId, name: 'Развлечения', iconId: 'outline-puzzle', type: 'EXPENSES', color: 'cyan#500', parentCategoryId: null},
+		{id: randomUUID(), userId, name: 'Общественные дела', iconId: 'outline-user-group', type: 'EXPENSES', color: 'blue#500', parentCategoryId: null},
+		{id: randomUUID(), userId, name: 'Стройка', iconId: 'outline-user-group', type: 'EXPENSES', color: 'yellow#500', parentCategoryId: categoryId},
+		{id: randomUUID(), userId, name: 'Волонтёрство', iconId: 'outline-translate', type: 'INCOMES', color: 'gray#500', parentCategoryId: categoryId},
+		{id: randomUUID(), userId, name: 'Раздача еды', iconId: 'outline-cloud', type: 'INCOMES', color: 'blue#500', parentCategoryId: categoryId},
+		{id: randomUUID(), userId, name: 'Репетиторство', iconId: 'outline-translate', type: 'INCOMES', color: 'pink#500', parentCategoryId: null},
+		{id: randomUUID(), userId, name: 'Сайты', iconId: 'outline-cloud', type: 'INCOMES', color: 'blue#500', parentCategoryId: null},
 	]
 	await prisma.category.createMany({
 		data: fiveCategories,
 	})
 
 	await prisma.transaction.createMany({data: [
-		{id: 1, date: new Date(), money: 802, currencyId: 1, bankAccountId: 1, categoryId: 1, comment: 'Весы для тёти Тани'},
-		{id: 2, date: new Date(), money: generateRandomInt(), currencyId: 1, bankAccountId: 1, categoryId: 1},
-		{id: 3, date: new Date(), money: generateRandomInt(), currencyId: 1, bankAccountId: 1, categoryId: 1},
-		{id: 4, date: new Date(), money: generateRandomInt(), currencyId: 1, bankAccountId: 1, categoryId: 1},
-		{id: 5, date: new Date(), money: generateRandomInt(), currencyId: 1, bankAccountId: 1, categoryId: 1},
+		{id: randomUUID(), date: new Date(), money: 802, currencyId, bankAccountId, categoryId, comment: 'Весы для тёти Тани'},
+		{id: randomUUID(), date: new Date(), money: generateRandomInt(), currencyId, bankAccountId, categoryId},
+		{id: randomUUID(), date: new Date(), money: generateRandomInt(), currencyId, bankAccountId, categoryId},
+		{id: randomUUID(), date: new Date(), money: generateRandomInt(), currencyId, bankAccountId, categoryId},
+		{id: randomUUID(), date: new Date(), money: generateRandomInt(), currencyId, bankAccountId, categoryId},
 	]})
 }
 

@@ -6,6 +6,7 @@ import {devideArray} from '../../common/array'
 import {ColorId} from '../../common/colors/colors'
 import {verify} from '../../common/verify'
 import {OutlineIconId} from '../../components/icons/getOutlineIconById'
+import {generateMockData} from '../../prisma/generateMockData'
 import prisma from '../../prisma/prisma'
 import {CategoryData, MainCategoryData, SubCategoryData, categoriesAtom} from './categoriesSection/model/categoriesAtom'
 import styles from './index.module.css'
@@ -38,6 +39,7 @@ export default function Index(props: MainSpaceProps) {
 export async function getServerSideProps(context: NextPageContext): Promise<GetServerSidePropsResult<MainSpaceProps & {
 	session: Session | null,
 }>> {
+	generateMockData()
 	const session = await getSession(context)
 	if (!session?.user) {
 		return {

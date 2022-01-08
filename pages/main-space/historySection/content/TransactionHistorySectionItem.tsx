@@ -13,7 +13,7 @@ type MoneyInfo = {
 
 type ViewTransactionInfo = {
 	id: string,
-	categoryId: number,
+	categoryId: string,
 	bankCardName: string,
 	moneyInfo: MoneyInfo,
 	comment?: string,

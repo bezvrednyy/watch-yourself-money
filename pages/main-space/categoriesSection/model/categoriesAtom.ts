@@ -5,8 +5,8 @@ import {OutlineIconId} from '../../../../components/icons/getOutlineIconById'
 type CategoryType = 'EXPENSES'|'INCOMES'
 
 export type CategoryData = {
-	id: number,
-	parentCategoryId?: number,
+	id: string,
+	parentCategoryId?: string,
 	title: string,
 	type: CategoryType,
 	iconId: OutlineIconId,
@@ -18,7 +18,7 @@ export type MainCategoryData = CategoryData & {
 }
 
 export type SubCategoryData = CategoryData & {
-	parentCategoryId: number,
+	parentCategoryId: string,
 }
 
 type CategoriesAtomData = {
@@ -30,4 +30,4 @@ export const categoriesAtom = createPrimitiveAtom<CategoriesAtomData>({
 	mainCategories: [],
 	subCategories: [],
 })
-export const editableCategoryIdAtom = createPrimitiveAtom(<null|number>(null))
+export const editableCategoryIdAtom = createPrimitiveAtom(<null|string>(null))
