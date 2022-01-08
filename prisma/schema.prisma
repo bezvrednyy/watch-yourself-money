@@ -17,6 +17,16 @@ enum CategoryType {
     INCOMES
 }
 
+enum CurrencyId {
+    RUBLE
+    DOLLAR
+}
+
+enum LanguageId {
+    RUSSIAN
+    ENGLISH
+}
+
 model User {
     id            String            @id @default(uuid()) @map("id_user")
     name          String?
@@ -59,7 +69,7 @@ model BankAccount {
 }
 
 model Currency {
-    id              String             @id @default(uuid()) @map("id_currency")
+    id              CurrencyId             @id @map("id_currency")
     name            String
     transactions    Transaction[]
     userSettings    UserSettings[]
@@ -73,7 +83,7 @@ model Transaction {
     bankAccount     BankAccount @relation(fields: [bankAccountId], references: [id])
     bankAccountId   String      @map("id_bank_account")
     currency        Currency    @relation(fields: [currencyId], references: [id])
-    currencyId      String      @map("id_currency")
+    currencyId      CurrencyId  @map("id_currency")
     comment         String?
     money           Decimal
     date            DateTime
@@ -81,7 +91,7 @@ model Transaction {
 }
 
 model Language {
-    id            String            @id @default(uuid()) @map("id_language")
+    id            LanguageId            @id @map("id_language")
     name          String
     userSettings  UserSettings[]
     @@map("language")
@@ -92,9 +102,9 @@ model UserSettings {
     userId      String      @id @map("id_user_settings")
     theme       Theme       @default(DEFAULT)
     language    Language    @relation(fields: [languageId], references: [id])
-    languageId  String      @map("id_language")
+    languageId  LanguageId  @map("id_language")
     currency    Currency    @relation(fields: [currencyId], references: [id])
-    currencyId  String      @map("id_currency")
+    currencyId  CurrencyId  @map("id_currency")
     @@map("user_settings")
 }
 

@@ -1,27 +1,26 @@
-import {Category} from '@prisma/client'
+import {Category, CurrencyId, LanguageId} from '@prisma/client'
 import {randomUUID} from 'crypto'
 import {generateRandomInt} from '../common/generateRandom'
-import {CategoryData} from '../pages/main-space/categoriesSection/model/categoriesAtom'
 import prisma from './prisma'
 
 async function generateMockData() {
 	const userId = randomUUID()
-	const currencyId = randomUUID()
-	const languageId = randomUUID()
+	const currencyId: CurrencyId = 'RUBLE'
+	const languageId: LanguageId = 'RUSSIAN'
 	const bankAccountId = randomUUID()
 	const categoryId = randomUUID()
 
 	await prisma.user.create({
-		data: {id: userId, email: 'algaev18@gmail.com'},
+		data: {id: userId, email: 'algaev18@gmail.com', emailVerified: '2022-01-08T18:29:35.396Z'},
 	})
 
 	await prisma.currency.createMany({data: [
 		{id: currencyId, name: 'Рубль'},
-		{id: randomUUID(), name: 'Доллар'},
+		{id: 'DOLLAR', name: 'Доллар'},
 	]})
 	await prisma.language.createMany({data: [
 		{id: languageId, name: 'Русский'},
-		{id: randomUUID(), name: 'Английский'},
+		{id: 'ENGLISH', name: 'Английский'},
 	]})
 
 	await prisma.userSettings.create({

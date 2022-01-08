@@ -39,7 +39,6 @@ export default function Index(props: MainSpaceProps) {
 export async function getServerSideProps(context: NextPageContext): Promise<GetServerSidePropsResult<MainSpaceProps & {
 	session: Session | null,
 }>> {
-	generateMockData()
 	const session = await getSession(context)
 	if (!session?.user) {
 		return {
