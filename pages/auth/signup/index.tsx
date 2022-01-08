@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {TextField} from '../../../components/textField/TextField'
+import {TextFieldDefault} from '../../../components/textField/TextFieldDefault'
 import {AuthFormHeader} from '../FormHeader'
 
 export default function SignUpPage() {
@@ -22,27 +22,27 @@ export default function SignUpPage() {
 					<form className='mt-8 space-y-6' action='#' method='POST'>
 						<input type='hidden' name='remember' defaultValue='true' />
 						<div className='rounded-md shadow-sm space-y-4'>
-							<TextField
+							<TextFieldDefault
 								value={username}
 								onInput={value => setUsername(value)}
 								placeholder='Username'
 								required={true}
 							/>
-							<TextField
+							<TextFieldDefault
 								value={email}
 								onInput={value => setEmail(value)}
 								placeholder='Email'
 								required={true}
 								type={'email'}
 							/>
-							<TextField
+							<TextFieldDefault
 								value={firstPassword}
 								onInput={value => setFirstPassword(value)}
 								placeholder='Password'
 								required={true}
 								type={'password'}
 							/>
-							<TextField
+							<TextFieldDefault
 								value={secondPassword}
 								onInput={value => setSecondPassword(value)}
 								placeholder='Repeat the password'

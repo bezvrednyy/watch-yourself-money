@@ -15,7 +15,7 @@ type TextField = {
 	inputClass?: string,
 }
 
-function TextField({
+function TextFieldDefault({
 	value,
 	onInput,
 	label,
@@ -76,5 +76,5 @@ function Description({
 }
 
 export {
-	TextField,
+	TextFieldDefault,
 }

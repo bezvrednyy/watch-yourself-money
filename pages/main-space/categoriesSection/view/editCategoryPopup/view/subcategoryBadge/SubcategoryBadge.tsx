@@ -11,7 +11,7 @@ import {
 } from '../../../../../../../components/icons/getOutlineIconById'
 import {PopupDefault} from '../../../../../../../components/PopupDefault'
 import {RoundedSquare} from '../../../../../../../components/RoundedSquare'
-import {TextField} from '../../../../../../../components/textField/TextField'
+import {TextFieldDefault} from '../../../../../../../components/textField/TextFieldDefault'
 import {CategoryData} from '../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from '../../model/editableCategoryAtom'
 import styles from './SubcategoryBadge.module.css'
@@ -106,7 +106,7 @@ function SubcategoryBadgePopupContent({
 }: PopoverContentProps) {
 	return (
 		<div className='w-80'>
-			<TextField
+			<TextFieldDefault
 				value={title}
 				onInput={setTitle}
 				placeholder={'Category name'}
