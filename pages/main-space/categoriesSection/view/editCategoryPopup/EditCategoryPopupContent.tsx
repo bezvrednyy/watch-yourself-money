@@ -1,6 +1,6 @@
 import {useAction, useAtom} from '@reatom/react'
+import {TextField} from '../../../../../components/textField/TextField'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
-import {TextFieldDefault} from '../../../../../components/textField/TextFieldDefault'
 import {CategoryViewPicker} from './view/CategoryViewPicker'
 import {AddSubcategoryBadge} from './view/subcategoryBadge/AddSubcategoryBadge'
 import {SubcategoryBadge} from './view/subcategoryBadge/SubcategoryBadge'
@@ -14,7 +14,8 @@ function EditCategoryPopupContent() {
 		<>
 			<div className='flex space-x-3 items-center'>
 				<CategoryViewPicker/>
-				<TextFieldDefault
+				<TextField
+					style='default'
 					value={title}
 					onInput={handleSetTitle}
 					placeholder={'Category name'}

@@ -1,51 +1,31 @@
 import {joinClassNames} from '../../common/joinClassNames'
-
-type TextFieldType = 'text'|'password'|'email'|'number'
-
-type TextField = {
-	value: string,
-	onInput: (v: string) => void,
-	label?: string,
-	maxLength?: number,
-	description?: string,
-	errorMessage?: string,
-	placeholder?: string,
-	required?: boolean,
-	type?: TextFieldType,
-	inputClass?: string,
-}
+import {TextFieldDescription} from './common/TextFieldDescription'
+import {TextFieldInput} from './common/TextFieldInput'
+import {TextFieldDefaultProps} from './textFieldProps'
 
 function TextFieldDefault({
-	value,
-	onInput,
 	label,
-	maxLength,
 	description,
 	errorMessage,
-	placeholder,
-	required,
-	type = 'text',
+	inputType = 'text',
 	inputClass,
-}: TextField) {
+	...inputProps
+}: TextFieldDefaultProps) {
 	const descriptionText = errorMessage || description
 
 	return (
 		<div className='w-full'>
 			{label && <Label text={label} />}
-			<input
-				value={value}
-				onInput={event => onInput(event.currentTarget.value)}
-				required={required}
-				className={joinClassNames(
+			<TextFieldInput
+				{...inputProps}
+				inputType={inputType}
+				inputClass={joinClassNames(
 					'appearance-none rounded-md relative block w-full px-3 py-2 border-2 border-gray-300 placeholder-gray-500 text-gray-900',
 					'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm',
 					inputClass,
 				)}
-				placeholder={placeholder}
-				maxLength={maxLength}
-				type={type}
 			/>
-			{descriptionText && <Description text={descriptionText} isError={!!errorMessage}/>}
+			{descriptionText && <TextFieldDescription text={descriptionText} isError={!!errorMessage}/>}
 		</div>)
 }
 
@@ -57,22 +37,6 @@ function Label({
 	text,
 }: LabelProps) {
 	return <label>{text}</label>
-}
-
-type DescriptionProps = {
-	text: string,
-	isError: boolean,
-}
-
-function Description({
-	text,
-	isError,
-}: DescriptionProps) {
-	let className = 'text-sm'
-	className += isError ? 'text-red-500' : 'text-gray-500'
-	return <span className={className}>
-		{text}
-	</span>
 }
 
 export {
