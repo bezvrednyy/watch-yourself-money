@@ -19,7 +19,7 @@ import {useBadgePopupButtons} from './useBadgePopupButtons'
 
 type SubcategoryType = 'default'|'removed'|'turnInMain'|'new'
 
-function useSubcategoryType(id: number): SubcategoryType {
+function useSubcategoryType(id: string): SubcategoryType {
 	const [haveBecomeMainCategoriesIdsSet] = useAtom(editCategoryPopupAtoms.haveBecomeMainCategoriesIdsSetAtom)
 	const [removedSubcategoryIdsSet] = useAtom(editCategoryPopupAtoms.removedSubcategoryIdsSetAtom)
 	const [newSubcategoriesIdsSet] = useAtom(editCategoryPopupAtoms.newSubcategoriesIdsSetAtom)

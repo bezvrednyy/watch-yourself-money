@@ -8,13 +8,13 @@ import prisma from '../../../prisma/prisma'
 import {CategoryData} from '../../main-space/categoriesSection/model/categoriesAtom'
 
 export type UpdateCategoriesInfoRequest = {
-	id: number,
+	id: string,
 	name: string,
 	iconId: OutlineIconId,
 	colorId: ColorId,
 	editedSubcategories: Array<CategoryData>,
 	newSubcategories: Array<CategoryData>,
-	removedSubcategoryIds: Array<number>,
+	removedSubcategoryIds: Array<string>,
 }
 
 type UpdateCategoriesApiRequest = NextApiRequest & {
@@ -45,9 +45,7 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 				},
 			}),
 			prisma.category.createMany({
-				data: newSubcategories.map(x => remapCategoryDataToCategory(x, Number(
-					verify(session?.user.id),
-				))),
+				data: newSubcategories.map(x => remapCategoryDataToCategory(x, verify(session?.user.id))),
 			}),
 			prisma.category.update({
 				where: {
@@ -63,9 +61,7 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 				where: {
 					id: x.id,
 				},
-				data: remapCategoryDataToCategory(x, Number(
-					verify(session?.user.id),
-				)),
+				data: remapCategoryDataToCategory(x, verify(session?.user.id)),
 			})),
 		])
 
@@ -78,7 +74,7 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 	}
 }
 
-function remapCategoryDataToCategory(data: CategoryData, userId: number): Category {
+function remapCategoryDataToCategory(data: CategoryData, userId: string): Category {
 	return {
 		id: data.id,
 		parentCategoryId: data.parentCategoryId || null,

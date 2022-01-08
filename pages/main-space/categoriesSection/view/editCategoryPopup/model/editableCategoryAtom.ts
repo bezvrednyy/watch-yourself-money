@@ -5,10 +5,10 @@ import {createEnumAtom, createSetAtom, createStringAtom} from '@reatom/core/prim
 import {OutlineIconId} from '../../../../../../components/icons/getOutlineIconById'
 
 const statusesAtom = createEnumAtom(['init', 'saving'])
-const removedSubcategoryIdsSetAtom = createSetAtom<number>()
-const editedSubcategoryIdsSetAtom = createSetAtom<number>()
-const haveBecomeMainCategoriesIdsSetAtom = createSetAtom<number>()
-const newSubcategoriesIdsSetAtom = createSetAtom<number>()
+const removedSubcategoryIdsSetAtom = createSetAtom<string>()
+const editedSubcategoryIdsSetAtom = createSetAtom<string>()
+const haveBecomeMainCategoriesIdsSetAtom = createSetAtom<string>()
+const newSubcategoriesIdsSetAtom = createSetAtom<string>()
 
 const titleAtom = createStringAtom('')
 const iconIdAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
@@ -17,8 +17,8 @@ const subcategoriesAtom = createAtom(
 	{
 		newSubcategoriesIdsSetAtom,
 		updateSubcategory: (value: CategoryData) => value,
-		remove: (id: number) => id,
-		turnInMain: (id: number) => id,
+		remove: (id: string) => id,
+		turnInMain: (id: string) => id,
 		set: (value: Array<CategoryData>) => value,
 		add: (value: CategoryData) => value,
 	},
