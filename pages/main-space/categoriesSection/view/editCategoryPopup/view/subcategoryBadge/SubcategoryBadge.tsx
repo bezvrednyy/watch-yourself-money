@@ -11,7 +11,7 @@ import {
 } from '../../../../../../../components/icons/getOutlineIconById'
 import {PopupDefault} from '../../../../../../../components/PopupDefault'
 import {RoundedSquare} from '../../../../../../../components/RoundedSquare'
-import {TextField} from '../../../../../../../components/TextField'
+import {TextField} from '../../../../../../../components/textField/TextField'
 import {CategoryData} from '../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from '../../model/editableCategoryAtom'
 import styles from './SubcategoryBadge.module.css'

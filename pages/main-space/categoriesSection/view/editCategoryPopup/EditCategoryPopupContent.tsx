@@ -1,6 +1,6 @@
 import {useAction, useAtom} from '@reatom/react'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
-import {TextField} from '../../../../../components/TextField'
+import {TextField} from '../../../../../components/textField/TextField'
 import {CategoryViewPicker} from './view/CategoryViewPicker'
 import {AddSubcategoryBadge} from './view/subcategoryBadge/AddSubcategoryBadge'
 import {SubcategoryBadge} from './view/subcategoryBadge/SubcategoryBadge'

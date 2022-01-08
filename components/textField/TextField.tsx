@@ -1,3 +1,5 @@
+import {joinClassNames} from '../../common/joinClassNames'
+
 type TextFieldType = 'text'|'password'|'email'|'number'
 
 type TextField = {
@@ -10,6 +12,7 @@ type TextField = {
 	placeholder?: string,
 	required?: boolean,
 	type?: TextFieldType,
+	inputClass?: string,
 }
 
 function TextField({
@@ -22,6 +25,7 @@ function TextField({
 	placeholder,
 	required,
 	type = 'text',
+	inputClass,
 }: TextField) {
 	const descriptionText = errorMessage || description
 
@@ -32,7 +36,11 @@ function TextField({
 				value={value}
 				onInput={event => onInput(event.currentTarget.value)}
 				required={required}
-				className='appearance-none rounded-md relative block w-full px-3 py-2 border-2 border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm'
+				className={joinClassNames(
+					'appearance-none rounded-md relative block w-full px-3 py-2 border-2 border-gray-300 placeholder-gray-500 text-gray-900',
+					'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm',
+					inputClass,
+				)}
 				placeholder={placeholder}
 				maxLength={maxLength}
 				type={type}
