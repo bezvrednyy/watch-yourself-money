@@ -41,9 +41,7 @@ const subcategoriesAtom = createAtom(
 					dispatch(newSubcategoriesIdsSetAtom.delete(id))
 					state = state.filter(x => x.id !== id)
 				}
-				else {
-					dispatch(removedSubcategoryIdsSetAtom.add(id))
-				}
+				dispatch(removedSubcategoryIdsSetAtom.add(id))
 				dispatch(editedSubcategoryIdsSetAtom.delete(id))
 				dispatch(haveBecomeMainCategoriesIdsSetAtom.delete(id))
 			})

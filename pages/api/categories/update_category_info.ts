@@ -13,7 +13,6 @@ export type UpdateCategoriesInfoRequest = {
 	editedSubcategories: Array<CategoryData>,
 	newSubcategories: Array<CategoryData>,
 	removedSubcategoryIds: Array<number>,
-	haveBecomeMainCategoriesIds: Array<number>,
 }
 
 type UpdateCategoriesApiRequest = NextApiRequest & {
@@ -30,7 +29,7 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 	const {removedSubcategoryIds} = req.body.data
 
 	try {
-		prisma.category.deleteMany({
+		await prisma.category.deleteMany({
 			where: {
 				id: {
 					in: removedSubcategoryIds,

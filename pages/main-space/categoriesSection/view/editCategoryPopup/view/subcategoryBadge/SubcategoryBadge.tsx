@@ -24,7 +24,7 @@ function useSubcategoryType(id: number): SubcategoryType {
 	const [removedSubcategoryIdsSet] = useAtom(editCategoryPopupAtoms.removedSubcategoryIdsSetAtom)
 	const [newSubcategoriesIdsSet] = useAtom(editCategoryPopupAtoms.newSubcategoriesIdsSetAtom)
 
-	if (removedSubcategoryIdsSet.has(id)) return 'default'
+	if (removedSubcategoryIdsSet.has(id)) return 'removed'
 	if (newSubcategoriesIdsSet.has(id)) return 'new'
 	if (haveBecomeMainCategoriesIdsSet.has(id)) return 'turnInMain'
 	return 'default'
