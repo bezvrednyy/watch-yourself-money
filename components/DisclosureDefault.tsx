@@ -12,7 +12,7 @@ export default function DisclosureDefault({
 }: DisclosureDefaultProps) {
 	return (
 		<div className='w-full px-4 pt-16'>
-			<div className='w-full max-w-md p-2 mx-auto bg-white rounded-2xl'>
+			<div className='w-full max-w-md mx-auto bg-white rounded-2xl'>
 				<Disclosure>
 					{({open}) => (
 						<>

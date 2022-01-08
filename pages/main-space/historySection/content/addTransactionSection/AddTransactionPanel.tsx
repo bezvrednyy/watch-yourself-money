@@ -17,13 +17,15 @@ export function AddTransactionPanel() {
 				style='link'
 				value={sum}
 				onInput={value => setSum(value)}
-				placeholder={`100${currencySymbol}`}
+				size='xLarge'
+				placeholder='100'
 				required={true}
 				inputType='number'
 				inputClass={joinClassNames(
-					'w-40',
+					'w-16',
 					styles.sum,
 				)}
+				createIcon={() => <div className='text-xl'>{currencySymbol}</div>}
 			/>
 		</div>
 	</div>

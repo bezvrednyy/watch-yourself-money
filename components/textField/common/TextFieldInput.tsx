@@ -1,4 +1,4 @@
-import {TextFieldInputProps} from '../textFieldProps'
+import {TextFieldInputProps, TextFieldSize} from '../textFieldProps'
 
 export function TextFieldInput({
 	value,
@@ -8,11 +8,15 @@ export function TextFieldInput({
 	placeholder,
 	inputType,
 	inputClass,
+	onFocus,
+	onBlur,
 }: TextFieldInputProps) {
 	return (
 		<input
 			value={value}
 			onInput={event => onInput(event.currentTarget.value)}
+			onFocus={onFocus}
+			onBlur={onBlur}
 			required={required}
 			className={inputClass}
 			placeholder={placeholder}
