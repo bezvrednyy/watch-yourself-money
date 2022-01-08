@@ -8,11 +8,12 @@ function getEnvType(): EnvironmentType {
 	return process.env.NODE_ENV
 }
 
-function initEnvironment() {
+function useInitEnvironment() {
+	console.log('hello env')
 	//TODO
 }
 
 export {
-	initEnvironment,
+	useInitEnvironment,
 	getEnvType,
 }
