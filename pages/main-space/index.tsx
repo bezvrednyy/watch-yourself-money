@@ -1,7 +1,7 @@
 import {useAction} from '@reatom/react'
-import {GetServerSidePropsResult} from 'next'
+import {GetServerSidePropsResult, NextPageContext} from 'next'
 import {Session} from 'next-auth'
-import {GetSessionParams, getSession} from 'next-auth/react'
+import {getSession} from 'next-auth/react'
 import {devideArray} from '../../common/array'
 import {ColorId} from '../../common/colors/colors'
 import {verify} from '../../common/verify'
@@ -35,7 +35,7 @@ export default function Index(props: MainSpaceProps) {
 		</MainLayout>)
 }
 
-export async function getServerSideProps(context: GetSessionParams): Promise<GetServerSidePropsResult<MainSpaceProps & {
+export async function getServerSideProps(context: NextPageContext): Promise<GetServerSidePropsResult<MainSpaceProps & {
 	session: Session | null,
 }>> {
 	const session = await getSession(context)
@@ -55,9 +55,10 @@ export async function getServerSideProps(context: GetSessionParams): Promise<Get
 			},
 		},
 	})
+
 	return {
 		props: {
-			session: await getSession(context),
+			session,
 			categories: categories.map(x => {
 				const remappedValue: CategoryData = {
 					id: x.id,
