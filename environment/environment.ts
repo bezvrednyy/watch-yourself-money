@@ -16,8 +16,10 @@ function getEnvType(): EnvironmentType {
 const initEnv = declareAsyncAction(async store => {
 	const settingsRes = await fetch('http://localhost:3000/api/env/get_user_settings')
 	if (settingsRes.ok) {
-		const settings = await settingsRes.json()
-		store.dispatch(userSettingsAtom.set(settings))
+		const { settings } = await settingsRes.json()
+		store.dispatch(userSettingsAtom.set(
+			settings,
+		))
 	}
 })
 
@@ -25,7 +27,6 @@ function useInitEnvironment(store: Store) {
 	useEffect(() => {
 		initEnv(store)
 	}, [store])
-	//TODO
 }
 
 export {
