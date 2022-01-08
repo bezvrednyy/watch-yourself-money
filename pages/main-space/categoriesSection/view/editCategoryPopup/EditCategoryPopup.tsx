@@ -26,7 +26,7 @@ export function EditCategoryPopup({
 		createContent={() => <EditCategoryPopupContent />}
 		buttons={[
 			<Button
-				key={'close'}
+				key={'save'}
 				style='blue-default'
 				onClick={() => {
 					handleSaveData({
@@ -35,6 +35,13 @@ export function EditCategoryPopup({
 				}}
 				structure='text'
 				text='Save'
+			/>,
+			<Button
+				key={'close'}
+				style='secondary'
+				onClick={onClose}
+				structure='text'
+				text='Cancel'
 			/>,
 		]}
 		className='w-full max-w-md'
