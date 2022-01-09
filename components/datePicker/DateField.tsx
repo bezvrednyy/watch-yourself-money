@@ -4,14 +4,12 @@ import {DatePickerInputStyle} from './model/DatePickerData'
 
 type DateFieldProps = {
     date: Date,
-    onClick: () => void,
     icon?: ReactElement,
     style: DatePickerInputStyle,
 }
 
 function DateField({
 	date,
-	onClick,
 	icon,
 	style,
 }: DateFieldProps) {
@@ -27,20 +25,18 @@ function DateField({
         }`}
 				placeholder='Select date'
 				value={format(date, 'yyyy-MM-dd')}
-				onClick={onClick}
 			/>
-			{icon && <Icon icon={icon} onClick={onClick} />}
+			{icon && <Icon icon={icon} />}
 		</div>)
 }
 
 type IconProps = {
-    onClick: () => void,
     icon: ReactElement,
 }
 
 function Icon(props: IconProps) {
 	return (
-		<div className='cursor-pointer absolute top-0 right-0 px-3 py-2' onClick={props.onClick}>
+		<div className='cursor-pointer absolute top-0 right-0 px-3 py-2'>
 			{props.icon}
 		</div>)
 }

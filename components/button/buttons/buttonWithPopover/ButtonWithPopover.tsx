@@ -4,7 +4,7 @@ import {usePopper} from 'react-popper'
 import {Portal} from 'next/dist/client/portal'
 
 export type PopoverContentProps = {
-	onClose: () => void,
+	closeFn: () => void,
 }
 
 type ButtonWithPopoverProps = {
@@ -55,7 +55,7 @@ export function ButtonWithPopover({
 							leaveTo='opacity-0 translate-y-1'
 						>
 							{createPopover({
-								onClose: close,
+								closeFn: close,
 							})}
 						</Transition>
 					)}

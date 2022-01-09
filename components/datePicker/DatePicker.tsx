@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {ButtonWithPopover} from '../button/buttons/buttonWithPopover/ButtonWithPopover'
 import {DateField} from './DateField'
 import {joinClassNames} from '../../common/joinClassNames'
 import {DatePickerPopover} from './popover/DatePickerPopover'
@@ -13,26 +13,25 @@ function DatePicker({
 	className,
 	inputStyle = 'block',
 }: DatePickerProps) {
-	const [showDatepicker, setShowDatepicker] = useState(false)
-	const toggleDatepicker = () => setShowDatepicker(prev => !prev)
 
 	return (
 		<div className={joinClassNames('relative', className)}>
 			{label && <Label text={label} />}
-			<DateField
-				date={date}
-				onClick={toggleDatepicker}
-				icon={icon}
-				style={inputStyle}
+			<ButtonWithPopover
+				createButton={() => <DateField
+					date={date}
+					icon={icon}
+					style={inputStyle}
+				/>}
+				createPopover={({closeFn}) => <DatePickerPopover
+					selectedDate={date}
+					onSelectedChanged={value => {
+						onSelectedChanged(value)
+						closeFn()
+					}}
+					type={type}
+				/>}
 			/>
-			{showDatepicker && <DatePickerPopover
-				selectedDate={date}
-				onSelectedChanged={value => {
-					onSelectedChanged(value)
-					setShowDatepicker(false)
-				}}
-				type={type}
-			/>}
 		</div>)
 }
 

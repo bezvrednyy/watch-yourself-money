@@ -66,7 +66,7 @@ function CategoryPicker() {
 }
 
 function PopoverContent({
-	onClose,
+	closeFn,
 }: PopoverContentProps) {
 	const [categories] = useAtom(categoriesAtom)
 	const handleSetSelectCategoryId = useAction(addTransactionSectionAtoms.selectedCategoryIdAtom.set)
@@ -81,7 +81,7 @@ function PopoverContent({
 					title={item.title}
 					onClick={() => {
 						handleSetSelectCategoryId(item.id)
-						onClose()
+						closeFn()
 					}}
 					bgHexColor={getColorById(item.colorId)}
 					className='m-1 opacity-90 transform transition hover:scale-105 cursor-pointer hover:opacity-100 shadow'

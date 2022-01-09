@@ -50,7 +50,7 @@ function DatePickerPopover({
 
 	return (
 		<div
-			className='bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0'
+			className='bg-white rounded-lg shadow p-4'
 			style={{width: '17rem'}}
 		>
 			<DatePickerPopoverHeader
