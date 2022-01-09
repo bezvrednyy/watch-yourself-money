@@ -6,16 +6,11 @@ import {RoundedSquare} from '../../../../components/RoundedSquare'
 import {getOutlineIconById} from '../../../../components/icons/getOutlineIconById'
 import {getColorById} from '../../../../common/colors/theme'
 
-type MoneyInfo = {
-	value: number,
-	type: 'expense'|'income',
-}
-
 type ViewTransactionInfo = {
 	id: string,
 	categoryId: string,
 	bankCardName: string,
-	moneyInfo: MoneyInfo,
+	money: number,
 	comment?: string,
 }
 
@@ -27,13 +22,14 @@ function TransactionHistorySectionItem({
 	id,
 	bankCardName,
 	categoryId,
-	moneyInfo,
+	money,
 	comment,
 	onClick,
 }: TransitionHistorySectionItemProps) {
 	const hintClassName = 'text-sm font-light font-sans text-gray-500'
 	const titleClassName = 'text-lg font-light font-sans'
 	const [categories] = useAtom(categoriesAtom)
+	//Для определения EXPENSES/INCOMES использовать category
 	const category = verify(
 		categories.mainCategories.find(x => x.id === categoryId) || categories.subCategories.find(x => x.id === categoryId),
 		'Error, in category not found!',
@@ -55,7 +51,7 @@ function TransactionHistorySectionItem({
 				<p className={hintClassName}>{comment ? `${bankCardName} | ${comment}` : bankCardName}</p>
 			</div>
 			<p className={joinClassNames('flex flex-row-reverse text-purple-500 font-factor self-start flex-grow ml-4', titleClassName)}>
-				{moneyInfo.value}
+				{money}
 			</p>
 		</div>
 	)

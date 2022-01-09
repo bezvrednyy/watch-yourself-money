@@ -1,13 +1,16 @@
 import {PlusIcon} from '@heroicons/react/solid'
 import {useAction, useAtom} from '@reatom/react'
-import {getMilliseconds} from 'date-fns'
-import {useEffect, useState} from 'react'
+import {getMilliseconds, startOfDay} from 'date-fns'
+import {useEffect, useMemo, useState} from 'react'
+import {mapToArray} from '../../../common/array'
+import {defaultCompare} from '../../../common/compare'
 import {useAsyncAction} from '../../../common/declareAsyncAction'
 import {joinClassNames} from '../../../common/joinClassNames'
 import {verify} from '../../../common/verify'
 import {Button} from '../../../components/button/Button'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {categoriesAtom} from '../model/categoriesAtom'
+import {transactionsAtom} from '../model/transactionsAtom'
 import {AddTransactionPanel} from './content/addTransactionSection/AddTransactionPanel'
 import {
 	addTransaction,
@@ -16,22 +19,45 @@ import {
 import {ViewTransactionInfo} from './content/TransactionHistorySectionItem'
 import {DayTransactionsHistorySection} from './content/DayTransactionsHistorySection'
 
-type DayTransitionsData = {
-	dayDate: Date,
-	transitions: Array<ViewTransactionInfo>,
-}
-
 function HistorySection() {
-	const [open, setOpen] = useState(false)
-	const transactionsByDays: Array<DayTransitionsData> = []
-
 	useInitAtoms()
+	const [transactions] = useAtom(transactionsAtom)
+	const [bankAccounts] = useAtom(bankAccountsAtom)
+	const [open, setOpen] = useState(false)
+
+	const transactionsByDays = useMemo(() => {
+		const result: Map<Date, Array<ViewTransactionInfo>> = new Map()
+		transactions.forEach(x => {
+			const date = startOfDay(x.timestamp)
+			const bankAccount = verify(bankAccounts.find(account => account.id === x.bankAccountId))
+			const newItem: ViewTransactionInfo = {
+				id: x.id,
+				categoryId: x.categoryId,
+				bankCardName: bankAccount.name,
+				money: x.money,
+				comment: x.comment,
+			}
+
+			const items = result.get(date)
+			if (items) {
+				items.push(newItem)
+				return
+			}
+			result.set(date, [newItem])
+		})
+		return mapToArray(result)
+			.sort((x, y) => defaultCompare(
+				x.key,
+				y.key,
+			))
+	}, [bankAccounts, transactions])
+
 	return (
 		<div className='flex flex-col w-4/12 bg-white py-5'>
 			{transactionsByDays.map(x => <DayTransactionsHistorySection
-				key={getMilliseconds(x.dayDate)}
-				dayDate={x.dayDate}
-				transitions={x.transitions}
+				key={getMilliseconds(x.key)}
+				dayDate={x.key}
+				transitions={x.value}
 			/>)}
 			<div className='mt-auto px-5 pb-5'>
 				{open && <AddTransactionPanel />}
