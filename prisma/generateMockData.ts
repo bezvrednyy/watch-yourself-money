@@ -28,8 +28,8 @@ async function generateMockData() {
 	})
 
 	await prisma.bankAccount.createMany({data: [
-		{id: bankAccountId, userId, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
-		{id: randomUUID(), userId, iconId: 'outline-gift', name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
+		{id: bankAccountId, userId, money: 0, name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
+		{id: randomUUID(), userId, money: 0, name: 'Сбербанк', description: '#Основная карта', color: 'green#500'},
 	]})
 
 	const fiveCategories: Array<Category> = [

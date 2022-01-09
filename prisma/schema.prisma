@@ -60,10 +60,10 @@ model BankAccount {
     id              String          @id @default(uuid()) @map("id_bank_account")
     name            String
     description     String?
-    iconId          String          @map("id_icon")
     color           String
     user            User            @relation(fields: [userId], references: [id])
-    userId          String             @map("id_user")
+    userId          String          @map("id_user")
+    money           Decimal
     transactions    Transaction[]
     @@map("bank_account")
 }

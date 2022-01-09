@@ -34,6 +34,7 @@ export default NextAuth({
 	},
 	events: {
 		createUser: async ({user}) => {
+			//База данных должна быть проинициализирована ВСЕМИ дефолтными данными. Напр: language, currency...
 			await Promise.all([
 				prisma.category.create({
 					data: {userId: user.id, name: 'Food', color: 'green#300', iconId: 'outline-cake', type: 'EXPENSES'},
@@ -42,7 +43,7 @@ export default NextAuth({
 					data: {userId: user.id, languageId: 'RUSSIAN', currencyId: 'RUBLE', theme: 'DEFAULT'},
 				}),
 				prisma.bankAccount.create({
-					data: {userId: user.id, name: 'Сash', description: 'my love cash', color: 'green#300', iconId: 'outline-cash'},
+					data: {userId: user.id, name: 'Сash', description: 'my love cash', color: 'green#300', money: 0},
 				}),
 			])
 		},
