@@ -22,7 +22,7 @@ function CardsSection() {
 						'my-4',
 						styles['date-picker'],
 					)}
-					inputStyle='string'
+					inputClass='bg-transparent'
 				/>
 				{'—'}
 				<DatePicker
@@ -32,7 +32,7 @@ function CardsSection() {
 						'my-4',
 						styles['date-picker'],
 					)}
-					inputStyle='string'
+					inputClass='bg-transparent'
 				/>
 			</div>
 			<div className={joinClassNames('flex flex-col space-y-4 overflow-auto items-center', styles['cards-section'])}>

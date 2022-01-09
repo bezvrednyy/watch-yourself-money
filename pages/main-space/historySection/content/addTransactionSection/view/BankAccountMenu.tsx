@@ -15,7 +15,7 @@ export function BankAccountMenu() {
 
 	return (
 		<MenuDefault
-			className='mx-2'
+			className='mx-2 grow'
 			popoverClass='w-44 bg-blue-100'
 			createButton={() => (
 				<div className={joinClassNames(

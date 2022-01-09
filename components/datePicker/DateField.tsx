@@ -1,28 +1,28 @@
 import {ReactElement} from 'react'
 import {format} from 'date-fns'
-import {DatePickerInputStyle} from './model/DatePickerData'
+import {joinClassNames} from '../../common/joinClassNames'
 
 type DateFieldProps = {
     date: Date,
     icon?: ReactElement,
-    style: DatePickerInputStyle,
+	inputClass?: string,
 }
 
 function DateField({
 	date,
 	icon,
-	style,
+	inputClass,
 }: DateFieldProps) {
 	return (
 		<div className='flex items-center'>
 			<input
 				type='text'
 				readOnly
-				className={`cursor-pointer w-full p-2 leading-none rounded-lg focus:outline-none text-gray-600 font-medium ${
-            style === 'block'
-                ? 'bg-white shadow-sm focus:shadow-outline'
-                : 'bg-transparent'
-        }`}
+				className={joinClassNames(
+					'w-full p-2 leading-none rounded-lg text-gray-600 font-medium',
+					'cursor-pointer focus:outline-none',
+					inputClass,
+				)}
 				placeholder='Select date'
 				value={format(date, 'yyyy-MM-dd')}
 			/>

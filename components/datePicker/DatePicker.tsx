@@ -11,7 +11,7 @@ function DatePicker({
 	type = 'date',
 	icon,
 	className,
-	inputStyle = 'block',
+	inputClass,
 }: DatePickerProps) {
 
 	return (
@@ -21,7 +21,7 @@ function DatePicker({
 				createButton={() => <DateField
 					date={date}
 					icon={icon}
-					style={inputStyle}
+					inputClass={inputClass}
 				/>}
 				createPopover={({closeFn}) => <DatePickerPopover
 					selectedDate={date}

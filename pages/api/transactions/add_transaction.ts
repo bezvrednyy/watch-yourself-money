@@ -3,7 +3,7 @@ import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import prisma from '../../../prisma/prisma'
 
-type AddTransactionRequestData = {
+export type AddTransactionRequestData = {
 	id: string
 	categoryId: string
 	bankAccountId: string

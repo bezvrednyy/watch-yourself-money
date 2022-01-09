@@ -1,7 +1,6 @@
 import {ReactElement} from 'react'
 
 type DatepickerType = 'date' | 'month'
-type DatePickerInputStyle = 'block' | 'string'
 
 type DatePickerProps = {
     date: Date,
@@ -10,11 +9,10 @@ type DatePickerProps = {
     type?: DatepickerType,
     icon?: ReactElement,
     className?: string,
-    inputStyle?: DatePickerInputStyle,
+    inputClass?: string,
 }
 
 export type {
 	DatepickerType,
 	DatePickerProps,
-	DatePickerInputStyle,
 }

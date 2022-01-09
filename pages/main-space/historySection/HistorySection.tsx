@@ -2,13 +2,17 @@ import {PlusIcon} from '@heroicons/react/solid'
 import {useAction, useAtom} from '@reatom/react'
 import {getMilliseconds} from 'date-fns'
 import {useEffect, useState} from 'react'
+import {useAsyncAction} from '../../../common/declareAsyncAction'
 import {joinClassNames} from '../../../common/joinClassNames'
 import {verify} from '../../../common/verify'
 import {Button} from '../../../components/button/Button'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {categoriesAtom} from '../model/categoriesAtom'
 import {AddTransactionPanel} from './content/addTransactionSection/AddTransactionPanel'
-import {addTransactionSectionAtoms} from './content/addTransactionSection/model/addTransactionSectionAtoms'
+import {
+	addTransaction,
+	addTransactionSectionAtoms,
+} from './content/addTransactionSection/model/addTransactionSectionAtoms'
 import {ViewTransactionInfo} from './content/TransactionHistorySectionItem'
 import {DayTransactionsHistorySection} from './content/DayTransactionsHistorySection'
 
@@ -65,15 +69,16 @@ function ButtonsSection({
 	open,
 	setOpen,
 }: ButtonsSectionProps) {
+	const handleAddTransaction = useAsyncAction(addTransaction)
+
 	if (open) {
 		return (
 			<div className='flex space-x-3 mt-3'>
 				<Button
 					style='blue-default'
-					onClick={() => {
-						//TODO:Сохранение данных
-						setOpen(false)
-					}}
+					onClick={() => handleAddTransaction({
+						onClose: () => setOpen(false),
+					})}
 					structure='text'
 					text='Save'
 				/>

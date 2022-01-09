@@ -3,6 +3,7 @@ import {useMemo} from 'react'
 import {joinClassNames} from '../../../../../common/joinClassNames'
 import {verify} from '../../../../../common/verify'
 import {Badge} from '../../../../../components/Badge'
+import {DatePicker} from '../../../../../components/datePicker/DatePicker'
 import {getOutlineIconById} from '../../../../../components/icons/getOutlineIconById'
 import {TextField} from '../../../../../components/textField/TextField'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../environment/userSettingsAtom'
@@ -16,14 +17,21 @@ export function AddTransactionPanel() {
 	const [userSettings] = useAtom(userSettingsAtom)
 	const [sum] = useAtom(addTransactionSectionAtoms.sumAtom)
 	const [comment] = useAtom(addTransactionSectionAtoms.transactionCommentAtom)
+	const [transactionDate] = useAtom(addTransactionSectionAtoms.transactionDateAtom)
 	const handleSetSum = useAction(addTransactionSectionAtoms.sumAtom.set)
 	const handleSetComment = useAction(addTransactionSectionAtoms.transactionCommentAtom.set)
+	const handleSetDate = useAction(addTransactionSectionAtoms.transactionDateAtom.set)
 
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 
 	return <div>
 		<div className='flex items-center justify-between mb-2'>
 			<CategoryPicker />
+			<DatePicker
+				date={transactionDate}
+				onSelectedChanged={handleSetDate}
+				inputClass='bg-transparent text-center w-32'
+			/>
 			<BankAccountMenu />
 			<TextField
 				style='link'
