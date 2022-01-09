@@ -102,19 +102,24 @@ function SubcategoryBadge({
 	title,
 	iconId,
 }: CategoryData) {
+	const [selectedSubcategoryId] = useAtom(addTransactionSectionAtoms.selectedSubcategoryIdAtom)
 	const handleSetSelectedSubcategoryId = useAction(addTransactionSectionAtoms.selectedSubcategoryIdAtom.set)
+
 	return (
 		<Badge
 			label={title}
 			className={joinClassNames(
-				'rounded-full mr-1 mt-2 bg-indigo-300',
+				'rounded-full mr-1 mt-2 bg-indigo-300 border-2',
 				styles['subcategory-badge'],
+				selectedSubcategoryId === id ? 'border-indigo-500 opacity-100' : 'opacity-80 border-transparent',
 			)}
 			createIcon={() => {
 				const IconFC = getOutlineIconById(iconId)
 				return <IconFC className='w-4 h-4' />
 			}}
-			onClick={() => handleSetSelectedSubcategoryId(id)}
+			onClick={() => handleSetSelectedSubcategoryId(
+				selectedSubcategoryId === id ? null : id,
+			)}
 			cornerType='rounded'
 		/>
 	)
