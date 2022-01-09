@@ -26,7 +26,6 @@ export function CategoryPicker() {
 		createPopover={props => <PopoverDefault
 			createContent={() => <PopoverContent {...props}/>}
 		/>}
-		className='mr-4'
 	/>
 }
 

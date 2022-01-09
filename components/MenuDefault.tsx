@@ -7,12 +7,14 @@ type MenuDefaultProps = {
 	createButton: () => JSX.Element,
 	items: Array<JSX.Element>, //Menu.Item components
 	popoverClass?: string,
+	className?: string,
 }
 
 export function MenuDefault({
 	createButton,
 	items,
 	popoverClass,
+	className,
 }: MenuDefaultProps) {
 	const [referenceElement, setReferenceElement] = useState<HTMLButtonElement|null>(null)
 	const [popperElement, setPopperElement] = useState<HTMLDivElement|null>()
@@ -26,7 +28,10 @@ export function MenuDefault({
 	})
 
 	return (
-		<Menu as='div' className='relative inline-block text-left'>
+		<Menu as='div' className={joinClassNames(
+			'relative inline-block text-left',
+			className,
+		)}>
 			<Menu.Button ref={setReferenceElement}>
 				{createButton()}
 			</Menu.Button>

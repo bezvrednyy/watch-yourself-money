@@ -20,7 +20,7 @@ export function AddTransactionPanel() {
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 
 	return <div>
-		<div className='flex items-center'>
+		<div className='flex items-center justify-between'>
 			<CategoryPicker />
 			<BankAccountMenu />
 			<TextField

@@ -3,6 +3,7 @@ import {createPrimitiveAtom} from '@reatom/core/primitives'
 
 const selectedCategoryIdAtom = createPrimitiveAtom<string>('')
 const sumAtom = createPrimitiveAtom<number>(0)
+const selectedBankAccountId = createPrimitiveAtom<string>('')
 const selectedSubcategoryIdAtom = createAtom(
 	{
 		set: (v: string|null) => v,
@@ -19,4 +20,5 @@ export const addTransactionSectionAtoms = {
 	selectedCategoryIdAtom,
 	sumAtom,
 	selectedSubcategoryIdAtom,
+	selectedBankAccountId,
 }

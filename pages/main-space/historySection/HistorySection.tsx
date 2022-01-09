@@ -5,6 +5,7 @@ import {useEffect, useState} from 'react'
 import {joinClassNames} from '../../../common/joinClassNames'
 import {verify} from '../../../common/verify'
 import {Button} from '../../../components/button/Button'
+import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {categoriesAtom} from '../model/categoriesAtom'
 import {AddTransactionPanel} from './content/addTransactionSection/AddTransactionPanel'
 import {addTransactionSectionAtoms} from './content/addTransactionSection/model/addTransactionSectionAtoms'
@@ -37,12 +38,22 @@ function HistorySection() {
 
 function useInitAtoms() {
 	const [categories] = useAtom(categoriesAtom)
+	const [bankAccounts] = useAtom(bankAccountsAtom)
 	const initCategoryId = verify(categories.mainCategories[0], 'Error: there must be at least one category').id
+	const initBankAccountId = verify(bankAccounts[0], 'Error: there must be at least one bank account').id
+
 	const handleSetSelectCategoryId = useAction(addTransactionSectionAtoms.selectedCategoryIdAtom.set)
+	const handleSetSelectedBankAccountId = useAction(addTransactionSectionAtoms.selectedBankAccountId.set)
 
 	useEffect(() => {
 		handleSetSelectCategoryId(initCategoryId)
-	}, [handleSetSelectCategoryId, initCategoryId])
+		handleSetSelectedBankAccountId(initBankAccountId)
+	}, [
+		handleSetSelectCategoryId,
+		handleSetSelectedBankAccountId,
+		initBankAccountId,
+		initCategoryId,
+	])
 }
 
 type ButtonsSectionProps = {
