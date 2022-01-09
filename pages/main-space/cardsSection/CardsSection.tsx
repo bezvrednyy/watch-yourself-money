@@ -1,21 +1,22 @@
-import {useAtom} from '@reatom/react'
+import {useAction, useAtom} from '@reatom/react'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
+import {selectedPeriodAtom} from '../model/selectedPeriodAtom'
 import styles from './CardsSection.module.css'
 import {joinClassNames} from '../../../common/joinClassNames'
 import {BankCard} from '../../../components/bankCard/BankCard'
 import {DatePicker} from '../../../components/datePicker/DatePicker'
 import {CalendarIcon} from '@heroicons/react/outline'
-import {useState} from 'react'
 
 function CardsSection() {
-	const [selectedDate, setSelectedDate] = useState(new Date())
+	const [selectedPeriod] = useAtom(selectedPeriodAtom)
 	const [cards] = useAtom(bankAccountsAtom)
+	const handleSetStartDate = useAction(selectedPeriodAtom.setStartDate)
 
 	return (
 		<div className='flex flex-col w-96 bg-green-100'>
 			<DatePicker
-				date={selectedDate}
-				onSelectedChanged={setSelectedDate}
+				date={selectedPeriod.startDate}
+				onSelectedChanged={handleSetStartDate}
 				className='my-4 w-36 self-center'
 				inputStyle='string'
 				icon={<CalendarIcon className='w-5 h-5 text-gray-600' />}
