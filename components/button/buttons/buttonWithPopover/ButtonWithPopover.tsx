@@ -1,5 +1,5 @@
 import {Popover, Transition} from '@headlessui/react'
-import {Fragment, useState} from 'react'
+import {useState} from 'react'
 import {usePopper} from 'react-popper'
 import {Portal} from 'next/dist/client/portal'
 
@@ -14,7 +14,14 @@ export function ButtonWithPopover({
 }: ButtonWithPopoverProps) {
 	const [referenceElement, setReferenceElement] = useState<HTMLButtonElement|null>(null)
 	const [popperElement, setPopperElement] = useState<HTMLDivElement|null>()
-	const {styles, attributes} = usePopper(referenceElement, popperElement)
+	const {styles, attributes} = usePopper(referenceElement, popperElement, {
+		modifiers: [{
+			name: 'offset',
+			options: {
+				offset: [0, 5],
+			},
+		}],
+	})
 
 	//Panel всегда должна быть в DOM, т. к. за ней следит popper. Поэтому Transition закинут внутрь:
 	// https://popper.js.org/docs/v2/modifiers/hide/
