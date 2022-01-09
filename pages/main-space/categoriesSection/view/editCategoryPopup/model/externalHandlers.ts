@@ -1,7 +1,7 @@
 import {declareAsyncAction} from '../../../../../../common/declareAsyncAction'
 import {verify} from '../../../../../../common/verify'
 import {getEnvType} from '../../../../../../environment/environment'
-import {UpdateCategoriesInfoRequest} from '../../../../../api/categories/update_category_info'
+import {UpdateCategoriesInfoRequestData} from '../../../../../api/categories/update_category_info'
 import {editableCategoryIdAtom} from '../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from './editableCategoryAtom'
 
@@ -21,7 +21,7 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 	const editedSubcategoryIds = store.getState(editedSubcategoryIdsSetAtom)
 	const newSubcategoriesIds = store.getState(newSubcategoriesIdsSetAtom)
 
-	const data: UpdateCategoriesInfoRequest = {
+	const data: UpdateCategoriesInfoRequestData = {
 		id: verify(store.getState(editableCategoryIdAtom)),
 		iconId: store.getState(iconIdAtom),
 		colorId: store.getState(colorIdAtom),

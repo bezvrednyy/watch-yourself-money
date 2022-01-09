@@ -7,7 +7,7 @@ import {ColorId} from '../../../common/colors/colors'
 import prisma from '../../../prisma/prisma'
 import {CategoryData} from '../../main-space/model/categoriesAtom'
 
-export type UpdateCategoriesInfoRequest = {
+export type UpdateCategoriesInfoRequestData = {
 	id: string,
 	name: string,
 	iconId: OutlineIconId,
@@ -19,7 +19,7 @@ export type UpdateCategoriesInfoRequest = {
 
 type UpdateCategoriesApiRequest = NextApiRequest & {
 	body: {
-		data: UpdateCategoriesInfoRequest,
+		data: UpdateCategoriesInfoRequestData,
 	},
 }
 
@@ -33,8 +33,9 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 		newSubcategories,
 		editedSubcategories,
 		...mainCategory
-	} = req.body.data as UpdateCategoriesInfoRequest
+	} = req.body.data as UpdateCategoriesInfoRequestData
 
+	//TODO: Either вместо исключений
 	try {
 		await Promise.all([
 			prisma.category.deleteMany({

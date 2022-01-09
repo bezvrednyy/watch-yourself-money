@@ -9,11 +9,9 @@ export default async function getUserSettings(req: NextApiRequest, res: NextApiR
 		res.status(401).redirect('/api/auth/signin')
 	}
 
-	const settings = await prisma.userSettings.findFirst({
-		where: {
-			userId: session?.user.id,
-		},
-	})
+	const settings = await prisma.userSettings.findFirst({where: {
+		userId: session?.user.id,
+	}})
 
 	if (settings) {
 		res.json({

@@ -14,13 +14,9 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 		return
 	}
 
-	const categories = await prisma.category.findMany({
-		where: {
-			user: {
-				email: verify(session.user.email, 'Server error: email not found'),
-			},
-		},
-	})
+	const categories = await prisma.category.findMany({where: {user: {
+		id: verify(session.user.id, 'Server error: email not found'),
+	}}})
 
 	const remappedCategories = categories.map(x => {
 		const remappedValue: CategoryData = {
