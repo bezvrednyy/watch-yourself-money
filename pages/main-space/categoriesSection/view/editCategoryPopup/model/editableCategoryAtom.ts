@@ -1,6 +1,6 @@
 import {createAtom} from '@reatom/core'
 import {ColorId, ColorName, ColorsVariation, createColorId} from '../../../../../../common/colors/colors'
-import {CategoryData} from '../../../model/categoriesAtom'
+import {CategoryData} from '../../../../model/categoriesAtom'
 import {createEnumAtom, createSetAtom, createStringAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../../../components/icons/getOutlineIconById'
 

@@ -4,7 +4,7 @@ import {ColorId} from '../../../common/colors/colors'
 import {verify} from '../../../common/verify'
 import {OutlineIconId} from '../../../components/icons/getOutlineIconById'
 import prisma from '../../../prisma/prisma'
-import {CategoryData} from '../../main-space/categoriesSection/model/categoriesAtom'
+import {CategoryData} from '../../main-space/model/categoriesAtom'
 
 export default async function getCategories(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })

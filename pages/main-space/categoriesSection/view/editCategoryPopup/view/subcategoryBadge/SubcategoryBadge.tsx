@@ -12,7 +12,7 @@ import {
 import {PopupDefault} from '../../../../../../../components/PopupDefault'
 import {RoundedSquare} from '../../../../../../../components/RoundedSquare'
 import {TextField} from '../../../../../../../components/textField/TextField'
-import {CategoryData} from '../../../../model/categoriesAtom'
+import {CategoryData} from '../../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from '../../model/editableCategoryAtom'
 import styles from './SubcategoryBadge.module.css'
 import {useBadgePopupButtons} from './useBadgePopupButtons'

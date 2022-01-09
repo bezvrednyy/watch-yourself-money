@@ -2,7 +2,7 @@ import {declareAsyncAction} from '../../../../../../common/declareAsyncAction'
 import {verify} from '../../../../../../common/verify'
 import {getEnvType} from '../../../../../../environment/environment'
 import {UpdateCategoriesInfoRequest} from '../../../../../api/categories/update_category_info'
-import {editableCategoryIdAtom} from '../../../model/categoriesAtom'
+import {editableCategoryIdAtom} from '../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from './editableCategoryAtom'
 
 type SaveDataParams = {

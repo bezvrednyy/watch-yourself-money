@@ -4,7 +4,7 @@ import {EditCategoryPopup} from './view/editCategoryPopup/EditCategoryPopup'
 import {getOutlineIconById} from '../../../components/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../components/RoundedSquare'
 import {Tabs} from '../Tabs'
-import {categoriesAtom, editableCategoryIdAtom} from './model/categoriesAtom'
+import {categoriesAtom, editableCategoryIdAtom} from '../model/categoriesAtom'
 
 function CategoriesSection() {
 	const [editableCategoryId] = useAtom(editableCategoryIdAtom)

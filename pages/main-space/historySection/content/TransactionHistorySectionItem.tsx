@@ -1,5 +1,5 @@
 import {joinClassNames} from '../../../../common/joinClassNames'
-import {categoriesAtom} from '../../categoriesSection/model/categoriesAtom'
+import {categoriesAtom} from '../../model/categoriesAtom'
 import {useAtom} from '@reatom/react'
 import {verify} from '../../../../common/verify'
 import {RoundedSquare} from '../../../../components/RoundedSquare'

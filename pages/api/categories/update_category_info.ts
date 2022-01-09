@@ -5,7 +5,7 @@ import {verify} from '../../../common/verify'
 import {OutlineIconId} from '../../../components/icons/getOutlineIconById'
 import {ColorId} from '../../../common/colors/colors'
 import prisma from '../../../prisma/prisma'
-import {CategoryData} from '../../main-space/categoriesSection/model/categoriesAtom'
+import {CategoryData} from '../../main-space/model/categoriesAtom'
 
 export type UpdateCategoriesInfoRequest = {
 	id: string,
