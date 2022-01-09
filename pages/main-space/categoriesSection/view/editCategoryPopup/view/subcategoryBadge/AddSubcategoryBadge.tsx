@@ -1,6 +1,6 @@
 import {useAction, useAtom} from '@reatom/react'
-import {randomUUID} from 'crypto'
 import {useState} from 'react'
+import {generateUuid} from '../../../../../../../common/generateRandom'
 import {joinClassNames} from '../../../../../../../common/joinClassNames'
 import {verify} from '../../../../../../../common/verify'
 import {Badge} from '../../../../../../../components/Badge'
@@ -49,7 +49,7 @@ export function AddSubcategoryBadge() {
 						return
 					}
 					handleAddSubcategory({
-						id: randomUUID(),
+						id: generateUuid(),
 						parentCategoryId: verify(editableCategoryId),
 						title,
 						type: 'EXPENSES',
