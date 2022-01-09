@@ -21,7 +21,7 @@ function HistorySection() {
 	useInitAtoms()
 	const iconClass = 'w-5 h-5 text-purple-500'
 	return (
-		<div className='w-4/12 bg-white py-5'>
+		<div className='flex flex-col w-4/12 bg-white py-5'>
 			{transactionsByDays.map(x => <DayTransactionsHistorySection
 				key={getMilliseconds(x.dayDate)}
 				dayDate={x.dayDate}
@@ -36,6 +36,7 @@ function HistorySection() {
 					{open ? <MinusIcon className={iconClass} /> : <PlusIcon className={iconClass} />}
 				</div>}
 				createPanel={() => <AddTransactionPanel />}
+				className='mt-auto px-5 pb-5'
 			/>
 		</div>)
 }
