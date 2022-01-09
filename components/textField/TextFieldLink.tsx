@@ -14,7 +14,7 @@ function TextFieldLink({
 
 	return (
 		<div className={joinClassNames(
-			'flex flex-between border-b',
+			'flex justify-between border-b',
 			focused ? 'border-b-indigo-500' : 'border-b-gray-300',
 		)}>
 			<TextFieldInput

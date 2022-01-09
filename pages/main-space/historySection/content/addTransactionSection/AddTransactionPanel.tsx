@@ -58,6 +58,7 @@ function CategoryPicker() {
 		createPopover={() => <PopoverDefault
 			createContent={() => <PopoverContent/>}
 		/>}
+		className='mr-4'
 	/>
 }
 

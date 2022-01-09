@@ -5,12 +5,14 @@ import {Portal} from 'next/dist/client/portal'
 
 type ButtonWithPopoverProps = {
 	createButton: () => JSX.Element,
-	createPopover: () => JSX.Element
+	createPopover: () => JSX.Element,
+	className?: string,
 }
 
 export function ButtonWithPopover({
 	createButton,
 	createPopover,
+	className,
 }: ButtonWithPopoverProps) {
 	const [referenceElement, setReferenceElement] = useState<HTMLButtonElement|null>(null)
 	const [popperElement, setPopperElement] = useState<HTMLDivElement|null>()
@@ -26,7 +28,7 @@ export function ButtonWithPopover({
 	//Panel всегда должна быть в DOM, т. к. за ней следит popper. Поэтому Transition закинут внутрь:
 	// https://popper.js.org/docs/v2/modifiers/hide/
 	return (
-		<Popover>
+		<Popover className={className}>
 			<Popover.Button
 				ref={setReferenceElement}
 			>
