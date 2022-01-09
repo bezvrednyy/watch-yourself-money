@@ -15,12 +15,14 @@ import {CategoryPicker} from './view/CategoryPicker'
 export function AddTransactionPanel() {
 	const [userSettings] = useAtom(userSettingsAtom)
 	const [sum] = useAtom(addTransactionSectionAtoms.sumAtom)
+	const [comment] = useAtom(addTransactionSectionAtoms.transactionCommentAtom)
 	const handleSetSum = useAction(addTransactionSectionAtoms.sumAtom.set)
+	const handleSetComment = useAction(addTransactionSectionAtoms.transactionCommentAtom.set)
 
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 
 	return <div>
-		<div className='flex items-center justify-between'>
+		<div className='flex items-center justify-between mb-2'>
 			<CategoryPicker />
 			<BankAccountMenu />
 			<TextField
@@ -39,6 +41,15 @@ export function AddTransactionPanel() {
 			/>
 		</div>
 		<SubcategoriesSection/>
+		<TextField
+			style='default'
+			value={comment}
+			onInput={value => handleSetComment(value)}
+			placeholder='#Products'
+			required={true}
+			inputType='text'
+			maxLength={255}
+		/>
 	</div>
 }
 
@@ -50,6 +61,11 @@ function SubcategoriesSection() {
 		() => categories.subCategories.filter(x => x.parentCategoryId === selectedCategory.id),
 		[categories.subCategories, selectedCategory.id],
 	)
+
+	if (!subcategories.length) {
+		return null
+	}
+
 	return (
 		<div className='flex flex-wrap'>
 			{subcategories.map(x => <SubcategoryBadge key={x.id} {...x} />)}
@@ -69,7 +85,7 @@ function SubcategoryBadge({
 		<Badge
 			label={title}
 			className={joinClassNames(
-				'rounded-full mr-1 mt-2 bg-indigo-300 border-2',
+				'rounded-full mr-1 mb-2 bg-indigo-300 border-2',
 				styles['subcategory-badge'],
 				selectedSubcategoryId === id ? 'border-indigo-500 opacity-100' : 'opacity-80 border-transparent',
 			)}
