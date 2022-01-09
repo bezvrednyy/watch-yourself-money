@@ -38,8 +38,8 @@ export function AddTransactionPanel() {
 				)}
 				createIcon={() => <div className='text-xl'>{currencySymbol}</div>}
 			/>
-			<SubcategoriesSection/>
 		</div>
+		<SubcategoriesSection/>
 	</div>
 }
 
@@ -91,7 +91,7 @@ function SubcategoriesSection() {
 		[categories.subCategories, selectedCategory.id],
 	)
 	return (
-		<div>
+		<div className='flex flex-wrap'>
 			{subcategories.map(x => <SubcategoryBadge key={x.id} {...x} />)}
 		</div>
 	)
@@ -112,7 +112,7 @@ function SubcategoryBadge({
 			)}
 			createIcon={() => {
 				const IconFC = getOutlineIconById(iconId)
-				return <IconFC className='w-5 h-5' />
+				return <IconFC className='w-4 h-4' />
 			}}
 			onClick={() => handleSetSelectedSubcategoryId(id)}
 			cornerType='rounded'

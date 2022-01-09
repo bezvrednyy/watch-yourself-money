@@ -73,7 +73,7 @@ function SubcategoryBadge(props: CategoryData) {
 			)}
 			createIcon={() => {
 				const IconFC = getOutlineIconById(initIconId)
-				return <IconFC className='w-5 h-5' />
+				return <IconFC className='w-4 h-4' />
 			}}
 			onClick={() => setShow(true)}
 			cornerType='rounded'

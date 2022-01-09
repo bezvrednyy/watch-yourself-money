@@ -22,8 +22,8 @@ export function Badge({
 	return (
 		<span
 			className={joinClassNames(
-				'flex items-center text-black text-xs font-bold',
-				'px-2 md:px-4 py-1 h-7',
+				'flex items-center text-black text-xs font-medium',
+				'px-2 md:px-4 py-1 h-6',
 				'duration-300 opacity-90 hover:opacity-100 cursor-pointer',
 				className,
 				cornerType === 'regular' ? 'rounded-sm' : 'rounded-full',
