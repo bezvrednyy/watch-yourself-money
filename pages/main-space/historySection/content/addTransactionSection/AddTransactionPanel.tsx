@@ -1,14 +1,16 @@
 import {useAction, useAtom} from '@reatom/react'
+import {useMemo} from 'react'
 import {getColorById} from '../../../../../common/colors/theme'
 import {joinClassNames} from '../../../../../common/joinClassNames'
 import {verify} from '../../../../../common/verify'
+import {Badge} from '../../../../../components/Badge'
 import {ButtonWithPopover} from '../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
 import {getOutlineIconById} from '../../../../../components/icons/getOutlineIconById'
 import {PopoverDefault} from '../../../../../components/popovers/PopoverDefault'
 import {RoundedSquare} from '../../../../../components/RoundedSquare'
 import {TextField} from '../../../../../components/textField/TextField'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../environment/userSettingsAtom'
-import {categoriesAtom} from '../../../model/categoriesAtom'
+import {CategoryData, categoriesAtom} from '../../../model/categoriesAtom'
 import styles from './AddTransactionPanel.module.css'
 import {addTransactionSectionAtoms} from './model/addTransactionSectionAtoms'
 
@@ -36,6 +38,7 @@ export function AddTransactionPanel() {
 				)}
 				createIcon={() => <div className='text-xl'>{currencySymbol}</div>}
 			/>
+			<SubcategoriesSection/>
 		</div>
 	</div>
 }
@@ -76,5 +79,43 @@ function PopoverContent() {
 				/>
 			})}
 		</div>
+	)
+}
+
+function SubcategoriesSection() {
+	const [selectedCategoryId] = useAtom(addTransactionSectionAtoms.selectedCategoryIdAtom)
+	const [categories] = useAtom(categoriesAtom)
+	const selectedCategory = verify(categories.mainCategories.find(x => x.id === selectedCategoryId))
+	const subcategories = useMemo(
+		() => categories.subCategories.filter(x => x.parentCategoryId === selectedCategory.id),
+		[categories.subCategories, selectedCategory.id],
+	)
+	return (
+		<div>
+			{subcategories.map(x => <SubcategoryBadge key={x.id} {...x} />)}
+		</div>
+	)
+}
+
+function SubcategoryBadge({
+	id,
+	title,
+	iconId,
+}: CategoryData) {
+	const handleSetSelectedSubcategoryId = useAction(addTransactionSectionAtoms.selectedSubcategoryIdAtom.set)
+	return (
+		<Badge
+			label={title}
+			className={joinClassNames(
+				'rounded-full mr-1 mt-2 bg-indigo-300',
+				styles['subcategory-badge'],
+			)}
+			createIcon={() => {
+				const IconFC = getOutlineIconById(iconId)
+				return <IconFC className='w-5 h-5' />
+			}}
+			onClick={() => handleSetSelectedSubcategoryId(id)}
+			cornerType='rounded'
+		/>
 	)
 }
