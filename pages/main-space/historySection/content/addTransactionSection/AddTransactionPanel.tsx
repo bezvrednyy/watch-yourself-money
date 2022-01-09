@@ -4,7 +4,10 @@ import {getColorById} from '../../../../../common/colors/theme'
 import {joinClassNames} from '../../../../../common/joinClassNames'
 import {verify} from '../../../../../common/verify'
 import {Badge} from '../../../../../components/Badge'
-import {ButtonWithPopover} from '../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
+import {
+	ButtonWithPopover,
+	PopoverContentProps,
+} from '../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
 import {getOutlineIconById} from '../../../../../components/icons/getOutlineIconById'
 import {PopoverDefault} from '../../../../../components/popovers/PopoverDefault'
 import {RoundedSquare} from '../../../../../components/RoundedSquare'
@@ -55,14 +58,16 @@ function CategoryPicker() {
 			bgHexColor={getColorById(selectedCategory.colorId)}
 			className='transform transition hover:scale-105 cursor-pointer shadow'
 		/>}
-		createPopover={() => <PopoverDefault
-			createContent={() => <PopoverContent/>}
+		createPopover={props => <PopoverDefault
+			createContent={() => <PopoverContent {...props}/>}
 		/>}
 		className='mr-4'
 	/>
 }
 
-function PopoverContent() {
+function PopoverContent({
+	onClose,
+}: PopoverContentProps) {
 	const [categories] = useAtom(categoriesAtom)
 	const handleSetSelectCategoryId = useAction(addTransactionSectionAtoms.selectedCategoryIdAtom.set)
 
@@ -74,7 +79,10 @@ function PopoverContent() {
 					key={item.id}
 					createIcon={() => <Icon className='m-1 w-6 h-6 overflow-hidden'/>}
 					title={item.title}
-					onClick={() => handleSetSelectCategoryId(item.id)}
+					onClick={() => {
+						handleSetSelectCategoryId(item.id)
+						onClose()
+					}}
 					bgHexColor={getColorById(item.colorId)}
 					className='m-1 opacity-90 transform transition hover:scale-105 cursor-pointer hover:opacity-100 shadow'
 				/>
