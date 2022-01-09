@@ -37,7 +37,7 @@ export function MenuDefault({
 			</Menu.Button>
 			<Menu.Items
 				className={joinClassNames(
-					'rounded-md shadow-lg',
+					'rounded-md shadow-lg z-10',
 					popoverClass,
 				)}
 				ref={setPopperElement}
