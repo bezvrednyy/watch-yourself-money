@@ -14,7 +14,7 @@ function CardsSection() {
 
 	return (
 		<div className='flex flex-col w-96 bg-green-100'>
-			<div className='flex justify-center'>
+			<div className='flex justify-center items-center'>
 				<DatePicker
 					date={selectedPeriod.startDate}
 					onSelectedChanged={handleSetStartDate}
@@ -24,6 +24,7 @@ function CardsSection() {
 					)}
 					inputStyle='string'
 				/>
+				{'—'}
 				<DatePicker
 					date={selectedPeriod.endDate}
 					onSelectedChanged={handleSetEndDate}
