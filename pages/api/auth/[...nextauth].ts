@@ -32,4 +32,19 @@ export default NextAuth({
 			return session
 		},
 	},
+	events: {
+		createUser: async ({user}) => {
+			await Promise.all([
+				prisma.category.create({
+					data: {userId: user.id, name: 'Food', color: 'green#300', iconId: 'outline-cake', type: 'EXPENSES'},
+				}),
+				prisma.userSettings.create({
+					data: {userId: user.id, languageId: 'RUSSIAN', currencyId: 'RUBLE', theme: 'DEFAULT'},
+				}),
+				prisma.bankAccount.create({
+					data: {userId: user.id, name: 'Сash', description: 'my love cash', color: 'green#300', iconId: 'outline-cash'},
+				}),
+			])
+		},
+	},
 })
