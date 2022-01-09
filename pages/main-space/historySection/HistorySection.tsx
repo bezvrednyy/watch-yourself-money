@@ -1,10 +1,10 @@
-import {MinusIcon, PlusIcon} from '@heroicons/react/solid'
+import {PlusIcon} from '@heroicons/react/solid'
 import {useAction, useAtom} from '@reatom/react'
 import {getMilliseconds} from 'date-fns'
-import {useEffect} from 'react'
+import {useEffect, useState} from 'react'
 import {joinClassNames} from '../../../common/joinClassNames'
 import {verify} from '../../../common/verify'
-import DisclosureDefault from '../../../components/DisclosureDefault'
+import {Button} from '../../../components/button/Button'
 import {categoriesAtom} from '../model/categoriesAtom'
 import {AddTransactionPanel} from './content/addTransactionSection/AddTransactionPanel'
 import {addTransactionSectionAtoms} from './content/addTransactionSection/model/addTransactionSectionAtoms'
@@ -17,9 +17,10 @@ type DayTransitionsData = {
 }
 
 function HistorySection() {
+	const [open, setOpen] = useState(false)
 	const transactionsByDays: Array<DayTransitionsData> = []
+
 	useInitAtoms()
-	const iconClass = 'w-5 h-5 text-purple-500'
 	return (
 		<div className='flex flex-col w-4/12 bg-white py-5'>
 			{transactionsByDays.map(x => <DayTransactionsHistorySection
@@ -27,17 +28,10 @@ function HistorySection() {
 				dayDate={x.dayDate}
 				transitions={x.transitions}
 			/>)}
-			<DisclosureDefault
-				createButton={open => <div className={joinClassNames(
-					'flex justify-between w-full px-4 py-2 mt-2 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg',
-					'hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75',
-				)}>
-					<span>Add new transaction</span>
-					{open ? <MinusIcon className={iconClass} /> : <PlusIcon className={iconClass} />}
-				</div>}
-				createPanel={() => <AddTransactionPanel />}
-				className='mt-auto px-5 pb-5'
-			/>
+			<div className='mt-auto px-5 pb-5'>
+				{open && <AddTransactionPanel />}
+				<ButtonsSection open={open} setOpen={setOpen} />
+			</div>
 		</div>)
 }
 
@@ -49,6 +43,52 @@ function useInitAtoms() {
 	useEffect(() => {
 		handleSetSelectCategoryId(initCategoryId)
 	}, [handleSetSelectCategoryId, initCategoryId])
+}
+
+type ButtonsSectionProps = {
+	open: boolean,
+	setOpen: (v: boolean) => void,
+}
+
+function ButtonsSection({
+	open,
+	setOpen,
+}: ButtonsSectionProps) {
+	if (open) {
+		return (
+			<div className='flex space-x-3 mt-3'>
+				<Button
+					style='blue-default'
+					onClick={() => {
+						//TODO:Сохранение данных
+						setOpen(false)
+					}}
+					structure='text'
+					text='Save'
+				/>
+				<Button
+					style='secondary'
+					onClick={() => setOpen(false)}
+					structure='text'
+					text='Cancel'
+				/>
+			</div>
+		)
+	}
+
+	return (
+		<div
+			key='open'
+			className={joinClassNames(
+				'flex justify-between w-full px-4 py-2.5 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg',
+				'hover:bg-purple-200 cursor-pointer',
+			)}
+			onClick={() => setOpen(true)}
+		>
+			<span>Add new transaction</span>
+			<PlusIcon className='w-5 h-5 text-purple-500' />
+		</div>
+	)
 }
 
 export {
