@@ -1,6 +1,6 @@
 import {ButtonWithPopover} from '../button/buttons/buttonWithPopover/ButtonWithPopover'
 import {DateField} from './DateField'
-import {joinClassNames} from '../../common/joinClassNames'
+import {joinStrings} from '../../common/string'
 import {DatePickerPopover} from './popover/DatePickerPopover'
 import type {DatePickerProps} from './model/DatePickerData'
 
@@ -15,7 +15,7 @@ function DatePicker({
 }: DatePickerProps) {
 
 	return (
-		<div className={joinClassNames('relative', className)}>
+		<div className={joinStrings('relative', className)}>
 			{label && <Label text={label} />}
 			<ButtonWithPopover
 				createButton={() => <DateField

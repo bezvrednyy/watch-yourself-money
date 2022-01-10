@@ -1,7 +1,7 @@
 import {useAtom} from '@reatom/react'
 import {useState} from 'react'
 import {checkNever} from '../../../../../../../common/checkNever'
-import {joinClassNames} from '../../../../../../../common/joinClassNames'
+import {joinStrings} from '../../../../../../../common/string'
 import {Badge} from '../../../../../../../uikit/Badge'
 import {getOutlineIconById} from '../../../../../../../uikit/icons/getOutlineIconById'
 import {PopupDefault} from '../../../../../../../uikit/PopupDefault'
@@ -60,7 +60,7 @@ function SubcategoryBadge(props: CategoryData) {
 	return <>
 		<Badge
 			label={initTitle}
-			className={joinClassNames(
+			className={joinStrings(
 				'rounded-full mr-1 mt-2',
 				styles.badge,
 				badgeColorClass,

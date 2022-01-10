@@ -1,4 +1,4 @@
-import {joinClassNames} from '../common/joinClassNames'
+import {joinStrings} from '../common/string'
 
 type RoundedType = 'none'|'default'|'full'
 
@@ -22,7 +22,7 @@ function RoundedSquare({
 	return (
 		<div
 			onClick={onClick}
-			className={joinClassNames(
+			className={joinStrings(
 				className,
 				'flex items-center justify-center',
 				getRoundedClass(rounded),
@@ -46,7 +46,7 @@ function Icon({
 }: IconProps) {
 	return (
 		<div
-			className={joinClassNames(
+			className={joinStrings(
 				'flex justify-center items-center',
 				getRoundedClass(rounded),
 			)}

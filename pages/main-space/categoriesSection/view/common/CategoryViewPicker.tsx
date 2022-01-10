@@ -4,7 +4,7 @@ import {getColorById} from '../../../../../common/colors/theme'
 import {PopoverDefault} from '../../../../../uikit/popovers/PopoverDefault'
 import {ButtonWithPopover} from '../../../../../uikit/button/buttons/buttonWithPopover/ButtonWithPopover'
 import {Tab} from '@headlessui/react'
-import {joinClassNames} from '../../../../../common/joinClassNames'
+import {joinStrings} from '../../../../../common/string'
 import {RoundedSquare} from '../../../../../uikit/RoundedSquare'
 import {
 	OutlineIconId,
@@ -47,7 +47,7 @@ function PopoverContent({
 				<Tab.List className='flex space-x-4 p-1'>
 					{tabs.map(category => (
 						<Tab key={category} className={({selected}) =>
-							joinClassNames(
+							joinStrings(
 								'w-full text-base font-medium text-purple-600 border-b-2 border-purple-600 border-opacity-0',
 								'px-4 py-1 cursor-pointer duration-300',
 								selected ? 'border-opacity-100' : 'hover:border-opacity-50',
@@ -81,7 +81,7 @@ function IconSelections({
 			{iconIds.map(id => <RoundedSquare
 				key={id}
 				bgHexColor={getColorById('white')}
-				className={joinClassNames(
+				className={joinStrings(
 					'transform transition hover:scale-105 cursor-pointer w-7 h-7 mb-1',
 					selected === id ? 'border-2 border-purple-600 rounded-full' : null,
 				)}

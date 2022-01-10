@@ -1,6 +1,6 @@
 import {ReactElement} from 'react'
 import {format} from 'date-fns'
-import {joinClassNames} from '../../common/joinClassNames'
+import {joinStrings} from '../../common/string'
 
 type DateFieldProps = {
     date: Date,
@@ -18,7 +18,7 @@ function DateField({
 			<input
 				type='text'
 				readOnly
-				className={joinClassNames(
+				className={joinStrings(
 					'w-full p-2 leading-none rounded-lg text-gray-600 font-medium',
 					'cursor-pointer focus:outline-none',
 					inputClass,

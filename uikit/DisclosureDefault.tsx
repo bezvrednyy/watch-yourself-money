@@ -1,6 +1,6 @@
 import {Disclosure} from '@headlessui/react'
 import {Fragment} from 'react'
-import {joinClassNames} from '../common/joinClassNames'
+import {joinStrings} from '../common/string'
 
 type DisclosureDefaultProps = {
 	createButton: (open: boolean) => JSX.Element,
@@ -14,7 +14,7 @@ export default function DisclosureDefault({
 	className,
 }: DisclosureDefaultProps) {
 	return (
-		<div className={joinClassNames(
+		<div className={joinStrings(
 			'w-full max-w-md mx-auto bg-white rounded-2xl',
 			className,
 		)}>

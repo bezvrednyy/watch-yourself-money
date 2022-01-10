@@ -2,7 +2,7 @@ import {useAction, useAtom} from '@reatom/react'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {selectedPeriodAtom} from '../model/selectedPeriodAtom'
 import styles from './CardsSection.module.css'
-import {joinClassNames} from '../../../common/joinClassNames'
+import {joinStrings} from '../../../common/string'
 import {BankCard} from '../../../uikit/bankCard/BankCard'
 import {DatePicker} from '../../../uikit/datePicker/DatePicker'
 
@@ -18,7 +18,7 @@ function CardsSection() {
 				<DatePicker
 					date={selectedPeriod.startDate}
 					onSelectedChanged={handleSetStartDate}
-					className={joinClassNames(
+					className={joinStrings(
 						'my-4',
 						styles['date-picker'],
 					)}
@@ -28,14 +28,14 @@ function CardsSection() {
 				<DatePicker
 					date={selectedPeriod.endDate}
 					onSelectedChanged={handleSetEndDate}
-					className={joinClassNames(
+					className={joinStrings(
 						'my-4',
 						styles['date-picker'],
 					)}
 					inputClass='bg-transparent'
 				/>
 			</div>
-			<div className={joinClassNames('flex flex-col space-y-4 overflow-auto items-center', styles['cards-section'])}>
+			<div className={joinStrings('flex flex-col space-y-4 overflow-auto items-center', styles['cards-section'])}>
 				{cards.map(card => <BankCard key={card.id} {...card} />)}
 			</div>
 		</div>)

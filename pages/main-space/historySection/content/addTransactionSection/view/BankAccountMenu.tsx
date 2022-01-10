@@ -1,6 +1,6 @@
 import {Menu} from '@headlessui/react'
 import {useAtom} from '@reatom/react'
-import {joinClassNames} from '../../../../../../common/joinClassNames'
+import {joinStrings} from '../../../../../../common/string'
 import {verify} from '../../../../../../common/verify'
 import {MenuDefault} from '../../../../../../uikit/MenuDefault'
 import {TextWithEllipsis} from '../../../../../../uikit/TextWithEllipsis'
@@ -18,7 +18,7 @@ export function BankAccountMenu() {
 			className='mx-2 grow'
 			popoverClass='w-44 bg-blue-100'
 			createButton={() => (
-				<div className={joinClassNames(
+				<div className={joinStrings(
 					'inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-800 rounded-md',
 					'hover:text-indigo-500',
 				)}>
@@ -45,7 +45,7 @@ function BankAccountItem({
 	return (
 		<Menu.Item>
 			{({active}) => (
-				<button className={joinClassNames(
+				<button className={joinStrings(
 					'flex justify-between rounded-md items-center w-full px-3 py-1 text-sm',
 					active ? 'bg-violet-400 text-white' : 'text-gray-900',
 				)}>

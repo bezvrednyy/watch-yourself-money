@@ -1,4 +1,4 @@
-import {joinClassNames} from '../common/joinClassNames'
+import {joinStrings} from '../common/string'
 
 type TextWithEllipsis = {
 	text: string,
@@ -11,7 +11,7 @@ function TextWithEllipsis({
 }: TextWithEllipsis) {
 	return (
 		<span
-			className={joinClassNames(
+			className={joinStrings(
 				'overflow-hidden text-ellipsis whitespace-nowrap',
 				className,
 			)}

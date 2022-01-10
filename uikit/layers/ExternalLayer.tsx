@@ -1,7 +1,7 @@
 import styles from './ExternalLayer.module.css'
 import {Dialog, Transition} from '@headlessui/react'
 import {Fragment} from 'react'
-import {joinClassNames} from '../../common/joinClassNames'
+import {joinStrings} from '../../common/string'
 
 type ExternalLayerProps = {
 	show: boolean,
@@ -31,7 +31,7 @@ export function ExternalLayer({
 						leaveFrom='opacity-100'
 						leaveTo='opacity-0'
 					>
-						<Dialog.Overlay className={joinClassNames(styles.overlay, 'fixed inset-0')} />
+						<Dialog.Overlay className={joinStrings(styles.overlay, 'fixed inset-0')} />
 					</Transition.Child>
 					<Content createComponent={createComponent} />
 				</div>

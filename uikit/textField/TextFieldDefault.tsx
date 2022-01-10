@@ -1,4 +1,4 @@
-import {joinClassNames} from '../../common/joinClassNames'
+import {joinStrings} from '../../common/string'
 import {TextFieldDescription} from './common/TextFieldDescription'
 import {TextFieldInput} from './common/TextFieldInput'
 import {TextFieldDefaultProps, TextFieldSize} from './textFieldProps'
@@ -20,7 +20,7 @@ function TextFieldDefault({
 			<TextFieldInput
 				{...inputProps}
 				inputType={inputType}
-				inputClass={joinClassNames(
+				inputClass={joinStrings(
 					'appearance-none rounded-md relative block w-full border-gray-300 placeholder-gray-500 text-gray-900',
 					'focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10',
 					inputClass,

@@ -1,5 +1,5 @@
 import {signIn, signOut, useSession} from 'next-auth/react'
-import {joinClassNames} from '../../common/joinClassNames'
+import {joinStrings} from '../../common/string'
 
 function AuthButtons() {
 	const {data: session} = useSession()
@@ -23,7 +23,7 @@ function Button({
 }: ButtonProps) {
 	return (
 		<button
-			className={joinClassNames(
+			className={joinStrings(
 				'p-1 border-b-2 border-purple-600 border-opacity-0 cursor-pointer',
 				'text-xl text-gray-800 hover:border-opacity-100 hover:text-purple-600 duration-200',
 			)}

@@ -1,5 +1,5 @@
 import {XIcon} from '@heroicons/react/outline'
-import {joinClassNames} from '../common/joinClassNames'
+import {joinStrings} from '../common/string'
 import {TextWithEllipsis} from './TextWithEllipsis'
 
 type BadgeProps = {
@@ -21,7 +21,7 @@ export function Badge({
 }: BadgeProps) {
 	return (
 		<span
-			className={joinClassNames(
+			className={joinStrings(
 				'flex items-center text-black text-xs font-medium',
 				'px-2 md:px-4 py-1 h-6',
 				'duration-300 opacity-90 hover:opacity-100 cursor-pointer',

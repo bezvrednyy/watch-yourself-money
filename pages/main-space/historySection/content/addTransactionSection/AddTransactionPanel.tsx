@@ -1,6 +1,6 @@
 import {useAction, useAtom} from '@reatom/react'
 import {useMemo} from 'react'
-import {joinClassNames} from '../../../../../common/joinClassNames'
+import {joinStrings} from '../../../../../common/string'
 import {verify} from '../../../../../common/verify'
 import {Badge} from '../../../../../uikit/Badge'
 import {DatePicker} from '../../../../../uikit/datePicker/DatePicker'
@@ -41,7 +41,7 @@ export function AddTransactionPanel() {
 				placeholder='100'
 				required={true}
 				inputType='number'
-				inputClass={joinClassNames(
+				inputClass={joinStrings(
 					'w-16',
 					styles.sum,
 				)}
@@ -92,7 +92,7 @@ function SubcategoryBadge({
 	return (
 		<Badge
 			label={title}
-			className={joinClassNames(
+			className={joinStrings(
 				'rounded-full mr-1 mb-2 bg-indigo-300 border-2',
 				styles['subcategory-badge'],
 				selectedSubcategoryId === id ? 'border-indigo-500 opacity-100' : 'opacity-80 border-transparent',

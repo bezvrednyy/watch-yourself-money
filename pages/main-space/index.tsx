@@ -12,7 +12,7 @@ import {MainLayout} from '../../uikit/layouts/MainLayout'
 import {CardsSection} from './cardsSection/CardsSection'
 import {CategoriesSection} from './categoriesSection/CategoriesSection'
 import {HistorySection} from './historySection/HistorySection'
-import {joinClassNames} from '../../common/joinClassNames'
+import {joinStrings} from '../../common/string'
 import {TransactionData, transactionsAtom} from './model/transactionsAtom'
 import {remapBankAccountToBankAccountData, remapCategoryToCategoryData, remapTransactionToTransactionData} from './remapMainSpaceData'
 
@@ -40,7 +40,7 @@ export default function Index({
 	handleSetTransactions(transactions)
 
 	return (
-		<MainLayout title='Home page' className={joinClassNames('flex', styles.container)}>
+		<MainLayout title='Home page' className={joinStrings('flex', styles.container)}>
 			<CardsSection/>
 			<CategoriesSection />
 			<HistorySection/>

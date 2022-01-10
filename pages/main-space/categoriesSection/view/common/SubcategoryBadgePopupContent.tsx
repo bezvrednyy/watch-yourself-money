@@ -1,5 +1,5 @@
 import {getColorById} from '../../../../../common/colors/theme'
-import {joinClassNames} from '../../../../../common/joinClassNames'
+import {joinStrings} from '../../../../../common/string'
 import {OutlineIconId, getDefaultIconIds, getOutlineIconById} from '../../../../../uikit/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../../../uikit/RoundedSquare'
 import {TextField} from '../../../../../uikit/textField/TextField'
@@ -30,7 +30,7 @@ export function SubcategoryBadgePopupContent({
 				{getDefaultIconIds().map(id => <RoundedSquare
 					key={id}
 					bgHexColor={getColorById('white')}
-					className={joinClassNames(
+					className={joinStrings(
 						'transform transition hover:scale-105 cursor-pointer w-7 h-7 mb-1',
 						iconId === id ? 'border-2 border-purple-600 rounded-full' : null,
 					)}

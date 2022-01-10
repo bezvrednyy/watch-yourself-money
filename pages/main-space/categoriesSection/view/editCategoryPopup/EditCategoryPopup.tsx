@@ -1,6 +1,6 @@
 import {useAction, useAtom} from '@reatom/react'
 import {useAsyncAction} from '../../../../../common/declareAsyncAction'
-import {joinTexts} from '../../../../../common/joinClassNames'
+import {joinStrings} from '../../../../../common/string'
 import {Button} from '../../../../../uikit/button/Button'
 import {PopupDefault} from '../../../../../uikit/PopupDefault'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
@@ -73,7 +73,7 @@ function RemoveNotificationPopup({
 	return <NotificationPopup
 		show={showNotificationPopup}
 		onCancel={() => handleCloseNotificationPopup()}
-		description={joinTexts(
+		description={joinStrings(
 			'При удалении категории удаляться все её транзакции.',
 			subcategories.length ? 'Что сделать с подкатегориями?' : '',
 		)}

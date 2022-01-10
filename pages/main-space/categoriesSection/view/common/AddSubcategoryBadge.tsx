@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {joinClassNames} from '../../../../../common/joinClassNames'
+import {joinStrings} from '../../../../../common/string'
 import {Badge} from '../../../../../uikit/Badge'
 import {Button} from '../../../../../uikit/button/Button'
 import {OutlineIconId, getOutlineIconById} from '../../../../../uikit/icons/getOutlineIconById'
@@ -26,7 +26,7 @@ export function AddSubcategoryBadge({
 	return <>
 		<Badge
 			label='Add'
-			className={joinClassNames(
+			className={joinStrings(
 				'bg-green-200 rounded-full mr-1 mt-2',
 				styles.badge,
 			)}

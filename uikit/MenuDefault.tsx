@@ -1,7 +1,7 @@
 import {Menu} from '@headlessui/react'
 import {useState} from 'react'
 import {usePopper} from 'react-popper'
-import {joinClassNames} from '../common/joinClassNames'
+import {joinStrings} from '../common/string'
 
 type MenuDefaultProps = {
 	createButton: () => JSX.Element,
@@ -28,7 +28,7 @@ export function MenuDefault({
 	})
 
 	return (
-		<Menu as='div' className={joinClassNames(
+		<Menu as='div' className={joinStrings(
 			'relative inline-block text-left',
 			className,
 		)}>
@@ -36,7 +36,7 @@ export function MenuDefault({
 				{createButton()}
 			</Menu.Button>
 			<Menu.Items
-				className={joinClassNames(
+				className={joinStrings(
 					'rounded-md shadow-lg z-10',
 					popoverClass,
 				)}

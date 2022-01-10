@@ -1,4 +1,4 @@
-import {joinClassNames} from '../../../../common/joinClassNames'
+import {joinStrings} from '../../../../common/string'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../environment/userSettingsAtom'
 import {categoriesAtom} from '../../model/categoriesAtom'
 import {useAtom} from '@reatom/react'
@@ -48,12 +48,12 @@ function TransactionHistorySectionItem({
 				className='mr-5 opacity-90 transform transition hover:opacity-100 shadow'
 			/>
 			<div>
-				<p className={joinClassNames('text-gray-800', titleClassName)}>
+				<p className={joinStrings('text-gray-800', titleClassName)}>
 					{category.title}
 				</p>
 				<p className={hintClassName}>{comment ? `${bankCardName} | ${comment}` : bankCardName}</p>
 			</div>
-			<p className={joinClassNames('flex flex-row-reverse flex-grow shrink-0 text-purple-500 font-factor self-start ml-4', titleClassName)}>
+			<p className={joinStrings('flex flex-row-reverse flex-grow shrink-0 text-purple-500 font-factor self-start ml-4', titleClassName)}>
 				{`${money} ${currencySymbol}`}
 			</p>
 		</div>

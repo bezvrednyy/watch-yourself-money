@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {joinClassNames} from '../../common/joinClassNames'
+import {joinStrings} from '../../common/string'
 import {TextFieldInput} from './common/TextFieldInput'
 import {TextFieldLinkProps, TextFieldSize} from './textFieldProps'
 
@@ -13,14 +13,14 @@ function TextFieldLink({
 	const [focused, setFocused] = useState(false)
 
 	return (
-		<div className={joinClassNames(
+		<div className={joinStrings(
 			'flex justify-between border-b',
 			focused ? 'border-b-indigo-500' : 'border-b-gray-300',
 		)}>
 			<TextFieldInput
 				{...inputProps}
 				inputType={inputType}
-				inputClass={joinClassNames(
+				inputClass={joinStrings(
 					'appearance-none relative block w-full placeholder-gray-500 text-gray-900',
 					'focus:outline-none',
 					inputClass,
@@ -30,7 +30,7 @@ function TextFieldLink({
 				onBlur={() => setFocused(false)}
 			/>
 			{createIcon && (
-				<div className={joinClassNames(
+				<div className={joinStrings(
 					'flex items-center',
 					focused ? 'text-indigo-600' : 'text-gray-500',
 				)}>

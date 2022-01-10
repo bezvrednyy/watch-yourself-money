@@ -1,6 +1,6 @@
 import {useAction} from '@reatom/react'
 import {useState} from 'react'
-import {joinClassNames} from '../../../../../common/joinClassNames'
+import {joinStrings} from '../../../../../common/string'
 import {Badge} from '../../../../../uikit/Badge'
 import {Button} from '../../../../../uikit/button/Button'
 import {
@@ -31,7 +31,7 @@ function SubcategoryBadge(props: CategoryData) {
 	return <>
 		<Badge
 			label={initTitle}
-			className={joinClassNames(
+			className={joinStrings(
 				'rounded-full mr-1 mt-2 bg-purple-300',
 				styles.badge,
 			)}

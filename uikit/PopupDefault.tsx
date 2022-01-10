@@ -1,4 +1,4 @@
-import {joinClassNames} from '../common/joinClassNames'
+import {joinStrings} from '../common/string'
 import {ExternalLayer} from './layers/ExternalLayer'
 
 type PopupDefaultProps = {
@@ -32,7 +32,7 @@ function PopupDefaultContent({
 	className,
 }: PopupDefaultContent) {
 	return (
-		<div className={joinClassNames(
+		<div className={joinStrings(
 			'inline-block p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-xl',
 			className,
 		)}>

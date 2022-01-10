@@ -5,7 +5,7 @@ import {useEffect, useMemo, useState} from 'react'
 import {mapToArray} from '../../../common/array'
 import {defaultCompare} from '../../../common/compare'
 import {useAsyncAction} from '../../../common/declareAsyncAction'
-import {joinClassNames} from '../../../common/joinClassNames'
+import {joinStrings} from '../../../common/string'
 import {verify} from '../../../common/verify'
 import {Button} from '../../../uikit/button/Button'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
@@ -121,7 +121,7 @@ function ButtonsSection({
 	return (
 		<div
 			key='open'
-			className={joinClassNames(
+			className={joinStrings(
 				'flex justify-between w-full px-4 py-2.5 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg',
 				'hover:bg-purple-200 cursor-pointer',
 			)}
