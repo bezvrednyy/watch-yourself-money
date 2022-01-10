@@ -42,7 +42,7 @@ export function AddCategoryPopup({
 			<Button
 				key='cancel'
 				style='secondary'
-				onClick={onClose}
+				onClick={onClose} //TODO:category реализовать очистку атомов попапа
 				structure='text'
 				text='Cancel'
 			/>,

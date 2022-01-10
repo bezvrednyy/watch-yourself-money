@@ -37,6 +37,16 @@ export function EditCategoryPopup({
 				text='Save'
 			/>,
 			<Button
+				key='remove'
+				style='destructure'
+				onClick={() => {
+					//TODO:category Реализовать удаление категории, закрытие попапа по завершению и очистку атомов
+					console.log('Remove category')
+				}}
+				structure='text'
+				text='Remove'
+			/>,
+			<Button
 				key={'close'}
 				style='secondary'
 				onClick={onClose}
