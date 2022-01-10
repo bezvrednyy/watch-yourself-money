@@ -1,17 +1,8 @@
-import {CategoryType} from '@prisma/client'
 import {randomUUID} from 'crypto'
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {ColorId} from '../../../common/colors/colors'
-import {OutlineIconId} from '../../../components/icons/getOutlineIconById'
 import prisma from '../../../prisma/prisma'
-
-type CategoryData = {
-	title: string,
-	type: CategoryType,
-	iconId: OutlineIconId,
-	colorId: ColorId,
-}
+import {CategoryData} from '../../main-space/model/categoriesAtom'
 
 type CreateCategoryRequestData = CategoryData & {
 	subcategories: Array<CategoryData>,
@@ -32,12 +23,11 @@ export default async function createCategory(req: CreateCategoryRequest, res: Ne
 
 	const userId = session.user.id
 	const {subcategories, ...mainCategory}: CreateCategoryRequestData = req.body.data
-	const parentCategoryId = randomUUID()
 
 	try {
 		await prisma.category.createMany({data: [
 			{
-				id: parentCategoryId,
+				id: mainCategory.id,
 				name: mainCategory.title,
 				iconId: mainCategory.iconId,
 				color: mainCategory.colorId,
@@ -51,7 +41,7 @@ export default async function createCategory(req: CreateCategoryRequest, res: Ne
 				color: x.colorId,
 				type: x.type,
 				userId,
-				parentCategoryId,
+				parentCategoryId: x.parentCategoryId,
 			})),
 		]})
 		res.status(200).send({})
@@ -61,4 +51,8 @@ export default async function createCategory(req: CreateCategoryRequest, res: Ne
 			text: error,
 		})
 	}
+}
+
+export type {
+	CreateCategoryRequestData,
 }
