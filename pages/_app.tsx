@@ -4,7 +4,7 @@ import {AppProps} from 'next/app'
 import 'tailwindcss/tailwind.css'
 import '../public/styles.css'
 import {useEffect} from 'react'
-import {useInitEnvironment} from '../environment/environment'
+import {initEnvironment} from '../environment/environment'
 import {SessionProvider} from 'next-auth/react'
 
 export default function MyApp({
@@ -13,7 +13,7 @@ export default function MyApp({
 }: AppProps) {
 	const store = createStore()
 
-	useInitEnvironment(store)
+	initEnvironment(store)
 	useEffect(() => {
 		const rootElement = document.getElementById('__next')
 		rootElement && rootElement.classList.add('h-full') //tailwind-css

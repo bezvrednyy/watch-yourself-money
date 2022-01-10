@@ -14,7 +14,11 @@ function getCurrencySymbolById(id: CurrencyId): string {
 	}
 }
 
-const userSettingsAtom = createPrimitiveAtom<UserSettings>({} as UserSettings)
+const userSettingsAtom = createPrimitiveAtom<UserSettings>({
+	currencyId: 'RUBLE',
+	languageId: 'RUSSIAN',
+	theme: 'DEFAULT',
+} as UserSettings)
 
 export {
 	userSettingsAtom,

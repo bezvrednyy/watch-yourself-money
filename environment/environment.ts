@@ -1,5 +1,4 @@
 import {Store} from '@reatom/core'
-import {useEffect} from 'react'
 import {declareAsyncAction} from '../common/declareAsyncAction'
 import {userSettingsAtom} from './userSettingsAtom'
 
@@ -13,7 +12,7 @@ function getEnvType(): EnvironmentType {
 	return process.env.NODE_ENV
 }
 
-const initEnv = declareAsyncAction(async store => {
+const initUserSettings = declareAsyncAction(async store => {
 	const settingsRes = await fetch('http://localhost:3000/api/env/get_user_settings')
 	if (settingsRes.ok) {
 		const { settings } = await settingsRes.json()
@@ -23,13 +22,11 @@ const initEnv = declareAsyncAction(async store => {
 	}
 })
 
-function useInitEnvironment(store: Store) {
-	useEffect(() => {
-		initEnv(store)
-	}, [store])
+function initEnvironment(store: Store) {
+	initUserSettings(store)
 }
 
 export {
-	useInitEnvironment,
+	initEnvironment,
 	getEnvType,
 }

@@ -38,7 +38,6 @@ export default function Index({
 	})
 	handleSetBankAccounts(bankAccounts)
 	handleSetTransactions(transactions)
-	console.log(transactions)
 
 	return (
 		<MainLayout title={'Home page'} className={joinClassNames('flex', styles.container)}>
