@@ -274,7 +274,7 @@ const theme: DefaultTheme = {
 }
 
 function getColorById(id: ColorId): string {
-	if (id === 'white' || id === 'black') {
+	if (id === 'white' || id === 'black' || id === 'transparent') {
 		return theme.colors[id]
 	}
 	const values = id.split(colorDelimiter)
