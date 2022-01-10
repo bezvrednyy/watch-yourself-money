@@ -26,7 +26,7 @@ export function EditCategoryPopup({
 		createContent={() => <EditCategoryPopupContent />}
 		buttons={[
 			<Button
-				key={'save'}
+				key='save'
 				style='blue-default'
 				onClick={() => {
 					handleSaveData({
@@ -47,7 +47,7 @@ export function EditCategoryPopup({
 				text='Remove'
 			/>,
 			<Button
-				key={'close'}
+				key='close'
 				style='secondary'
 				onClick={onClose}
 				structure='text'

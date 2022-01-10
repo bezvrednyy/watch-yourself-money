@@ -29,7 +29,7 @@ export function AddCategoryPopup({
 		createContent={() => <AddCategoryPopupContent />}
 		buttons={[
 			<Button
-				key={'save'}
+				key='save'
 				style='blue-default'
 				onClick={() => {
 					handleSaveData({

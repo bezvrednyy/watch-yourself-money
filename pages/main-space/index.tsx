@@ -40,7 +40,7 @@ export default function Index({
 	handleSetTransactions(transactions)
 
 	return (
-		<MainLayout title={'Home page'} className={joinClassNames('flex', styles.container)}>
+		<MainLayout title='Home page' className={joinClassNames('flex', styles.container)}>
 			<CardsSection/>
 			<CategoriesSection />
 			<HistorySection/>

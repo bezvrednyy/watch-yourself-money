@@ -32,7 +32,7 @@ export function MenuDefault({
 			'relative inline-block text-left',
 			className,
 		)}>
-			<Menu.Button className={'w-full'} ref={setReferenceElement}>
+			<Menu.Button className='w-full' ref={setReferenceElement}>
 				{createButton()}
 			</Menu.Button>
 			<Menu.Items

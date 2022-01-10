@@ -23,7 +23,7 @@ export function SubcategoryBadgePopupContent({
 				style='default'
 				value={title}
 				onInput={setTitle}
-				placeholder={'Category name'}
+				placeholder='Category name'
 				required={true}
 			/>
 			<div className='flex justify-between flex-wrap max-h-40 overflow-y-scroll mt-4 pr-1 relative left-1 scrollbar'>

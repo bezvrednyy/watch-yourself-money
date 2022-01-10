@@ -32,7 +32,7 @@ function AddCategoryPopupContent() {
 					style='default'
 					value={title}
 					onInput={handleSetTitle}
-					placeholder={'Category name'}
+					placeholder='Category name'
 					required={true}
 				/>
 			</div>

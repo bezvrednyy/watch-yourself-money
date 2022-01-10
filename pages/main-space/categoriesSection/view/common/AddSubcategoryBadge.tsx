@@ -25,7 +25,7 @@ export function AddSubcategoryBadge({
 
 	return <>
 		<Badge
-			label={'Add'}
+			label='Add'
 			className={joinClassNames(
 				'bg-green-200 rounded-full mr-1 mt-2',
 				styles.badge,
