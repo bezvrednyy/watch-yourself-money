@@ -1,6 +1,6 @@
 import {PlusIcon} from '@heroicons/react/solid'
 import {useAction, useAtom} from '@reatom/react'
-import {getMilliseconds, startOfDay} from 'date-fns'
+import {startOfDay} from 'date-fns'
 import {useEffect, useMemo, useState} from 'react'
 import {mapToArray} from '../../../common/array'
 import {defaultCompare} from '../../../common/compare'
@@ -55,7 +55,7 @@ function HistorySection() {
 	return (
 		<div className='flex flex-col w-4/12 bg-white py-5'>
 			{transactionsByDays.map(x => <DayTransactionsHistorySection
-				key={getMilliseconds(x.key)}
+				key={x.key.getTime()}
 				dayDate={x.key}
 				transitions={x.value}
 			/>)}
