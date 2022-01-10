@@ -1,3 +1,4 @@
+import {PlusSmIcon} from '@heroicons/react/solid'
 import {useAction, useAtom} from '@reatom/react'
 import {getColorById} from '../../../common/colors/theme'
 import {EditCategoryPopup} from './view/editCategoryPopup/EditCategoryPopup'
@@ -29,6 +30,14 @@ function CategoriesSection() {
 						className='mx-2.5 my-2.5 opacity-90 transform transition hover:scale-105 cursor-pointer hover:opacity-100 shadow'
 					/>
 				})}
+				<RoundedSquare
+					key='add-category-button'
+					createIcon={() => <PlusSmIcon className='m-2 w-8 h-8 overflow-hidden'/>}
+					title='Add category'
+					onClick={() => console.log('Open create category popup')}
+					bgHexColor={getColorById('white')}
+					className='mx-2.5 my-2.5 opacity-90 transform transition hover:scale-105 cursor-pointer hover:opacity-100 shadow'
+				/>
 			</div>
 		</div>)
 }
