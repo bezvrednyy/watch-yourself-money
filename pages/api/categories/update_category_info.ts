@@ -1,4 +1,4 @@
-import {Category} from '@prisma/client'
+import {Category, CategoryType} from '@prisma/client'
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import {verify} from '../../../common/verify'
@@ -12,6 +12,7 @@ export type UpdateCategoriesInfoRequestData = {
 	name: string,
 	iconId: OutlineIconId,
 	colorId: ColorId,
+	type: CategoryType,
 	editedSubcategories: Array<CategoryData>,
 	newSubcategories: Array<CategoryData>,
 	removedSubcategoryIds: Array<string>,
@@ -56,6 +57,7 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 					iconId: mainCategory.iconId,
 					color: mainCategory.colorId,
 					name: mainCategory.name,
+					type: mainCategory.type,
 				},
 			}),
 			...editedSubcategories.map(x => prisma.category.update({

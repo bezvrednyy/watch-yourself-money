@@ -26,6 +26,7 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 		iconId: store.getState(iconIdAtom),
 		colorId: store.getState(colorIdAtom),
 		name: store.getState(titleAtom),
+		type: 'EXPENSES', //TODO: IncomesFeature,
 		editedSubcategories: store.getState(subcategoriesAtom)
 			.filter(x => editedSubcategoryIds.has(x.id))
 			.map(x => (haveBecomeMainCategoriesIdsSet.has(x.id)
