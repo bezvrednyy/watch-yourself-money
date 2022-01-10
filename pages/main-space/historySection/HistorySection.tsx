@@ -26,9 +26,9 @@ function HistorySection() {
 	const [open, setOpen] = useState(false)
 
 	const transactionsByDays = useMemo(() => {
-		const result: Map<Date, Array<ViewTransactionInfo>> = new Map()
+		const result: Map<number, Array<ViewTransactionInfo>> = new Map()
 		transactions.forEach(x => {
-			const date = startOfDay(x.timestamp)
+			const timestamp = startOfDay(x.timestamp).getTime()
 			const bankAccount = verify(bankAccounts.find(account => account.id === x.bankAccountId))
 			const newItem: ViewTransactionInfo = {
 				id: x.id,
@@ -38,12 +38,12 @@ function HistorySection() {
 				comment: x.comment,
 			}
 
-			const items = result.get(date)
+			const items = result.get(timestamp)
 			if (items) {
 				items.push(newItem)
 				return
 			}
-			result.set(date, [newItem])
+			result.set(timestamp, [newItem])
 		})
 		return mapToArray(result)
 			.sort((x, y) => defaultCompare(
@@ -55,8 +55,8 @@ function HistorySection() {
 	return (
 		<div className='flex flex-col w-4/12 bg-white py-5'>
 			{transactionsByDays.map(x => <DayTransactionsHistorySection
-				key={x.key.getTime()}
-				dayDate={x.key}
+				key={x.key}
+				timestamp={x.key}
 				transitions={x.value}
 			/>)}
 			<div className='mt-auto px-5 pb-5'>

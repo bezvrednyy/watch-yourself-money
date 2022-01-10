@@ -1,28 +1,28 @@
-import {format} from 'date-fns'
+import {format, getYear} from 'date-fns'
 import {
 	TransactionHistorySectionItem,
 	ViewTransactionInfo,
 } from './TransactionHistorySectionItem'
 
 type DayTransitionsHistorySectionProps = {
-	dayDate: Date,
+	timestamp: number,
 	transitions: Array<ViewTransactionInfo>,
 }
 
 function DayTransactionsHistorySection({
-	dayDate,
+	timestamp,
 	transitions,
 }: DayTransitionsHistorySectionProps) {
 	const onClick = (id: string) => console.log(`Click on transition ${id}`) //TODO Reatom
 	const currentDate = new Date()
-	const formatType = currentDate.getFullYear() === dayDate.getFullYear()
+	const formatType = getYear(currentDate) === getYear(timestamp)
 		? 'd MMMM'
 		: 'd MMMM yyyy'
 
 	return (
 		<div className='px-10 py-5'>
 			<h2 className='mb-5 px-4 font-medium' suppressHydrationWarning>
-				{format(dayDate, formatType)}
+				{format(timestamp, formatType)}
 			</h2>
 			<div className='flex flex-col'>
 				{transitions.map(x => <TransactionHistorySectionItem
