@@ -1,8 +1,8 @@
 import {getColorById} from '../../../../../common/colors/theme'
 import {joinClassNames} from '../../../../../common/joinClassNames'
-import {OutlineIconId, getDefaultIconIds, getOutlineIconById} from '../../../../../components/icons/getOutlineIconById'
-import {RoundedSquare} from '../../../../../components/RoundedSquare'
-import {TextField} from '../../../../../components/textField/TextField'
+import {OutlineIconId, getDefaultIconIds, getOutlineIconById} from '../../../../../uikit/icons/getOutlineIconById'
+import {RoundedSquare} from '../../../../../uikit/RoundedSquare'
+import {TextField} from '../../../../../uikit/textField/TextField'
 
 type SubcategoryBadgePopupContentProps = {
 	iconId: OutlineIconId,

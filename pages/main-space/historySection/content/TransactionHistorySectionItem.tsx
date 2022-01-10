@@ -3,8 +3,8 @@ import {getCurrencySymbolById, userSettingsAtom} from '../../../../environment/u
 import {categoriesAtom} from '../../model/categoriesAtom'
 import {useAtom} from '@reatom/react'
 import {verify} from '../../../../common/verify'
-import {RoundedSquare} from '../../../../components/RoundedSquare'
-import {getOutlineIconById} from '../../../../components/icons/getOutlineIconById'
+import {RoundedSquare} from '../../../../uikit/RoundedSquare'
+import {getOutlineIconById} from '../../../../uikit/icons/getOutlineIconById'
 import {getColorById} from '../../../../common/colors/theme'
 
 type ViewTransactionInfo = {

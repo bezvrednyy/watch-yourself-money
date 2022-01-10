@@ -1,13 +1,13 @@
 import {useAction} from '@reatom/react'
 import {useState} from 'react'
 import {joinClassNames} from '../../../../../common/joinClassNames'
-import {Badge} from '../../../../../components/Badge'
-import {Button} from '../../../../../components/button/Button'
+import {Badge} from '../../../../../uikit/Badge'
+import {Button} from '../../../../../uikit/button/Button'
 import {
 	OutlineIconId,
 	getOutlineIconById,
-} from '../../../../../components/icons/getOutlineIconById'
-import {PopupDefault} from '../../../../../components/PopupDefault'
+} from '../../../../../uikit/icons/getOutlineIconById'
+import {PopupDefault} from '../../../../../uikit/PopupDefault'
 import {CategoryData} from '../../../model/categoriesAtom'
 import {SubcategoryBadgePopupContent} from '../common/SubcategoryBadgePopupContent'
 import {addCategoryPopupAtoms} from './model/addCategoryPopupAtoms'

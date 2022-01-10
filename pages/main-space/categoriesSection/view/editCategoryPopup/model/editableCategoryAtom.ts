@@ -2,7 +2,7 @@ import {createAtom} from '@reatom/core'
 import {ColorId} from '../../../../../../common/colors/colors'
 import {CategoryData} from '../../../../model/categoriesAtom'
 import {createEnumAtom, createSetAtom, createStringAtom} from '@reatom/core/primitives'
-import {OutlineIconId} from '../../../../../../components/icons/getOutlineIconById'
+import {OutlineIconId} from '../../../../../../uikit/icons/getOutlineIconById'
 
 const statusesAtom = createEnumAtom(['normal', 'saving'])
 const removedSubcategoryIdsSetAtom = createSetAtom<string>()

@@ -5,7 +5,7 @@ import {joinClassNames} from '../common/joinClassNames'
 
 type MenuDefaultProps = {
 	createButton: () => JSX.Element,
-	items: Array<JSX.Element>, //Menu.Item components
+	items: Array<JSX.Element>, //Menu.Item uikit
 	popoverClass?: string,
 	className?: string,
 }

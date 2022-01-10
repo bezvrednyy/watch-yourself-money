@@ -1,16 +1,16 @@
 import {CheckIcon} from '@heroicons/react/outline'
 import {ColorId, getDefaultColorIds} from '../../../../../common/colors/colors'
 import {getColorById} from '../../../../../common/colors/theme'
-import {PopoverDefault} from '../../../../../components/popovers/PopoverDefault'
-import {ButtonWithPopover} from '../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
+import {PopoverDefault} from '../../../../../uikit/popovers/PopoverDefault'
+import {ButtonWithPopover} from '../../../../../uikit/button/buttons/buttonWithPopover/ButtonWithPopover'
 import {Tab} from '@headlessui/react'
 import {joinClassNames} from '../../../../../common/joinClassNames'
-import {RoundedSquare} from '../../../../../components/RoundedSquare'
+import {RoundedSquare} from '../../../../../uikit/RoundedSquare'
 import {
 	OutlineIconId,
 	getDefaultIconIds,
 	getOutlineIconById,
-} from '../../../../../components/icons/getOutlineIconById'
+} from '../../../../../uikit/icons/getOutlineIconById'
 
 type CategoryViewPickerProps = {
 	iconId: OutlineIconId,

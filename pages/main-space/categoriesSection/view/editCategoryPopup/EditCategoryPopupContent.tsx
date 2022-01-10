@@ -1,7 +1,7 @@
 import {useAction, useAtom} from '@reatom/react'
 import {generateUuid} from '../../../../../common/generateRandom'
 import {verify} from '../../../../../common/verify'
-import {TextField} from '../../../../../components/textField/TextField'
+import {TextField} from '../../../../../uikit/textField/TextField'
 import {editableCategoryIdAtom} from '../../../model/categoriesAtom'
 import {AddSubcategoryBadge} from '../common/AddSubcategoryBadge'
 import {CategoryViewPicker} from '../common/CategoryViewPicker'

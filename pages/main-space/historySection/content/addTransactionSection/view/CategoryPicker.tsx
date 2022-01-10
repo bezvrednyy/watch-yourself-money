@@ -4,10 +4,10 @@ import {verify} from '../../../../../../common/verify'
 import {
 	ButtonWithPopover,
 	PopoverContentProps,
-} from '../../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
-import {getOutlineIconById} from '../../../../../../components/icons/getOutlineIconById'
-import {PopoverDefault} from '../../../../../../components/popovers/PopoverDefault'
-import {RoundedSquare} from '../../../../../../components/RoundedSquare'
+} from '../../../../../../uikit/button/buttons/buttonWithPopover/ButtonWithPopover'
+import {getOutlineIconById} from '../../../../../../uikit/icons/getOutlineIconById'
+import {PopoverDefault} from '../../../../../../uikit/popovers/PopoverDefault'
+import {RoundedSquare} from '../../../../../../uikit/RoundedSquare'
 import {categoriesAtom} from '../../../../model/categoriesAtom'
 import {addTransactionSectionAtoms} from '../model/addTransactionSectionAtoms'
 

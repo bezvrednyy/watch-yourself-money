@@ -1,5 +1,5 @@
 module.exports = {
-	content: ['./pages/**/*.tsx', './components/**/*.tsx'],
+	content: ['./pages/**/*.tsx', './uikit/**/*.tsx'],
 	darkMode: false, // or 'media' or 'class'
 	theme: {
 		fontFamily: {
