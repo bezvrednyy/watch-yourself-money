@@ -53,7 +53,7 @@ function TransactionHistorySectionItem({
 				</p>
 				<p className={hintClassName}>{comment ? `${bankCardName} | ${comment}` : bankCardName}</p>
 			</div>
-			<p className={joinClassNames('flex flex-row-reverse text-purple-500 font-factor self-start flex-grow ml-4', titleClassName)}>
+			<p className={joinClassNames('flex flex-row-reverse flex-grow shrink-0 text-purple-500 font-factor self-start ml-4', titleClassName)}>
 				{`${money} ${currencySymbol}`}
 			</p>
 		</div>
