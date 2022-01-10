@@ -17,13 +17,16 @@ export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async
 
 	store.dispatch(statusesAtom.setSaving())
 
+	const colorId = store.getState(colorIdAtom)
 	const data: CreateCategoryRequestData = {
 		id: verify(store.getState(categoryIdAtom)),
 		iconId: store.getState(iconIdAtom),
-		colorId: store.getState(colorIdAtom),
+		colorId,
 		title,
 		type: 'EXPENSES', //TODO: IncomesFeature,
-		subcategories: store.getState(subcategoriesAtom),
+		subcategories: store.getState(subcategoriesAtom).map(
+			x => ({...x, colorId}),
+		),
 	}
 
 	//TODO: Either вместо исключений

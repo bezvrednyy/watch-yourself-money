@@ -22,7 +22,7 @@ const subcategoriesAtom = createAtom(
 		set: (value: Array<CategoryData>) => value,
 		add: (value: CategoryData) => value,
 	},
-	({onAction, onChange, create, schedule, get}, state = [] as Array<CategoryData>) => {
+	({onAction, schedule, get}, state = [] as Array<CategoryData>) => {
 		onAction('set', value => (state = value))
 		onAction('updateSubcategory', value => {
 			state = state.map(x => (x.id === value.id ? value : x))
