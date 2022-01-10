@@ -8,7 +8,6 @@ import {CategoryData} from '../../main-space/model/categoriesAtom'
 
 export default async function getCategories(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
-
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
 		return

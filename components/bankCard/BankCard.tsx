@@ -27,7 +27,7 @@ function BankCard({
 					</p>
 				)}
 				<div className='w-full flex justify-between items-center'>
-					<h1 className='font-bold text-gray-500'>{`${money}${currencySymbol}`}</h1>
+					<h1 className='font-bold text-gray-500'>{`${money} ${currencySymbol}`}</h1>
 				</div>
 			</div>
 		</div>

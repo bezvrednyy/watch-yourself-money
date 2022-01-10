@@ -50,7 +50,7 @@ function BankAccountItem({
 					active ? 'bg-violet-400 text-white' : 'text-gray-900',
 				)}>
 					<TextWithEllipsis text={name} />
-					{`${money}${currencySymbol}`}
+					{`${money} ${currencySymbol}`}
 				</button>
 			)}
 		</Menu.Item>
