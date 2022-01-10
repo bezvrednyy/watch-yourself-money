@@ -1,5 +1,6 @@
 import {useAction, useAtom} from '@reatom/react'
 import {useAsyncAction} from '../../../../../common/declareAsyncAction'
+import {joinTexts} from '../../../../../common/joinClassNames'
 import {Button} from '../../../../../uikit/button/Button'
 import {PopupDefault} from '../../../../../uikit/PopupDefault'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
@@ -7,7 +8,8 @@ import {categoriesAtom, editableCategoryIdAtom} from '../../../model/categoriesA
 import {verify} from '../../../../../common/verify'
 import {useEffect} from 'react'
 import {EditCategoryPopupContent} from './EditCategoryPopupContent'
-import {editCategoryPopupSaveData} from './model/externalHandlers'
+import {editCategoryPopupRemoveCategory, editCategoryPopupSaveData} from './model/externalHandlers'
+import {NotificationPopup} from '../../../../../common/components/popups/NotificationPopup'
 
 type EditCategoryPopupProps = {
 	show: boolean,
@@ -19,43 +21,97 @@ export function EditCategoryPopup({
 	onClose,
 }: EditCategoryPopupProps) {
 	useInitPopupAtoms()
-	const handleSaveData = useAsyncAction(editCategoryPopupSaveData)
+	const buttons = useEditCategoryPopupButtons(onClose)
 
-	return <PopupDefault
-		show={show}
-		createContent={() => <EditCategoryPopupContent />}
-		buttons={[
-			<Button
-				key='save'
-				style='blue-default'
-				onClick={() => {
-					handleSaveData({
-						onClose,
-					})
-				}}
-				structure='text'
-				text='Save'
-			/>,
-			<Button
-				key='remove'
-				style='destructure'
-				onClick={() => {
-					//TODO:category Реализовать удаление категории, закрытие попапа по завершению и очистку атомов
-					console.log('Remove category')
-				}}
-				structure='text'
-				text='Remove'
-			/>,
-			<Button
-				key='close'
-				style='secondary'
-				onClick={onClose}
-				structure='text'
-				text='Cancel'
-			/>,
-		]}
-		className='w-full max-w-md'
+	return <>
+		<PopupDefault
+			show={show}
+			createContent={() => <EditCategoryPopupContent />}
+			buttons={buttons}
+			className='w-full max-w-md'
+		/>
+		<RemoveNotificationPopup onClose={onClose} />
+	</>
+}
+
+type RemoveNotificationPopupProps = {
+	onClose: () => void,
+}
+
+function RemoveNotificationPopup({
+	onClose,
+}: RemoveNotificationPopupProps) {
+	const [subcategories] = useAtom(editCategoryPopupAtoms.subcategoriesAtom)
+	const [showNotificationPopup] = useAtom(editCategoryPopupAtoms.showNotificationPopupAtom)
+	const handleCloseNotificationPopup = useAction(editCategoryPopupAtoms.showNotificationPopupAtom.setFalse)
+	const handleRemoveCategory = useAsyncAction(editCategoryPopupRemoveCategory)
+
+	const closeFn = () => {
+		handleCloseNotificationPopup()
+		onClose()
+	}
+
+	const additionalButtons: Array<JSX.Element> = []
+	subcategories.length && additionalButtons.push(<Button
+		key='turnInMain'
+		style='blue-default'
+		structure='text'
+		text='Turn in main'
+		onClick={() => handleRemoveCategory({ onClose: closeFn })}
+	/>)
+	additionalButtons.push(<Button
+		key='remove'
+		style='destructure'
+		structure='text'
+		text='Remove'
+		onClick={() => handleRemoveCategory({
+			onClose: closeFn,
+			removeSubcategories: true,
+		})}
+	/>)
+
+	return <NotificationPopup
+		show={showNotificationPopup}
+		onCancel={() => handleCloseNotificationPopup()}
+		description={joinTexts(
+			'При удалении категории удаляться все её транзакции.',
+			subcategories.length ? 'Что сделать с подкатегориями?' : '',
+		)}
+		additionalButtons={additionalButtons}
 	/>
+}
+
+function useEditCategoryPopupButtons(onClose: () => void): Array<JSX.Element> {
+	const handleSaveData = useAsyncAction(editCategoryPopupSaveData)
+	const handleShowNotificationPopup = useAction(editCategoryPopupAtoms.showNotificationPopupAtom.setTrue)
+
+	return [
+		<Button
+			key='save'
+			style='blue-default'
+			onClick={() => {
+				handleSaveData({
+					onClose,
+				})
+			}}
+			structure='text'
+			text='Save'
+		/>,
+		<Button
+			key='remove'
+			style='destructure'
+			onClick={() => handleShowNotificationPopup()}
+			structure='text'
+			text='Remove'
+		/>,
+		<Button
+			key='close'
+			style='secondary'
+			onClick={onClose}
+			structure='text'
+			text='Cancel'
+		/>,
+	]
 }
 
 function useInitPopupAtoms() {

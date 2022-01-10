@@ -1,10 +1,11 @@
 import {createAtom} from '@reatom/core'
 import {ColorId} from '../../../../../../common/colors/colors'
 import {CategoryData} from '../../../../model/categoriesAtom'
-import {createEnumAtom, createSetAtom, createStringAtom} from '@reatom/core/primitives'
+import {createBooleanAtom, createEnumAtom, createSetAtom, createStringAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../../../uikit/icons/getOutlineIconById'
 
 const statusesAtom = createEnumAtom(['normal', 'saving'])
+const showNotificationPopupAtom = createBooleanAtom(false)
 const removedSubcategoryIdsSetAtom = createSetAtom<string>()
 const editedSubcategoryIdsSetAtom = createSetAtom<string>()
 const haveBecomeMainCategoriesIdsSetAtom = createSetAtom<string>()
@@ -71,4 +72,5 @@ export const editCategoryPopupAtoms = {
 	newSubcategoriesIdsSetAtom,
 	removedSubcategoryIdsSetAtom,
 	haveBecomeMainCategoriesIdsSetAtom,
+	showNotificationPopupAtom,
 }

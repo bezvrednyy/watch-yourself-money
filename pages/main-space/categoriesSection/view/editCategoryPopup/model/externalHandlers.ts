@@ -1,6 +1,8 @@
+import {fetchPostData} from '../../../../../../common/clientApi/fetchPostData'
 import {declareAsyncAction} from '../../../../../../common/declareAsyncAction'
 import {verify} from '../../../../../../common/verify'
 import {getEnvType} from '../../../../../../environment/environment'
+import {RemoveCategoryRequestData} from '../../../../../api/categories/remove_category'
 import {UpdateCategoriesInfoRequestData} from '../../../../../api/categories/update_category_info'
 import {editableCategoryIdAtom} from '../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from './editableCategoryAtom'
@@ -64,3 +66,32 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 	}
 	store.dispatch(statusesAtom.setNormal())
 })
+
+
+type RemoveCategoryParams = {
+	removeSubcategories?: boolean,
+	onClose: () => void,
+}
+
+export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategoryParams>(async (store, {
+	onClose,
+	removeSubcategories = false,
+}) => {
+	const {statusesAtom} = editCategoryPopupAtoms
+	store.dispatch(statusesAtom.setSaving())
+
+	const data: RemoveCategoryRequestData = {
+		categoryId: verify(store.getState(editableCategoryIdAtom)),
+		removeSubcategories,
+	}
+
+	//TODO: Either вместо исключений
+	const res = await fetchPostData('/api/categories/remove_category', data)
+	if (res.ok) {
+		//TODO: добавить тостер и обновление категорий
+		onClose()
+	}
+	store.dispatch(statusesAtom.setNormal())
+})
+
+//TODO:category Реализовать экшн очистки атомов и использовать его в externalHandlers

@@ -2,7 +2,7 @@ import {Category, CategoryType} from '@prisma/client'
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import {verify} from '../../../common/verify'
-import {OutlineIconId} from '../../../components/icons/getOutlineIconById'
+import {OutlineIconId} from '../../../uikit/icons/getOutlineIconById'
 import {ColorId} from '../../../common/colors/colors'
 import prisma from '../../../prisma/prisma'
 import {CategoryData} from '../../main-space/model/categoriesAtom'
@@ -38,6 +38,7 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 
 	//TODO: Either вместо исключений
 	try {
+		//TODO:category, при удалении подкатегории транзакции должны удалиться. Добавить сообщение об этом.
 		await Promise.all([
 			prisma.category.deleteMany({
 				where: {
