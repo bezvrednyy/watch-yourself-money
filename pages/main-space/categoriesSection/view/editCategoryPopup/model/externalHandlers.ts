@@ -62,4 +62,5 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 		//TODO: добавить тостер и обновление категорий
 		onClose()
 	}
+	store.dispatch(statusesAtom.setNormal())
 })

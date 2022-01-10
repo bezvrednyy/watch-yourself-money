@@ -4,7 +4,7 @@ import {CategoryData} from '../../../../model/categoriesAtom'
 import {createEnumAtom, createSetAtom, createStringAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../../../components/icons/getOutlineIconById'
 
-const statusesAtom = createEnumAtom(['init', 'saving'])
+const statusesAtom = createEnumAtom(['normal', 'saving'])
 const removedSubcategoryIdsSetAtom = createSetAtom<string>()
 const editedSubcategoryIdsSetAtom = createSetAtom<string>()
 const haveBecomeMainCategoriesIdsSetAtom = createSetAtom<string>()
