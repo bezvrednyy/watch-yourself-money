@@ -10,13 +10,18 @@ type SaveDataParams = {
 
 export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async (store, {onClose}) => {
 	const {categoryIdAtom, titleAtom, statusesAtom, iconIdAtom, subcategoriesAtom, colorIdAtom} = addCategoryPopupAtoms
+	const title = store.getState(titleAtom)
+	if (!title) {
+		return
+	}
+
 	store.dispatch(statusesAtom.setSaving())
 
 	const data: CreateCategoryRequestData = {
 		id: verify(store.getState(categoryIdAtom)),
 		iconId: store.getState(iconIdAtom),
 		colorId: store.getState(colorIdAtom),
-		title: store.getState(titleAtom),
+		title,
 		type: 'EXPENSES', //TODO: IncomesFeature,
 		subcategories: store.getState(subcategoriesAtom),
 	}

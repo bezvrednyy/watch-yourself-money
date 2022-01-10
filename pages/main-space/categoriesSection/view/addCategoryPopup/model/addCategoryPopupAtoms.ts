@@ -8,7 +8,7 @@ const statusesAtom = createEnumAtom(['normal', 'saving'])
 const categoryIdAtom = createStringAtom('')
 const titleAtom = createStringAtom('')
 const iconIdAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
-const colorIdAtom = createStringAtom<ColorId>('white')
+const colorIdAtom = createStringAtom<ColorId>('green#400')
 const subcategoriesAtom = createAtom(
 	{
 		set: (value: Array<CategoryData>) => value,
@@ -16,7 +16,7 @@ const subcategoriesAtom = createAtom(
 		update: (value: CategoryData) => value,
 		remove: (id: string) => id,
 	},
-	({onAction, onChange, create, schedule, get}, state = [] as Array<CategoryData>) => {
+	({onAction}, state = [] as Array<CategoryData>) => {
 		onAction('set', value => (state = value))
 		onAction('add', value => (state = state.concat(value)))
 		onAction('update', value => {

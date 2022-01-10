@@ -6,21 +6,27 @@ import {editCategoryPopupAtoms} from '../../model/editableCategoryAtom'
 import {useSubcategoryType} from './SubcategoryBadge'
 
 type UseBadgePopupButtonsParams = CategoryData & {
-	iconId: OutlineIconId,
-	title: string,
+	newTitle: string,
+	newIconId: OutlineIconId,
 	setShow: (v: boolean) => void
 }
 
 export function useBadgePopupButtons({
 	setShow,
-	iconId,
-	title,
+	newTitle,
+	newIconId,
 	...props
 }: UseBadgePopupButtonsParams): Array<JSX.Element> {
 	const handleUpdateSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.updateSubcategory)
 	const handleRemoveSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.remove)
 	const handleTurnInMainSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.turnInMain)
 	const type = useSubcategoryType(props.id)
+
+	const updateFn = () => handleUpdateSubcategory({
+		...props,
+		iconId: newIconId,
+		title: newTitle,
+	})
 
 	const buttons: Array<JSX.Element> = []
 
@@ -29,11 +35,7 @@ export function useBadgePopupButtons({
 			key='restore'
 			style='blue-default'
 			onClick={() => {
-				handleUpdateSubcategory({
-					...props,
-					iconId,
-					title,
-				})
+				updateFn()
 				setShow(false)
 			}}
 			structure='text'
@@ -45,11 +47,7 @@ export function useBadgePopupButtons({
 			key='turnInSub'
 			style='blue-default'
 			onClick={() => {
-				handleUpdateSubcategory({
-					...props,
-					iconId,
-					title,
-				})
+				updateFn()
 				setShow(false)
 			}}
 			structure='text'
@@ -61,11 +59,7 @@ export function useBadgePopupButtons({
 			key='save'
 			style='blue-default'
 			onClick={() => {
-				handleUpdateSubcategory({
-					...props,
-					iconId,
-					title,
-				})
+				updateFn()
 				setShow(false)
 			}}
 			structure='text'

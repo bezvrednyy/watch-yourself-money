@@ -12,7 +12,7 @@ const newSubcategoriesIdsSetAtom = createSetAtom<string>()
 
 const titleAtom = createStringAtom('')
 const iconIdAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
-const colorIdAtom = createStringAtom<ColorId>('white')
+const colorIdAtom = createStringAtom<ColorId>('green#500')
 const subcategoriesAtom = createAtom(
 	{
 		newSubcategoriesIdsSetAtom,

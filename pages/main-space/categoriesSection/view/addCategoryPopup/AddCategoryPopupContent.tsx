@@ -4,6 +4,7 @@ import {TextField} from '../../../../../components/textField/TextField'
 import {addCategoryPopupAtoms} from './model/addCategoryPopupAtoms'
 import {CategoryViewPicker} from '../common/CategoryViewPicker'
 import {AddSubcategoryBadge} from '../common/AddSubcategoryBadge'
+import {SubcategoryBadge} from './SubcategoryBadge'
 
 function AddCategoryPopupContent() {
 	const [title] = useAtom(addCategoryPopupAtoms.titleAtom)
@@ -36,7 +37,7 @@ function AddCategoryPopupContent() {
 				/>
 			</div>
 			<div className='flex flex-wrap pt-1'>
-				{subcategories.map(x => <div key={x.id} />)}
+				{subcategories.map(x => <SubcategoryBadge key={x.id} {...x} />)}
 				<AddSubcategoryBadge
 					onSave={data => handleAddSubcategory({
 						id: generateUuid(),

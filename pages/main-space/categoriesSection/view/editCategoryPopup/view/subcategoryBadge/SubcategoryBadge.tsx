@@ -1,21 +1,15 @@
 import {useAtom} from '@reatom/react'
 import {useState} from 'react'
 import {checkNever} from '../../../../../../../common/checkNever'
-import {getColorById} from '../../../../../../../common/colors/theme'
 import {joinClassNames} from '../../../../../../../common/joinClassNames'
 import {Badge} from '../../../../../../../components/Badge'
-import {
-	OutlineIconId,
-	getDefaultIconIds,
-	getOutlineIconById,
-} from '../../../../../../../components/icons/getOutlineIconById'
+import {getOutlineIconById} from '../../../../../../../components/icons/getOutlineIconById'
 import {PopupDefault} from '../../../../../../../components/PopupDefault'
-import {RoundedSquare} from '../../../../../../../components/RoundedSquare'
-import {TextField} from '../../../../../../../components/textField/TextField'
 import {CategoryData} from '../../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from '../../model/editableCategoryAtom'
-import styles from './SubcategoryBadge.module.css'
+import styles from '../../../common/common.module.css'
 import {useBadgePopupButtons} from './useBadgePopupButtons'
+import { SubcategoryBadgePopupContent } from '../../../common/SubcategoryBadgePopupContent'
 
 type SubcategoryType = 'default'|'removed'|'turnInMain'|'new'
 
@@ -58,8 +52,8 @@ function SubcategoryBadge(props: CategoryData) {
 	const badgeColorClass = getBgColorByType(type)
 	const buttons = useBadgePopupButtons({
 		...props,
-		title,
-		iconId,
+		newTitle: title,
+		newIconId: iconId,
 		setShow,
 	})
 
@@ -91,50 +85,7 @@ function SubcategoryBadge(props: CategoryData) {
 	</>
 }
 
-type PopoverContentProps = {
-	iconId: OutlineIconId,
-	setIconId: (v: OutlineIconId) => void,
-	title: string,
-	setTitle: (v: string) => void,
-}
-
-function SubcategoryBadgePopupContent({
-	iconId,
-	setIconId,
-	title,
-	setTitle,
-}: PopoverContentProps) {
-	return (
-		<div className='w-80'>
-			<TextField
-				style='default'
-				value={title}
-				onInput={setTitle}
-				placeholder={'Category name'}
-				required={true}
-			/>
-			<div className='flex justify-between flex-wrap max-h-40 overflow-y-scroll mt-4 pr-1 relative left-1 scrollbar'>
-				{getDefaultIconIds().map(id => <RoundedSquare
-					key={id}
-					bgHexColor={getColorById('white')}
-					className={joinClassNames(
-						'transform transition hover:scale-105 cursor-pointer w-7 h-7 mb-1',
-						iconId === id ? 'border-2 border-purple-600 rounded-full' : null,
-					)}
-					rounded='full'
-					createIcon={() => {
-						const IconFC = getOutlineIconById(id)
-						return <IconFC className='w-6 h-6 text-black shadow-none' />
-					}}
-					onClick={() => setIconId(id)}
-				/>)}
-			</div>
-		</div>
-	)
-}
-
 export {
 	SubcategoryBadge,
-	SubcategoryBadgePopupContent,
 	useSubcategoryType,
 }

@@ -4,8 +4,8 @@ import {Badge} from '../../../../../components/Badge'
 import {Button} from '../../../../../components/button/Button'
 import {OutlineIconId, getOutlineIconById} from '../../../../../components/icons/getOutlineIconById'
 import {PopupDefault} from '../../../../../components/PopupDefault'
-import {SubcategoryBadgePopupContent} from '../addCategoryPopup/view/subcategoryBadge/SubcategoryBadge'
-import styles from '../addCategoryPopup/view/subcategoryBadge/SubcategoryBadge.module.css'
+import styles from './common.module.css'
+import {SubcategoryBadgePopupContent} from './SubcategoryBadgePopupContent'
 
 type OnSaveParams = {
 	title: string,

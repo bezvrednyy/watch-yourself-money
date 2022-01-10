@@ -38,10 +38,7 @@ function EditCategoryPopupContent() {
 				/>
 			</div>
 			<div className='flex flex-wrap pt-1'>
-				{subcategories.map(x => <SubcategoryBadge
-					key={x.id}
-					{...x}
-				/>)}
+				{subcategories.map(x => <SubcategoryBadge key={x.id} {...x} />)}
 				<AddSubcategoryBadge
 					onSave={data => handleAddSubcategory({
 						id: generateUuid(),
