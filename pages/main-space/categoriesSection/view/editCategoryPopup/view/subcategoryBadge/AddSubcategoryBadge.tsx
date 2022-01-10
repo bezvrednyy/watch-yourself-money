@@ -16,8 +16,9 @@ export function AddSubcategoryBadge() {
 	const [show, setShow] = useState(false)
 	const [iconId, setIconId] = useState<OutlineIconId>('outline-bookmark')
 	const [title, setTitle] = useState('')
-	const handleAddSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.add)
+	const [parentCategoryColorId] = useAtom(editCategoryPopupAtoms.colorIdAtom)
 	const [editableCategoryId] = useAtom(editableCategoryIdAtom)
+	const handleAddSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.add)
 
 	return <>
 		<Badge
@@ -54,7 +55,7 @@ export function AddSubcategoryBadge() {
 						title,
 						type: 'EXPENSES',
 						iconId,
-						colorId: 'transparent',
+						colorId: parentCategoryColorId,
 					})
 					setShow(false)
 				}}
