@@ -33,7 +33,7 @@ export function ButtonWithPopover({
 	// https://popper.js.org/docs/v2/modifiers/hide/
 	return (
 		<Popover className={className}>
-			<Popover.Button ref={setReferenceElement}>
+			<Popover.Button ref={setReferenceElement} className='focus:outline-none'>
 				{createButton()}
 			</Popover.Button>
 			<Portal type='popover-layer'>
