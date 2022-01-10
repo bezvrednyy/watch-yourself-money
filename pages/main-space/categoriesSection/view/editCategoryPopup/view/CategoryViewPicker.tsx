@@ -1,4 +1,5 @@
 import {CheckIcon} from '@heroicons/react/outline'
+import {getDefaultColorIds} from '../../../../../../common/colors/colors'
 import {getColorById} from '../../../../../../common/colors/theme'
 import {PopoverDefault} from '../../../../../../components/popovers/PopoverDefault'
 import {ButtonWithPopover} from '../../../../../../components/button/buttons/buttonWithPopover/ButtonWithPopover'
@@ -6,7 +7,7 @@ import {Tab} from '@headlessui/react'
 import {joinClassNames} from '../../../../../../common/joinClassNames'
 import {RoundedSquare} from '../../../../../../components/RoundedSquare'
 import {useAction, useAtom} from '@reatom/react'
-import {editCategoryPopupAtoms, getAvailableColorIds} from '../model/editableCategoryAtom'
+import {editCategoryPopupAtoms} from '../model/editableCategoryAtom'
 import {getDefaultIconIds, getOutlineIconById} from '../../../../../../components/icons/getOutlineIconById'
 
 export function CategoryViewPicker() {
@@ -80,7 +81,7 @@ function IconSelections() {
 }
 
 function ColorSelections() {
-	const colorIds = getAvailableColorIds()
+	const colorIds = getDefaultColorIds()
 	const [selectedColorId] = useAtom(editCategoryPopupAtoms.colorIdAtom)
 	const handleSetColorId = useAction(editCategoryPopupAtoms.colorIdAtom.set)
 	return (

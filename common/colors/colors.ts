@@ -29,6 +29,18 @@ interface DefaultTheme {
 const colorDelimiter: ColorDelimiter = '#'
 const createColorId = (a: ColorName, b: ColorsVariation): ColorId => `${a}${colorDelimiter}${b}`
 
+function getDefaultColorIds(): Array<ColorId> {
+	const colorGroups: Array<ColorName> = [
+		'gray', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal',
+		'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose',
+	]
+	const colorsSaturation: Array<ColorsVariation> = [
+		300, 400, 500, 600, 700,
+	]
+
+	return colorGroups.flatMap(group => colorsSaturation.map(x => createColorId(group, x)))
+}
+
 export type {
 	DefaultTheme,
 	ColorId,
@@ -39,4 +51,5 @@ export type {
 export {
 	colorDelimiter,
 	createColorId,
+	getDefaultColorIds,
 }

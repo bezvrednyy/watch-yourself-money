@@ -1,5 +1,5 @@
 import {createAtom} from '@reatom/core'
-import {ColorId, ColorName, ColorsVariation, createColorId} from '../../../../../../common/colors/colors'
+import {ColorId} from '../../../../../../common/colors/colors'
 import {CategoryData} from '../../../../model/categoriesAtom'
 import {createEnumAtom, createSetAtom, createStringAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../../../components/icons/getOutlineIconById'
@@ -61,18 +61,6 @@ const subcategoriesAtom = createAtom(
 	},
 )
 
-function getAvailableColorIds(): Array<ColorId> {
-	const colorGroups: Array<ColorName> = [
-		'gray', 'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal',
-		'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose',
-	]
-	const colorsSaturation: Array<ColorsVariation> = [
-		300, 400, 500, 600, 700,
-	]
-
-	return colorGroups.flatMap(group => colorsSaturation.map(x => createColorId(group, x)))
-}
-
 export const editCategoryPopupAtoms = {
 	statusesAtom,
 	titleAtom,
@@ -83,8 +71,4 @@ export const editCategoryPopupAtoms = {
 	newSubcategoriesIdsSetAtom,
 	removedSubcategoryIdsSetAtom,
 	haveBecomeMainCategoriesIdsSetAtom,
-}
-
-export {
-	getAvailableColorIds,
 }
