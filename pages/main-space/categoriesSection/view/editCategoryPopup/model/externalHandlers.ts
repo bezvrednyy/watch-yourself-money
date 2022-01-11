@@ -1,4 +1,4 @@
-import {fetchPostData} from '../../../../../../backFrontJoint/clientApi/fetchPostData'
+import {fetchPostData} from '../../../../../../backFrontJoint/clientApi/clientApi'
 import {declareAsyncAction} from '../../../../../../common/declareAsyncAction'
 import {verify} from '../../../../../../common/verify'
 import {getEnvType} from '../../../../../../environment/environment'

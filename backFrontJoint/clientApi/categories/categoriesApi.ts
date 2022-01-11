@@ -4,7 +4,7 @@ import {
 	CreateCategoryRightData,
 } from '../../contracts/categories/createCategoryContract'
 import {BackendEitherObject, processBackendEither} from '../../contracts/BackendEitherObject'
-import {fetchPostData} from '../fetchPostData'
+import {fetchPostData} from '../clientApi'
 import {Either} from '@sweet-monads/either'
 
 type BackendEitherData = BackendEitherObject<CreateCategoryLeftData, CreateCategoryRightData>
