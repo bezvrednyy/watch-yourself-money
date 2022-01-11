@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
+import {sendJsonError} from '../../../common/backendApi/sendJsonError'
 import prisma from '../../../prisma/prisma'
 
 export default async function getUserSettings(req: NextApiRequest, res: NextApiResponse) {
@@ -14,12 +15,8 @@ export default async function getUserSettings(req: NextApiRequest, res: NextApiR
 	}})
 
 	if (settings) {
-		res.json({
-			settings,
-		})
+		res.json({ settings })
 		return
 	}
-	res.status(500).json({
-		error: 'Error: user settings not found!',
-	})
+	sendJsonError(res, 500, 'Error: user settings not found!')
 }

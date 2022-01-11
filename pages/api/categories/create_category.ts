@@ -48,7 +48,7 @@ export default async function createCategory(req: CreateCategoryRequest, res: Ne
 	}
 	catch (error) {
 		res.status(500).json({
-			text: error,
+			error,
 		})
 	}
 }

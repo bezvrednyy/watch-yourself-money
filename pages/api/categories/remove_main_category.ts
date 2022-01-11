@@ -63,9 +63,7 @@ export default async function removeMainCategory(req: RemoveCategoryRequest, res
 		res.status(200).send({})
 	}
 	catch (error) {
-		res.status(500).json({
-			text: error,
-		})
+		res.status(500).json({ error })
 	}
 }
 
