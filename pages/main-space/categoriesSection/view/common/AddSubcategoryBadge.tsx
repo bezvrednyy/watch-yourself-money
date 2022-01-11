@@ -1,9 +1,9 @@
 import {useState} from 'react'
 import {joinStrings} from '../../../../../common/utils/string'
-import {Badge} from '../../../../../uikit/Badge'
-import {Button} from '../../../../../uikit/button/Button'
-import {OutlineIconId, getOutlineIconById} from '../../../../../uikit/icons/getOutlineIconById'
-import {PopupDefault} from '../../../../../uikit/PopupDefault'
+import {Badge} from '../../../../../commonClient/uikit/Badge'
+import {Button} from '../../../../../commonClient/uikit/button/Button'
+import {OutlineIconId, getOutlineIconById} from '../../../../../commonClient/uikit/icons/getOutlineIconById'
+import {PopupDefault} from '../../../../../commonClient/uikit/PopupDefault'
 import styles from './common.module.css'
 import {SubcategoryBadgePopupContent} from './SubcategoryBadgePopupContent'
 

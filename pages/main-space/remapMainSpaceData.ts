@@ -1,6 +1,6 @@
 import {BankAccount, Category, Transaction} from '@prisma/client'
 import {ColorId} from '../../common/colors/colors'
-import {OutlineIconId} from '../../uikit/icons/getOutlineIconById'
+import {OutlineIconId} from '../../commonClient/uikit/icons/getOutlineIconById'
 import {BankAccountData} from './model/bankAccountsAtom'
 import {CategoryData} from './model/categoriesAtom'
 import {TransactionData} from './model/transactionsAtom'

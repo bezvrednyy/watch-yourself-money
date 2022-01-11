@@ -1,4 +1,4 @@
-import {TextFieldInputProps, TextFieldSize} from '../textFieldProps'
+import {TextFieldInputProps} from '../textFieldProps'
 
 export function TextFieldInput({
 	value,

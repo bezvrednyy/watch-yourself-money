@@ -3,8 +3,8 @@ import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {selectedPeriodAtom} from '../model/selectedPeriodAtom'
 import styles from './CardsSection.module.css'
 import {joinStrings} from '../../../common/utils/string'
-import {BankCard} from '../../../uikit/bankCard/BankCard'
-import {DatePicker} from '../../../uikit/datePicker/DatePicker'
+import {BankCard} from '../../../commonClient/uikit/bankCard/BankCard'
+import {DatePicker} from '../../../commonClient/uikit/datePicker/DatePicker'
 
 function CardsSection() {
 	const [selectedPeriod] = useAtom(selectedPeriodAtom)

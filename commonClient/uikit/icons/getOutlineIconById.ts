@@ -66,7 +66,7 @@ import {
 	TruckIcon, UserGroupIcon, UsersIcon, VolumeUpIcon, WifiIcon,
 } from '@heroicons/react/outline'
 import * as React from 'react'
-import {checkNever} from '../../common/utils/checkNever'
+import {checkNever} from '../../../common/utils/checkNever'
 
 export type OutlineIconId = 'outline-academic-cap'|
 	'outline-annotation'|

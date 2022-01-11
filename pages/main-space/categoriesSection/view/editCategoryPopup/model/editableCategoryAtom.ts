@@ -2,7 +2,7 @@ import {createAtom} from '@reatom/core'
 import {ColorId} from '../../../../../../common/colors/colors'
 import {CategoryData} from '../../../../model/categoriesAtom'
 import {createBooleanAtom, createEnumAtom, createSetAtom, createStringAtom} from '@reatom/core/primitives'
-import {OutlineIconId} from '../../../../../../uikit/icons/getOutlineIconById'
+import {OutlineIconId} from '../../../../../../commonClient/uikit/icons/getOutlineIconById'
 
 const statusesAtom = createEnumAtom(['normal', 'saving'])
 const showNotificationPopupAtom = createBooleanAtom(false)

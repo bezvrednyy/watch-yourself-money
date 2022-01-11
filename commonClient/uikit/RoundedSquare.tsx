@@ -1,4 +1,4 @@
-import {joinStrings} from '../common/utils/string'
+import {joinStrings} from '../../common/utils/string'
 
 type RoundedType = 'none'|'default'|'full'
 

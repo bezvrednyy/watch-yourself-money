@@ -1,6 +1,6 @@
 import {createPrimitiveAtom} from '@reatom/core/primitives'
 import {ColorId} from '../../../common/colors/colors'
-import {OutlineIconId} from '../../../uikit/icons/getOutlineIconById'
+import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
 
 type CategoryType = 'EXPENSES'|'INCOMES'
 

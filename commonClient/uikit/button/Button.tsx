@@ -1,4 +1,4 @@
-import {Logger} from '../../common/utils/Logger'
+import {Logger} from '../../../common/utils/Logger'
 import type {ButtonProps} from './buttonProps'
 import {ButtonWithText} from './buttons/ButtonWithText'
 

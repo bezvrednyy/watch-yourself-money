@@ -1,7 +1,7 @@
 import {Menu} from '@headlessui/react'
 import {useState} from 'react'
 import {usePopper} from 'react-popper'
-import {joinStrings} from '../common/utils/string'
+import {joinStrings} from '../../common/utils/string'
 
 type MenuDefaultProps = {
 	createButton: () => JSX.Element,

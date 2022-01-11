@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {joinStrings} from '../../common/utils/string'
+import {joinStrings} from '../../../common/utils/string'
 import {TextFieldInput} from './common/TextFieldInput'
 import {TextFieldLinkProps, TextFieldSize} from './textFieldProps'
 

@@ -1,4 +1,4 @@
-import {joinStrings} from '../common/utils/string'
+import {joinStrings} from '../../common/utils/string'
 import {ExternalLayer} from './layers/ExternalLayer'
 
 type PopupDefaultProps = {

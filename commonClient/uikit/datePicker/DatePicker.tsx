@@ -1,6 +1,6 @@
 import {ButtonWithPopover} from '../button/buttons/buttonWithPopover/ButtonWithPopover'
 import {DateField} from './DateField'
-import {joinStrings} from '../../common/utils/string'
+import {joinStrings} from '../../../common/utils/string'
 import {DatePickerPopover} from './popover/DatePickerPopover'
 import type {DatePickerProps} from './model/DatePickerData'
 

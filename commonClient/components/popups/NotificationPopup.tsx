@@ -1,5 +1,5 @@
-import {Button} from '../../../uikit/button/Button'
-import {PopupDefault} from '../../../uikit/PopupDefault'
+import {Button} from '../../uikit/button/Button'
+import {PopupDefault} from '../../uikit/PopupDefault'
 
 type NotificationPopupProps = {
 	show: boolean,

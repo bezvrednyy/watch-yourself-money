@@ -1,7 +1,7 @@
 import styles from './ExternalLayer.module.css'
 import {Dialog, Transition} from '@headlessui/react'
 import {Fragment} from 'react'
-import {joinStrings} from '../../common/utils/string'
+import {joinStrings} from '../../../common/utils/string'
 
 type ExternalLayerProps = {
 	show: boolean,
