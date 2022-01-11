@@ -10,6 +10,9 @@ type PopupDefaultProps = {
 	className?: string,
 }
 
+/**
+ * @description Если модальное окно должно открывать ещё одно, то второе окно должно быть обязательно вложено в первое
+ */
 export function PopupDefault(props: PopupDefaultProps) {
 	return <ExternalLayer
 		show={props.show}

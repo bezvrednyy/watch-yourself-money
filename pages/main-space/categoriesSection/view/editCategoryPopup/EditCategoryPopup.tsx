@@ -23,15 +23,15 @@ export function EditCategoryPopup({
 	useInitPopupAtoms()
 	const buttons = useEditCategoryPopupButtons(onClose)
 
-	return <>
-		<PopupDefault
-			show={show}
-			createContent={() => <EditCategoryPopupContent />}
-			buttons={buttons}
-			className='w-full max-w-md'
-		/>
-		<RemoveNotificationPopup onClose={onClose} />
-	</>
+	return <PopupDefault
+		show={show}
+		createContent={() => <>
+			<EditCategoryPopupContent />
+			<RemoveNotificationPopup onClose={onClose} />
+		</>}
+		buttons={buttons}
+		className='w-full max-w-md'
+	/>
 }
 
 type RemoveNotificationPopupProps = {
