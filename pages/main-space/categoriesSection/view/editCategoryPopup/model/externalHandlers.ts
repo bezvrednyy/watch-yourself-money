@@ -86,7 +86,7 @@ export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategory
 	}
 
 	//TODO:Either
-	const res = await fetchPostData('/api/categories/remove_category', data)
+	const res = await fetchPostData('/api/categories/remove_main_category', data)
 	if (res.ok) {
 		//TODO:toast и обновление категорий
 		onClose()
