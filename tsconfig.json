@@ -15,7 +15,7 @@
     "jsx": "preserve",
     "incremental": true,
     "typeRoots": [
-      "common/types",
+      "common/definitions",
       "node_modules/@types"
     ]
   },

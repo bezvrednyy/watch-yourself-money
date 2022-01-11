@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {joinStrings} from '../../../../../common/string'
+import {joinStrings} from '../../../../../common/utils/string'
 import {Badge} from '../../../../../uikit/Badge'
 import {Button} from '../../../../../uikit/button/Button'
 import {OutlineIconId, getOutlineIconById} from '../../../../../uikit/icons/getOutlineIconById'

@@ -1,7 +1,7 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import {ColorId} from '../../../common/colors/colors'
-import {verify} from '../../../common/verify'
+import {verify} from '../../../common/utils/verify'
 import {OutlineIconId} from '../../../uikit/icons/getOutlineIconById'
 import prisma from '../../../prisma/prisma'
 import {CategoryData} from '../../main-space/model/categoriesAtom'

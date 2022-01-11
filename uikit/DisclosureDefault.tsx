@@ -1,6 +1,6 @@
 import {Disclosure} from '@headlessui/react'
 import {Fragment} from 'react'
-import {joinStrings} from '../common/string'
+import {joinStrings} from '../common/utils/string'
 
 type DisclosureDefaultProps = {
 	createButton: (open: boolean) => JSX.Element,

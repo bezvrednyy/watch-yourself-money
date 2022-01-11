@@ -1,6 +1,6 @@
 import {Category, CurrencyId, LanguageId} from '@prisma/client'
 import {randomUUID} from 'crypto'
-import {generateRandomInt} from '../common/generateRandom'
+import {generateRandomInt} from '../common/utils/generateRandom'
 import prisma from './prisma'
 
 async function generateMockData() {

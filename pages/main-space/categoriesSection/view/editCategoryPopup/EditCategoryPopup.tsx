@@ -1,15 +1,15 @@
 import {useAction, useAtom} from '@reatom/react'
-import {useAsyncAction} from '../../../../../common/declareAsyncAction'
-import {joinStrings} from '../../../../../common/string'
+import {useAsyncAction} from '../../../../../commonClient/declareAsyncAction'
+import {joinStrings} from '../../../../../common/utils/string'
 import {Button} from '../../../../../uikit/button/Button'
 import {PopupDefault} from '../../../../../uikit/PopupDefault'
 import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
 import {categoriesAtom, editableCategoryIdAtom} from '../../../model/categoriesAtom'
-import {verify} from '../../../../../common/verify'
+import {verify} from '../../../../../common/utils/verify'
 import {useEffect} from 'react'
 import {EditCategoryPopupContent} from './EditCategoryPopupContent'
 import {editCategoryPopupRemoveCategory, editCategoryPopupSaveData} from './model/externalHandlers'
-import {NotificationPopup} from '../../../../../common/components/popups/NotificationPopup'
+import {NotificationPopup} from '../../../../../commonClient/components/popups/NotificationPopup'
 
 type EditCategoryPopupProps = {
 	show: boolean,

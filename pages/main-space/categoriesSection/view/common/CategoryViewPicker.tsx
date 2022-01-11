@@ -4,7 +4,7 @@ import {getColorById} from '../../../../../common/colors/theme'
 import {PopoverDefault} from '../../../../../uikit/popovers/PopoverDefault'
 import {ButtonWithPopover} from '../../../../../uikit/button/buttons/buttonWithPopover/ButtonWithPopover'
 import {Tab} from '@headlessui/react'
-import {joinStrings} from '../../../../../common/string'
+import {joinStrings} from '../../../../../common/utils/string'
 import {RoundedSquare} from '../../../../../uikit/RoundedSquare'
 import {
 	OutlineIconId,

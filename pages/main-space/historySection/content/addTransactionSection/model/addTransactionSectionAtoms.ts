@@ -1,9 +1,9 @@
 import {createAtom} from '@reatom/core'
 import {createPrimitiveAtom} from '@reatom/core/primitives'
-import {declareAsyncAction} from '../../../../../../common/declareAsyncAction'
-import {generateUuid} from '../../../../../../common/generateRandom'
-import {getEnvType} from '../../../../../../environment/environment'
-import {userSettingsAtom} from '../../../../../../environment/userSettingsAtom'
+import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
+import {generateUuid} from '../../../../../../common/utils/generateRandom'
+import {getEnvType} from '../../../../../../commonClient/environment/clientEnv'
+import {userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
 import {AddTransactionRequestData} from '../../../../../api/transactions/add_transaction'
 
 const selectedCategoryIdAtom = createPrimitiveAtom<string>('')

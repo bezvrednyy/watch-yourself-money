@@ -1,4 +1,4 @@
-import {Logger} from '../../common/Logger'
+import {Logger} from '../../common/utils/Logger'
 import {TextFieldDefault} from './TextFieldDefault'
 import {TextFieldLink} from './TextFieldLink'
 import type {TextFieldProps} from './textFieldProps'

@@ -1,5 +1,5 @@
 import {getColorById} from '../../../../../common/colors/theme'
-import {joinStrings} from '../../../../../common/string'
+import {joinStrings} from '../../../../../common/utils/string'
 import {OutlineIconId, getDefaultIconIds, getOutlineIconById} from '../../../../../uikit/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../../../uikit/RoundedSquare'
 import {TextField} from '../../../../../uikit/textField/TextField'

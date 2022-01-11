@@ -1,4 +1,4 @@
-import {verify} from '../verify'
+import {verify} from '../utils/verify'
 import {ColorId, ColorName, ColorsVariation, DefaultTheme, colorDelimiter} from './colors'
 
 const theme: DefaultTheme = {

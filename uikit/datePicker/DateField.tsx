@@ -1,6 +1,6 @@
 import {ReactElement} from 'react'
 import {format} from 'date-fns'
-import {joinStrings} from '../../common/string'
+import {joinStrings} from '../../common/utils/string'
 
 type DateFieldProps = {
     date: Date,

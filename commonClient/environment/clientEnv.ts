@@ -1,12 +1,8 @@
 import {Store} from '@reatom/core'
-import {declareAsyncAction} from '../common/declareAsyncAction'
+import {declareAsyncAction} from '../declareAsyncAction'
 import {userSettingsAtom} from './userSettingsAtom'
 
 type EnvironmentType = 'test'|'development'|'production'
-
-export default interface Session {
-	userId: string,
-}
 
 function getEnvType(): EnvironmentType {
 	return process.env.NODE_ENV

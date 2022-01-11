@@ -5,7 +5,7 @@ import 'tailwindcss/tailwind.css'
 import '../public/styles.css'
 import {useEffect} from 'react'
 import {Toaster} from 'react-hot-toast'
-import {initEnvironment} from '../environment/environment'
+import {initEnvironment} from '../commonClient/environment/clientEnv'
 import {SessionProvider} from 'next-auth/react'
 
 export default function MyApp({

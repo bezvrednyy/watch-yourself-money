@@ -1,6 +1,6 @@
 import {CreateCategoryRequestData} from '../../../../../../backFrontJoint/contracts/categories/createCategoryContract'
-import {declareAsyncAction} from '../../../../../../common/declareAsyncAction'
-import {verify} from '../../../../../../common/verify'
+import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
+import {verify} from '../../../../../../common/utils/verify'
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
 import {addCategoryPopupAtoms} from './addCategoryPopupAtoms'
 

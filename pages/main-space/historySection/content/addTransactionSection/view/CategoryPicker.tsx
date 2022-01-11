@@ -1,6 +1,6 @@
 import {useAction, useAtom} from '@reatom/react'
 import {getColorById} from '../../../../../../common/colors/theme'
-import {verify} from '../../../../../../common/verify'
+import {verify} from '../../../../../../common/utils/verify'
 import {
 	ButtonWithPopover,
 	PopoverContentProps,

@@ -1,6 +1,6 @@
 import {CurrencyId, UserSettings} from '@prisma/client'
 import {createPrimitiveAtom} from '@reatom/core/primitives'
-import {checkNever} from '../common/checkNever'
+import {checkNever} from '../../common/utils/checkNever'
 
 function getCurrencySymbolById(id: CurrencyId): string {
 	switch (id) {

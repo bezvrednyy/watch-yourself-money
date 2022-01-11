@@ -2,7 +2,7 @@ import {useAction, useAtom} from '@reatom/react'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {selectedPeriodAtom} from '../model/selectedPeriodAtom'
 import styles from './CardsSection.module.css'
-import {joinStrings} from '../../../common/string'
+import {joinStrings} from '../../../common/utils/string'
 import {BankCard} from '../../../uikit/bankCard/BankCard'
 import {DatePicker} from '../../../uikit/datePicker/DatePicker'
 

@@ -1,5 +1,5 @@
 import {XIcon} from '@heroicons/react/outline'
-import {joinStrings} from '../common/string'
+import {joinStrings} from '../common/utils/string'
 import {TextWithEllipsis} from './TextWithEllipsis'
 
 type BadgeProps = {

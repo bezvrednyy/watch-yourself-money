@@ -1,5 +1,5 @@
 import {useAction, useAtom} from '@reatom/react'
-import {generateUuid} from '../../../../../common/generateRandom'
+import {generateUuid} from '../../../../../common/utils/generateRandom'
 import {TextField} from '../../../../../uikit/textField/TextField'
 import {addCategoryPopupAtoms} from './model/addCategoryPopupAtoms'
 import {CategoryViewPicker} from '../common/CategoryViewPicker'

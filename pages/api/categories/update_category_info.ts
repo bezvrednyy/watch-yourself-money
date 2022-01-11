@@ -1,7 +1,7 @@
 import {Category, CategoryType} from '@prisma/client'
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {verify} from '../../../common/verify'
+import {verify} from '../../../common/utils/verify'
 import {OutlineIconId} from '../../../uikit/icons/getOutlineIconById'
 import {ColorId} from '../../../common/colors/colors'
 import prisma from '../../../prisma/prisma'

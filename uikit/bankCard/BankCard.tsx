@@ -1,5 +1,5 @@
 import {useAtom} from '@reatom/react'
-import {getCurrencySymbolById, userSettingsAtom} from '../../environment/userSettingsAtom'
+import {getCurrencySymbolById, userSettingsAtom} from '../../commonClient/environment/userSettingsAtom'
 import {BankAccountData} from '../../pages/main-space/model/bankAccountsAtom'
 
 function BankCard({

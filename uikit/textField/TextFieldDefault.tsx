@@ -1,4 +1,4 @@
-import {joinStrings} from '../../common/string'
+import {joinStrings} from '../../common/utils/string'
 import {TextFieldDescription} from './common/TextFieldDescription'
 import {TextFieldInput} from './common/TextFieldInput'
 import {TextFieldDefaultProps, TextFieldSize} from './textFieldProps'

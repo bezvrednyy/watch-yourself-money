@@ -1,5 +1,5 @@
-import {checkNever} from '../../../common/checkNever'
-import {joinStrings} from '../../../common/string'
+import {checkNever} from '../../../common/utils/checkNever'
+import {joinStrings} from '../../../common/utils/string'
 import type {ButtonWithTextProps, ButtonWithTextStyle} from '../buttonProps'
 
 function ButtonWithText({

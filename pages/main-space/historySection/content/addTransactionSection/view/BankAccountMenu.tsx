@@ -1,10 +1,10 @@
 import {Menu} from '@headlessui/react'
 import {useAtom} from '@reatom/react'
-import {joinStrings} from '../../../../../../common/string'
-import {verify} from '../../../../../../common/verify'
+import {joinStrings} from '../../../../../../common/utils/string'
+import {verify} from '../../../../../../common/utils/verify'
 import {MenuDefault} from '../../../../../../uikit/MenuDefault'
 import {TextWithEllipsis} from '../../../../../../uikit/TextWithEllipsis'
-import {getCurrencySymbolById, userSettingsAtom} from '../../../../../../environment/userSettingsAtom'
+import {getCurrencySymbolById, userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
 import {bankAccountsAtom} from '../../../../model/bankAccountsAtom'
 import {addTransactionSectionAtoms} from '../model/addTransactionSectionAtoms'
 
