@@ -1,5 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
+import {sendJsonError} from '../../../common/backendApi/sendJsonError'
 import prisma from '../../../prisma/prisma'
 
 type RemoveCategoryRequestData = {
@@ -13,7 +14,7 @@ type RemoveCategoryRequest = NextApiRequest & {
 	}
 }
 
-export default async function removeCategory(req: RemoveCategoryRequest, res: NextApiResponse) {
+export default async function removeMainCategory(req: RemoveCategoryRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
@@ -22,27 +23,31 @@ export default async function removeCategory(req: RemoveCategoryRequest, res: Ne
 
 	try {
 		const {categoryId, removeSubcategories}: RemoveCategoryRequestData = req.body.data
-		const categoryInfo = await prisma.category.findUnique({
-			where: {
-				id: categoryId,
-			},
-			select: {
-				userId: true,
-			},
-		})
+		const [categoryInfo, mainCategoriesCount] = await Promise.all([
+			prisma.category.findUnique({
+				where: { id: categoryId },
+				select: { userId: true, parentCategoryId: true },
+			}),
+			prisma.category.count({ where: {
+				userId: session.user.id,
+				parentCategoryId: null,
+			}}),
+		])
 
 		if (!categoryInfo) {
-			res.status(500).json({
-				text: 'Category not found',
-			})
-			return
+			return sendJsonError(res, 500, 'Category not found')
 		}
-
 		if (categoryInfo.userId !== session?.user.id) {
-			//Когда запрос ушёл от пользователя на добавление транзакции другому пользователю
-			res.status(403).json({
-				text: 'Not enough rights',
-			})
+			return sendJsonError(res, 403, 'Not enough rights')
+		}
+		if (!categoryInfo.parentCategoryId) {
+			return sendJsonError(res, 400, 'Is not category. Is it subcategory')
+		}
+		if (mainCategoriesCount < 1) {
+			return sendJsonError(res, 500, 'Not found main categories')
+		}
+		if (mainCategoriesCount === 1) {
+			return sendJsonError(res, 400, 'The last category cannot be deleted')
 		}
 
 		await prisma.$transaction([
