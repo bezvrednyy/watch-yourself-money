@@ -43,7 +43,7 @@ export default async function AddTransaction(req: AddTransactionRequest, res: Ne
 		return sendJsonError(res, 403, 'Not enough rights')
 	}
 
-	//TODO: Either вместо исключений
+	//TODO:Either
 	try {
 		await prisma.transaction.create({
 			data: {

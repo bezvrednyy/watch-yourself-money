@@ -36,7 +36,7 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 		...mainCategory
 	} = req.body.data as UpdateCategoriesInfoRequestData
 
-	//TODO: Either вместо исключений
+	//TODO:Either
 	try {
 		//TODO:category, при удалении подкатегории транзакции должны удалиться. Добавить сообщение об этом.
 		await Promise.all([

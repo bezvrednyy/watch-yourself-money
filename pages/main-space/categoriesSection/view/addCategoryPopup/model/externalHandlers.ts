@@ -23,13 +23,13 @@ export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async
 		iconId: store.getState(iconIdAtom),
 		colorId,
 		title,
-		type: 'EXPENSES', //TODO: IncomesFeature,
+		type: 'EXPENSES', //TODO:newFeature добавить категории тип "Доходы"
 		subcategories: store.getState(subcategoriesAtom).map(
 			x => ({...x, colorId}),
 		),
 	}
 
-	//TODO: Either вместо исключений
+	//TODO:Either
 	const res = await fetch('/api/categories/create_category', {
 		method: 'POST',
 		headers: {
@@ -46,7 +46,7 @@ export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async
 	}
 
 	if (res.ok) {
-		//TODO: добавить тостер и обновление категорий
+		//TODO:toast
 		onClose()
 	}
 	store.dispatch(statusesAtom.setNormal())

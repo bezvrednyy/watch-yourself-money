@@ -38,7 +38,7 @@ export const addTransaction = declareAsyncAction<AddTransactionParams>(async (st
 		money: store.getState(sumAtom),
 	}
 
-	//TODO: Either вместо исключений
+	//TODO:Either
 	const res = await fetch('/api/transactions/add_transaction', {
 		method: 'POST',
 		headers: {
@@ -55,7 +55,7 @@ export const addTransaction = declareAsyncAction<AddTransactionParams>(async (st
 	}
 
 	if (res.ok) {
-		//TODO: добавить тостер и обновление транзакций
+		//TODO:toast и обновление транзакций
 		onClose()
 	}
 })

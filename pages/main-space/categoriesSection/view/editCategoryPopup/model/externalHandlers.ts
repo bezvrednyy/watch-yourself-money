@@ -28,7 +28,7 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 		iconId: store.getState(iconIdAtom),
 		colorId: store.getState(colorIdAtom),
 		name: store.getState(titleAtom),
-		type: 'EXPENSES', //TODO: IncomesFeature,
+		type: 'EXPENSES', //TODO:newFeature добавить категории тип "Доходы"
 		editedSubcategories: store.getState(subcategoriesAtom)
 			.filter(x => editedSubcategoryIds.has(x.id))
 			.map(x => (haveBecomeMainCategoriesIdsSet.has(x.id)
@@ -44,7 +44,7 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 		removedSubcategoryIds: [...removedSubcategoryIdsSet],
 	}
 
-	//TODO: Either вместо исключений
+	//TODO:Either
 	const res = await fetch('/api/categories/update_category_info', {
 		method: 'POST',
 		headers: {
@@ -61,7 +61,7 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 	}
 
 	if (res.ok) {
-		//TODO: добавить тостер и обновление категорий
+		//TODO:toast и обновление категорий
 		onClose()
 	}
 	store.dispatch(statusesAtom.setNormal())
@@ -85,13 +85,13 @@ export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategory
 		removeSubcategories,
 	}
 
-	//TODO: Either вместо исключений
+	//TODO:Either
 	const res = await fetchPostData('/api/categories/remove_category', data)
 	if (res.ok) {
-		//TODO: добавить тостер и обновление категорий
+		//TODO:toast и обновление категорий
 		onClose()
 	}
 	store.dispatch(statusesAtom.setNormal())
 })
 
-//TODO:category Реализовать экшн очистки атомов и использовать его в externalHandlers
+//TODO:category. Реализовать экшн очистки атомов и использовать его в externalHandlers

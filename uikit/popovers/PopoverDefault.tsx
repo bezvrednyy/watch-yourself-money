@@ -1,5 +1,5 @@
 
-//TODO: buttons и т. п.
+//TODO:uikit buttons и т. п.
 type PopoverDefaultProps = {
 	createContent: () => JSX.Element,
 }
