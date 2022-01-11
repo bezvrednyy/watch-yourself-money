@@ -1,10 +1,8 @@
-import {createCategoryApi} from './categories/categoriesApi'
+import {categoriesClientApi} from './categories/categoriesApi'
 
 export function getClientApi() {
 	return {
-		categories: {
-			createCategory: createCategoryApi,
-		},
+		categories: categoriesClientApi,
 	}
 }
 
