@@ -1,5 +1,5 @@
 import {NextApiRequest} from 'next'
-import {CategoryData} from '../../../pages/main-space/model/categoriesAtom'
+import {CategoryData} from '../../../../pages/main-space/model/categoriesAtom'
 
 export interface CreateCategoryRequestData extends CategoryData {
 	subcategories: Array<CategoryData>,

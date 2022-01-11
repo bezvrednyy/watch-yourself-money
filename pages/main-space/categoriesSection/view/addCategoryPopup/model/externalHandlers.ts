@@ -1,4 +1,4 @@
-import {CreateCategoryRequestData} from '../../../../../../backFrontJoint/contracts/categories/createCategoryContract'
+import {CreateCategoryRequestData} from '../../../../../../backFrontJoint/common/contracts/categories/createCategoryContract'
 import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {verify} from '../../../../../../common/utils/verify'
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'

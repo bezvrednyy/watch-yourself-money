@@ -2,8 +2,8 @@ import {
 	CreateCategoryLeftData,
 	CreateCategoryRequestData,
 	CreateCategoryRightData,
-} from '../../contracts/categories/createCategoryContract'
-import {BackendEitherObject, processBackendEither} from '../../contracts/BackendEitherObject'
+} from '../../common/contracts/categories/createCategoryContract'
+import {BackendEitherObject, processBackendEither} from '../../common/contracts/BackendEitherObject'
 import {fetchPostData} from '../clientApi'
 import {Either} from '@sweet-monads/either'
 
