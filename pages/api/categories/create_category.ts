@@ -1,18 +1,9 @@
 import {randomUUID} from 'crypto'
-import {NextApiRequest, NextApiResponse} from 'next'
+import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
+import {CreateCategoryRequest} from '../../../backFrontJoint/contracts/categories/createCategoryContract'
 import prisma from '../../../prisma/prisma'
-import {CategoryData} from '../../main-space/model/categoriesAtom'
-
-type CreateCategoryRequestData = CategoryData & {
-	subcategories: Array<CategoryData>,
-}
-
-type CreateCategoryRequest = NextApiRequest & {
-	body: {
-		data: CreateCategoryRequestData,
-	}
-}
+import {left, right} from '@sweet-monads/either'
 
 export default async function createCategory(req: CreateCategoryRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
@@ -22,7 +13,7 @@ export default async function createCategory(req: CreateCategoryRequest, res: Ne
 	}
 
 	const userId = session.user.id
-	const {subcategories, ...mainCategory}: CreateCategoryRequestData = req.body.data
+	const {subcategories, ...mainCategory} = req.body.data
 
 	try {
 		await prisma.category.createMany({data: [
@@ -44,15 +35,9 @@ export default async function createCategory(req: CreateCategoryRequest, res: Ne
 				parentCategoryId: x.parentCategoryId,
 			})),
 		]})
-		res.status(200).send({})
+		res.status(200).send(right(undefined))
 	}
 	catch (error) {
-		res.status(500).json({
-			error,
-		})
+		res.status(500).json(left(error))
 	}
-}
-
-export type {
-	CreateCategoryRequestData,
 }

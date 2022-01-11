@@ -1,7 +1,7 @@
 import {CurrencyId, Prisma} from '@prisma/client'
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {sendJsonError} from '../../../common/backendApi/sendJsonError'
+import {sendJsonError} from '../../../backFrontJoint/backendApi/sendJsonError'
 import prisma from '../../../prisma/prisma'
 
 export type AddTransactionRequestData = {

@@ -18,6 +18,7 @@
     "@prisma/client": "^3.6.0",
     "@reatom/core": "^2.0.0-rc15",
     "@reatom/react": "^2.0.0-rc5",
+    "@sweet-monads/either": "^2.3.1",
     "babel-plugin-styled-components": "^2.0.2",
     "date-fns": "^2.27.0",
     "next": "^12.0.7",

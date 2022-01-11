@@ -1,7 +1,7 @@
+import {CreateCategoryRequestData} from '../../../../../../backFrontJoint/contracts/categories/createCategoryContract'
 import {declareAsyncAction} from '../../../../../../common/declareAsyncAction'
 import {verify} from '../../../../../../common/verify'
-import {getEnvType} from '../../../../../../environment/environment'
-import {CreateCategoryRequestData} from '../../../../../api/categories/create_category'
+import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
 import {addCategoryPopupAtoms} from './addCategoryPopupAtoms'
 
 type SaveDataParams = {
@@ -29,25 +29,18 @@ export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async
 		),
 	}
 
-	//TODO:Either
-	const res = await fetch('/api/categories/create_category', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json;charset=utf-8',
-		},
-		body: JSON.stringify({
-			data,
-		}),
-	})
-
-	if (getEnvType() !== 'production') {
-		console.log(data)
-		console.log(res)
-	}
-
-	if (res.ok) {
-		//TODO:toast
-		onClose()
-	}
-	store.dispatch(statusesAtom.setNormal())
+	const either = await getClientApi().categories.createCategory(data)
+	console.log(either)
+	return either
+		.mapRight(rightData => {
+			//TODO:toast
+			console.log(rightData)
+			store.dispatch(statusesAtom.setNormal())
+			onClose()
+		})
+		.mapLeft(error => {
+			store.dispatch(statusesAtom.setNormal())
+			onClose()
+			processStandardError(error)
+		})
 })
