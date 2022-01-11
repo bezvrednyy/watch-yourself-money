@@ -4,6 +4,7 @@ import {AppProps} from 'next/app'
 import 'tailwindcss/tailwind.css'
 import '../public/styles.css'
 import {useEffect} from 'react'
+import {Toaster} from 'react-hot-toast'
 import {initEnvironment} from '../environment/environment'
 import {SessionProvider} from 'next-auth/react'
 
@@ -23,6 +24,7 @@ export default function MyApp({
 		<SessionProvider session={session}>
 			<reatomContext.Provider value={store}>
 				<Component {...pageProps} />
+				<Toaster position='bottom-center' />
 			</reatomContext.Provider>
 		</SessionProvider>
 	</>
