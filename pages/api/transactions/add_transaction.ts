@@ -1,7 +1,7 @@
 import {CurrencyId, Prisma} from '@prisma/client'
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {sendJsonError} from '../../../backFrontJoint/backendApi/sendJsonError'
+import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
 import prisma from '../../../prisma/prisma'
 
 export type AddTransactionRequestData = {
@@ -37,10 +37,10 @@ export default async function AddTransaction(req: AddTransactionRequest, res: Ne
 	})
 
 	if (!categoryInfo) {
-		return sendJsonError(res, 500, 'Category not found')
+		return sendJsonTextError(res, 500, 'Category not found')
 	}
 	if (categoryInfo.userId !== session?.user.id) {
-		return sendJsonError(res, 403, 'Not enough rights')
+		return sendJsonTextError(res, 403, 'Not enough rights')
 	}
 
 	//TODO:Either

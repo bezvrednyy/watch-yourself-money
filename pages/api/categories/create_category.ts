@@ -2,10 +2,10 @@ import {randomUUID} from 'crypto'
 import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processPrismaError'
+import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
 import {CreateCategoryRequest} from '../../../backFrontJoint/common/contracts/categories/createCategoryContract'
-import {TextErrorResponse} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
-import {left, right} from '@sweet-monads/either'
+import {right} from '@sweet-monads/either'
 
 export default async function createCategory(req: CreateCategoryRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
@@ -40,9 +40,6 @@ export default async function createCategory(req: CreateCategoryRequest, res: Ne
 		res.status(200).send(right(undefined))
 	}
 	catch (error) {
-		const response: TextErrorResponse = {
-			error: getBackendErrorText(error),
-		}
-		res.status(500).json(left(response))
+		sendJsonTextError(res, 500, getBackendErrorText(error))
 	}
 }

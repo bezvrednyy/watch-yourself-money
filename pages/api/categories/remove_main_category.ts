@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {sendJsonError} from '../../../backFrontJoint/backendApi/sendJsonError'
+import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
 import prisma from '../../../prisma/prisma'
 
 type RemoveCategoryRequestData = {
@@ -35,19 +35,19 @@ export default async function removeMainCategory(req: RemoveCategoryRequest, res
 		])
 
 		if (!categoryInfo) {
-			return sendJsonError(res, 500, 'Category not found')
+			return sendJsonTextError(res, 500, 'Category not found')
 		}
 		if (categoryInfo.userId !== session?.user.id) {
-			return sendJsonError(res, 403, 'Not enough rights')
+			return sendJsonTextError(res, 403, 'Not enough rights')
 		}
 		if (!categoryInfo.parentCategoryId) {
-			return sendJsonError(res, 400, 'Is not category. Is it subcategory')
+			return sendJsonTextError(res, 400, 'Is not category. Is it subcategory')
 		}
 		if (mainCategoriesCount < 1) {
-			return sendJsonError(res, 500, 'Not found main categories')
+			return sendJsonTextError(res, 500, 'Not found main categories')
 		}
 		if (mainCategoriesCount === 1) {
-			return sendJsonError(res, 400, 'The last category cannot be deleted')
+			return sendJsonTextError(res, 400, 'The last category cannot be deleted')
 		}
 
 		await prisma.$transaction([
