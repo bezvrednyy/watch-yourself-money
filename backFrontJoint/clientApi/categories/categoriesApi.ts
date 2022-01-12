@@ -4,6 +4,11 @@ import {
 	CreateCategoryRightData,
 } from '../../common/contracts/categories/createCategoryContract'
 import {BackendEitherObject, processBackendEither} from '../../common/contracts/BackendEitherObject'
+import {
+	EditMainCategoryLeftData,
+	EditMainCategoryRequestData,
+	EditMainCategoryRightData,
+} from '../../common/contracts/categories/editMainCategoryContract'
 import {GetCategoriesLeftData, GetCategoriesRightData} from '../../common/contracts/categories/getCategoriesContract'
 import {
 	RemoveMainCategoryLeftData,
@@ -32,8 +37,17 @@ async function removeMainCategory(data: RemoveMainCategoryRequestData): Promise<
 	return processBackendEither(eitherObject)
 }
 
+async function editMainCategory(data: EditMainCategoryRequestData): Promise<Either<EditMainCategoryLeftData, EditMainCategoryRightData>> {
+	//TODO:clientApi, нужно настроить методы: PUT, POST, DELETE
+	const response = await fetchPostData('/api/categories/edit_main_category', data)
+	const eitherObject: BackendEitherObject<EditMainCategoryLeftData, EditMainCategoryRightData> = await response.json()
+	return processBackendEither(eitherObject)
+}
+
+
 export const categoriesClientApi = {
 	createCategory,
 	getCategories,
 	removeMainCategory,
+	editMainCategory,
 }

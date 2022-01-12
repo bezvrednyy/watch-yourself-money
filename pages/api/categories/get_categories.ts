@@ -1,9 +1,11 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
-import {sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
-import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
-import {GetCategoriesRightData} from '../../../backFrontJoint/common/contracts/categories/getCategoriesContract'
+import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
+import {
+	GetCategoriesLeftData,
+	GetCategoriesRightData,
+} from '../../../backFrontJoint/common/contracts/categories/getCategoriesContract'
 import {ColorId} from '../../../common/colors/colors'
 import {verify} from '../../../common/utils/verify'
 import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
@@ -39,6 +41,6 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 		sendJsonRightData<GetCategoriesRightData>(res, { categories: remappedCategories })
 	}
 	catch (error) {
-		sendJsonTextError(res, 500, getBackendErrorText(error))
+		sendJsonLeftData<GetCategoriesLeftData>(res, 500, { error: getBackendErrorText(error) })
 	}
 }

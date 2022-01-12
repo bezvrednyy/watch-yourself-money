@@ -1,9 +1,10 @@
 import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
-import {sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
+import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
 import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
 import {
+	RemoveMainCategoryLeftData,
 	RemoveMainCategoryRequest,
 	RemoveMainCategoryRightData,
 } from '../../../backFrontJoint/common/contracts/categories/removeMainCategoryContract'
@@ -29,6 +30,7 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 			}}),
 		])
 
+		//TODO:clientApi, нужно отправлять типы ошибок, а на фронте отображать текст
 		if (!categoryInfo) {
 			return sendJsonTextError(res, 500, 'Category not found')
 		}
@@ -58,6 +60,6 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 		sendJsonRightData<RemoveMainCategoryRightData>(res, undefined)
 	}
 	catch (error) {
-		sendJsonTextError(res, 500, getBackendErrorText(error))
+		sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, { error: getBackendErrorText(error) })
 	}
 }

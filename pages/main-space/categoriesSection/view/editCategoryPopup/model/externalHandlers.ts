@@ -1,8 +1,6 @@
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
 import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {verify} from '../../../../../../common/utils/verify'
-import {getEnvType} from '../../../../../../commonClient/environment/clientEnv'
-import {UpdateCategoriesInfoRequestData} from '../../../../../api/categories/update_category_info'
 import {editableCategoryIdAtom} from '../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from './editableCategoryAtom'
 
@@ -22,7 +20,7 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 	const editedSubcategoryIds = store.getState(editedSubcategoryIdsSetAtom)
 	const newSubcategoriesIds = store.getState(newSubcategoriesIdsSetAtom)
 
-	const data: UpdateCategoriesInfoRequestData = {
+	const either = await getClientApi().categories.editMainCategory({
 		id: verify(store.getState(editableCategoryIdAtom)),
 		iconId: store.getState(iconIdAtom),
 		colorId: store.getState(colorIdAtom),
@@ -41,29 +39,19 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 				: x),
 			),
 		removedSubcategoryIds: [...removedSubcategoryIdsSet],
-	}
-
-	//TODO:Either
-	const res = await fetch('/api/categories/update_category_info', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json;charset=utf-8',
-		},
-		body: JSON.stringify({
-			data,
-		}),
 	})
 
-	if (getEnvType() !== 'production') {
-		console.log(data)
-		console.log(res)
-	}
-
-	if (res.ok) {
-		//TODO:toast и обновление категорий
-		onClose()
-	}
-	store.dispatch(statusesAtom.setNormal())
+	either
+		.mapRight(() => {
+			//TODO:toast и обновление категорий
+			onClose()
+			store.dispatch(statusesAtom.setNormal())
+		})
+		.mapLeft(error => {
+			store.dispatch(statusesAtom.setNormal())
+			onClose()
+			processStandardError(error)
+		})
 })
 
 

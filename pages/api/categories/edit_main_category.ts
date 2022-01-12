@@ -1,30 +1,18 @@
-import {Category, CategoryType} from '@prisma/client'
-import {NextApiRequest, NextApiResponse} from 'next'
+import {Category} from '@prisma/client'
+import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
+import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
+import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
+import {
+	EditMainCategoryLeftData,
+	EditMainCategoryRequest,
+	EditMainCategoryRightData,
+} from '../../../backFrontJoint/common/contracts/categories/editMainCategoryContract'
 import {verify} from '../../../common/utils/verify'
-import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
-import {ColorId} from '../../../common/colors/colors'
 import prisma from '../../../prisma/prisma'
 import {CategoryData} from '../../main-space/model/categoriesAtom'
 
-export type UpdateCategoriesInfoRequestData = {
-	id: string,
-	name: string,
-	iconId: OutlineIconId,
-	colorId: ColorId,
-	type: CategoryType,
-	editedSubcategories: Array<CategoryData>,
-	newSubcategories: Array<CategoryData>,
-	removedSubcategoryIds: Array<string>,
-}
-
-type UpdateCategoriesApiRequest = NextApiRequest & {
-	body: {
-		data: UpdateCategoriesInfoRequestData,
-	},
-}
-
-export default async function updateCategories(req: UpdateCategoriesApiRequest, res: NextApiResponse) {
+export default async function editMainCategory(req: EditMainCategoryRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
@@ -34,9 +22,8 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 		newSubcategories,
 		editedSubcategories,
 		...mainCategory
-	} = req.body.data as UpdateCategoriesInfoRequestData
+	} = req.body.data
 
-	//TODO:Either
 	try {
 		//TODO:category, при удалении подкатегории транзакции должны удалиться. Добавить сообщение об этом.
 		await Promise.all([
@@ -69,10 +56,10 @@ export default async function updateCategories(req: UpdateCategoriesApiRequest, 
 			})),
 		])
 
-		res.status(200).send({})
+		sendJsonRightData<EditMainCategoryRightData>(res, undefined)
 	}
 	catch (error) {
-		res.status(500).json({ error })
+		sendJsonLeftData<EditMainCategoryLeftData>(res, 500, { error: getBackendErrorText(error) })
 	}
 }
 
