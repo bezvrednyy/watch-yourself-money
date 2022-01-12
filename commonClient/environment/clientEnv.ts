@@ -1,4 +1,5 @@
 import {Store} from '@reatom/core'
+import {getClientApi, processStandardError} from '../../backFrontJoint/clientApi/clientApi'
 import {declareAsyncAction} from '../declareAsyncAction'
 import {userSettingsAtom} from './userSettingsAtom'
 
@@ -9,13 +10,14 @@ function getEnvType(): EnvironmentType {
 }
 
 const initUserSettings = declareAsyncAction(async store => {
-	const settingsRes = await fetch('http://localhost:3000/api/env/get_user_settings')
-	if (settingsRes.ok) {
-		const { settings } = await settingsRes.json()
-		store.dispatch(userSettingsAtom.set(
-			settings,
-		))
-	}
+	const either = await getClientApi().env.getUserSettings()
+	either
+		.mapRight(settings => {
+			store.dispatch(userSettingsAtom.set(
+				settings,
+			))
+		})
+		.mapLeft(processStandardError)
 })
 
 function initEnvironment(store: Store) {
