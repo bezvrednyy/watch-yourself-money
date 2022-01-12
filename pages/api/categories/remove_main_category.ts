@@ -1,20 +1,15 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
+import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
+import {sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
 import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
+import {
+	RemoveMainCategoryRequest,
+	RemoveMainCategoryRightData,
+} from '../../../backFrontJoint/common/contracts/categories/removeMainCategoryContract'
 import prisma from '../../../prisma/prisma'
 
-type RemoveCategoryRequestData = {
-	categoryId: string,
-	removeSubcategories: boolean,
-}
-
-type RemoveCategoryRequest = NextApiRequest & {
-	body: {
-		data: RemoveCategoryRequestData,
-	}
-}
-
-export default async function removeMainCategory(req: RemoveCategoryRequest, res: NextApiResponse) {
+export default async function removeMainCategory(req: RemoveMainCategoryRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
@@ -22,7 +17,7 @@ export default async function removeMainCategory(req: RemoveCategoryRequest, res
 	}
 
 	try {
-		const {categoryId, removeSubcategories}: RemoveCategoryRequestData = req.body.data
+		const {categoryId, removeSubcategories} = req.body.data
 		const [categoryInfo, mainCategoriesCount] = await Promise.all([
 			prisma.category.findUnique({
 				where: { id: categoryId },
@@ -60,13 +55,9 @@ export default async function removeMainCategory(req: RemoveCategoryRequest, res
 			prisma.category.delete({where: { id: categoryId }}),
 		])
 
-		res.status(200).send({})
+		sendJsonRightData<RemoveMainCategoryRightData>(res, undefined)
 	}
 	catch (error) {
-		res.status(500).json({ error })
+		sendJsonTextError(res, 500, getBackendErrorText(error))
 	}
-}
-
-export type {
-	RemoveCategoryRequestData,
 }

@@ -1,8 +1,7 @@
-import {fetchPostData} from '../../../../../../backFrontJoint/clientApi/clientApi'
+import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
 import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {verify} from '../../../../../../common/utils/verify'
 import {getEnvType} from '../../../../../../commonClient/environment/clientEnv'
-import {RemoveCategoryRequestData} from '../../../../../api/categories/remove_main_category'
 import {UpdateCategoriesInfoRequestData} from '../../../../../api/categories/update_category_info'
 import {editableCategoryIdAtom} from '../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from './editableCategoryAtom'
@@ -80,18 +79,22 @@ export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategory
 	const {statusesAtom} = editCategoryPopupAtoms
 	store.dispatch(statusesAtom.setSaving())
 
-	const data: RemoveCategoryRequestData = {
+	const either = await getClientApi().categories.removeMainCategory({
 		categoryId: verify(store.getState(editableCategoryIdAtom)),
 		removeSubcategories,
-	}
+	})
 
-	//TODO:Either
-	const res = await fetchPostData('/api/categories/remove_main_category', data)
-	if (res.ok) {
-		//TODO:toast и обновление категорий
-		onClose()
-	}
-	store.dispatch(statusesAtom.setNormal())
+	either
+		.mapRight(() => {
+			//TODO:toast и обновление категорий
+			onClose()
+			store.dispatch(statusesAtom.setNormal())
+		})
+		.mapLeft(error => {
+			store.dispatch(statusesAtom.setNormal())
+			onClose()
+			processStandardError(error)
+		})
 })
 
 //TODO:category. Реализовать экшн очистки атомов и использовать его в externalHandlers
