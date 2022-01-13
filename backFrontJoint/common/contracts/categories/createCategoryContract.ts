@@ -7,6 +7,7 @@ export interface CreateCategoryRequestData extends CategoryData {
 }
 
 export interface CreateCategoryRequest extends NextApiRequest {
+	method: 'POST',
 	body: {
 		data: CreateCategoryRequestData,
 	}

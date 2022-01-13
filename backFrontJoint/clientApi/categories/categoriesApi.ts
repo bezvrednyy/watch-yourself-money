@@ -31,14 +31,12 @@ async function getCategories(): Promise<Either<GetCategoriesLeftData, GetCategor
 }
 
 async function removeMainCategory(data: RemoveMainCategoryRequestData): Promise<Either<RemoveMainCategoryLeftData, RemoveMainCategoryRightData>> {
-	//TODO:clientApi, нужно настроить методы: PUT, POST, DELETE
 	const response = await fetchPostData('/api/categories/remove_main_category', data)
 	const eitherObject: BackendEitherObject<RemoveMainCategoryLeftData, RemoveMainCategoryRightData> = await response.json()
 	return processBackendEither(eitherObject)
 }
 
 async function editMainCategory(data: EditMainCategoryRequestData): Promise<Either<EditMainCategoryLeftData, EditMainCategoryRightData>> {
-	//TODO:clientApi, нужно настроить методы: PUT, POST, DELETE
 	const response = await fetchPostData('/api/categories/edit_main_category', data)
 	const eitherObject: BackendEitherObject<EditMainCategoryLeftData, EditMainCategoryRightData> = await response.json()
 	return processBackendEither(eitherObject)
