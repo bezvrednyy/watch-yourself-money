@@ -1,13 +1,13 @@
 import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
+import {getBackendTextErrorResponse} from '../../../backFrontJoint/backendApi/processBackendError'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
-import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
 import {
 	RemoveMainCategoryLeftData,
 	RemoveMainCategoryRequest,
 	RemoveMainCategoryRightData,
 } from '../../../backFrontJoint/common/contracts/categories/removeMainCategoryContract'
+import {createTypeError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
 export default async function removeMainCategory(req: RemoveMainCategoryRequest, res: NextApiResponse) {
@@ -30,21 +30,20 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 			}}),
 		])
 
-		//TODO:clientApi, нужно отправлять типы ошибок, а на фронте отображать текст
 		if (!categoryInfo) {
-			return sendJsonTextError(res, 500, 'Category not found')
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createTypeError('CATEGORY_NOT_FOUND'))
 		}
 		if (categoryInfo.userId !== session?.user.id) {
-			return sendJsonTextError(res, 403, 'Not enough rights')
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 403, createTypeError('NOT_ENOUGH_RIGHTS'))
 		}
-		if (!categoryInfo.parentCategoryId) {
-			return sendJsonTextError(res, 400, 'Is not category. Is it subcategory')
+		if (categoryInfo.parentCategoryId) {
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createTypeError('IS_IT_SUBCATEGORY'))
 		}
 		if (mainCategoriesCount < 1) {
-			return sendJsonTextError(res, 500, 'Not found main categories')
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createTypeError('NO_MAIN_CATEGORIES_FOUND'))
 		}
 		if (mainCategoriesCount === 1) {
-			return sendJsonTextError(res, 400, 'The last category cannot be deleted')
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createTypeError('LAST_MAIN_CATEGORY'))
 		}
 
 		await prisma.$transaction([
@@ -60,6 +59,6 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 		sendJsonRightData<RemoveMainCategoryRightData>(res, undefined)
 	}
 	catch (error) {
-		sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, { error: getBackendErrorText(error) })
+		sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, getBackendTextErrorResponse(error))
 	}
 }

@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
+import {getBackendTextErrorResponse} from '../../../backFrontJoint/backendApi/processBackendError'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
 import {
 	GetCategoriesLeftData,
@@ -41,6 +41,6 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 		sendJsonRightData<GetCategoriesRightData>(res, { categories: remappedCategories })
 	}
 	catch (error) {
-		sendJsonLeftData<GetCategoriesLeftData>(res, 500, { error: getBackendErrorText(error) })
+		sendJsonLeftData<GetCategoriesLeftData>(res, 500, getBackendTextErrorResponse(error))
 	}
 }

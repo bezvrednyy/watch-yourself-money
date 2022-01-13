@@ -1,7 +1,7 @@
 import {Prisma} from '@prisma/client'
 import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
+import {getBackendTextErrorResponse} from '../../../backFrontJoint/backendApi/processBackendError'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
 import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
 import {
@@ -49,6 +49,6 @@ export default async function createTransaction(req: CreateTransactionRequest, r
 		sendJsonRightData<CreateTransactionRightData>(res, undefined)
 	}
 	catch (error) {
-		sendJsonLeftData<CreateTransactionLeftData>(res, 500, { error: getBackendErrorText(error) })
+		sendJsonLeftData<CreateTransactionLeftData>(res, 500, getBackendTextErrorResponse(error))
 	}
 }

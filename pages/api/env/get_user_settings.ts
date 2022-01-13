@@ -1,11 +1,12 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
+import {getBackendTextErrorResponse} from '../../../backFrontJoint/backendApi/processBackendError'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
 import {
 	GetUserSettingsContractLeftData,
 	GetUserSettingsContractRightData,
 } from '../../../backFrontJoint/common/contracts/env/getUserSettingsContract'
+import {createTypeError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
 export default async function getUserSettings(req: NextApiRequest, res: NextApiResponse) {
@@ -21,13 +22,11 @@ export default async function getUserSettings(req: NextApiRequest, res: NextApiR
 		}})
 
 		if (settings) {
-			sendJsonRightData<GetUserSettingsContractRightData>(res, settings)
-			return
+			return sendJsonRightData<GetUserSettingsContractRightData>(res, settings)
 		}
-		//TODO:clientApi, нужно отправлять типы ошибок, а на фронте отображать текст
-		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, { error: 'Error: user settings not found!' })
+		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, createTypeError('USER_SETTINGS_NOT_FOUND'))
 	}
 	catch (error) {
-		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, { error: getBackendErrorText(error) })
+		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, getBackendTextErrorResponse(error))
 	}
 }

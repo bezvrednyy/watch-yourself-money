@@ -1,7 +1,7 @@
 import {Category} from '@prisma/client'
 import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
+import {getBackendTextErrorResponse} from '../../../backFrontJoint/backendApi/processBackendError'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
 import {
 	EditMainCategoryLeftData,
@@ -59,7 +59,7 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 		sendJsonRightData<EditMainCategoryRightData>(res, undefined)
 	}
 	catch (error) {
-		sendJsonLeftData<EditMainCategoryLeftData>(res, 500, { error: getBackendErrorText(error) })
+		sendJsonLeftData<EditMainCategoryLeftData>(res, 500, getBackendTextErrorResponse(error))
 	}
 }
 

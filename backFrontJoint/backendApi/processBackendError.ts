@@ -1,5 +1,5 @@
 import {Prisma} from '@prisma/client'
-import {ProcessedError} from '../common/errors'
+import {ProcessedError, TextErrorResponse} from '../common/errors'
 
 export function processPrismaError<T>(error: T): string|T {
 	if (error instanceof Prisma.PrismaClientInitializationError
@@ -27,10 +27,10 @@ export function processBackendError<T>(error: T): ProcessedError {
 	}
 }
 
-export function getBackendErrorText<T>(error: T): string {
+export function getBackendTextErrorResponse<T>(error: T): TextErrorResponse {
 	const processedError = processBackendError(error)
-	if (processedError.type === 'unknown') {
-		return `Unknown error: ${JSON.stringify(error)}`
-	}
-	return processedError.text
+	const value = processedError.type === 'unknown'
+		? `Unknown error: ${JSON.stringify(error)}`
+		: processedError.text
+	return { error: { type: 'text', value }}
 }

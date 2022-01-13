@@ -1,7 +1,7 @@
 import {randomUUID} from 'crypto'
 import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
+import {getBackendTextErrorResponse} from '../../../backFrontJoint/backendApi/processBackendError'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
 import {
 	CreateCategoryLeftData,
@@ -43,6 +43,6 @@ export default async function createCategory(req: CreateCategoryRequest, res: Ne
 		sendJsonRightData<CreateCategoryRightData>(res, undefined)
 	}
 	catch (error) {
-		sendJsonLeftData<CreateCategoryLeftData>(res, 500, { error: getBackendErrorText(error) })
+		sendJsonLeftData<CreateCategoryLeftData>(res, 500, getBackendTextErrorResponse(error))
 	}
 }
