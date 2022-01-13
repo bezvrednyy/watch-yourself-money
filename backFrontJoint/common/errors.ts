@@ -23,6 +23,7 @@ function createTypeError<T>(type: T): TypeErrorResponse<T> {
 	return { type }
 }
 
+//TODO:errors реалзиовать метод создания дефолтных ошибок и его обработчик на фронте. ServerError, Forbidden (NOT_ENOUGH_RIGHTS)...
 function createServerError(meta: unknown): ServerError {
 	return { type: 'server', meta }
 }
