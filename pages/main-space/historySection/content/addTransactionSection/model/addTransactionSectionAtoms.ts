@@ -1,11 +1,11 @@
 import {createAtom} from '@reatom/core'
-import {createPrimitiveAtom} from '@reatom/core/primitives'
+import {createEnumAtom, createPrimitiveAtom} from '@reatom/core/primitives'
+import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
 import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {generateUuid} from '../../../../../../common/utils/generateRandom'
-import {getEnvType} from '../../../../../../commonClient/environment/clientEnv'
 import {userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
-import {AddTransactionRequestData} from '../../../../../api/transactions/add_transaction'
 
+const statusesAtom = createEnumAtom(['normal', 'saving'])
 const selectedCategoryIdAtom = createPrimitiveAtom<string>('')
 const sumAtom = createPrimitiveAtom<number>(0)
 const selectedBankAccountId = createPrimitiveAtom<string>('')
@@ -28,7 +28,7 @@ type AddTransactionParams = {
 }
 
 export const addTransaction = declareAsyncAction<AddTransactionParams>(async (store, {onClose}) => {
-	const data: AddTransactionRequestData = {
+	const either = await getClientApi().transactions.createTransaction({
 		id: generateUuid(),
 		date: store.getState(transactionDateAtom),
 		categoryId: store.getState(selectedSubcategoryIdAtom) || store.getState(selectedCategoryIdAtom),
@@ -36,28 +36,19 @@ export const addTransaction = declareAsyncAction<AddTransactionParams>(async (st
 		comment: store.getState(transactionCommentAtom),
 		bankAccountId: store.getState(selectedBankAccountId),
 		money: store.getState(sumAtom),
-	}
-
-	//TODO:Either
-	const res = await fetch('/api/transactions/add_transaction', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json;charset=utf-8',
-		},
-		body: JSON.stringify({
-			data,
-		}),
 	})
 
-	if (getEnvType() !== 'production') {
-		console.log(data)
-		console.log(res)
-	}
-
-	if (res.ok) {
-		//TODO:toast и обновление транзакций
-		onClose()
-	}
+	return either
+		.mapRight(() => {
+			//TODO:toast
+			store.dispatch(statusesAtom.setNormal())
+			onClose()
+		})
+		.mapLeft(error => {
+			store.dispatch(statusesAtom.setNormal())
+			onClose()
+			processStandardError(error)
+		})
 })
 
 export const addTransactionSectionAtoms = {
@@ -67,4 +58,5 @@ export const addTransactionSectionAtoms = {
 	selectedBankAccountId,
 	transactionCommentAtom,
 	transactionDateAtom,
+	statusesAtom,
 }

@@ -30,11 +30,9 @@ export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async
 	}
 
 	const either = await getClientApi().categories.createCategory(data)
-	console.log(either)
 	return either
-		.mapRight(rightData => {
+		.mapRight(() => {
 			//TODO:toast
-			console.log(rightData)
 			store.dispatch(statusesAtom.setNormal())
 			onClose()
 		})

@@ -1,10 +1,12 @@
 import {categoriesClientApi} from './categories/categoriesApi'
 import {envClientApi} from './envApi'
+import {transactionsClientApi} from './transactionsApi'
 
 export function getClientApi() {
 	return {
 		categories: categoriesClientApi,
 		env: envClientApi,
+		transactions: transactionsClientApi,
 	}
 }
 
