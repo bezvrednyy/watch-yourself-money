@@ -28,7 +28,7 @@ export default async function createTransaction(req: CreateTransactionRequest, r
 		})
 
 		if (!categoryInfo) {
-			return sendJsonLeftData<CreateTransactionLeftData>(res, 500, createTypeError('CATEGORY_NOT_FOUND'))
+			return sendJsonLeftData<CreateTransactionLeftData>(res, 400, createTypeError('CATEGORY_NOT_FOUND'))
 		}
 		if (categoryInfo.userId !== session?.user.id) {
 			return sendJsonLeftData<CreateTransactionLeftData>(res, 403, createTypeError('NOT_ENOUGH_RIGHTS'))
