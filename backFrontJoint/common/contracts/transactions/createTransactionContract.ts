@@ -1,5 +1,5 @@
 import {NextApiRequest} from 'next'
-import {TextErrorResponse, TypeErrorResponse} from '../../errors'
+import {ServerError, TypeErrorResponse} from '../../errors'
 
 export type CreateTransactionRequestData = {
 	id: string
@@ -22,4 +22,4 @@ export type CreateTransactionErrorType = 'CATEGORY_NOT_FOUND'
 	|'NOT_ENOUGH_RIGHTS'
 
 export type CreateTransactionRightData = void
-export type CreateTransactionLeftData = TypeErrorResponse<CreateTransactionErrorType> | TextErrorResponse
+export type CreateTransactionLeftData = TypeErrorResponse<CreateTransactionErrorType> | ServerError

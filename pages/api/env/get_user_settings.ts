@@ -1,12 +1,11 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {getBackendTextErrorResponse} from '../../../backFrontJoint/backendApi/processBackendError'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
 import {
 	GetUserSettingsContractLeftData,
 	GetUserSettingsContractRightData,
 } from '../../../backFrontJoint/common/contracts/env/getUserSettingsContract'
-import {createTypeError} from '../../../backFrontJoint/common/errors'
+import {createServerError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
 export default async function getUserSettings(req: NextApiRequest, res: NextApiResponse) {
@@ -24,9 +23,9 @@ export default async function getUserSettings(req: NextApiRequest, res: NextApiR
 		if (settings) {
 			return sendJsonRightData<GetUserSettingsContractRightData>(res, settings)
 		}
-		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, createTypeError('USER_SETTINGS_NOT_FOUND'))
+		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, createServerError('USER_SETTINGS_NOT_FOUND'))
 	}
 	catch (error) {
-		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, getBackendTextErrorResponse(error))
+		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, createServerError(error))
 	}
 }

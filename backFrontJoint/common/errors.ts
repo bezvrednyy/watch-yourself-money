@@ -8,25 +8,26 @@ type UnknownError = {
 	value: unknown,
 }
 
-export type TextErrorResponse = {
-	error: {
-		type: 'text',
-		value: string,
-	}
+export type ServerError = {
+	type: 'server'
+	meta: unknown,
 }
 
 export type TypeErrorResponse<T> = {
-	error: {
-		type: T,
-	}
+	type: T,
 }
 
 export type ProcessedError = PrismaError | UnknownError
 
 function createTypeError<T>(type: T): TypeErrorResponse<T> {
-	return { error: { type } }
+	return { type }
+}
+
+function createServerError(meta: unknown): ServerError {
+	return { type: 'server', meta }
 }
 
 export {
 	createTypeError,
+	createServerError,
 }

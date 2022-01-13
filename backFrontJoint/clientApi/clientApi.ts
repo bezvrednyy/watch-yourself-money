@@ -1,3 +1,5 @@
+import {toast} from 'react-hot-toast'
+import {ServerError} from '../common/errors'
 import {categoriesClientApi} from './categories/categoriesApi'
 import {envClientApi} from './envApi'
 import {transactionsClientApi} from './transactionsApi'
@@ -23,7 +25,7 @@ export async function fetchPostData<DATA>(url: string, data: DATA): Promise<Resp
 	return result
 }
 
-export function processStandardError(error: unknown) {
-	//TODO:toast
-	console.log('Error', error)
+export function processStandardError(error: ServerError) {
+	toast.error('Произошла ошибка сервера.')
+	console.error(error.meta)
 }

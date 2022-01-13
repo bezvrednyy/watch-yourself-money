@@ -1,13 +1,12 @@
 import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {getBackendTextErrorResponse} from '../../../backFrontJoint/backendApi/processBackendError'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
 import {
 	RemoveMainCategoryLeftData,
 	RemoveMainCategoryRequest,
 	RemoveMainCategoryRightData,
 } from '../../../backFrontJoint/common/contracts/categories/removeMainCategoryContract'
-import {createTypeError} from '../../../backFrontJoint/common/errors'
+import {createServerError, createTypeError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
 export default async function removeMainCategory(req: RemoveMainCategoryRequest, res: NextApiResponse) {
@@ -44,7 +43,7 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 		}
 
 		if (mainCategoriesCount < 1) {
-			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createTypeError('NO_MAIN_CATEGORIES_FOUND'))
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createServerError('NO_MAIN_CATEGORIES_FOUND'))
 		}
 
 		await prisma.$transaction([
@@ -60,6 +59,6 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 		sendJsonRightData<RemoveMainCategoryRightData>(res, undefined)
 	}
 	catch (error) {
-		sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, getBackendTextErrorResponse(error))
+		sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createServerError(error))
 	}
 }

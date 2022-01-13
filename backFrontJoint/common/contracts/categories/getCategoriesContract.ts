@@ -1,6 +1,6 @@
 import {ColorId} from '../../../../common/colors/colors'
 import {OutlineIconId} from '../../../../commonClient/uikit/icons/getOutlineIconById'
-import {TextErrorResponse} from '../../errors'
+import {ServerError} from '../../errors'
 
 type GetCategoriesRequest = void
 
@@ -16,4 +16,4 @@ export type GetCategoriesCategoryData = {
 export type GetCategoriesRightData = {
 	categories: Array<GetCategoriesCategoryData>,
 }
-export type GetCategoriesLeftData = TextErrorResponse
+export type GetCategoriesLeftData = ServerError
