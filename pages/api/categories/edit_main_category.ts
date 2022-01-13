@@ -8,9 +8,9 @@ import {
 	EditMainCategoryRequest,
 	EditMainCategoryRightData,
 } from '../../../backFrontJoint/common/contracts/categories/editMainCategoryContract'
+import {GetCategoriesCategoryData} from '../../../backFrontJoint/common/contracts/categories/getCategoriesContract'
 import {verify} from '../../../common/utils/verify'
 import prisma from '../../../prisma/prisma'
-import {CategoryData} from '../../main-space/model/categoriesAtom'
 
 export default async function editMainCategory(req: EditMainCategoryRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
@@ -63,7 +63,7 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 	}
 }
 
-function remapCategoryDataToCategory(data: CategoryData, userId: string): Category {
+function remapCategoryDataToCategory(data: GetCategoriesCategoryData, userId: string): Category {
 	return {
 		id: data.id,
 		parentCategoryId: data.parentCategoryId || null,

@@ -8,12 +8,12 @@ import {
 	getOutlineIconById,
 } from '../../../../../commonClient/uikit/icons/getOutlineIconById'
 import {PopupDefault} from '../../../../../commonClient/uikit/PopupDefault'
-import {CategoryData} from '../../../model/categoriesAtom'
+import {ClientCategoryData} from '../../../model/categoriesAtom'
 import {SubcategoryBadgePopupContent} from '../common/SubcategoryBadgePopupContent'
 import {addCategoryPopupAtoms} from './model/addCategoryPopupAtoms'
 import styles from '../common/common.module.css'
 
-function SubcategoryBadge(props: CategoryData) {
+function SubcategoryBadge(props: ClientCategoryData) {
 	const {
 		title: initTitle,
 		iconId: initIconId,
@@ -55,7 +55,7 @@ function SubcategoryBadge(props: CategoryData) {
 	</>
 }
 
-type UseBadgePopupButtonsParams = CategoryData & {
+type UseBadgePopupButtonsParams = ClientCategoryData & {
 	newTitle: string,
 	newIconId: OutlineIconId,
 	setShow: (v: boolean) => void

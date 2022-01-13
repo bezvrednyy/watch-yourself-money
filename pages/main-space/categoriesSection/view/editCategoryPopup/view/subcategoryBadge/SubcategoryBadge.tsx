@@ -5,7 +5,7 @@ import {joinStrings} from '../../../../../../../common/utils/string'
 import {Badge} from '../../../../../../../commonClient/uikit/Badge'
 import {getOutlineIconById} from '../../../../../../../commonClient/uikit/icons/getOutlineIconById'
 import {PopupDefault} from '../../../../../../../commonClient/uikit/PopupDefault'
-import {CategoryData} from '../../../../../model/categoriesAtom'
+import {ClientCategoryData} from '../../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from '../../model/editableCategoryAtom'
 import styles from '../../../common/common.module.css'
 import {useBadgePopupButtons} from './useBadgePopupButtons'
@@ -40,7 +40,7 @@ function getBgColorByType(type: SubcategoryType): string {
 	}
 }
 
-function SubcategoryBadge(props: CategoryData) {
+function SubcategoryBadge(props: ClientCategoryData) {
 	const {
 		title: initTitle,
 		iconId: initIconId,

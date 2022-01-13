@@ -6,7 +6,7 @@ import {devideArray} from '../../common/utils/array'
 import {verify} from '../../common/utils/verify'
 import prisma from '../../prisma/prisma'
 import {BankAccountData, bankAccountsAtom} from './model/bankAccountsAtom'
-import {CategoryData, MainCategoryData, SubCategoryData, categoriesAtom} from './model/categoriesAtom'
+import {ClientCategoryData, MainCategoryData, SubCategoryData, categoriesAtom} from './model/categoriesAtom'
 import styles from './index.module.css'
 import {MainLayout} from '../../commonClient/uikit/layouts/MainLayout'
 import {CardsSection} from './cardsSection/CardsSection'
@@ -17,7 +17,7 @@ import {TransactionData, transactionsAtom} from './model/transactionsAtom'
 import {remapBankAccountToBankAccountData, remapCategoryToCategoryData, remapTransactionToTransactionData} from './remapMainSpaceData'
 
 interface MainSpaceProps {
-	categories: Array<CategoryData>,
+	categories: Array<ClientCategoryData>,
 	bankAccounts: Array<BankAccountData>,
 	transactions: Array<TransactionData>,
 }

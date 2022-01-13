@@ -10,7 +10,7 @@ import {ColorId} from '../../../common/colors/colors'
 import {verify} from '../../../common/utils/verify'
 import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
 import prisma from '../../../prisma/prisma'
-import {CategoryData} from '../../main-space/model/categoriesAtom'
+import {ClientCategoryData} from '../../main-space/model/categoriesAtom'
 
 export default async function getCategories(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
@@ -25,7 +25,7 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 		}}})
 
 		const remappedCategories = categories.map(x => {
-			const remappedValue: CategoryData = {
+			const remappedValue: ClientCategoryData = {
 				id: x.id,
 				title: x.name,
 				type: x.type,

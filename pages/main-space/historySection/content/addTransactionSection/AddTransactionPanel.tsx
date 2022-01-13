@@ -7,7 +7,7 @@ import {DatePicker} from '../../../../../commonClient/uikit/datePicker/DatePicke
 import {getOutlineIconById} from '../../../../../commonClient/uikit/icons/getOutlineIconById'
 import {TextField} from '../../../../../commonClient/uikit/textField/TextField'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../commonClient/environment/userSettingsAtom'
-import {CategoryData, categoriesAtom} from '../../../model/categoriesAtom'
+import {ClientCategoryData, categoriesAtom} from '../../../model/categoriesAtom'
 import styles from './AddTransactionPanel.module.css'
 import {addTransactionSectionAtoms} from './model/addTransactionSectionAtoms'
 import {BankAccountMenu} from './view/BankAccountMenu'
@@ -85,7 +85,7 @@ function SubcategoryBadge({
 	id,
 	title,
 	iconId,
-}: CategoryData) {
+}: ClientCategoryData) {
 	const [selectedSubcategoryId] = useAtom(addTransactionSectionAtoms.selectedSubcategoryIdAtom)
 	const handleSetSelectedSubcategoryId = useAction(addTransactionSectionAtoms.selectedSubcategoryIdAtom.set)
 

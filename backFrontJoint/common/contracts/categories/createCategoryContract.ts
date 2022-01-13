@@ -1,9 +1,10 @@
 import {NextApiRequest} from 'next'
-import {CategoryData} from '../../../../pages/main-space/model/categoriesAtom'
+import {ClientCategoryData} from '../../../../pages/main-space/model/categoriesAtom'
 import {TextErrorResponse} from '../../errors'
 
-export interface CreateCategoryRequestData extends CategoryData {
-	subcategories: Array<CategoryData>,
+//TODO:models
+export interface CreateCategoryRequestData extends ClientCategoryData {
+	subcategories: Array<ClientCategoryData>,
 }
 
 export interface CreateCategoryRequest extends NextApiRequest {

@@ -1,6 +1,6 @@
 import {createAtom} from '@reatom/core'
 import {ColorId} from '../../../../../../common/colors/colors'
-import {CategoryData} from '../../../../model/categoriesAtom'
+import {ClientCategoryData} from '../../../../model/categoriesAtom'
 import {createBooleanAtom, createEnumAtom, createSetAtom, createStringAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../../../commonClient/uikit/icons/getOutlineIconById'
 
@@ -17,13 +17,13 @@ const colorIdAtom = createStringAtom<ColorId>('green#500')
 const subcategoriesAtom = createAtom(
 	{
 		newSubcategoriesIdsSetAtom,
-		updateSubcategory: (value: CategoryData) => value,
+		updateSubcategory: (value: ClientCategoryData) => value,
 		remove: (id: string) => id,
 		turnInMain: (id: string) => id,
-		set: (value: Array<CategoryData>) => value,
-		add: (value: CategoryData) => value,
+		set: (value: Array<ClientCategoryData>) => value,
+		add: (value: ClientCategoryData) => value,
 	},
-	({onAction, schedule, get}, state = [] as Array<CategoryData>) => {
+	({onAction, schedule, get}, state = [] as Array<ClientCategoryData>) => {
 		onAction('set', value => (state = value))
 		onAction('updateSubcategory', value => {
 			state = state.map(x => (x.id === value.id ? value : x))

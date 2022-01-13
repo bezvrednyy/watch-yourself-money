@@ -4,7 +4,7 @@ import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconByI
 
 type CategoryType = 'EXPENSES'|'INCOMES'
 
-export type CategoryData = {
+export type ClientCategoryData = {
 	id: string,
 	parentCategoryId?: string,
 	title: string,
@@ -13,11 +13,11 @@ export type CategoryData = {
 	colorId: ColorId,
 }
 
-export type MainCategoryData = CategoryData & {
+export type MainCategoryData = ClientCategoryData & {
 	parentCategoryId: undefined,
 }
 
-export type SubCategoryData = CategoryData & {
+export type SubCategoryData = ClientCategoryData & {
 	parentCategoryId: string,
 }
 

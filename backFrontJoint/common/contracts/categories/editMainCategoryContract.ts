@@ -2,17 +2,18 @@ import {CategoryType} from '@prisma/client'
 import {NextApiRequest} from 'next'
 import {ColorId} from '../../../../common/colors/colors'
 import {OutlineIconId} from '../../../../commonClient/uikit/icons/getOutlineIconById'
-import {CategoryData} from '../../../../pages/main-space/model/categoriesAtom'
+import {ClientCategoryData} from '../../../../pages/main-space/model/categoriesAtom'
 import {TextErrorResponse} from '../../errors'
 
+//TODO:models
 export type EditMainCategoryRequestData = {
 	id: string,
 	name: string,
 	iconId: OutlineIconId,
 	colorId: ColorId,
 	type: CategoryType,
-	editedSubcategories: Array<CategoryData>,
-	newSubcategories: Array<CategoryData>,
+	editedSubcategories: Array<ClientCategoryData>,
+	newSubcategories: Array<ClientCategoryData>,
 	removedSubcategoryIds: Array<string>,
 }
 
