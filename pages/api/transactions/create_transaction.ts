@@ -3,11 +3,11 @@ import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import {getBackendTextErrorResponse} from '../../../backFrontJoint/backendApi/processBackendError'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
-import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
 import {
 	CreateTransactionLeftData,
 	CreateTransactionRequest, CreateTransactionRightData,
 } from '../../../backFrontJoint/common/contracts/transactions/createTransactionContract'
+import {createTypeError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
 export default async function createTransaction(req: CreateTransactionRequest, res: NextApiResponse) {
@@ -27,12 +27,11 @@ export default async function createTransaction(req: CreateTransactionRequest, r
 			},
 		})
 
-		//TODO:clientApi, нужно отправлять типы ошибок, а на фронте отображать текст
 		if (!categoryInfo) {
-			return sendJsonTextError(res, 500, 'Category not found')
+			return sendJsonLeftData<CreateTransactionLeftData>(res, 500, createTypeError('CATEGORY_NOT_FOUND'))
 		}
 		if (categoryInfo.userId !== session?.user.id) {
-			return sendJsonTextError(res, 403, 'Not enough rights')
+			return sendJsonLeftData<CreateTransactionLeftData>(res, 403, createTypeError('NOT_ENOUGH_RIGHTS'))
 		}
 
 		await prisma.transaction.create({

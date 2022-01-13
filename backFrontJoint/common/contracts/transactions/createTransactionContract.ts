@@ -1,6 +1,6 @@
 import {CurrencyId} from '@prisma/client'
 import {NextApiRequest} from 'next'
-import {TextErrorResponse} from '../../errors'
+import {TextErrorResponse, TypeErrorResponse} from '../../errors'
 
 //TODO:clientApi CurrencyId идёт из prisma. А она не должна использоваться на фронте.
 export type CreateTransactionRequestData = {
@@ -19,5 +19,9 @@ export interface CreateTransactionRequest extends NextApiRequest {
 	},
 }
 
+
+export type CreateTransactionErrorType = 'CATEGORY_NOT_FOUND'
+	|'NOT_ENOUGH_RIGHTS'
+
 export type CreateTransactionRightData = void
-export type CreateTransactionLeftData = TextErrorResponse
+export type CreateTransactionLeftData = TypeErrorResponse<CreateTransactionErrorType> | TextErrorResponse
