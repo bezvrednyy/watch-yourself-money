@@ -9,6 +9,11 @@ import {
 	GetTransactionsLeftData,
 	GetTransactionsRightData,
 } from '../common/contracts/transactions/getTransactionsContract'
+import {
+	RemoveTransactionLeftData,
+	RemoveTransactionRequestData,
+	RemoveTransactionRightData,
+} from '../common/contracts/transactions/removeTransactionContract'
 import {fetchPostData} from './clientApi'
 
 async function createTransaction(data: CreateTransactionRequestData): Promise<Either<CreateTransactionLeftData, CreateTransactionRightData>> {
@@ -23,7 +28,14 @@ async function getTransactions(): Promise<Either<GetTransactionsLeftData, GetTra
 	return processBackendEither(eitherObject)
 }
 
+async function removeTransaction(data: RemoveTransactionRequestData): Promise<Either<RemoveTransactionLeftData, RemoveTransactionRightData>> {
+	const response = await fetchPostData('/api/transactions/remove_transaction', data)
+	const eitherObject: BackendEitherObject<RemoveTransactionLeftData, RemoveTransactionRightData> = await response.json()
+	return processBackendEither(eitherObject)
+}
+
 export const transactionsClientApi = {
 	createTransaction,
 	getTransactions,
+	removeTransaction,
 }
