@@ -1,6 +1,6 @@
 import {NextApiRequest} from 'next'
 import {ClientCategoryData} from '../../../../pages/main-space/model/categoriesAtom'
-import {ServerError} from '../../errors'
+import {StandardError} from '../../errors'
 
 //TODO:models
 export interface CreateCategoryRequestData extends ClientCategoryData {
@@ -15,4 +15,4 @@ export interface CreateCategoryRequest extends NextApiRequest {
 }
 
 export type CreateCategoryRightData = void
-export type CreateCategoryLeftData = ServerError
+export type CreateCategoryLeftData = StandardError

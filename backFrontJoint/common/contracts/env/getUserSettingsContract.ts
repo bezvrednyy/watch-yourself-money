@@ -1,7 +1,7 @@
 import {UserSettings} from '@prisma/client'
-import {ServerError} from '../../errors'
+import {StandardError} from '../../errors'
 
 type GetUserSettingsContractRequestData = void
 
 export type GetUserSettingsContractRightData = UserSettings
-export type GetUserSettingsContractLeftData = ServerError
+export type GetUserSettingsContractLeftData = StandardError

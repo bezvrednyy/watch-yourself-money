@@ -1,15 +1,15 @@
 type PrismaError = {
-	type: 'prisma'
+	type: 'PRISMA_ERROR'
 	text: string,
 }
 
 type UnknownError = {
-	type: 'unknown'
+	type: 'UNKNOWN_ERROR'
 	value: unknown,
 }
 
-export type ServerError = {
-	type: 'server'
+export type StandardError = {
+	type: StandardErrorType
 	meta: unknown,
 }
 
@@ -17,18 +17,20 @@ export type TypeErrorResponse<T> = {
 	type: T,
 }
 
+export type StandardErrorType = 'SERVER_ERROR'
+	|'FORBIDDEN'
+
 export type ProcessedError = PrismaError | UnknownError
 
 function createTypeError<T>(type: T): TypeErrorResponse<T> {
 	return { type }
 }
 
-//TODO:errors реалзиовать метод создания дефолтных ошибок и его обработчик на фронте. ServerError, Forbidden (NOT_ENOUGH_RIGHTS)...
-function createServerError(meta: unknown): ServerError {
-	return { type: 'server', meta }
+function createStandardError(type: StandardErrorType, meta?: unknown): StandardError {
+	return { type, meta }
 }
 
 export {
 	createTypeError,
-	createServerError,
+	createStandardError,
 }

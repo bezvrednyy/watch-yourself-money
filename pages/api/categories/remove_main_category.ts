@@ -6,7 +6,7 @@ import {
 	RemoveMainCategoryRequest,
 	RemoveMainCategoryRightData,
 } from '../../../backFrontJoint/common/contracts/categories/removeMainCategoryContract'
-import {createServerError, createTypeError} from '../../../backFrontJoint/common/errors'
+import {createStandardError, createTypeError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
 export default async function removeMainCategory(req: RemoveMainCategoryRequest, res: NextApiResponse) {
@@ -33,7 +33,7 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createTypeError('CATEGORY_NOT_FOUND'))
 		}
 		if (categoryInfo.userId !== session?.user.id) {
-			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 403, createTypeError('NOT_ENOUGH_RIGHTS'))
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 403, createStandardError('FORBIDDEN'))
 		}
 		if (categoryInfo.parentCategoryId) {
 			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createTypeError('IS_IT_SUBCATEGORY'))
@@ -43,7 +43,7 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 		}
 
 		if (mainCategoriesCount < 1) {
-			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createServerError('NO_MAIN_CATEGORIES_FOUND'))
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createStandardError('SERVER_ERROR', 'NO_MAIN_CATEGORIES_FOUND'))
 		}
 
 		await prisma.$transaction([
@@ -59,6 +59,6 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 		sendJsonRightData<RemoveMainCategoryRightData>(res, undefined)
 	}
 	catch (error) {
-		sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createServerError(error))
+		sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createStandardError('SERVER_ERROR', error))
 	}
 }

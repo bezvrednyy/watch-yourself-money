@@ -7,7 +7,7 @@ import {
 	CreateCategoryRequest,
 	CreateCategoryRightData,
 } from '../../../backFrontJoint/common/contracts/categories/createCategoryContract'
-import {createServerError} from '../../../backFrontJoint/common/errors'
+import {createStandardError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
 export default async function createCategory(req: CreateCategoryRequest, res: NextApiResponse) {
@@ -43,6 +43,6 @@ export default async function createCategory(req: CreateCategoryRequest, res: Ne
 		sendJsonRightData<CreateCategoryRightData>(res, undefined)
 	}
 	catch (error) {
-		sendJsonLeftData<CreateCategoryLeftData>(res, 500, createServerError(error))
+		sendJsonLeftData<CreateCategoryLeftData>(res, 500, createStandardError('SERVER_ERROR', error))
 	}
 }

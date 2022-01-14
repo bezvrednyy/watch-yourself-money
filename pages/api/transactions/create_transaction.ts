@@ -6,7 +6,7 @@ import {
 	CreateTransactionLeftData,
 	CreateTransactionRequest, CreateTransactionRightData,
 } from '../../../backFrontJoint/common/contracts/transactions/createTransactionContract'
-import {createServerError, createTypeError} from '../../../backFrontJoint/common/errors'
+import {createStandardError, createTypeError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
 export default async function createTransaction(req: CreateTransactionRequest, res: NextApiResponse) {
@@ -30,7 +30,7 @@ export default async function createTransaction(req: CreateTransactionRequest, r
 			return sendJsonLeftData<CreateTransactionLeftData>(res, 400, createTypeError('CATEGORY_NOT_FOUND'))
 		}
 		if (categoryInfo.userId !== session?.user.id) {
-			return sendJsonLeftData<CreateTransactionLeftData>(res, 403, createTypeError('NOT_ENOUGH_RIGHTS'))
+			return sendJsonLeftData<CreateTransactionLeftData>(res, 403, createStandardError('FORBIDDEN'))
 		}
 
 		await prisma.transaction.create({
@@ -47,6 +47,6 @@ export default async function createTransaction(req: CreateTransactionRequest, r
 		sendJsonRightData<CreateTransactionRightData>(res, undefined)
 	}
 	catch (error) {
-		sendJsonLeftData<CreateTransactionLeftData>(res, 500, createServerError(error))
+		sendJsonLeftData<CreateTransactionLeftData>(res, 500, createStandardError('SERVER_ERROR', error))
 	}
 }

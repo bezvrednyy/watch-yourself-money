@@ -5,7 +5,7 @@ import {
 	GetCategoriesLeftData,
 	GetCategoriesRightData,
 } from '../../../backFrontJoint/common/contracts/categories/getCategoriesContract'
-import {createServerError} from '../../../backFrontJoint/common/errors'
+import {createStandardError} from '../../../backFrontJoint/common/errors'
 import {ColorId} from '../../../common/colors/colors'
 import {verify} from '../../../common/utils/verify'
 import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
@@ -41,6 +41,6 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 		sendJsonRightData<GetCategoriesRightData>(res, { categories: remappedCategories })
 	}
 	catch (error) {
-		sendJsonLeftData<GetCategoriesLeftData>(res, 500, createServerError(error))
+		sendJsonLeftData<GetCategoriesLeftData>(res, 500, createStandardError('SERVER_ERROR', error))
 	}
 }

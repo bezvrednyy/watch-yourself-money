@@ -5,7 +5,7 @@ import {
 	GetUserSettingsContractLeftData,
 	GetUserSettingsContractRightData,
 } from '../../../backFrontJoint/common/contracts/env/getUserSettingsContract'
-import {createServerError} from '../../../backFrontJoint/common/errors'
+import {createStandardError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
 export default async function getUserSettings(req: NextApiRequest, res: NextApiResponse) {
@@ -23,9 +23,9 @@ export default async function getUserSettings(req: NextApiRequest, res: NextApiR
 		if (settings) {
 			return sendJsonRightData<GetUserSettingsContractRightData>(res, settings)
 		}
-		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, createServerError('USER_SETTINGS_NOT_FOUND'))
+		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, createStandardError('SERVER_ERROR', 'USER_SETTINGS_NOT_FOUND'))
 	}
 	catch (error) {
-		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, createServerError(error))
+		sendJsonLeftData<GetUserSettingsContractLeftData>(res, 500, createStandardError('SERVER_ERROR', error))
 	}
 }

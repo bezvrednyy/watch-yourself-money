@@ -3,7 +3,7 @@ import {NextApiRequest} from 'next'
 import {ColorId} from '../../../../common/colors/colors'
 import {OutlineIconId} from '../../../../commonClient/uikit/icons/getOutlineIconById'
 import {ClientCategoryData} from '../../../../pages/main-space/model/categoriesAtom'
-import {ServerError} from '../../errors'
+import {StandardError} from '../../errors'
 
 //TODO:models
 export type EditMainCategoryRequestData = {
@@ -24,4 +24,4 @@ export interface EditMainCategoryRequest extends NextApiRequest {
 }
 
 export type EditMainCategoryRightData = void
-export type EditMainCategoryLeftData = ServerError
+export type EditMainCategoryLeftData = StandardError
