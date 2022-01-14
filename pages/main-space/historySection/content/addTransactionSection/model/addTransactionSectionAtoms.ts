@@ -6,6 +6,7 @@ import {generateUuid} from '../../../../../../common/utils/generateRandom'
 import {userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
 import {updateCategoriesAction} from '../../../../model/categoriesAtom'
 import {toast} from 'react-hot-toast'
+import {updateTransactionsAction} from '../../../../model/transactionsAtom'
 
 const statusesAtom = createEnumAtom(['normal', 'saving'])
 const selectedCategoryIdAtom = createPrimitiveAtom<string>('')
@@ -42,9 +43,9 @@ export const addTransaction = declareAsyncAction<AddTransactionParams>(async (st
 
 	return either
 		.mapRight(() => {
-			//TODO:toast и обновление транзакций
 			store.dispatch(statusesAtom.setNormal())
 			onClose()
+			updateTransactionsAction(store)
 		})
 		.mapLeft(error => {
 			if (error.type === 'CATEGORY_NOT_FOUND') {
