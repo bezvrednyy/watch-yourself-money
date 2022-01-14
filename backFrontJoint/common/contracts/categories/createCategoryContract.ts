@@ -1,9 +1,17 @@
+import {CategoryType} from '@prisma/client'
 import {NextApiRequest} from 'next'
+import {ColorId} from '../../../../common/colors/colors'
+import {OutlineIconId} from '../../../../commonClient/uikit/icons/getOutlineIconById'
 import {ClientCategoryData} from '../../../../pages/main-space/model/categoriesAtom'
 import {StandardError} from '../../errors'
 
 //TODO:models
-export interface CreateCategoryRequestData extends ClientCategoryData {
+export type CreateCategoryRequestData = {
+	id: string,
+	title: string,
+	type: CategoryType,
+	iconId: OutlineIconId,
+	colorId: ColorId,
 	subcategories: Array<ClientCategoryData>,
 }
 

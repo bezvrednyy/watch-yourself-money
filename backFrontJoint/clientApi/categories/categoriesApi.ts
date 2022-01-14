@@ -19,7 +19,7 @@ import {fetchPostData} from '../clientApi'
 import {Either} from '@sweet-monads/either'
 
 async function createCategory(data: CreateCategoryRequestData): Promise<Either<CreateCategoryLeftData, CreateCategoryRightData>> {
-	const response = await fetchPostData('/api/categories/create_category', data)
+	const response = await fetchPostData('/api/categories/create_main_category', data)
 	const eitherObject: BackendEitherObject<CreateCategoryLeftData, CreateCategoryRightData> = await response.json()
 	return processBackendEither(eitherObject)
 }

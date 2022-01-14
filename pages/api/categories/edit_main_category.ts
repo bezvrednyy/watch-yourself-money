@@ -28,19 +28,13 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 		//TODO:category, при удалении подкатегории транзакции должны удалиться. Добавить сообщение об этом.
 		await Promise.all([
 			prisma.category.deleteMany({
-				where: {
-					id: {
-						in: removedSubcategoryIds,
-					},
-				},
+				where: { id: { in: removedSubcategoryIds } },
 			}),
 			prisma.category.createMany({
 				data: newSubcategories.map(x => remapCategoryDataToCategory(x, verify(session?.user.id))),
 			}),
 			prisma.category.update({
-				where: {
-					id: mainCategory.id,
-				},
+				where: { id: mainCategory.id },
 				data: {
 					iconId: mainCategory.iconId,
 					color: mainCategory.colorId,
@@ -49,9 +43,7 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 				},
 			}),
 			...editedSubcategories.map(x => prisma.category.update({
-				where: {
-					id: x.id,
-				},
+				where: { id: x.id },
 				data: remapCategoryDataToCategory(x, verify(session?.user.id)),
 			})),
 		])
