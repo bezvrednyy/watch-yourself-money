@@ -2,13 +2,14 @@ import {CreateCategoryRequestData} from '../../../../../../backFrontJoint/common
 import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {verify} from '../../../../../../common/utils/verify'
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
+import {updateCategoriesAction} from '../../../../model/categoriesAtom'
 import {addCategoryPopupAtoms} from './addCategoryPopupAtoms'
 
 type SaveDataParams = {
 	onClose: () => void,
 }
 
-export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async (store, {onClose}) => {
+export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async (store, { onClose }) => {
 	const {categoryIdAtom, titleAtom, statusesAtom, iconIdAtom, subcategoriesAtom, colorIdAtom} = addCategoryPopupAtoms
 	const title = store.getState(titleAtom)
 	if (!title) {
@@ -30,9 +31,10 @@ export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async
 	}
 
 	const either = await getClientApi().categories.createCategory(data)
-	return either
-		.mapRight(() => {
-			//TODO:toast
+
+	either
+		.mapRight(async () => {
+			await updateCategoriesAction(store)
 			store.dispatch(statusesAtom.setNormal())
 			onClose()
 		})

@@ -44,8 +44,8 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 	})
 
 	either
-		.mapRight(() => {
-			//TODO:toast и обновление категорий
+		.mapRight(async () => {
+			await updateCategoriesAction(store)
 			onClose()
 			store.dispatch(statusesAtom.setNormal())
 		})
@@ -76,12 +76,9 @@ export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategory
 
 	either
 		.mapRight(async () => {
-			toast.success('Категория успешно удалена.')
+			await updateCategoriesAction(store)
 			onClose()
 			store.dispatch(statusesAtom.setNormal())
-
-			await updateCategoriesAction(store)
-			toast.success('Категории обновлены')
 		})
 		.mapLeft(error => {
 			if (error.type === 'CATEGORY_NOT_FOUND') {
