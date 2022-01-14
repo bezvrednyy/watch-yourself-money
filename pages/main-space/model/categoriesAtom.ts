@@ -4,6 +4,7 @@ import {ColorId} from '../../../common/colors/colors'
 import {devideArray} from '../../../common/utils/array'
 import {declareAsyncAction} from '../../../commonClient/declareAsyncAction'
 import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
+import {updateTransactionsAction} from './transactionsAtom'
 
 type CategoryType = 'EXPENSES'|'INCOMES'
 
@@ -36,9 +37,12 @@ export const categoriesAtom = createPrimitiveAtom<CategoriesAtomData>({
 export const editableCategoryIdAtom = createPrimitiveAtom(<null|string>(null))
 
 export const updateCategoriesAction = declareAsyncAction(async store => {
-	const either = await getClientApi().categories.getCategories()
+	const eithers = await Promise.all([
+		getClientApi().categories.getCategories(),
+		updateTransactionsAction(store),
+	])
 
-	either
+	eithers[0]
 		.mapRight(categories => {
 			const [mainCategories, subCategories] = devideArray(categories, x => x.parentCategoryId === undefined)
 			store.dispatch(categoriesAtom.set({
