@@ -4,6 +4,8 @@ import {getClientApi, processStandardError} from '../../../../../../backFrontJoi
 import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {generateUuid} from '../../../../../../common/utils/generateRandom'
 import {userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
+import {updateCategoriesAction} from '../../../../model/categoriesAtom'
+import {toast} from 'react-hot-toast'
 
 const statusesAtom = createEnumAtom(['normal', 'saving'])
 const selectedCategoryIdAtom = createPrimitiveAtom<string>('')
@@ -40,14 +42,20 @@ export const addTransaction = declareAsyncAction<AddTransactionParams>(async (st
 
 	return either
 		.mapRight(() => {
-			//TODO:toast
+			//TODO:toast и обновление транзакций
 			store.dispatch(statusesAtom.setNormal())
 			onClose()
 		})
 		.mapLeft(error => {
+			if (error.type === 'CATEGORY_NOT_FOUND') {
+				toast.error('Категория уже не существует.')
+				updateCategoriesAction(store)
+			}
+			else {
+				processStandardError(error)
+			}
 			store.dispatch(statusesAtom.setNormal())
 			onClose()
-			processStandardError(error)
 		})
 })
 
