@@ -1,4 +1,3 @@
-import {Category} from '@prisma/client'
 import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
@@ -7,9 +6,7 @@ import {
 	EditMainCategoryRequest,
 	EditMainCategoryRightData,
 } from '../../../backFrontJoint/common/contracts/categories/editMainCategoryContract'
-import {GetCategoriesCategoryData} from '../../../backFrontJoint/common/contracts/categories/getCategoriesContract'
-import {createStandardError} from '../../../backFrontJoint/common/errors'
-import {verify} from '../../../common/utils/verify'
+import {createStandardError, createTypeError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
 export default async function editMainCategory(req: EditMainCategoryRequest, res: NextApiResponse) {
@@ -25,26 +22,55 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 	} = req.body.data
 
 	try {
+		const currentCategoryData = await prisma.category.findUnique({
+			where: { id: mainCategory.id },
+			select: { userId: true },
+		})
+
+		if (!currentCategoryData) {
+			return sendJsonLeftData<EditMainCategoryLeftData>(res, 400, createTypeError('CATEGORY_NOT_FOUND'))
+		}
+		if (currentCategoryData.userId !== session?.user.id) {
+			return sendJsonLeftData<EditMainCategoryLeftData>(res, 403, createStandardError('FORBIDDEN'))
+		}
+
+		const userId = session.user.id
 		//TODO:category, при удалении подкатегории транзакции должны удалиться. Добавить сообщение об этом.
 		await Promise.all([
 			prisma.category.deleteMany({
 				where: { id: { in: removedSubcategoryIds } },
 			}),
 			prisma.category.createMany({
-				data: newSubcategories.map(x => remapCategoryDataToCategory(x, verify(session?.user.id))),
+				data: newSubcategories.map(x => ({
+					id: x.id,
+					color: x.colorId,
+					name: x.title,
+					iconId: x.iconId,
+					type: x.type,
+					parentCategoryId: mainCategory.id,
+					userId,
+				})),
 			}),
 			prisma.category.update({
 				where: { id: mainCategory.id },
 				data: {
 					iconId: mainCategory.iconId,
 					color: mainCategory.colorId,
-					name: mainCategory.name,
+					name: mainCategory.title,
 					type: mainCategory.type,
 				},
 			}),
 			...editedSubcategories.map(x => prisma.category.update({
 				where: { id: x.id },
-				data: remapCategoryDataToCategory(x, verify(session?.user.id)),
+				data: {
+					id: x.id,
+					color: x.colorId,
+					name: x.title,
+					iconId: x.iconId,
+					type: x.type,
+					parentCategoryId: x.parentCategoryId,
+					userId,
+				},
 			})),
 		])
 
@@ -52,17 +78,5 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 	}
 	catch (error) {
 		sendJsonLeftData<EditMainCategoryLeftData>(res, 500, createStandardError('SERVER_ERROR', error))
-	}
-}
-
-function remapCategoryDataToCategory(data: GetCategoriesCategoryData, userId: string): Category {
-	return {
-		id: data.id,
-		parentCategoryId: data.parentCategoryId || null,
-		color: data.colorId,
-		name: data.title,
-		iconId: data.iconId,
-		type: data.type,
-		userId,
 	}
 }

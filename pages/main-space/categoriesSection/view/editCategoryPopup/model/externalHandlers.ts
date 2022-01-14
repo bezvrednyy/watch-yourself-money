@@ -26,7 +26,7 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 		id: verify(store.getState(editableCategoryIdAtom)),
 		iconId: store.getState(iconIdAtom),
 		colorId: store.getState(colorIdAtom),
-		name: store.getState(titleAtom),
+		title: store.getState(titleAtom),
 		type: 'EXPENSES', //TODO:newFeature добавить категории тип "Доходы"
 		editedSubcategories: store.getState(subcategoriesAtom)
 			.filter(x => editedSubcategoryIds.has(x.id))
@@ -50,9 +50,15 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 			store.dispatch(statusesAtom.setNormal())
 		})
 		.mapLeft(error => {
+			if (error.type === 'CATEGORY_NOT_FOUND') {
+				toast.error('Категория уже не существует.')
+				updateCategoriesAction(store)
+			}
+			else {
+				processStandardError(error)
+			}
 			store.dispatch(statusesAtom.setNormal())
 			onClose()
-			processStandardError(error)
 		})
 })
 

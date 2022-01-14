@@ -2,18 +2,25 @@ import {CategoryType} from '@prisma/client'
 import {NextApiRequest} from 'next'
 import {ColorId} from '../../../../common/colors/colors'
 import {OutlineIconId} from '../../../../commonClient/uikit/icons/getOutlineIconById'
-import {ClientCategoryData} from '../../../../pages/main-space/model/categoriesAtom'
-import {StandardError} from '../../errors'
+import {StandardError, TypeErrorResponse} from '../../errors'
 
 //TODO:models
-export type EditMainCategoryRequestData = {
+export type EditMainCategoryDefaultCategoryData = {
 	id: string,
-	name: string,
+	title: string,
 	iconId: OutlineIconId,
 	colorId: ColorId,
 	type: CategoryType,
-	editedSubcategories: Array<ClientCategoryData>,
-	newSubcategories: Array<ClientCategoryData>,
+}
+
+export type EditMainCategorySubcategoryData = EditMainCategoryDefaultCategoryData & {
+	parentCategoryId?: string,
+}
+
+
+export type EditMainCategoryRequestData = EditMainCategoryDefaultCategoryData & {
+	editedSubcategories: Array<EditMainCategorySubcategoryData>,
+	newSubcategories: Array<EditMainCategoryDefaultCategoryData>,
 	removedSubcategoryIds: Array<string>,
 }
 
@@ -21,5 +28,7 @@ export interface EditMainCategoryRequest extends NextApiRequest {
 	body: { data: EditMainCategoryRequestData },
 }
 
+export type EditMainCategoryErrorType = 'CATEGORY_NOT_FOUND'
+
 export type EditMainCategoryRightData = void
-export type EditMainCategoryLeftData = StandardError
+export type EditMainCategoryLeftData = TypeErrorResponse<EditMainCategoryErrorType> | StandardError
