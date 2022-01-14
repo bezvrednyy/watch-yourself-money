@@ -13,7 +13,5 @@ export type GetCategoriesCategoryData = {
 	colorId: ColorId,
 }
 
-export type GetCategoriesRightData = {
-	categories: Array<GetCategoriesCategoryData>,
-}
+export type GetCategoriesRightData = Array<GetCategoriesCategoryData>
 export type GetCategoriesLeftData = StandardError

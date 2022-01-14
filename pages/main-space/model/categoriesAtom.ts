@@ -1,5 +1,8 @@
 import {createPrimitiveAtom} from '@reatom/core/primitives'
+import {getClientApi, processStandardError} from '../../../backFrontJoint/clientApi/clientApi'
 import {ColorId} from '../../../common/colors/colors'
+import {devideArray} from '../../../common/utils/array'
+import {declareAsyncAction} from '../../../commonClient/declareAsyncAction'
 import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
 
 type CategoryType = 'EXPENSES'|'INCOMES'
@@ -31,3 +34,18 @@ export const categoriesAtom = createPrimitiveAtom<CategoriesAtomData>({
 	subCategories: [],
 })
 export const editableCategoryIdAtom = createPrimitiveAtom(<null|string>(null))
+
+export const updateCategoriesAction = declareAsyncAction(async store => {
+	const either = await getClientApi().categories.getCategories()
+
+	either
+		.mapRight(categories => {
+			const [mainCategories, subCategories] = devideArray(categories, x => x.parentCategoryId === undefined)
+			store.dispatch(categoriesAtom.set({
+				mainCategories: mainCategories as Array<MainCategoryData>,
+				subCategories: subCategories as Array<SubCategoryData>,
+			}))
+		})
+		.mapLeft(processStandardError)
+
+})

@@ -24,6 +24,11 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 			id: verify(session.user.id, 'Server error: email not found'),
 		}}})
 
+		if (categories.length === 0) {
+			sendJsonLeftData<GetCategoriesLeftData>(res, 500, createStandardError('SERVER_ERROR', 'NO_CATEGORIES_FOUND'))
+			return
+		}
+
 		const remappedCategories = categories.map(x => {
 			const remappedValue: ClientCategoryData = {
 				id: x.id,
@@ -38,7 +43,7 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 			return remappedValue
 		})
 
-		sendJsonRightData<GetCategoriesRightData>(res, { categories: remappedCategories })
+		sendJsonRightData<GetCategoriesRightData>(res, remappedCategories)
 	}
 	catch (error) {
 		sendJsonLeftData<GetCategoriesLeftData>(res, 500, createStandardError('SERVER_ERROR', error))

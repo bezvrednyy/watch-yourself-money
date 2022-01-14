@@ -2,7 +2,7 @@ import {getClientApi, processStandardError} from '../../../../../../backFrontJoi
 import {StandardError} from '../../../../../../backFrontJoint/common/errors'
 import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {verify} from '../../../../../../common/utils/verify'
-import {editableCategoryIdAtom} from '../../../../model/categoriesAtom'
+import {editableCategoryIdAtom, updateCategoriesAction} from '../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from './editableCategoryAtom'
 import {toast} from 'react-hot-toast'
 
@@ -75,16 +75,18 @@ export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategory
 	})
 
 	either
-		.mapRight(() => {
-			//TODO:toast и обновление категорий
+		.mapRight(async () => {
 			toast.success('Категория успешно удалена.')
 			onClose()
 			store.dispatch(statusesAtom.setNormal())
+
+			await updateCategoriesAction(store)
+			toast.success('Категории обновлены')
 		})
 		.mapLeft(error => {
 			if (error.type === 'CATEGORY_NOT_FOUND') {
 				toast.error('Категория уже не существует.')
-				//TODO:toast и обновление категорий
+				updateCategoriesAction(store)
 			}
 			else if (error.type === 'LAST_MAIN_CATEGORY') {
 				toast.error('Нельзя удалить последнюю категорию')
