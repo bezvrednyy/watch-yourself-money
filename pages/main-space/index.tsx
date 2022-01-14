@@ -68,16 +68,10 @@ export async function getServerSideProps(context: NextPageContext): Promise<GetS
 		id: verify(session.user.id, 'Server error: user not found'),
 	}}})
 
-	//TODO:transactions. Переделать на lazyLoad
 	const transactions = await prisma.transaction.findMany({
-		where: {
-			categoryId: {
-				in: categories.map(x => x.id),
-			},
-		},
-		orderBy: {
-			date: 'desc',
-		},
+		where: { categoryId: { in: categories.map(x => x.id) } },
+		orderBy: { date: 'desc' },
+		take: 30,
 	})
 
 	return {
