@@ -32,16 +32,16 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 		if (!categoryInfo) {
 			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createTypeError('CATEGORY_NOT_FOUND'))
 		}
-		if (categoryInfo.userId !== session?.user.id) {
-			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 403, createStandardError('FORBIDDEN'))
-		}
-		if (categoryInfo.parentCategoryId) {
-			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createTypeError('IS_IT_SUBCATEGORY'))
-		}
 		if (mainCategoriesCount === 1) {
 			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createTypeError('LAST_MAIN_CATEGORY'))
 		}
 
+		if (categoryInfo.userId !== session?.user.id) {
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 403, createStandardError('FORBIDDEN'))
+		}
+		if (categoryInfo.parentCategoryId) {
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createStandardError('BAD_REQUEST'))
+		}
 		if (mainCategoriesCount < 1) {
 			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createStandardError('SERVER_ERROR', 'NO_MAIN_CATEGORIES_FOUND'))
 		}

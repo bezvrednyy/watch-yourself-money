@@ -1,8 +1,10 @@
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
+import {StandardError} from '../../../../../../backFrontJoint/common/errors'
 import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {verify} from '../../../../../../common/utils/verify'
 import {editableCategoryIdAtom} from '../../../../model/categoriesAtom'
 import {editCategoryPopupAtoms} from './editableCategoryAtom'
+import {toast} from 'react-hot-toast'
 
 type SaveDataParams = {
 	onClose: () => void,
@@ -75,13 +77,23 @@ export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategory
 	either
 		.mapRight(() => {
 			//TODO:toast и обновление категорий
+			toast.success('Категория успешно удалена.')
 			onClose()
 			store.dispatch(statusesAtom.setNormal())
 		})
 		.mapLeft(error => {
+			if (error.type === 'CATEGORY_NOT_FOUND') {
+				toast.error('Категория уже не существует.')
+				//TODO:toast и обновление категорий
+			}
+			else if (error.type === 'LAST_MAIN_CATEGORY') {
+				toast.error('Нельзя удалить последнюю категорию')
+			}
+			else {
+				processStandardError(error as StandardError)
+			}
 			store.dispatch(statusesAtom.setNormal())
 			onClose()
-			processStandardError(error)
 		})
 })
 

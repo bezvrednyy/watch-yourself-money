@@ -14,8 +14,6 @@ export interface RemoveMainCategoryRequest extends NextApiRequest {
 
 
 export type RemoveMainCategoryErrorType = 'CATEGORY_NOT_FOUND'
-	|'NOT_ENOUGH_RIGHTS'
-	|'IS_IT_SUBCATEGORY'
 	|'LAST_MAIN_CATEGORY'
 
 export type RemoveMainCategoryRightData = void

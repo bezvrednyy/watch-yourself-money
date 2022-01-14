@@ -10,7 +10,7 @@ type UnknownError = {
 
 export type StandardError = {
 	type: StandardErrorType
-	meta: unknown,
+	meta?: unknown,
 }
 
 export type TypeErrorResponse<T> = {
@@ -19,6 +19,7 @@ export type TypeErrorResponse<T> = {
 
 export type StandardErrorType = 'SERVER_ERROR'
 	|'FORBIDDEN'
+	|'BAD_REQUEST'
 
 export type ProcessedError = PrismaError | UnknownError
 

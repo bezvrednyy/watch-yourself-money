@@ -34,6 +34,9 @@ export function processStandardError(error: StandardError) {
 		case 'FORBIDDEN':
 			toast.error('У вас недостаточно прав.')
 			break
+		case 'BAD_REQUEST':
+			toast.error('Неверный запрос.')
+			break
 		default:
 			checkNever(error.type, `Unknown error type, ${error.type}`)
 	}
