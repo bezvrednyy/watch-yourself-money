@@ -7,11 +7,8 @@ export interface RemoveMainCategoryRequestData {
 }
 
 export interface RemoveMainCategoryRequest extends NextApiRequest {
-	body: {
-		data: RemoveMainCategoryRequestData,
-	}
+	body: { data: RemoveMainCategoryRequestData }
 }
-
 
 export type RemoveMainCategoryErrorType = 'CATEGORY_NOT_FOUND'
 	|'LAST_MAIN_CATEGORY'

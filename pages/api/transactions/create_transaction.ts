@@ -17,13 +17,9 @@ export default async function createTransaction(req: CreateTransactionRequest, r
 
 	try {
 		const data = req.body.data
-		const categoryInfo = await prisma.category.findFirst({
-			where: {
-				id: data.categoryId,
-			},
-			select: {
-				userId: true,
-			},
+		const categoryInfo = await prisma.category.findUnique({
+			where: { id: data.categoryId },
+			select: { userId: true },
 		})
 
 		if (!categoryInfo) {

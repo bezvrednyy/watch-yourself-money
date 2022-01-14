@@ -16,7 +16,7 @@ export default async function getUserSettings(req: NextApiRequest, res: NextApiR
 	}
 
 	try {
-		const settings = await prisma.userSettings.findFirst({where: {
+		const settings = await prisma.userSettings.findUnique({where: {
 			userId: session?.user.id,
 		}})
 
