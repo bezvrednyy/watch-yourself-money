@@ -6,6 +6,11 @@ import {
 	CreateTransactionRightData,
 } from '../common/contracts/transactions/createTransactionContract'
 import {
+	EditTransactionLeftData,
+	EditTransactionRequestData,
+	EditTransactionRightData,
+} from '../common/contracts/transactions/editTransactionContract'
+import {
 	GetTransactionsLeftData,
 	GetTransactionsRightData,
 } from '../common/contracts/transactions/getTransactionsContract'
@@ -34,8 +39,15 @@ async function removeTransaction(data: RemoveTransactionRequestData): Promise<Ei
 	return processBackendEither(eitherObject)
 }
 
+async function editTransaction(data: EditTransactionRequestData): Promise<Either<EditTransactionLeftData, EditTransactionRightData>> {
+	const response = await fetchPostData('/api/transactions/remove_transaction', data)
+	const eitherObject: BackendEitherObject<EditTransactionLeftData, EditTransactionRightData> = await response.json()
+	return processBackendEither(eitherObject)
+}
+
 export const transactionsClientApi = {
 	createTransaction,
 	getTransactions,
 	removeTransaction,
+	editTransaction,
 }

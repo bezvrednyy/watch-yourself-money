@@ -18,9 +18,7 @@ export type EditMainCategoryRequestData = {
 }
 
 export interface EditMainCategoryRequest extends NextApiRequest {
-	body: {
-		data: EditMainCategoryRequestData,
-	},
+	body: { data: EditMainCategoryRequestData },
 }
 
 export type EditMainCategoryRightData = void

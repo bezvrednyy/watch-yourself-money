@@ -8,10 +8,7 @@ export interface CreateCategoryRequestData extends ClientCategoryData {
 }
 
 export interface CreateCategoryRequest extends NextApiRequest {
-	method: 'POST',
-	body: {
-		data: CreateCategoryRequestData,
-	}
+	body: { data: CreateCategoryRequestData }
 }
 
 export type CreateCategoryRightData = void
