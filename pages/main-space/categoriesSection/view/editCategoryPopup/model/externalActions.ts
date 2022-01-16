@@ -104,5 +104,3 @@ export const editCategoryPopupRemoveCategory = declareAloneAction<RemoveCategory
 			closeFn()
 		})
 })
-
-//TODO:category. Реализовать экшн очистки атомов и использовать его в externalHandlers
