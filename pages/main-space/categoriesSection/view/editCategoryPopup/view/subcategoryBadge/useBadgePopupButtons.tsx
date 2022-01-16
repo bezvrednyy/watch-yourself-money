@@ -2,7 +2,7 @@ import {useAction} from '@reatom/react'
 import {Button} from '../../../../../../../commonClient/uikit/button/Button'
 import {OutlineIconId} from '../../../../../../../commonClient/uikit/icons/getOutlineIconById'
 import {ClientCategoryData} from '../../../../../model/categoriesAtom'
-import {editCategoryPopupAtoms} from '../../model/editableCategoryAtom'
+import {editCategoryPopupAtoms} from '../../model/editCategoryPopupAtoms'
 import {useSubcategoryType} from './SubcategoryBadge'
 
 type UseBadgePopupButtonsParams = ClientCategoryData & {

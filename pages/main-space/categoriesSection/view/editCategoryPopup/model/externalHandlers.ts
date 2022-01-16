@@ -3,7 +3,7 @@ import {StandardError} from '../../../../../../backFrontJoint/common/errors'
 import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {verify} from '../../../../../../common/utils/verify'
 import {editableCategoryIdAtom, updateCategoriesAction} from '../../../../model/categoriesAtom'
-import {editCategoryPopupAtoms} from './editableCategoryAtom'
+import {editCategoryPopupAtoms} from './editCategoryPopupAtoms'
 import {toast} from 'react-hot-toast'
 
 type SaveDataParams = {
