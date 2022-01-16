@@ -1,10 +1,14 @@
 import {createPrimitiveAtom} from '@reatom/core/primitives'
+import {getClientApi, processStandardError} from '../../../backFrontJoint/clientApi/clientApi'
 import {ColorId} from '../../../common/colors/colors'
+import {devideArray} from '../../../common/utils/array'
+import {declareAloneAction} from '../../../commonClient/declareAloneAction'
 import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
+import {updateTransactionsAction} from './transactionsAtom'
 
 type CategoryType = 'EXPENSES'|'INCOMES'
 
-export type CategoryData = {
+export type ClientCategoryData = {
 	id: string,
 	parentCategoryId?: string,
 	title: string,
@@ -13,11 +17,11 @@ export type CategoryData = {
 	colorId: ColorId,
 }
 
-export type MainCategoryData = CategoryData & {
+export type MainCategoryData = ClientCategoryData & {
 	parentCategoryId: undefined,
 }
 
-export type SubCategoryData = CategoryData & {
+export type SubCategoryData = ClientCategoryData & {
 	parentCategoryId: string,
 }
 
@@ -31,3 +35,21 @@ export const categoriesAtom = createPrimitiveAtom<CategoriesAtomData>({
 	subCategories: [],
 })
 export const editableCategoryIdAtom = createPrimitiveAtom(<null|string>(null))
+
+export const updateCategoriesAction = declareAloneAction(async store => {
+	const eithers = await Promise.all([
+		getClientApi().categories.getCategories(),
+		updateTransactionsAction(store),
+	])
+
+	eithers[0]
+		.mapRight(categories => {
+			const [mainCategories, subCategories] = devideArray(categories, x => x.parentCategoryId === undefined)
+			store.dispatch(categoriesAtom.set({
+				mainCategories: mainCategories as Array<MainCategoryData>,
+				subCategories: subCategories as Array<SubCategoryData>,
+			}))
+		})
+		.mapLeft(processStandardError)
+
+})

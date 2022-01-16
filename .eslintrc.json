@@ -4,6 +4,11 @@
     "es6": true,
     "jest": true
   },
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint",
+    "unused-imports"
+  ],
   "parserOptions": {
     "ecmaVersion": 2017,
     "sourceType": "module"
@@ -228,6 +233,7 @@
         "hoist": "never"
       }
     ],
+    "@typescript-eslint/no-explicit-any": "error",
     "no-shadow-restricted-names": "error",
     "no-spaced-func": "error",
     "no-sync": "off",
@@ -317,6 +323,8 @@
     "require-await": "off",
     "require-jsdoc": "off",
     "rest-spread-spacing": "error",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
     "semi": [
       "error",
       "never"
@@ -355,6 +363,7 @@
       "error",
       "never"
     ],
+    "unused-imports/no-unused-imports": "error",
     "valid-jsdoc": [
       "off",
       {

@@ -5,7 +5,7 @@ import {TextField} from '../../../../../commonClient/uikit/textField/TextField'
 import {editableCategoryIdAtom} from '../../../model/categoriesAtom'
 import {AddSubcategoryBadge} from '../common/AddSubcategoryBadge'
 import {CategoryViewPicker} from '../common/CategoryViewPicker'
-import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
+import {editCategoryPopupAtoms} from './model/editCategoryPopupAtoms'
 import {SubcategoryBadge} from './view/subcategoryBadge/SubcategoryBadge'
 
 function EditCategoryPopupContent() {
@@ -47,6 +47,7 @@ function EditCategoryPopupContent() {
 						type: 'EXPENSES',
 						iconId: data.iconId,
 						colorId: parentCategoryColorId,
+						changeType: 'new',
 					})}
 				/>
 			</div>

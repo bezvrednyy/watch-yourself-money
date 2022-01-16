@@ -1,0 +1,1 @@
+export function addDeps(...args: unknown[]): void {}

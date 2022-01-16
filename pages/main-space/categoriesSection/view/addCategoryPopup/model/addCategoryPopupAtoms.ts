@@ -1,6 +1,6 @@
 import {createAtom} from '@reatom/core'
 import {ColorId} from '../../../../../../common/colors/colors'
-import {CategoryData} from '../../../../model/categoriesAtom'
+import {ClientCategoryData} from '../../../../model/categoriesAtom'
 import {createEnumAtom, createStringAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../../../commonClient/uikit/icons/getOutlineIconById'
 
@@ -11,12 +11,12 @@ const iconIdAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
 const colorIdAtom = createStringAtom<ColorId>('green#400')
 const subcategoriesAtom = createAtom(
 	{
-		set: (value: Array<CategoryData>) => value,
-		add: (value: CategoryData) => value,
-		update: (value: CategoryData) => value,
+		set: (value: Array<ClientCategoryData>) => value,
+		add: (value: ClientCategoryData) => value,
+		update: (value: ClientCategoryData) => value,
 		remove: (id: string) => id,
 	},
-	({onAction}, state = [] as Array<CategoryData>) => {
+	({onAction}, state = [] as Array<ClientCategoryData>) => {
 		onAction('set', value => (state = value))
 		onAction('add', value => (state = state.concat(value)))
 		onAction('update', value => {

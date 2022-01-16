@@ -1,14 +1,16 @@
 import {NextApiRequest, NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {getBackendErrorText} from '../../../backFrontJoint/backendApi/processBackendError'
-import {sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
-import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
-import {GetCategoriesRightData} from '../../../backFrontJoint/common/contracts/categories/getCategoriesContract'
+import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
+import {
+	GetCategoriesLeftData,
+	GetCategoriesRightData,
+} from '../../../backFrontJoint/common/contracts/categories/getCategoriesContract'
+import {createStandardError} from '../../../backFrontJoint/common/errors'
 import {ColorId} from '../../../common/colors/colors'
 import {verify} from '../../../common/utils/verify'
 import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
 import prisma from '../../../prisma/prisma'
-import {CategoryData} from '../../main-space/model/categoriesAtom'
+import {ClientCategoryData} from '../../main-space/model/categoriesAtom'
 
 export default async function getCategories(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
@@ -22,8 +24,13 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 			id: verify(session.user.id, 'Server error: email not found'),
 		}}})
 
+		if (categories.length === 0) {
+			sendJsonLeftData<GetCategoriesLeftData>(res, 500, createStandardError('SERVER_ERROR', 'NO_CATEGORIES_FOUND'))
+			return
+		}
+
 		const remappedCategories = categories.map(x => {
-			const remappedValue: CategoryData = {
+			const remappedValue: ClientCategoryData = {
 				id: x.id,
 				title: x.name,
 				type: x.type,
@@ -36,9 +43,9 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 			return remappedValue
 		})
 
-		sendJsonRightData<GetCategoriesRightData>(res, { categories: remappedCategories })
+		sendJsonRightData<GetCategoriesRightData>(res, remappedCategories)
 	}
 	catch (error) {
-		sendJsonTextError(res, 500, getBackendErrorText(error))
+		sendJsonLeftData<GetCategoriesLeftData>(res, 500, createStandardError('SERVER_ERROR', error))
 	}
 }

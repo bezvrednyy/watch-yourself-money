@@ -1,15 +1,14 @@
 import {useAction, useAtom} from '@reatom/react'
-import {useAsyncAction} from '../../../../../commonClient/declareAsyncAction'
-import {joinStrings} from '../../../../../common/utils/string'
+import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
 import {Button} from '../../../../../commonClient/uikit/button/Button'
 import {PopupDefault} from '../../../../../commonClient/uikit/PopupDefault'
-import {editCategoryPopupAtoms} from './model/editableCategoryAtom'
+import {editCategoryPopupAtoms} from './model/editCategoryPopupAtoms'
 import {categoriesAtom, editableCategoryIdAtom} from '../../../model/categoriesAtom'
 import {verify} from '../../../../../common/utils/verify'
 import {useEffect} from 'react'
 import {EditCategoryPopupContent} from './EditCategoryPopupContent'
-import {editCategoryPopupRemoveCategory, editCategoryPopupSaveData} from './model/externalHandlers'
-import {NotificationPopup} from '../../../../../commonClient/components/popups/NotificationPopup'
+import {editCategoryPopupSaveData} from './model/externalActions'
+import {RemoveCategoryNotificationPopup, RemoveSubcategoriesNotificationPopup} from './view/NotificationPopups'
 
 type EditCategoryPopupProps = {
 	show: boolean,
@@ -20,79 +19,39 @@ export function EditCategoryPopup({
 	show,
 	onClose,
 }: EditCategoryPopupProps) {
-	useInitPopupAtoms()
+	useInitPopupAtoms(onClose)
 	const buttons = useEditCategoryPopupButtons(onClose)
 
 	return <PopupDefault
 		show={show}
 		createContent={() => <>
 			<EditCategoryPopupContent />
-			<RemoveNotificationPopup onClose={onClose} />
+			<RemoveCategoryNotificationPopup />
+			<RemoveSubcategoriesNotificationPopup />
 		</>}
 		buttons={buttons}
 		className='w-full max-w-md'
 	/>
 }
 
-type RemoveNotificationPopupProps = {
-	onClose: () => void,
-}
-
-function RemoveNotificationPopup({
-	onClose,
-}: RemoveNotificationPopupProps) {
-	const [subcategories] = useAtom(editCategoryPopupAtoms.subcategoriesAtom)
-	const [showNotificationPopup] = useAtom(editCategoryPopupAtoms.showNotificationPopupAtom)
-	const handleCloseNotificationPopup = useAction(editCategoryPopupAtoms.showNotificationPopupAtom.setFalse)
-	const handleRemoveCategory = useAsyncAction(editCategoryPopupRemoveCategory)
-
-	const closeFn = () => {
-		handleCloseNotificationPopup()
-		onClose()
-	}
-
-	const additionalButtons: Array<JSX.Element> = []
-	subcategories.length && additionalButtons.push(<Button
-		key='turnInMain'
-		style='blue-default'
-		structure='text'
-		text='Turn in main'
-		onClick={() => handleRemoveCategory({ onClose: closeFn })}
-	/>)
-	additionalButtons.push(<Button
-		key='remove'
-		style='destructure'
-		structure='text'
-		text='Remove'
-		onClick={() => handleRemoveCategory({
-			onClose: closeFn,
-			removeSubcategories: true,
-		})}
-	/>)
-
-	return <NotificationPopup
-		show={showNotificationPopup}
-		onCancel={() => handleCloseNotificationPopup()}
-		description={joinStrings(
-			'При удалении категории удаляться все её транзакции.',
-			subcategories.length ? 'Что сделать с подкатегориями?' : '',
-		)}
-		additionalButtons={additionalButtons}
-	/>
-}
-
 function useEditCategoryPopupButtons(onClose: () => void): Array<JSX.Element> {
-	const handleSaveData = useAsyncAction(editCategoryPopupSaveData)
-	const handleShowNotificationPopup = useAction(editCategoryPopupAtoms.showNotificationPopupAtom.setTrue)
+	const handleSaveData = useAloneAction(editCategoryPopupSaveData)
+	const handleOpenRemoveCategoryPopup = useAction(editCategoryPopupAtoms.openedNotificationPopupAtom.setRemoveCategory)
+	const handleOpenRemoveSubcategoryPopup = useAction(editCategoryPopupAtoms.openedNotificationPopupAtom.setRemoveSubcategory)
+	const [subcategories] = useAtom(editCategoryPopupAtoms.subcategoriesAtom)
+	const hasRemovedSubcategories = !!subcategories.filter(x => x.changeType === 'removed').map(x => x.id).length
 
 	return [
 		<Button
 			key='save'
 			style='blue-default'
 			onClick={() => {
-				handleSaveData({
-					onClose,
-				})
+				if (hasRemovedSubcategories) {
+					handleOpenRemoveSubcategoryPopup()
+				}
+				else {
+					handleSaveData({ closeFn: onClose })
+				}
 			}}
 			structure='text'
 			text='Save'
@@ -100,7 +59,7 @@ function useEditCategoryPopupButtons(onClose: () => void): Array<JSX.Element> {
 		<Button
 			key='remove'
 			style='destructure'
-			onClick={() => handleShowNotificationPopup()}
+			onClick={() => handleOpenRemoveCategoryPopup()}
 			structure='text'
 			text='Remove'
 		/>,
@@ -114,7 +73,7 @@ function useEditCategoryPopupButtons(onClose: () => void): Array<JSX.Element> {
 	]
 }
 
-function useInitPopupAtoms() {
+function useInitPopupAtoms(onClose: () => void) {
 	const [categories] = useAtom(categoriesAtom)
 	const {mainCategories, subCategories} = categories
 	const [editableCategoryId] = useAtom(editableCategoryIdAtom)
@@ -122,6 +81,7 @@ function useInitPopupAtoms() {
 	const handleSetSubcategories = useAction(editCategoryPopupAtoms.subcategoriesAtom.set)
 	const handleSetColor = useAction(editCategoryPopupAtoms.colorIdAtom.set)
 	const handleSetIcon = useAction(editCategoryPopupAtoms.iconIdAtom.set)
+	const handleSetExternalHandlers = useAction(editCategoryPopupAtoms.externalHandlersAtom.set)
 
 	useEffect(() => {
 		if (editableCategoryId === null) {
@@ -138,6 +98,7 @@ function useInitPopupAtoms() {
 		)
 		handleSetColor(category.colorId)
 		handleSetIcon(category.iconId)
+		handleSetExternalHandlers({ onClose })
 	}, [
 		mainCategories,
 		subCategories,
@@ -146,5 +107,7 @@ function useInitPopupAtoms() {
 		handleSetIcon,
 		handleSetSubcategories,
 		handleSetTitle,
+		handleSetExternalHandlers,
+		onClose,
 	])
 }

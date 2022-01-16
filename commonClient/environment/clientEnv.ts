@@ -1,5 +1,6 @@
 import {Store} from '@reatom/core'
-import {declareAsyncAction} from '../declareAsyncAction'
+import {getClientApi, processStandardError} from '../../backFrontJoint/clientApi/clientApi'
+import {declareAloneAction} from '../declareAloneAction'
 import {userSettingsAtom} from './userSettingsAtom'
 
 type EnvironmentType = 'test'|'development'|'production'
@@ -8,14 +9,15 @@ function getEnvType(): EnvironmentType {
 	return process.env.NODE_ENV
 }
 
-const initUserSettings = declareAsyncAction(async store => {
-	const settingsRes = await fetch('http://localhost:3000/api/env/get_user_settings')
-	if (settingsRes.ok) {
-		const { settings } = await settingsRes.json()
-		store.dispatch(userSettingsAtom.set(
-			settings,
-		))
-	}
+const initUserSettings = declareAloneAction(async store => {
+	const either = await getClientApi().env.getUserSettings()
+	either
+		.mapRight(settings => {
+			store.dispatch(userSettingsAtom.set(
+				settings,
+			))
+		})
+		.mapLeft(processStandardError)
 })
 
 function initEnvironment(store: Store) {

@@ -1,11 +1,14 @@
 import {createAtom} from '@reatom/core'
-import {createPrimitiveAtom} from '@reatom/core/primitives'
-import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
+import {createEnumAtom, createPrimitiveAtom} from '@reatom/core/primitives'
+import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
+import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
 import {generateUuid} from '../../../../../../common/utils/generateRandom'
-import {getEnvType} from '../../../../../../commonClient/environment/clientEnv'
 import {userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
-import {AddTransactionRequestData} from '../../../../../api/transactions/add_transaction'
+import {updateCategoriesAction} from '../../../../model/categoriesAtom'
+import {toast} from 'react-hot-toast'
+import {updateTransactionsAction} from '../../../../model/transactionsAtom'
 
+const statusesAtom = createEnumAtom(['normal', 'saving'])
 const selectedCategoryIdAtom = createPrimitiveAtom<string>('')
 const sumAtom = createPrimitiveAtom<number>(0)
 const selectedBankAccountId = createPrimitiveAtom<string>('')
@@ -27,8 +30,8 @@ type AddTransactionParams = {
 	onClose: () => void,
 }
 
-export const addTransaction = declareAsyncAction<AddTransactionParams>(async (store, {onClose}) => {
-	const data: AddTransactionRequestData = {
+export const addTransaction = declareAloneAction<AddTransactionParams>(async (store, {onClose}) => {
+	const either = await getClientApi().transactions.createTransaction({
 		id: generateUuid(),
 		date: store.getState(transactionDateAtom),
 		categoryId: store.getState(selectedSubcategoryIdAtom) || store.getState(selectedCategoryIdAtom),
@@ -36,28 +39,25 @@ export const addTransaction = declareAsyncAction<AddTransactionParams>(async (st
 		comment: store.getState(transactionCommentAtom),
 		bankAccountId: store.getState(selectedBankAccountId),
 		money: store.getState(sumAtom),
-	}
-
-	//TODO:Either
-	const res = await fetch('/api/transactions/add_transaction', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json;charset=utf-8',
-		},
-		body: JSON.stringify({
-			data,
-		}),
 	})
 
-	if (getEnvType() !== 'production') {
-		console.log(data)
-		console.log(res)
-	}
-
-	if (res.ok) {
-		//TODO:toast и обновление транзакций
-		onClose()
-	}
+	return either
+		.mapRight(() => {
+			store.dispatch(statusesAtom.setNormal())
+			onClose()
+			updateTransactionsAction(store)
+		})
+		.mapLeft(error => {
+			if (error.type === 'CATEGORY_NOT_FOUND') {
+				toast.error('Категория уже не существует.')
+				updateCategoriesAction(store)
+			}
+			else {
+				processStandardError(error)
+			}
+			store.dispatch(statusesAtom.setNormal())
+			onClose()
+		})
 })
 
 export const addTransactionSectionAtoms = {
@@ -67,4 +67,5 @@ export const addTransactionSectionAtoms = {
 	selectedBankAccountId,
 	transactionCommentAtom,
 	transactionDateAtom,
+	statusesAtom,
 }

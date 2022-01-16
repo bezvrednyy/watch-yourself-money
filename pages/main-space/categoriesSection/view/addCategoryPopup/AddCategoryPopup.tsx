@@ -1,12 +1,13 @@
 import {useAction} from '@reatom/react'
 import {useEffect} from 'react'
-import {useAsyncAction} from '../../../../../commonClient/declareAsyncAction'
+import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
 import {generateUuid} from '../../../../../common/utils/generateRandom'
 import {Button} from '../../../../../commonClient/uikit/button/Button'
 import {PopupDefault} from '../../../../../commonClient/uikit/PopupDefault'
+import {addDeps} from '../../../../../commonClient/utils/addDeps'
 import {AddCategoryPopupContent} from './AddCategoryPopupContent'
 import {addCategoryPopupAtoms} from './model/addCategoryPopupAtoms'
-import {addCategoryPopupSaveData} from './model/externalHandlers'
+import {addCategoryPopupSaveData} from './model/externalActions'
 
 type EditCategoryPopupProps = {
 	show: boolean,
@@ -17,12 +18,8 @@ export function AddCategoryPopup({
 	show,
 	onClose,
 }: EditCategoryPopupProps) {
-	const handleSaveData = useAsyncAction(addCategoryPopupSaveData)
-	const handleSetCategoryId = useAction(addCategoryPopupAtoms.categoryIdAtom.set)
-
-	useEffect(() => {
-		handleSetCategoryId(generateUuid())
-	}, [handleSetCategoryId])
+	useInitPopupAtoms(show)
+	const handleSaveData = useAloneAction(addCategoryPopupSaveData)
 
 	return <PopupDefault
 		show={show}
@@ -31,22 +28,47 @@ export function AddCategoryPopup({
 			<Button
 				key='save'
 				style='blue-default'
-				onClick={() => {
-					handleSaveData({
-						onClose,
-					})
-				}}
+				onClick={() => handleSaveData({ onClose })}
 				structure='text'
 				text='Save'
 			/>,
 			<Button
 				key='cancel'
 				style='secondary'
-				onClick={onClose} //TODO:category реализовать очистку атомов попапа
+				onClick={onClose}
 				structure='text'
 				text='Cancel'
 			/>,
 		]}
 		className='w-full max-w-md'
 	/>
+}
+
+function useInitPopupAtoms(show: boolean) {
+	const handleSetNormal = useAction(addCategoryPopupAtoms.statusesAtom.setNormal)
+	const handleSetTitle = useAction(addCategoryPopupAtoms.titleAtom.set)
+	const handleSetSubcategories = useAction(addCategoryPopupAtoms.subcategoriesAtom.set)
+	const handleSetColor = useAction(addCategoryPopupAtoms.colorIdAtom.set)
+	const handleSetIcon = useAction(addCategoryPopupAtoms.iconIdAtom.set)
+	const handleSetCategoryId = useAction(addCategoryPopupAtoms.categoryIdAtom.set)
+
+	useEffect(() => {
+		addDeps(show)
+		if (!show) return
+
+		handleSetNormal()
+		handleSetCategoryId(generateUuid())
+		handleSetTitle('')
+		handleSetSubcategories([])
+		handleSetColor('green#400')
+		handleSetIcon('outline-shopping-bag')
+	}, [
+		handleSetCategoryId,
+		handleSetColor,
+		handleSetIcon,
+		handleSetNormal,
+		handleSetSubcategories,
+		handleSetTitle,
+		show,
+	])
 }

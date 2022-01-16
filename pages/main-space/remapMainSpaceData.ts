@@ -2,11 +2,11 @@ import {BankAccount, Category, Transaction} from '@prisma/client'
 import {ColorId} from '../../common/colors/colors'
 import {OutlineIconId} from '../../commonClient/uikit/icons/getOutlineIconById'
 import {BankAccountData} from './model/bankAccountsAtom'
-import {CategoryData} from './model/categoriesAtom'
+import {ClientCategoryData} from './model/categoriesAtom'
 import {TransactionData} from './model/transactionsAtom'
 
-function remapCategoryToCategoryData(data: Category): CategoryData {
-	const remappedValue: CategoryData = {
+function remapCategoryToCategoryData(data: Category): ClientCategoryData {
+	const remappedValue: ClientCategoryData = {
 		id: data.id,
 		title: data.name,
 		type: data.type,

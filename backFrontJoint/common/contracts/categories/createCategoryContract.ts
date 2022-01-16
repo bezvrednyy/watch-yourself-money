@@ -1,16 +1,23 @@
+import {CategoryType} from '@prisma/client'
 import {NextApiRequest} from 'next'
-import {CategoryData} from '../../../../pages/main-space/model/categoriesAtom'
-import {TextErrorResponse} from '../../errors'
+import {ColorId} from '../../../../common/colors/colors'
+import {OutlineIconId} from '../../../../commonClient/uikit/icons/getOutlineIconById'
+import {ClientCategoryData} from '../../../../pages/main-space/model/categoriesAtom'
+import {StandardError} from '../../errors'
 
-export interface CreateCategoryRequestData extends CategoryData {
-	subcategories: Array<CategoryData>,
+//TODO:models
+export type CreateCategoryRequestData = {
+	id: string,
+	title: string,
+	type: CategoryType,
+	iconId: OutlineIconId,
+	colorId: ColorId,
+	subcategories: Array<ClientCategoryData>,
 }
 
 export interface CreateCategoryRequest extends NextApiRequest {
-	body: {
-		data: CreateCategoryRequestData,
-	}
+	body: { data: CreateCategoryRequestData }
 }
 
 export type CreateCategoryRightData = void
-export type CreateCategoryLeftData = TextErrorResponse
+export type CreateCategoryLeftData = StandardError

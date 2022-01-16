@@ -1,20 +1,15 @@
-import {NextApiRequest, NextApiResponse} from 'next'
+import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
-import {sendJsonTextError} from '../../../backFrontJoint/backendApi/sendJsonTextError'
+import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
+import {
+	RemoveMainCategoryLeftData,
+	RemoveMainCategoryRequest,
+	RemoveMainCategoryRightData,
+} from '../../../backFrontJoint/common/contracts/categories/removeMainCategoryContract'
+import {createStandardError, createTypeError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
-type RemoveCategoryRequestData = {
-	categoryId: string,
-	removeSubcategories: boolean,
-}
-
-type RemoveCategoryRequest = NextApiRequest & {
-	body: {
-		data: RemoveCategoryRequestData,
-	}
-}
-
-export default async function removeMainCategory(req: RemoveCategoryRequest, res: NextApiResponse) {
+export default async function removeMainCategory(req: RemoveMainCategoryRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
@@ -22,7 +17,7 @@ export default async function removeMainCategory(req: RemoveCategoryRequest, res
 	}
 
 	try {
-		const {categoryId, removeSubcategories}: RemoveCategoryRequestData = req.body.data
+		const {categoryId, removeSubcategories} = req.body.data
 		const [categoryInfo, mainCategoriesCount] = await Promise.all([
 			prisma.category.findUnique({
 				where: { id: categoryId },
@@ -35,19 +30,20 @@ export default async function removeMainCategory(req: RemoveCategoryRequest, res
 		])
 
 		if (!categoryInfo) {
-			return sendJsonTextError(res, 500, 'Category not found')
-		}
-		if (categoryInfo.userId !== session?.user.id) {
-			return sendJsonTextError(res, 403, 'Not enough rights')
-		}
-		if (!categoryInfo.parentCategoryId) {
-			return sendJsonTextError(res, 400, 'Is not category. Is it subcategory')
-		}
-		if (mainCategoriesCount < 1) {
-			return sendJsonTextError(res, 500, 'Not found main categories')
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createTypeError('CATEGORY_NOT_FOUND'))
 		}
 		if (mainCategoriesCount === 1) {
-			return sendJsonTextError(res, 400, 'The last category cannot be deleted')
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createTypeError('LAST_MAIN_CATEGORY'))
+		}
+
+		if (categoryInfo.userId !== session?.user.id) {
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 403, createStandardError('FORBIDDEN'))
+		}
+		if (categoryInfo.parentCategoryId) {
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 400, createStandardError('BAD_REQUEST'))
+		}
+		if (mainCategoriesCount < 1) {
+			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createStandardError('SERVER_ERROR', 'NO_MAIN_CATEGORIES_FOUND'))
 		}
 
 		await prisma.$transaction([
@@ -60,13 +56,9 @@ export default async function removeMainCategory(req: RemoveCategoryRequest, res
 			prisma.category.delete({where: { id: categoryId }}),
 		])
 
-		res.status(200).send({})
+		sendJsonRightData<RemoveMainCategoryRightData>(res, undefined)
 	}
 	catch (error) {
-		res.status(500).json({ error })
+		sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createStandardError('SERVER_ERROR', error))
 	}
-}
-
-export type {
-	RemoveCategoryRequestData,
 }

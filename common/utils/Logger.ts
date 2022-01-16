@@ -3,7 +3,7 @@ class Logger {
 		console.error(message || 'Logger catch error')
 	}
 
-	static assert(condition: any, message = 'Assertion failed') {
+	static assert(condition: unknown, message = 'Assertion failed') {
 		!condition && Logger.error(message)
 	}
 }

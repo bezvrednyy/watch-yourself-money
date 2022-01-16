@@ -17,20 +17,12 @@ export function processBackendError<T>(error: T): ProcessedError {
 	const processedPrismaError = processPrismaError(error)
 	if (typeof processedPrismaError === 'string') {
 		return {
-			type: 'prisma',
+			type: 'PRISMA_ERROR',
 			text: processedPrismaError,
 		}
 	}
 	return {
-		type: 'unknown',
+		type: 'UNKNOWN_ERROR',
 		value: error,
 	}
-}
-
-export function getBackendErrorText<T>(error: T): string {
-	const processedError = processBackendError(error)
-	if (processedError.type === 'unknown') {
-		return `Unknown error: ${JSON.stringify(error)}`
-	}
-	return processedError.text
 }

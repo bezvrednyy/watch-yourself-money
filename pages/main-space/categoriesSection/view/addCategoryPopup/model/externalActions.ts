@@ -1,14 +1,15 @@
 import {CreateCategoryRequestData} from '../../../../../../backFrontJoint/common/contracts/categories/createCategoryContract'
-import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
+import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
 import {verify} from '../../../../../../common/utils/verify'
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
+import {updateCategoriesAction} from '../../../../model/categoriesAtom'
 import {addCategoryPopupAtoms} from './addCategoryPopupAtoms'
 
 type SaveDataParams = {
 	onClose: () => void,
 }
 
-export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async (store, {onClose}) => {
+export const addCategoryPopupSaveData = declareAloneAction<SaveDataParams>(async (store, { onClose }) => {
 	const {categoryIdAtom, titleAtom, statusesAtom, iconIdAtom, subcategoriesAtom, colorIdAtom} = addCategoryPopupAtoms
 	const title = store.getState(titleAtom)
 	if (!title) {
@@ -30,11 +31,10 @@ export const addCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async
 	}
 
 	const either = await getClientApi().categories.createCategory(data)
-	console.log(either)
-	return either
-		.mapRight(rightData => {
-			//TODO:toast
-			console.log(rightData)
+
+	either
+		.mapRight(async () => {
+			await updateCategoriesAction(store)
 			store.dispatch(statusesAtom.setNormal())
 			onClose()
 		})
