@@ -1,7 +1,7 @@
 import {PlusIcon} from '@heroicons/react/solid'
 import {useAction, useAtom} from '@reatom/react'
 import {startOfDay} from 'date-fns'
-import {useEffect, useMemo, useState} from 'react'
+import {useMemo} from 'react'
 import {mapToArray} from '../../../common/utils/array'
 import {defaultCompare} from '../../../common/utils/compare'
 import {useAloneAction} from '../../../commonClient/declareAloneAction'
@@ -9,7 +9,6 @@ import {joinStrings} from '../../../common/utils/string'
 import {verify} from '../../../common/utils/verify'
 import {Button} from '../../../commonClient/uikit/button/Button'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
-import {categoriesAtom} from '../model/categoriesAtom'
 import {transactionsAtom} from '../model/transactionsAtom'
 import {EditTransactionPanel} from './content/editTransactionPanel/EditTransactionPanel'
 import {
@@ -20,10 +19,9 @@ import {ViewTransactionInfo} from './content/TransactionHistorySectionItem'
 import {DayTransactionsHistorySection} from './content/DayTransactionsHistorySection'
 
 function HistorySection() {
-	useInitAtoms()
 	const [transactions] = useAtom(transactionsAtom)
 	const [bankAccounts] = useAtom(bankAccountsAtom)
-	const [open, setOpen] = useState(false)
+	const [showPanel] = useAtom(editTransactionPanelAtoms.showPanelAtom)
 
 	const transactionsByDays = useMemo(() => {
 		const result: Map<number, Array<ViewTransactionInfo>> = new Map()
@@ -60,57 +58,32 @@ function HistorySection() {
 				transitions={x.value}
 			/>)}
 			<div className='mt-auto px-5 pb-5'>
-				{open && <EditTransactionPanel />}
-				<ButtonsSection open={open} setOpen={setOpen} />
+				{showPanel && <EditTransactionPanel />}
+				<ButtonsSection />
 			</div>
 		</div>)
 }
 
-function useInitAtoms() {
-	const [categories] = useAtom(categoriesAtom)
-	const [bankAccounts] = useAtom(bankAccountsAtom)
-	const initCategoryId = verify(categories.mainCategories[0], 'Error: there must be at least one category').id
-	const initBankAccountId = verify(bankAccounts[0], 'Error: there must be at least one bank account').id
-
-	const handleSetSelectCategoryId = useAction(editTransactionPanelAtoms.selectedCategoryIdAtom.set)
-	const handleSetSelectedBankAccountId = useAction(editTransactionPanelAtoms.selectedBankAccountId.set)
-
-	useEffect(() => {
-		handleSetSelectCategoryId(initCategoryId)
-		handleSetSelectedBankAccountId(initBankAccountId)
-	}, [
-		handleSetSelectCategoryId,
-		handleSetSelectedBankAccountId,
-		initBankAccountId,
-		initCategoryId,
-	])
-}
-
-type ButtonsSectionProps = {
-	open: boolean,
-	setOpen: (v: boolean) => void,
-}
-
-function ButtonsSection({
-	open,
-	setOpen,
-}: ButtonsSectionProps) {
+function ButtonsSection() {
+	const [showPanel] = useAtom(editTransactionPanelAtoms.showPanelAtom)
+	const handleShowPanel = useAction(editTransactionPanelAtoms.showPanelAtom.show)
+	const handleClosePanel = useAction(editTransactionPanelAtoms.showPanelAtom.close)
 	const handleAddTransaction = useAloneAction(addTransaction)
 
-	if (open) {
+	if (showPanel) {
 		return (
 			<div className='flex space-x-3 mt-3'>
 				<Button
 					style='blue-default'
 					onClick={() => handleAddTransaction({
-						onClose: () => setOpen(false),
+						onClose: handleClosePanel,
 					})}
 					structure='text'
 					text='Save'
 				/>
 				<Button
 					style='secondary'
-					onClick={() => setOpen(false)}
+					onClick={handleClosePanel}
 					structure='text'
 					text='Cancel'
 				/>
@@ -125,7 +98,7 @@ function ButtonsSection({
 				'flex justify-between w-full px-4 py-2.5 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg',
 				'hover:bg-purple-200 cursor-pointer',
 			)}
-			onClick={() => setOpen(true)}
+			onClick={() => handleShowPanel()}
 		>
 			<span>Add new transaction</span>
 			<PlusIcon className='w-5 h-5 text-purple-500' />

@@ -1,12 +1,14 @@
 import {createAtom} from '@reatom/core'
 import {createEnumAtom, createPrimitiveAtom} from '@reatom/core/primitives'
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
+import {verify} from '../../../../../../common/utils/verify'
 import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
 import {generateUuid} from '../../../../../../common/utils/generateRandom'
 import {userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
-import {updateCategoriesAction} from '../../../../model/categoriesAtom'
+import {bankAccountsAtom} from '../../../../model/bankAccountsAtom'
+import {categoriesAtom, updateCategoriesAction} from '../../../../model/categoriesAtom'
 import {toast} from 'react-hot-toast'
-import {updateTransactionsAction} from '../../../../model/transactionsAtom'
+import {transactionsAtom, updateTransactionsAction} from '../../../../model/transactionsAtom'
 
 const statusesAtom = createEnumAtom(['normal', 'saving'])
 const selectedCategoryIdAtom = createPrimitiveAtom<string>('')
@@ -22,6 +24,56 @@ const selectedSubcategoryIdAtom = createAtom(
 	(track, state: string|null = null) => {
 		track.onAction('set', v => (state = v))
 		track.onChange('selectedCategoryIdAtom', () => (state = null))
+		return state
+	},
+)
+
+export const showPanelAtom = createAtom(
+	{
+		selectedCategoryIdAtom,
+		sumAtom,
+		selectedSubcategoryIdAtom,
+		selectedBankAccountId,
+		transactionCommentAtom,
+		transactionDateAtom,
+		statusesAtom,
+		categoriesAtom,
+		bankAccountsAtom,
+		transactionsAtom,
+		show: (transactionId?: string) => transactionId,
+		close: () => {},
+	},
+	({ onAction, schedule, get }, state = false) => {
+		onAction('show', transactionId => {
+			const categories = get('categoriesAtom')
+			const bankAccounts = get('bankAccountsAtom')
+			const transactions = get('transactionsAtom')
+			const initCategoryId = verify(categories.mainCategories[0], 'Error: there must be at least one category').id
+			const initBankAccountId = verify(bankAccounts[0], 'Error: there must be at least one bank account').id
+			state = true
+
+			schedule(dispatch => {
+				if (transactionId) {
+					const transaction = verify(transactions.find(x => x.id === transactionId))
+					dispatch(selectedCategoryIdAtom.set(transaction.categoryId))
+					dispatch(selectedBankAccountId.set(transaction.bankAccountId))
+					dispatch(sumAtom.set(transaction.money))
+					dispatch(transactionCommentAtom.set(transaction.comment || ''))
+					dispatch(transactionDateAtom.set(new Date(transaction.timestamp)))
+				}
+				else {
+					dispatch(selectedCategoryIdAtom.set(initCategoryId))
+					dispatch(selectedBankAccountId.set(initBankAccountId))
+					dispatch(sumAtom.set(0))
+					dispatch(transactionCommentAtom.set(''))
+					dispatch(transactionDateAtom.set(new Date()))
+				}
+				dispatch(statusesAtom.setNormal())
+			})
+		})
+
+		onAction('close', () => (state = false))
+
 		return state
 	},
 )
@@ -68,4 +120,5 @@ export const editTransactionPanelAtoms = {
 	transactionCommentAtom,
 	transactionDateAtom,
 	statusesAtom,
+	showPanelAtom,
 }
