@@ -23,12 +23,12 @@ const selectedSubcategoryIdAtom = createAtom(
 	},
 	(track, state: string|null = null) => {
 		track.onAction('set', v => (state = v))
-		track.onChange('selectedCategoryIdAtom', () => (state = null))
+		track.onChange('selectedCategoryIdAtom', () => (state = null)) //TODO:transactions из-за таких вот onChange, падает начальная инициализация.
 		return state
 	},
 )
 
-export const showPanelAtom = createAtom(
+const showPanelAtom = createAtom(
 	{
 		selectedCategoryIdAtom,
 		sumAtom,
@@ -45,19 +45,28 @@ export const showPanelAtom = createAtom(
 	},
 	({ onAction, schedule, get }, state = false) => {
 		onAction('show', transactionId => {
-			const categories = get('categoriesAtom')
+			const {mainCategories, subCategories} = get('categoriesAtom')
 			const bankAccounts = get('bankAccountsAtom')
 			const transactions = get('transactionsAtom')
-			const initCategoryId = verify(categories.mainCategories[0], 'Error: there must be at least one category').id
+			const initCategoryId = verify(mainCategories[0], 'Error: there must be at least one category').id
 			const initBankAccountId = verify(bankAccounts[0], 'Error: there must be at least one bank account').id
 			state = true
 
 			schedule(dispatch => {
 				if (transactionId) {
 					const transaction = verify(transactions.find(x => x.id === transactionId))
-					dispatch(selectedCategoryIdAtom.set(transaction.categoryId))
+					const category = verify(mainCategories.find(x => x.id === transaction.categoryId) || subCategories.find(x => x.id === transaction.categoryId))
+					if (category.parentCategoryId) {
+						dispatch(selectedSubcategoryIdAtom.set(category.id))
+						dispatch(selectedCategoryIdAtom.set(category.parentCategoryId))
+					}
+					else {
+						dispatch(selectedSubcategoryIdAtom.set(null))
+						dispatch(selectedCategoryIdAtom.set(category.id))
+					}
 					dispatch(selectedBankAccountId.set(transaction.bankAccountId))
 					dispatch(sumAtom.set(transaction.money))
+
 					dispatch(transactionCommentAtom.set(transaction.comment || ''))
 					dispatch(transactionDateAtom.set(new Date(transaction.timestamp)))
 				}
@@ -67,6 +76,7 @@ export const showPanelAtom = createAtom(
 					dispatch(sumAtom.set(0))
 					dispatch(transactionCommentAtom.set(''))
 					dispatch(transactionDateAtom.set(new Date()))
+					dispatch(selectedSubcategoryIdAtom.set(null))
 				}
 				dispatch(statusesAtom.setNormal())
 			})

@@ -68,6 +68,7 @@ function ButtonsSection() {
 	const [showPanel] = useAtom(editTransactionPanelAtoms.showPanelAtom)
 	const handleShowPanel = useAction(editTransactionPanelAtoms.showPanelAtom.show)
 	const handleClosePanel = useAction(editTransactionPanelAtoms.showPanelAtom.close)
+	//TODO:transactions нужно различать добавление от редактирования
 	const handleAddTransaction = useAloneAction(addTransaction)
 
 	if (showPanel) {
