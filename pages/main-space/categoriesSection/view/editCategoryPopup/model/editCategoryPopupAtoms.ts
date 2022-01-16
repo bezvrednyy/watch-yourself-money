@@ -1,7 +1,7 @@
 import {createAtom} from '@reatom/core'
 import {ColorId} from '../../../../../../common/colors/colors'
 import {ClientCategoryData} from '../../../../model/categoriesAtom'
-import {createBooleanAtom, createEnumAtom, createStringAtom} from '@reatom/core/primitives'
+import {createEnumAtom, createPrimitiveAtom, createStringAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../../../commonClient/uikit/icons/getOutlineIconById'
 
 export type SubcategoryChangeType = 'default'|'removed'|'turnInMain'|'new'|'edited'
@@ -10,8 +10,13 @@ export type EditCategoryPopupSubcategoryData = ClientCategoryData & {
 	changeType: SubcategoryChangeType,
 }
 
+type EditCategoryPopupExternalHandlers = {
+	onClose: () => void,
+}
+
 const statusesAtom = createEnumAtom(['normal', 'saving'])
-const showNotificationPopupAtom = createBooleanAtom(false)
+const openedNotificationPopupAtom = createEnumAtom(['closed', 'removeCategory', 'removeSubcategory'])
+const externalHandlersAtom = createPrimitiveAtom<EditCategoryPopupExternalHandlers>({} as EditCategoryPopupExternalHandlers)
 
 const titleAtom = createStringAtom('')
 const iconIdAtom = createStringAtom<OutlineIconId>('outline-shopping-bag')
@@ -46,9 +51,10 @@ const subcategoriesAtom = createAtom(
 
 export const editCategoryPopupAtoms = {
 	statusesAtom,
+	externalHandlersAtom,
 	titleAtom,
 	subcategoriesAtom,
 	iconIdAtom,
 	colorIdAtom,
-	showNotificationPopupAtom,
+	openedNotificationPopupAtom,
 }

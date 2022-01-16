@@ -36,7 +36,7 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 
 		const userId = session.user.id
 
-		if (removedSubcategoriesData.saveTransactions) {
+		if (removedSubcategoriesData && removedSubcategoriesData.saveTransactions) {
 			await prisma.transaction.updateMany({
 				data: { categoryId: mainCategory.id },
 				where: { categoryId: { in: removedSubcategoriesData.ids } },
@@ -44,7 +44,7 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 		}
 
 		await Promise.all([
-			prisma.category.deleteMany({
+			!!removedSubcategoriesData && prisma.category.deleteMany({
 				where: { id: { in: removedSubcategoriesData.ids } },
 			}),
 			prisma.category.createMany({

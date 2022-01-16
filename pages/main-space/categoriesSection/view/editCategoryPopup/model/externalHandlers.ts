@@ -7,10 +7,14 @@ import {EditCategoryPopupSubcategoryData, editCategoryPopupAtoms} from './editCa
 import {toast} from 'react-hot-toast'
 
 type SaveDataParams = {
-	onClose: () => void,
+	closeFn: () => void,
+	saveTransactions?: boolean,
 }
 
-export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async (store, {onClose}) => {
+export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async (store, {
+	closeFn,
+	saveTransactions = false,
+}) => {
 	const {titleAtom, statusesAtom, iconIdAtom, subcategoriesAtom, colorIdAtom} = editCategoryPopupAtoms
 	const subcategories = store.getState(subcategoriesAtom)
 	store.dispatch(statusesAtom.setSaving())
@@ -24,6 +28,7 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 		}
 	})
 
+	const removedSubcategoriesIds = subcategories.filter(x => x.changeType === 'removed').map(x => x.id)
 	const either = await getClientApi().categories.editMainCategory({
 		id: verify(store.getState(editableCategoryIdAtom)),
 		iconId: store.getState(iconIdAtom),
@@ -32,16 +37,19 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 		type: 'EXPENSES', //TODO:newFeature добавить категории тип "Доходы"
 		editedSubcategories,
 		newSubcategories: subcategories.filter(x => x.changeType === 'new'),
-		removedSubcategoryIds: subcategories
-			.filter(x => x.changeType === 'removed')
-			.map(x => x.id),
+		removedSubcategoriesData: removedSubcategoriesIds.length
+			? {
+				ids: removedSubcategoriesIds,
+				saveTransactions,
+			}
+			: undefined,
 	})
 
 	either
 		.mapRight(async () => {
 			await updateCategoriesAction(store)
 			toast.success('Категория успешно обновлена.')
-			onClose()
+			closeFn()
 			store.dispatch(statusesAtom.setNormal())
 		})
 		.mapLeft(error => {
@@ -53,18 +61,18 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 				processStandardError(error)
 			}
 			store.dispatch(statusesAtom.setNormal())
-			onClose()
+			closeFn()
 		})
 })
 
 
 type RemoveCategoryParams = {
 	removeSubcategories?: boolean,
-	onClose: () => void,
+	closeFn: () => void,
 }
 
 export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategoryParams>(async (store, {
-	onClose,
+	closeFn,
 	removeSubcategories = false,
 }) => {
 	const {statusesAtom} = editCategoryPopupAtoms
@@ -78,7 +86,7 @@ export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategory
 	either
 		.mapRight(async () => {
 			await updateCategoriesAction(store)
-			onClose()
+			closeFn()
 			store.dispatch(statusesAtom.setNormal())
 		})
 		.mapLeft(error => {
@@ -93,7 +101,7 @@ export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategory
 				processStandardError(error as StandardError)
 			}
 			store.dispatch(statusesAtom.setNormal())
-			onClose()
+			closeFn()
 		})
 })
 

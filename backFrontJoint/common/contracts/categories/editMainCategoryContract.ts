@@ -25,7 +25,7 @@ type RemoveSubcategoriesData = {
 export type EditMainCategoryRequestData = EditMainCategoryDefaultCategoryData & {
 	editedSubcategories: Array<EditMainCategorySubcategoryData>,
 	newSubcategories: Array<EditMainCategoryDefaultCategoryData>,
-	removedSubcategoriesData: RemoveSubcategoriesData,
+	removedSubcategoriesData?: RemoveSubcategoriesData,
 }
 
 export interface EditMainCategoryRequest extends NextApiRequest {
