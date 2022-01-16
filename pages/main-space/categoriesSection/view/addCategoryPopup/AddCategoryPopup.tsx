@@ -1,6 +1,6 @@
 import {useAction} from '@reatom/react'
 import {useEffect} from 'react'
-import {useAsyncAction} from '../../../../../commonClient/declareAsyncAction'
+import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
 import {generateUuid} from '../../../../../common/utils/generateRandom'
 import {Button} from '../../../../../commonClient/uikit/button/Button'
 import {PopupDefault} from '../../../../../commonClient/uikit/PopupDefault'
@@ -17,7 +17,7 @@ export function AddCategoryPopup({
 	show,
 	onClose,
 }: EditCategoryPopupProps) {
-	const handleSaveData = useAsyncAction(addCategoryPopupSaveData)
+	const handleSaveData = useAloneAction(addCategoryPopupSaveData)
 	const handleSetCategoryId = useAction(addCategoryPopupAtoms.categoryIdAtom.set)
 
 	useEffect(() => {

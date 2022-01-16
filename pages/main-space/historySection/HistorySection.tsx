@@ -4,7 +4,7 @@ import {startOfDay} from 'date-fns'
 import {useEffect, useMemo, useState} from 'react'
 import {mapToArray} from '../../../common/utils/array'
 import {defaultCompare} from '../../../common/utils/compare'
-import {useAsyncAction} from '../../../commonClient/declareAsyncAction'
+import {useAloneAction} from '../../../commonClient/declareAloneAction'
 import {joinStrings} from '../../../common/utils/string'
 import {verify} from '../../../common/utils/verify'
 import {Button} from '../../../commonClient/uikit/button/Button'
@@ -95,7 +95,7 @@ function ButtonsSection({
 	open,
 	setOpen,
 }: ButtonsSectionProps) {
-	const handleAddTransaction = useAsyncAction(addTransaction)
+	const handleAddTransaction = useAloneAction(addTransaction)
 
 	if (open) {
 		return (

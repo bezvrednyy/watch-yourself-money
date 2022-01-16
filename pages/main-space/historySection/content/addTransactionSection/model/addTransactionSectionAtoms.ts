@@ -1,7 +1,7 @@
 import {createAtom} from '@reatom/core'
 import {createEnumAtom, createPrimitiveAtom} from '@reatom/core/primitives'
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
-import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
+import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
 import {generateUuid} from '../../../../../../common/utils/generateRandom'
 import {userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
 import {updateCategoriesAction} from '../../../../model/categoriesAtom'
@@ -30,7 +30,7 @@ type AddTransactionParams = {
 	onClose: () => void,
 }
 
-export const addTransaction = declareAsyncAction<AddTransactionParams>(async (store, {onClose}) => {
+export const addTransaction = declareAloneAction<AddTransactionParams>(async (store, {onClose}) => {
 	const either = await getClientApi().transactions.createTransaction({
 		id: generateUuid(),
 		date: store.getState(transactionDateAtom),

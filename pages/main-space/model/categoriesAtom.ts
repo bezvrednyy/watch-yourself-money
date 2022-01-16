@@ -2,7 +2,7 @@ import {createPrimitiveAtom} from '@reatom/core/primitives'
 import {getClientApi, processStandardError} from '../../../backFrontJoint/clientApi/clientApi'
 import {ColorId} from '../../../common/colors/colors'
 import {devideArray} from '../../../common/utils/array'
-import {declareAsyncAction} from '../../../commonClient/declareAsyncAction'
+import {declareAloneAction} from '../../../commonClient/declareAloneAction'
 import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
 import {updateTransactionsAction} from './transactionsAtom'
 
@@ -36,7 +36,7 @@ export const categoriesAtom = createPrimitiveAtom<CategoriesAtomData>({
 })
 export const editableCategoryIdAtom = createPrimitiveAtom(<null|string>(null))
 
-export const updateCategoriesAction = declareAsyncAction(async store => {
+export const updateCategoriesAction = declareAloneAction(async store => {
 	const eithers = await Promise.all([
 		getClientApi().categories.getCategories(),
 		updateTransactionsAction(store),

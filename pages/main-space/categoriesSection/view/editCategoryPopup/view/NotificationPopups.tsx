@@ -1,7 +1,7 @@
 import {useAction, useAtom } from '@reatom/react'
 import {joinStrings} from '../../../../../../common/utils/string'
 import {NotificationPopup} from '../../../../../../commonClient/components/popups/NotificationPopup'
-import {useAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
+import {useAloneAction} from '../../../../../../commonClient/declareAloneAction'
 import {Button} from '../../../../../../commonClient/uikit/button/Button'
 import {editCategoryPopupAtoms} from '../model/editCategoryPopupAtoms'
 import {editCategoryPopupRemoveCategory, editCategoryPopupSaveData} from '../model/externalActions'
@@ -11,7 +11,7 @@ function RemoveCategoryNotificationPopup() {
 	const [openedNotificationPopup] = useAtom(editCategoryPopupAtoms.openedNotificationPopupAtom)
 	const [externalHandlers] = useAtom(editCategoryPopupAtoms.externalHandlersAtom)
 	const handleCloseNotificationPopup = useAction(editCategoryPopupAtoms.openedNotificationPopupAtom.setClosed)
-	const handleRemoveCategory = useAsyncAction(editCategoryPopupRemoveCategory)
+	const handleRemoveCategory = useAloneAction(editCategoryPopupRemoveCategory)
 
 	const closeFn = () => {
 		handleCloseNotificationPopup()
@@ -53,7 +53,7 @@ function RemoveSubcategoriesNotificationPopup() {
 	const [openedNotificationPopup] = useAtom(editCategoryPopupAtoms.openedNotificationPopupAtom)
 	const [externalHandlers] = useAtom(editCategoryPopupAtoms.externalHandlersAtom)
 	const handleCloseNotificationPopup = useAction(editCategoryPopupAtoms.openedNotificationPopupAtom.setClosed)
-	const handleSaveData = useAsyncAction(editCategoryPopupSaveData)
+	const handleSaveData = useAloneAction(editCategoryPopupSaveData)
 
 	const closeFn = () => {
 		handleCloseNotificationPopup()

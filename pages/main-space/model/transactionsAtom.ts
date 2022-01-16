@@ -1,7 +1,7 @@
 import {CurrencyId} from '@prisma/client'
 import {createPrimitiveAtom} from '@reatom/core/primitives'
 import {getClientApi, processStandardError} from '../../../backFrontJoint/clientApi/clientApi'
-import {declareAsyncAction} from '../../../commonClient/declareAsyncAction'
+import {declareAloneAction} from '../../../commonClient/declareAloneAction'
 
 export type TransactionData = {
 	id: string
@@ -16,7 +16,7 @@ export type TransactionData = {
 //TODO:transactions. Реализовать lazyLoad
 export const transactionsAtom = createPrimitiveAtom<Array<TransactionData>>([])
 
-export const updateTransactionsAction = declareAsyncAction(async store => {
+export const updateTransactionsAction = declareAloneAction(async store => {
 	const either = await getClientApi().transactions.getTransactions()
 
 	either

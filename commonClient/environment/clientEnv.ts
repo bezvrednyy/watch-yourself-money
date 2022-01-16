@@ -1,6 +1,6 @@
 import {Store} from '@reatom/core'
 import {getClientApi, processStandardError} from '../../backFrontJoint/clientApi/clientApi'
-import {declareAsyncAction} from '../declareAsyncAction'
+import {declareAloneAction} from '../declareAloneAction'
 import {userSettingsAtom} from './userSettingsAtom'
 
 type EnvironmentType = 'test'|'development'|'production'
@@ -9,7 +9,7 @@ function getEnvType(): EnvironmentType {
 	return process.env.NODE_ENV
 }
 
-const initUserSettings = declareAsyncAction(async store => {
+const initUserSettings = declareAloneAction(async store => {
 	const either = await getClientApi().env.getUserSettings()
 	either
 		.mapRight(settings => {

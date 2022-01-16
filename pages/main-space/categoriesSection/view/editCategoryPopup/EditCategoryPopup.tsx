@@ -1,5 +1,5 @@
 import {useAction, useAtom} from '@reatom/react'
-import {useAsyncAction} from '../../../../../commonClient/declareAsyncAction'
+import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
 import {Button} from '../../../../../commonClient/uikit/button/Button'
 import {PopupDefault} from '../../../../../commonClient/uikit/PopupDefault'
 import {editCategoryPopupAtoms} from './model/editCategoryPopupAtoms'
@@ -35,7 +35,7 @@ export function EditCategoryPopup({
 }
 
 function useEditCategoryPopupButtons(onClose: () => void): Array<JSX.Element> {
-	const handleSaveData = useAsyncAction(editCategoryPopupSaveData)
+	const handleSaveData = useAloneAction(editCategoryPopupSaveData)
 	const handleOpenRemoveCategoryPopup = useAction(editCategoryPopupAtoms.openedNotificationPopupAtom.setRemoveCategory)
 	const handleOpenRemoveSubcategoryPopup = useAction(editCategoryPopupAtoms.openedNotificationPopupAtom.setRemoveSubcategory)
 	const [subcategories] = useAtom(editCategoryPopupAtoms.subcategoriesAtom)

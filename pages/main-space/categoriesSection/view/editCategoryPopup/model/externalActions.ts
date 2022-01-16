@@ -1,6 +1,6 @@
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
 import {StandardError} from '../../../../../../backFrontJoint/common/errors'
-import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
+import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
 import {verify} from '../../../../../../common/utils/verify'
 import {editableCategoryIdAtom, updateCategoriesAction} from '../../../../model/categoriesAtom'
 import {EditCategoryPopupSubcategoryData, editCategoryPopupAtoms} from './editCategoryPopupAtoms'
@@ -11,7 +11,7 @@ type SaveDataParams = {
 	saveTransactions?: boolean,
 }
 
-export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async (store, {
+export const editCategoryPopupSaveData = declareAloneAction<SaveDataParams>(async (store, {
 	closeFn,
 	saveTransactions = false,
 }) => {
@@ -71,7 +71,7 @@ type RemoveCategoryParams = {
 	closeFn: () => void,
 }
 
-export const editCategoryPopupRemoveCategory = declareAsyncAction<RemoveCategoryParams>(async (store, {
+export const editCategoryPopupRemoveCategory = declareAloneAction<RemoveCategoryParams>(async (store, {
 	closeFn,
 	removeSubcategories = false,
 }) => {
