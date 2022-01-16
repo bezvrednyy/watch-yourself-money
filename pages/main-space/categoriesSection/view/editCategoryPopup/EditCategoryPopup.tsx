@@ -7,7 +7,7 @@ import {categoriesAtom, editableCategoryIdAtom} from '../../../model/categoriesA
 import {verify} from '../../../../../common/utils/verify'
 import {useEffect} from 'react'
 import {EditCategoryPopupContent} from './EditCategoryPopupContent'
-import {editCategoryPopupSaveData} from './model/externalHandlers'
+import {editCategoryPopupSaveData} from './model/externalActions'
 import {RemoveCategoryNotificationPopup, RemoveSubcategoriesNotificationPopup} from './view/NotificationPopups'
 
 type EditCategoryPopupProps = {

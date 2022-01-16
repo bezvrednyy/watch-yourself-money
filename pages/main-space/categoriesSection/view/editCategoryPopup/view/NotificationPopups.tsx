@@ -4,7 +4,7 @@ import {NotificationPopup} from '../../../../../../commonClient/components/popup
 import {useAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {Button} from '../../../../../../commonClient/uikit/button/Button'
 import {editCategoryPopupAtoms} from '../model/editCategoryPopupAtoms'
-import {editCategoryPopupRemoveCategory, editCategoryPopupSaveData} from '../model/externalHandlers'
+import {editCategoryPopupRemoveCategory, editCategoryPopupSaveData} from '../model/externalActions'
 
 function RemoveCategoryNotificationPopup() {
 	const [subcategories] = useAtom(editCategoryPopupAtoms.subcategoriesAtom)
