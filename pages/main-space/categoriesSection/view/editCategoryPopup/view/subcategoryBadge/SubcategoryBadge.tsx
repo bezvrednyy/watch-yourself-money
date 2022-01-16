@@ -1,30 +1,15 @@
-import {useAtom} from '@reatom/react'
 import {useState} from 'react'
 import {checkNever} from '../../../../../../../common/utils/checkNever'
 import {joinStrings} from '../../../../../../../common/utils/string'
 import {Badge} from '../../../../../../../commonClient/uikit/Badge'
 import {getOutlineIconById} from '../../../../../../../commonClient/uikit/icons/getOutlineIconById'
 import {PopupDefault} from '../../../../../../../commonClient/uikit/PopupDefault'
-import {ClientCategoryData} from '../../../../../model/categoriesAtom'
-import {editCategoryPopupAtoms} from '../../model/editCategoryPopupAtoms'
 import styles from '../../../common/common.module.css'
+import {EditCategoryPopupSubcategoryData, SubcategoryChangeType} from '../../model/editCategoryPopupAtoms'
 import {useBadgePopupButtons} from './useBadgePopupButtons'
 import { SubcategoryBadgePopupContent } from '../../../common/SubcategoryBadgePopupContent'
 
-type SubcategoryType = 'default'|'removed'|'turnInMain'|'new'
-
-function useSubcategoryType(id: string): SubcategoryType {
-	const [haveBecomeMainCategoriesIdsSet] = useAtom(editCategoryPopupAtoms.haveBecomeMainCategoriesIdsSetAtom)
-	const [removedSubcategoryIdsSet] = useAtom(editCategoryPopupAtoms.removedSubcategoryIdsSetAtom)
-	const [newSubcategoriesIdsSet] = useAtom(editCategoryPopupAtoms.newSubcategoriesIdsSetAtom)
-
-	if (removedSubcategoryIdsSet.has(id)) return 'removed'
-	if (newSubcategoriesIdsSet.has(id)) return 'new'
-	if (haveBecomeMainCategoriesIdsSet.has(id)) return 'turnInMain'
-	return 'default'
-}
-
-function getBgColorByType(type: SubcategoryType): string {
+function getBgColorByType(type: SubcategoryChangeType): string {
 	switch (type) {
 		case 'default':
 			return 'bg-purple-300'
@@ -34,22 +19,24 @@ function getBgColorByType(type: SubcategoryType): string {
 			return 'bg-red-300'
 		case 'turnInMain':
 			return 'bg-gray-300'
+		case 'edited':
+			return 'bg-blue-300'
 		default:
 			checkNever(type, `Unknown type: ${type}`)
 			return ''
 	}
 }
 
-function SubcategoryBadge(props: ClientCategoryData) {
+function SubcategoryBadge(props: EditCategoryPopupSubcategoryData) {
 	const {
 		title: initTitle,
 		iconId: initIconId,
+		changeType,
 	} = props
 	const [show, setShow] = useState(false)
 	const [iconId, setIconId] = useState(initIconId)
 	const [title, setTitle] = useState(initTitle)
-	const type = useSubcategoryType(props.id)
-	const badgeColorClass = getBgColorByType(type)
+	const badgeColorClass = getBgColorByType(changeType)
 	const buttons = useBadgePopupButtons({
 		...props,
 		newTitle: title,
@@ -87,5 +74,4 @@ function SubcategoryBadge(props: ClientCategoryData) {
 
 export {
 	SubcategoryBadge,
-	useSubcategoryType,
 }

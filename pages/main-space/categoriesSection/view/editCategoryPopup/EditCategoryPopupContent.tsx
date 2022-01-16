@@ -47,6 +47,7 @@ function EditCategoryPopupContent() {
 						type: 'EXPENSES',
 						iconId: data.iconId,
 						colorId: parentCategoryColorId,
+						changeType: 'new',
 					})}
 				/>
 			</div>

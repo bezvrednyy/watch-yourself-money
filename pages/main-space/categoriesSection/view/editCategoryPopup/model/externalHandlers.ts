@@ -3,7 +3,7 @@ import {StandardError} from '../../../../../../backFrontJoint/common/errors'
 import {declareAsyncAction} from '../../../../../../commonClient/declareAsyncAction'
 import {verify} from '../../../../../../common/utils/verify'
 import {editableCategoryIdAtom, updateCategoriesAction} from '../../../../model/categoriesAtom'
-import {editCategoryPopupAtoms} from './editCategoryPopupAtoms'
+import {EditCategoryPopupSubcategoryData, editCategoryPopupAtoms} from './editCategoryPopupAtoms'
 import {toast} from 'react-hot-toast'
 
 type SaveDataParams = {
@@ -11,16 +11,18 @@ type SaveDataParams = {
 }
 
 export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(async (store, {onClose}) => {
-	const {titleAtom, statusesAtom, iconIdAtom, editedSubcategoryIdsSetAtom, newSubcategoriesIdsSetAtom,
-		subcategoriesAtom, haveBecomeMainCategoriesIdsSetAtom, colorIdAtom, removedSubcategoryIdsSetAtom,
-	} = editCategoryPopupAtoms
-	const haveBecomeMainCategoriesIdsSet = store.getState(haveBecomeMainCategoriesIdsSetAtom)
-	const removedSubcategoryIdsSet = store.getState(removedSubcategoryIdsSetAtom)
-
+	const {titleAtom, statusesAtom, iconIdAtom, subcategoriesAtom, colorIdAtom} = editCategoryPopupAtoms
+	const subcategories = store.getState(subcategoriesAtom)
 	store.dispatch(statusesAtom.setSaving())
-
-	const editedSubcategoryIds = store.getState(editedSubcategoryIdsSetAtom)
-	const newSubcategoriesIds = store.getState(newSubcategoriesIdsSetAtom)
+	const editedSubcategories: Array<EditCategoryPopupSubcategoryData> = []
+	subcategories.forEach(x => {
+		if (x.changeType === 'edited') {
+			editedSubcategories.push(x)
+		}
+		else if (x.changeType === 'turnInMain') {
+			editedSubcategories.push({...x, parentCategoryId: undefined})
+		}
+	})
 
 	const either = await getClientApi().categories.editMainCategory({
 		id: verify(store.getState(editableCategoryIdAtom)),
@@ -28,24 +30,17 @@ export const editCategoryPopupSaveData = declareAsyncAction<SaveDataParams>(asyn
 		colorId: store.getState(colorIdAtom),
 		title: store.getState(titleAtom),
 		type: 'EXPENSES', //TODO:newFeature добавить категории тип "Доходы"
-		editedSubcategories: store.getState(subcategoriesAtom)
-			.filter(x => editedSubcategoryIds.has(x.id))
-			.map(x => (haveBecomeMainCategoriesIdsSet.has(x.id)
-				? { ...x, parentCategoryId: undefined }
-				: x),
-			),
-		newSubcategories: store.getState(subcategoriesAtom)
-			.filter(x => newSubcategoriesIds.has(x.id) && !removedSubcategoryIdsSet.has(x.id))
-			.map(x => (haveBecomeMainCategoriesIdsSet.has(x.id)
-				? { ...x, parentCategoryId: undefined }
-				: x),
-			),
-		removedSubcategoryIds: [...removedSubcategoryIdsSet],
+		editedSubcategories,
+		newSubcategories: subcategories.filter(x => x.changeType === 'new'),
+		removedSubcategoryIds: subcategories
+			.filter(x => x.changeType === 'removed')
+			.map(x => x.id),
 	})
 
 	either
 		.mapRight(async () => {
 			await updateCategoriesAction(store)
+			toast.success('Категория успешно обновлена.')
 			onClose()
 			store.dispatch(statusesAtom.setNormal())
 		})

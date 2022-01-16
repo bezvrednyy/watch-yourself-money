@@ -1,11 +1,9 @@
 import {useAction} from '@reatom/react'
 import {Button} from '../../../../../../../commonClient/uikit/button/Button'
 import {OutlineIconId} from '../../../../../../../commonClient/uikit/icons/getOutlineIconById'
-import {ClientCategoryData} from '../../../../../model/categoriesAtom'
-import {editCategoryPopupAtoms} from '../../model/editCategoryPopupAtoms'
-import {useSubcategoryType} from './SubcategoryBadge'
+import {EditCategoryPopupSubcategoryData, editCategoryPopupAtoms} from '../../model/editCategoryPopupAtoms'
 
-type UseBadgePopupButtonsParams = ClientCategoryData & {
+type UseBadgePopupButtonsParams = EditCategoryPopupSubcategoryData & {
 	newTitle: string,
 	newIconId: OutlineIconId,
 	setShow: (v: boolean) => void
@@ -17,10 +15,10 @@ export function useBadgePopupButtons({
 	newIconId,
 	...props
 }: UseBadgePopupButtonsParams): Array<JSX.Element> {
+	const changeType = props.changeType
 	const handleUpdateSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.updateSubcategory)
 	const handleRemoveSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.remove)
 	const handleTurnInMainSubcategory = useAction(editCategoryPopupAtoms.subcategoriesAtom.turnInMain)
-	const type = useSubcategoryType(props.id)
 
 	const updateFn = () => {
 		handleUpdateSubcategory({
@@ -41,16 +39,16 @@ export function useBadgePopupButtons({
 
 	const buttons: Array<JSX.Element> = []
 
-	if (type === 'removed') {
+	if (changeType === 'removed') {
 		buttons.push(<Button key='restore' style='blue-default' onClick={updateFn} structure='text' text='Restore' />)
 	}
-	else if (type === 'turnInMain') {
+	else if (changeType === 'turnInMain') {
 		buttons.push(<Button key='turnInSub' style='blue-default' onClick={updateFn} structure='text' text='Turn in sub' />)
 	}
 	else {
 		buttons.push(<Button key='save' style='blue-default' onClick={updateFn} structure='text' text='Save' />)
 		buttons.push(<Button key='remove' style='destructure' onClick={removeFn} structure='text' text='Remove' />)
-		if (type === 'default') {
+		if (changeType === 'default') {
 			buttons.push(<Button key='turnInMain' style='secondary' onClick={turnInMainFn} structure='text' text='Turn in main' />)
 		}
 	}
