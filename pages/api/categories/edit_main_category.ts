@@ -15,7 +15,7 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 		res.status(401).redirect('/api/auth/signin')
 	}
 	const {
-		removedSubcategoryIds,
+		removedSubcategoriesData,
 		newSubcategories,
 		editedSubcategories,
 		...mainCategory
@@ -35,10 +35,17 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 		}
 
 		const userId = session.user.id
-		//TODO:category, при удалении подкатегории транзакции должны удалиться. Добавить сообщение об этом.
+
+		if (removedSubcategoriesData.saveTransactions) {
+			await prisma.transaction.updateMany({
+				data: { categoryId: mainCategory.id },
+				where: { categoryId: { in: removedSubcategoriesData.ids } },
+			})
+		}
+
 		await Promise.all([
 			prisma.category.deleteMany({
-				where: { id: { in: removedSubcategoryIds } },
+				where: { id: { in: removedSubcategoriesData.ids } },
 			}),
 			prisma.category.createMany({
 				data: newSubcategories.map(x => ({

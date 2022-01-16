@@ -17,11 +17,15 @@ export type EditMainCategorySubcategoryData = EditMainCategoryDefaultCategoryDat
 	parentCategoryId?: string,
 }
 
+type RemoveSubcategoriesData = {
+	ids: Array<string>,
+	saveTransactions: boolean,
+}
 
 export type EditMainCategoryRequestData = EditMainCategoryDefaultCategoryData & {
 	editedSubcategories: Array<EditMainCategorySubcategoryData>,
 	newSubcategories: Array<EditMainCategoryDefaultCategoryData>,
-	removedSubcategoryIds: Array<string>,
+	removedSubcategoriesData: RemoveSubcategoriesData,
 }
 
 export interface EditMainCategoryRequest extends NextApiRequest {

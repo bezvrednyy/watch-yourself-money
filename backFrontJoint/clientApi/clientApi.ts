@@ -1,5 +1,6 @@
 import {toast} from 'react-hot-toast'
 import {checkNever} from '../../common/utils/checkNever'
+import {getEnvType} from '../../commonClient/environment/clientEnv'
 import {StandardError} from '../common/errors'
 import {categoriesClientApi} from './categories/categoriesApi'
 import {envClientApi} from './envApi'
@@ -14,6 +15,9 @@ export function getClientApi() {
 }
 
 export async function fetchPostData<DATA>(url: string, data: DATA): Promise<Response> {
+	if (getEnvType() === 'development') {
+		console.log(url, data)
+	}
 	const result = await fetch(url, {
 		method: 'POST',
 		headers: {
