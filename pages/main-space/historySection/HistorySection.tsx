@@ -11,11 +11,11 @@ import {Button} from '../../../commonClient/uikit/button/Button'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {categoriesAtom} from '../model/categoriesAtom'
 import {transactionsAtom} from '../model/transactionsAtom'
-import {AddTransactionPanel} from './content/addTransactionSection/AddTransactionPanel'
+import {EditTransactionPanel} from './content/editTransactionPanel/EditTransactionPanel'
 import {
 	addTransaction,
-	addTransactionSectionAtoms,
-} from './content/addTransactionSection/model/addTransactionSectionAtoms'
+	editTransactionPanelAtoms,
+} from './content/editTransactionPanel/model/editTransactionPanelAtoms'
 import {ViewTransactionInfo} from './content/TransactionHistorySectionItem'
 import {DayTransactionsHistorySection} from './content/DayTransactionsHistorySection'
 
@@ -60,7 +60,7 @@ function HistorySection() {
 				transitions={x.value}
 			/>)}
 			<div className='mt-auto px-5 pb-5'>
-				{open && <AddTransactionPanel />}
+				{open && <EditTransactionPanel />}
 				<ButtonsSection open={open} setOpen={setOpen} />
 			</div>
 		</div>)
@@ -72,8 +72,8 @@ function useInitAtoms() {
 	const initCategoryId = verify(categories.mainCategories[0], 'Error: there must be at least one category').id
 	const initBankAccountId = verify(bankAccounts[0], 'Error: there must be at least one bank account').id
 
-	const handleSetSelectCategoryId = useAction(addTransactionSectionAtoms.selectedCategoryIdAtom.set)
-	const handleSetSelectedBankAccountId = useAction(addTransactionSectionAtoms.selectedBankAccountId.set)
+	const handleSetSelectCategoryId = useAction(editTransactionPanelAtoms.selectedCategoryIdAtom.set)
+	const handleSetSelectedBankAccountId = useAction(editTransactionPanelAtoms.selectedBankAccountId.set)
 
 	useEffect(() => {
 		handleSetSelectCategoryId(initCategoryId)

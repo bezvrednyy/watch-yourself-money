@@ -6,11 +6,11 @@ import {MenuDefault} from '../../../../../../commonClient/uikit/MenuDefault'
 import {TextWithEllipsis} from '../../../../../../commonClient/uikit/TextWithEllipsis'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
 import {bankAccountsAtom} from '../../../../model/bankAccountsAtom'
-import {addTransactionSectionAtoms} from '../model/addTransactionSectionAtoms'
+import {editTransactionPanelAtoms} from '../model/editTransactionPanelAtoms'
 
 export function BankAccountMenu() {
 	const [bankAccounts] = useAtom(bankAccountsAtom)
-	const [selectedBankAccountId] = useAtom(addTransactionSectionAtoms.selectedBankAccountId)
+	const [selectedBankAccountId] = useAtom(editTransactionPanelAtoms.selectedBankAccountId)
 	const selectedBankAccount = verify(bankAccounts.find(x => x.id === selectedBankAccountId))
 
 	return (

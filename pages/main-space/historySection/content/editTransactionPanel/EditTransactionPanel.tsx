@@ -8,19 +8,19 @@ import {getOutlineIconById} from '../../../../../commonClient/uikit/icons/getOut
 import {TextField} from '../../../../../commonClient/uikit/textField/TextField'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../commonClient/environment/userSettingsAtom'
 import {ClientCategoryData, categoriesAtom} from '../../../model/categoriesAtom'
-import styles from './AddTransactionPanel.module.css'
-import {addTransactionSectionAtoms} from './model/addTransactionSectionAtoms'
+import styles from './EditTransactionPanel.module.css'
+import {editTransactionPanelAtoms} from './model/editTransactionPanelAtoms'
 import {BankAccountMenu} from './view/BankAccountMenu'
 import {CategoryPicker} from './view/CategoryPicker'
 
-export function AddTransactionPanel() {
+export function EditTransactionPanel() {
 	const [userSettings] = useAtom(userSettingsAtom)
-	const [sum] = useAtom(addTransactionSectionAtoms.sumAtom)
-	const [comment] = useAtom(addTransactionSectionAtoms.transactionCommentAtom)
-	const [transactionDate] = useAtom(addTransactionSectionAtoms.transactionDateAtom)
-	const handleSetSum = useAction(addTransactionSectionAtoms.sumAtom.set)
-	const handleSetComment = useAction(addTransactionSectionAtoms.transactionCommentAtom.set)
-	const handleSetDate = useAction(addTransactionSectionAtoms.transactionDateAtom.set)
+	const [sum] = useAtom(editTransactionPanelAtoms.sumAtom)
+	const [comment] = useAtom(editTransactionPanelAtoms.transactionCommentAtom)
+	const [transactionDate] = useAtom(editTransactionPanelAtoms.transactionDateAtom)
+	const handleSetSum = useAction(editTransactionPanelAtoms.sumAtom.set)
+	const handleSetComment = useAction(editTransactionPanelAtoms.transactionCommentAtom.set)
+	const handleSetDate = useAction(editTransactionPanelAtoms.transactionDateAtom.set)
 
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 
@@ -62,7 +62,7 @@ export function AddTransactionPanel() {
 }
 
 function SubcategoriesSection() {
-	const [selectedCategoryId] = useAtom(addTransactionSectionAtoms.selectedCategoryIdAtom)
+	const [selectedCategoryId] = useAtom(editTransactionPanelAtoms.selectedCategoryIdAtom)
 	const [categories] = useAtom(categoriesAtom)
 	const selectedCategory = verify(categories.mainCategories.find(x => x.id === selectedCategoryId))
 	const subcategories = useMemo(
@@ -86,8 +86,8 @@ function SubcategoryBadge({
 	title,
 	iconId,
 }: ClientCategoryData) {
-	const [selectedSubcategoryId] = useAtom(addTransactionSectionAtoms.selectedSubcategoryIdAtom)
-	const handleSetSelectedSubcategoryId = useAction(addTransactionSectionAtoms.selectedSubcategoryIdAtom.set)
+	const [selectedSubcategoryId] = useAtom(editTransactionPanelAtoms.selectedSubcategoryIdAtom)
+	const handleSetSelectedSubcategoryId = useAction(editTransactionPanelAtoms.selectedSubcategoryIdAtom.set)
 
 	return (
 		<Badge

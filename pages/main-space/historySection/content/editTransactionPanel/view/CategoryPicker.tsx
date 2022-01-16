@@ -9,10 +9,10 @@ import {getOutlineIconById} from '../../../../../../commonClient/uikit/icons/get
 import {PopoverDefault} from '../../../../../../commonClient/uikit/popovers/PopoverDefault'
 import {RoundedSquare} from '../../../../../../commonClient/uikit/RoundedSquare'
 import {categoriesAtom} from '../../../../model/categoriesAtom'
-import {addTransactionSectionAtoms} from '../model/addTransactionSectionAtoms'
+import {editTransactionPanelAtoms} from '../model/editTransactionPanelAtoms'
 
 export function CategoryPicker() {
-	const [selectedCategoryId] = useAtom(addTransactionSectionAtoms.selectedCategoryIdAtom)
+	const [selectedCategoryId] = useAtom(editTransactionPanelAtoms.selectedCategoryIdAtom)
 	const [categories] = useAtom(categoriesAtom)
 	const selectedCategory = verify(categories.mainCategories.find(x => x.id === selectedCategoryId))
 	const IconFC = getOutlineIconById(selectedCategory.iconId)
@@ -33,7 +33,7 @@ function PopoverContent({
 	closeFn,
 }: PopoverContentProps) {
 	const [categories] = useAtom(categoriesAtom)
-	const handleSetSelectCategoryId = useAction(addTransactionSectionAtoms.selectedCategoryIdAtom.set)
+	const handleSetSelectCategoryId = useAction(editTransactionPanelAtoms.selectedCategoryIdAtom.set)
 
 	return (
 		<div className='flex flex-wrap'>

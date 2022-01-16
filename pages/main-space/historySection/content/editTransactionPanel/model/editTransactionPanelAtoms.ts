@@ -60,7 +60,7 @@ export const addTransaction = declareAloneAction<AddTransactionParams>(async (st
 		})
 })
 
-export const addTransactionSectionAtoms = {
+export const editTransactionPanelAtoms = {
 	selectedCategoryIdAtom,
 	sumAtom,
 	selectedSubcategoryIdAtom,
