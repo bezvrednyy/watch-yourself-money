@@ -50,14 +50,14 @@ function HistorySection() {
 
 	return (
 		<div className='flex flex-col w-4/12 bg-white'>
-			<div className='overflow-auto py-5 shadow-[inset_0_-6px_9px_-9px_rgba(0,0,0,0.3)]'>
+			<div className='flex-grow overflow-auto py-5 shadow-[inset_0_-6px_9px_-9px_rgba(0,0,0,0.3)]'>
 				{transactionsByDays.map(x => <DayTransactionsHistorySection
 					key={x.key}
 					timestamp={x.key}
 					transitions={x.value}
 				/>)}
 			</div>
-			<div className='mt-auto px-5 pt-5 pb-5'>
+			<div className='px-5 pt-5 pb-5'>
 				{showPanel && <TransactionPanel />}
 				<ButtonsSection />
 			</div>
@@ -66,22 +66,27 @@ function HistorySection() {
 
 function ButtonsSection() {
 	const [showPanel] = useAtom(transactionPanelAtoms.showPanelAtom)
+	const [panelType] = useAtom(transactionPanelAtoms.panelTypeAtom)
 	const handleShowPanel = useAction(transactionPanelAtoms.showPanelAtom.show)
 	const handleClosePanel = useAction(transactionPanelAtoms.showPanelAtom.close)
-	//TODO:transactions нужно различать добавление от редактирования
 	const handleSaveData = useAloneAction(transactionPanelExternalActions.saveData)
+	const handleRemoveTransaction = useAloneAction(transactionPanelExternalActions.removeTransaction)
 
 	if (showPanel) {
 		return (
 			<div className='flex space-x-3 mt-3'>
 				<Button
 					style='blue-default'
-					onClick={() => handleSaveData({
-						onClose: handleClosePanel,
-					})}
+					onClick={() => handleSaveData()}
 					structure='text'
 					text='Save'
 				/>
+				{panelType === 'edit' && <Button
+					style='destructure'
+					onClick={() => handleRemoveTransaction()}
+					structure='text'
+					text='Remove'
+				/>}
 				<Button
 					style='secondary'
 					onClick={handleClosePanel}

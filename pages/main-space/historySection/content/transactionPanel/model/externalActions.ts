@@ -6,13 +6,9 @@ import {updateCategoriesAction} from '../../../../model/categoriesAtom'
 import {updateTransactionsAction} from '../../../../model/transactionsAtom'
 import {transactionPanelAtoms} from './transactionPanelAtoms'
 
-type SaveDataParams = {
-	onClose: () => void,
-}
-
-const saveData = declareAloneAction<SaveDataParams>(async (store, { onClose }) => {
+const saveData = declareAloneAction(async store => {
 	const {transactionDateAtom, selectedSubcategoryIdAtom, selectedCategoryIdAtom, transactionIdAtom,
-		transactionCommentAtom, selectedBankAccountId, sumAtom, statusesAtom, panelTypeAtom,
+		transactionCommentAtom, selectedBankAccountId, sumAtom, statusesAtom, panelTypeAtom, showPanelAtom,
 	} = transactionPanelAtoms
 
 	const data = {
@@ -32,7 +28,7 @@ const saveData = declareAloneAction<SaveDataParams>(async (store, { onClose }) =
 	return either
 		.mapRight(() => {
 			store.dispatch(statusesAtom.setNormal())
-			onClose()
+			store.dispatch(showPanelAtom.close())
 			updateTransactionsAction(store)
 		})
 		.mapLeft(error => {
@@ -48,10 +44,37 @@ const saveData = declareAloneAction<SaveDataParams>(async (store, { onClose }) =
 				processStandardError(error)
 			}
 			store.dispatch(statusesAtom.setNormal())
-			onClose()
+			store.dispatch(showPanelAtom.close())
+		})
+})
+
+const removeTransaction = declareAloneAction(async store => {
+	const {transactionIdAtom, statusesAtom, showPanelAtom} = transactionPanelAtoms
+
+	const either = await getClientApi().transactions.removeTransaction({
+		transactionId: store.getState(transactionIdAtom),
+	})
+
+	return either
+		.mapRight(() => {
+			store.dispatch(statusesAtom.setNormal())
+			store.dispatch(showPanelAtom.close())
+			updateTransactionsAction(store)
+		})
+		.mapLeft(error => {
+			if (error.type === 'TRANSACTION_NOT_FOUND') {
+				toast.error('Транзакция не найдена.')
+				updateCategoriesAction(store) //обновляем категории вместе с транзакциями
+			}
+			else {
+				processStandardError(error)
+			}
+			store.dispatch(statusesAtom.setNormal())
+			store.dispatch(showPanelAtom.close())
 		})
 })
 
 export const transactionPanelExternalActions = {
 	saveData,
+	removeTransaction,
 }
