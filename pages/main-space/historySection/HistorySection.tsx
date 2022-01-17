@@ -49,13 +49,15 @@ function HistorySection() {
 	}, [bankAccounts, transactions])
 
 	return (
-		<div className='flex flex-col w-4/12 bg-white py-5'>
-			{transactionsByDays.map(x => <DayTransactionsHistorySection
-				key={x.key}
-				timestamp={x.key}
-				transitions={x.value}
-			/>)}
-			<div className='mt-auto px-5 pb-5'>
+		<div className='flex flex-col w-4/12 bg-white'>
+			<div className='overflow-auto py-5 shadow-[inset_0_-6px_9px_-9px_rgba(0,0,0,0.3)]'>
+				{transactionsByDays.map(x => <DayTransactionsHistorySection
+					key={x.key}
+					timestamp={x.key}
+					transitions={x.value}
+				/>)}
+			</div>
+			<div className='mt-auto px-5 pt-5 pb-5'>
 				{showPanel && <TransactionPanel />}
 				<ButtonsSection />
 			</div>
