@@ -14,6 +14,7 @@ export default async function editTransaction(req: EditTransactionRequest, res: 
 	const session = await getSession({ req })
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
+		return
 	}
 
 	try {

@@ -13,6 +13,7 @@ export default async function createTransaction(req: CreateTransactionRequest, r
 	const session = await getSession({ req })
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
+		return
 	}
 
 	try {
