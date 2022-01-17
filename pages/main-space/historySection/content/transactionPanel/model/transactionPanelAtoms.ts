@@ -81,7 +81,7 @@ const showPanelAtom = createAtom(
 	},
 )
 
-export const editTransactionPanelAtoms = {
+export const transactionPanelAtoms = {
 	selectedCategoryIdAtom,
 	sumAtom,
 	selectedSubcategoryIdAtom,

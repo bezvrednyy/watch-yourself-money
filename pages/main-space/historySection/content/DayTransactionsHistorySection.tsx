@@ -1,6 +1,6 @@
 import {useAction} from '@reatom/react'
 import {format, getYear} from 'date-fns'
-import {editTransactionPanelAtoms} from './editTransactionPanel/model/editTransactionPanelAtoms'
+import {transactionPanelAtoms} from './transactionPanel/model/transactionPanelAtoms'
 import {
 	TransactionHistorySectionItem,
 	ViewTransactionInfo,
@@ -15,7 +15,7 @@ function DayTransactionsHistorySection({
 	timestamp,
 	transitions,
 }: DayTransitionsHistorySectionProps) {
-	const handleShowTransactionPanel = useAction(editTransactionPanelAtoms.showPanelAtom.show)
+	const handleShowTransactionPanel = useAction(transactionPanelAtoms.showPanelAtom.show)
 	const currentDate = new Date()
 	const formatType = getYear(currentDate) === getYear(timestamp)
 		? 'd MMMM'

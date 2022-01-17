@@ -10,16 +10,16 @@ import {verify} from '../../../common/utils/verify'
 import {Button} from '../../../commonClient/uikit/button/Button'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {transactionsAtom} from '../model/transactionsAtom'
-import {EditTransactionPanel} from './content/editTransactionPanel/EditTransactionPanel'
-import {editTransactionPanelAtoms} from './content/editTransactionPanel/model/editTransactionPanelAtoms'
-import {transactionPanelExternalActions} from './content/editTransactionPanel/model/externalActions'
+import {TransactionPanel} from './content/transactionPanel/TransactionPanel'
+import {transactionPanelAtoms} from './content/transactionPanel/model/transactionPanelAtoms'
+import {transactionPanelExternalActions} from './content/transactionPanel/model/externalActions'
 import {ViewTransactionInfo} from './content/TransactionHistorySectionItem'
 import {DayTransactionsHistorySection} from './content/DayTransactionsHistorySection'
 
 function HistorySection() {
 	const [transactions] = useAtom(transactionsAtom)
 	const [bankAccounts] = useAtom(bankAccountsAtom)
-	const [showPanel] = useAtom(editTransactionPanelAtoms.showPanelAtom)
+	const [showPanel] = useAtom(transactionPanelAtoms.showPanelAtom)
 
 	const transactionsByDays = useMemo(() => {
 		const result: Map<number, Array<ViewTransactionInfo>> = new Map()
@@ -56,16 +56,16 @@ function HistorySection() {
 				transitions={x.value}
 			/>)}
 			<div className='mt-auto px-5 pb-5'>
-				{showPanel && <EditTransactionPanel />}
+				{showPanel && <TransactionPanel />}
 				<ButtonsSection />
 			</div>
 		</div>)
 }
 
 function ButtonsSection() {
-	const [showPanel] = useAtom(editTransactionPanelAtoms.showPanelAtom)
-	const handleShowPanel = useAction(editTransactionPanelAtoms.showPanelAtom.show)
-	const handleClosePanel = useAction(editTransactionPanelAtoms.showPanelAtom.close)
+	const [showPanel] = useAtom(transactionPanelAtoms.showPanelAtom)
+	const handleShowPanel = useAction(transactionPanelAtoms.showPanelAtom.show)
+	const handleClosePanel = useAction(transactionPanelAtoms.showPanelAtom.close)
 	//TODO:transactions нужно различать добавление от редактирования
 	const handleSaveData = useAloneAction(transactionPanelExternalActions.saveData)
 

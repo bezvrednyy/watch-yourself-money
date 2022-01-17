@@ -4,16 +4,16 @@ import {declareAloneAction} from '../../../../../../commonClient/declareAloneAct
 import {userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
 import {updateCategoriesAction} from '../../../../model/categoriesAtom'
 import {updateTransactionsAction} from '../../../../model/transactionsAtom'
-import {editTransactionPanelAtoms} from './editTransactionPanelAtoms'
+import {transactionPanelAtoms} from './transactionPanelAtoms'
 
-type AddTransactionParams = {
+type SaveDataParams = {
 	onClose: () => void,
 }
 
-const saveData = declareAloneAction<AddTransactionParams>(async (store, { onClose }) => {
+const saveData = declareAloneAction<SaveDataParams>(async (store, { onClose }) => {
 	const {transactionDateAtom, selectedSubcategoryIdAtom, selectedCategoryIdAtom, transactionIdAtom,
 		transactionCommentAtom, selectedBankAccountId, sumAtom, statusesAtom, panelTypeAtom,
-	} = editTransactionPanelAtoms
+	} = transactionPanelAtoms
 
 	const data = {
 		id: store.getState(transactionIdAtom),
