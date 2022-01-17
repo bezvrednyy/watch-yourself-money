@@ -14,6 +14,7 @@ export type TransactionData = {
 }
 
 //TODO:transactions. Реализовать lazyLoad
+//Транзакции, которые отображаются в разделе "История"
 export const transactionsAtom = createPrimitiveAtom<Array<TransactionData>>([])
 
 export const updateTransactionsAction = declareAloneAction(async store => {

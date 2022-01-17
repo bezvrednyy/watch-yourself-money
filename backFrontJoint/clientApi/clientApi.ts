@@ -3,6 +3,7 @@ import {checkNever} from '../../common/utils/checkNever'
 import {getEnvType} from '../../commonClient/environment/clientEnv'
 import {StandardError} from '../common/errors'
 import {categoriesClientApi} from './categories/categoriesApi'
+import {chartClientApi} from './chartApi'
 import {envClientApi} from './envApi'
 import {transactionsClientApi} from './transactionsApi'
 
@@ -11,6 +12,7 @@ export function getClientApi() {
 		categories: categoriesClientApi,
 		env: envClientApi,
 		transactions: transactionsClientApi,
+		chart: chartClientApi,
 	}
 }
 
