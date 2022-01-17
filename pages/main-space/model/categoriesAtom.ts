@@ -36,6 +36,7 @@ export const categoriesAtom = createPrimitiveAtom<CategoriesAtomData>({
 })
 export const editableCategoryIdAtom = createPrimitiveAtom(<null|string>(null))
 
+//TODO:improvements мб сделать единый экшн обновления данных: категорий, транзакций, счетов?
 export const updateCategoriesAction = declareAloneAction(async store => {
 	const eithers = await Promise.all([
 		getClientApi().categories.getCategories(),

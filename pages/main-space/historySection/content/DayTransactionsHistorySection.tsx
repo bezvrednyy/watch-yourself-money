@@ -30,7 +30,10 @@ function DayTransactionsHistorySection({
 				{transitions.map(x => <TransactionHistorySectionItem
 					key={x.id}
 					{...x}
-					onClick={() => handleShowTransactionPanel(x.id)}
+					onClick={() => handleShowTransactionPanel({
+						type: 'edit',
+						transactionId: x.id,
+					})}
 				/>)}
 			</div>
 		</div>

@@ -11,10 +11,8 @@ import {Button} from '../../../commonClient/uikit/button/Button'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {transactionsAtom} from '../model/transactionsAtom'
 import {EditTransactionPanel} from './content/editTransactionPanel/EditTransactionPanel'
-import {
-	addTransaction,
-	editTransactionPanelAtoms,
-} from './content/editTransactionPanel/model/editTransactionPanelAtoms'
+import {editTransactionPanelAtoms} from './content/editTransactionPanel/model/editTransactionPanelAtoms'
+import {transactionPanelExternalActions} from './content/editTransactionPanel/model/externalActions'
 import {ViewTransactionInfo} from './content/TransactionHistorySectionItem'
 import {DayTransactionsHistorySection} from './content/DayTransactionsHistorySection'
 
@@ -69,14 +67,14 @@ function ButtonsSection() {
 	const handleShowPanel = useAction(editTransactionPanelAtoms.showPanelAtom.show)
 	const handleClosePanel = useAction(editTransactionPanelAtoms.showPanelAtom.close)
 	//TODO:transactions нужно различать добавление от редактирования
-	const handleAddTransaction = useAloneAction(addTransaction)
+	const handleSaveData = useAloneAction(transactionPanelExternalActions.saveData)
 
 	if (showPanel) {
 		return (
 			<div className='flex space-x-3 mt-3'>
 				<Button
 					style='blue-default'
-					onClick={() => handleAddTransaction({
+					onClick={() => handleSaveData({
 						onClose: handleClosePanel,
 					})}
 					structure='text'
@@ -99,7 +97,7 @@ function ButtonsSection() {
 				'flex justify-between w-full px-4 py-2.5 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg',
 				'hover:bg-purple-200 cursor-pointer',
 			)}
-			onClick={() => handleShowPanel()}
+			onClick={() => handleShowPanel({ type: 'create' })}
 		>
 			<span>Add new transaction</span>
 			<PlusIcon className='w-5 h-5 text-purple-500' />
