@@ -10,23 +10,15 @@ import {categoriesAtom, updateCategoriesAction} from '../../../../model/categori
 import {toast} from 'react-hot-toast'
 import {transactionsAtom, updateTransactionsAction} from '../../../../model/transactionsAtom'
 
+const INIT_CATEGORY_ID = ''
+
 const statusesAtom = createEnumAtom(['normal', 'saving'])
-const selectedCategoryIdAtom = createPrimitiveAtom<string>('')
+const selectedCategoryIdAtom = createPrimitiveAtom<string>(INIT_CATEGORY_ID)
 const sumAtom = createPrimitiveAtom<number>(0)
 const selectedBankAccountId = createPrimitiveAtom<string>('')
 const transactionCommentAtom = createPrimitiveAtom<string>('')
 const transactionDateAtom = createPrimitiveAtom<Date>(new Date())
-const selectedSubcategoryIdAtom = createAtom(
-	{
-		set: (v: string|null) => v,
-		selectedCategoryIdAtom,
-	},
-	(track, state: string|null = null) => {
-		track.onAction('set', v => (state = v))
-		track.onChange('selectedCategoryIdAtom', () => (state = null)) //TODO:transactions из-за таких вот onChange, падает начальная инициализация.
-		return state
-	},
-)
+const selectedSubcategoryIdAtom = createPrimitiveAtom<string|null>(null)
 
 const showPanelAtom = createAtom(
 	{

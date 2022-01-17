@@ -33,7 +33,8 @@ function PopoverContent({
 	closeFn,
 }: PopoverContentProps) {
 	const [categories] = useAtom(categoriesAtom)
-	const handleSetSelectCategoryId = useAction(editTransactionPanelAtoms.selectedCategoryIdAtom.set)
+	const handleSetSelectedCategoryId = useAction(editTransactionPanelAtoms.selectedCategoryIdAtom.set)
+	const handleSetSelectedSubcategoryId = useAction(editTransactionPanelAtoms.selectedSubcategoryIdAtom.set)
 
 	return (
 		<div className='flex flex-wrap'>
@@ -44,7 +45,8 @@ function PopoverContent({
 					createIcon={() => <Icon className='m-1 w-6 h-6 overflow-hidden'/>}
 					title={item.title}
 					onClick={() => {
-						handleSetSelectCategoryId(item.id)
+						handleSetSelectedCategoryId(item.id)
+						handleSetSelectedSubcategoryId(null)
 						closeFn()
 					}}
 					bgHexColor={getColorById(item.colorId)}
