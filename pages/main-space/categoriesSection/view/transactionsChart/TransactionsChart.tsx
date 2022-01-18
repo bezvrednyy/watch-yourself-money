@@ -20,8 +20,11 @@ export function TransactionsChart() {
 	const [selectedPeriod] = useAtom(selectedPeriodAtom)
 	const [categories] = useAtom(categoriesAtom)
 	const [categoriesExpensesData] = useAtom(transactionChartAtoms.categoriesExpensesAtom)
-	const data = categoriesExpensesData.mainCategoriesExpenses.map(x => x.percent)
-	const labels = categoriesExpensesData.mainCategoriesExpenses.map(x => x.name)
+	const labels: Array<string> = []
+	const data = categoriesExpensesData.mainCategoriesExpenses.map(x => {
+		labels.push(`${x.name}`)
+		return x.money
+	})
 
 	const handleUpdateExpenses = useAloneAction(transactionChartExternalActions.updateData)
 

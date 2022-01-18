@@ -3,7 +3,7 @@ import {StandardError} from '../../errors'
 type CategoryPercentExpenses = {
 	categoryId: string,
 	name: string,
-	percent: number,
+	money: number,
 }
 
 export type MainCategoryPercentExpenses = CategoryPercentExpenses & {

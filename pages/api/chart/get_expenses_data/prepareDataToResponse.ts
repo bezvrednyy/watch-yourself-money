@@ -19,12 +19,12 @@ export function prepareDataToResponse({
 	mainExpensesMap.forEach((({id, subcategories, name, money}) => {
 		percentExpenses.push({
 			categoryId: id,
-			percent: money.div(totalAmount).toNumber(),
+			money: money.toNumber(),
 			name: name,
 			subcategoriesExpenses: subcategories.map(x => ({
 				categoryId: x.id,
 				name: x.name,
-				percent: x.money.div(money).toNumber(),
+				money: x.money.toNumber(),
 			})),
 		})
 	}))
