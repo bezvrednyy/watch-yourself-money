@@ -1,16 +1,17 @@
 import {StandardError} from '../../errors'
 
-export type PercentInfo = {
+type CategoryPercentExpenses = {
 	categoryId: string,
+	name: string,
 	percent: number,
 }
 
-export type MainCategoriesExpensesData = Array<PercentInfo & {
-	subcategoriesData: Array<PercentInfo>
-}>
+export type MainCategoryPercentExpenses = CategoryPercentExpenses & {
+	subcategoriesExpenses: Array<CategoryPercentExpenses>
+}
 
 export type GetExpensesDataRightData = {
 	totalAmount: number,
-	mainCategoriesData: MainCategoriesExpensesData,
+	mainCategoriesExpenses: Array<MainCategoryPercentExpenses>,
 }
 export type GetExpensesDataLeftData = StandardError

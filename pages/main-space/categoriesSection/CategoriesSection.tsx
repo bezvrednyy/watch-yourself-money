@@ -8,7 +8,7 @@ import {getOutlineIconById} from '../../../commonClient/uikit/icons/getOutlineIc
 import {RoundedSquare} from '../../../commonClient/uikit/RoundedSquare'
 import {Tabs} from '../Tabs'
 import {categoriesAtom, editableCategoryIdAtom} from '../model/categoriesAtom'
-import {TransactionsChart} from './view/TransactionsChart'
+import {TransactionsChart} from './view/transactionsChart/TransactionsChart'
 
 function CategoriesSection() {
 	const [editableCategoryId] = useAtom(editableCategoryIdAtom)
