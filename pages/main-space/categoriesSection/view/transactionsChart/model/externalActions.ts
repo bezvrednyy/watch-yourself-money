@@ -10,10 +10,11 @@ type UpdateDataPayload = {
 const updateData = declareAloneAction(async (store, {
 	selectedPeriod,
 }: UpdateDataPayload) => {
-	//TODO:chart Реализовать отправку периода и обновление всех данных
-	const either = await getClientApi().chart.getExpensesData()
+	//TODO:chart обновление всех данных: категорий, транзакций и т. п.
+	const either = await getClientApi().chart.getExpensesData(selectedPeriod)
 	either
 		.mapRight(data => {
+			console.log(data)
 			store.dispatch(transactionChartAtoms.categoriesExpensesAtom.set(data))
 		})
 		.mapLeft(processStandardError)

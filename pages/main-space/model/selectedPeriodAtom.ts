@@ -1,7 +1,7 @@
 import {createAtom} from '@reatom/core'
 import {endOfMonth, startOfMonth} from 'date-fns'
 
-type SelectedPeriod = {
+export type SelectedPeriod = {
 	startDate: Date,
 	endDate: Date,
 }

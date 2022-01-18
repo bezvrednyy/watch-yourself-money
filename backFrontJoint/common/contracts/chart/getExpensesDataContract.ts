@@ -1,4 +1,15 @@
+import {NextApiRequest} from 'next'
 import {StandardError} from '../../errors'
+
+export type GetExpensesDataRequestData = {
+	startDate: Date,
+	endDate: Date,
+}
+
+export interface GetExpensesDataRequest extends NextApiRequest {
+	body: { data: GetExpensesDataRequestData },
+}
+
 
 type CategoryPercentExpenses = {
 	categoryId: string,
