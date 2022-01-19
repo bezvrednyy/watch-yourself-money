@@ -19,9 +19,11 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 	}
 
 	try {
-		const categories = await prisma.category.findMany({where: {user: {
-			id: session.user.id,
-		}}})
+		//Сортируем любую выборку категорий одинаково, чтобы было соответствие в отображении: категорий и диаграммы
+		const categories = await prisma.category.findMany({
+			where: { user: { id: session.user.id } },
+			orderBy: { id: 'asc' }, //TODO:newFeature добавить возможность кастомной сортировки
+		})
 
 		if (categories.length === 0) {
 			sendJsonLeftData<GetCategoriesLeftData>(res, 500, createStandardError('SERVER_ERROR', 'NO_CATEGORIES_FOUND'))

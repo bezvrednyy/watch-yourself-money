@@ -48,6 +48,8 @@ export default async function getExpensesData(req: GetExpensesDataRequest, res: 
 				name: true,
 				parentCategoryId: true,
 			},
+			//Сортируем любую выборку категорий одинаково, чтобы было соответствие в отображении: категорий и диаграммы
+			orderBy: { id: 'asc' }, //TODO:newFeature добавить возможность кастомной сортировки
 		})
 		const categoryMoneyAmounts = await prisma.transaction.groupBy({
 			by: ['categoryId'],
@@ -57,7 +59,7 @@ export default async function getExpensesData(req: GetExpensesDataRequest, res: 
 			},
 			_sum: { money: true },
 		})
-		console.log(categoryMoneyAmounts)
+
 		const data = calculateMainCategoriesExpenses({
 			allCategoriesData,
 			categoryMoneyMap: new Map<string, Prisma.Decimal>(

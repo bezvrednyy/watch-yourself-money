@@ -3,7 +3,6 @@ import {GetServerSidePropsResult, NextPageContext} from 'next'
 import {Session} from 'next-auth'
 import {getSession} from 'next-auth/react'
 import {devideArray} from '../../common/utils/array'
-import {verify} from '../../common/utils/verify'
 import prisma from '../../prisma/prisma'
 import {BankAccountData, bankAccountsAtom} from './model/bankAccountsAtom'
 import {ClientCategoryData, MainCategoryData, SubCategoryData, categoriesAtom} from './model/categoriesAtom'
@@ -60,12 +59,14 @@ export async function getServerSideProps(context: NextPageContext): Promise<GetS
 		}
 	}
 
-	const categories = await prisma.category.findMany({ where: { user: {
-		id: verify(session.user.id, 'Server error: user not found'),
-	}}})
+	//Сортируем любую выборку категорий одинаково, чтобы было соответствие в отображении: категорий и диаграммы
+	const categories = await prisma.category.findMany({
+		where: { user: { id: session.user.id } },
+		orderBy: { id: 'asc' }, //TODO:newFeature добавить возможность кастомной сортировки
+	})
 
 	const bankAccounts = await prisma.bankAccount.findMany({ where: { user: {
-		id: verify(session.user.id, 'Server error: user not found'),
+		id: session.user.id,
 	}}})
 
 	const transactions = await prisma.transaction.findMany({
