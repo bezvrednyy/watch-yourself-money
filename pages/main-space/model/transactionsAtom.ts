@@ -19,7 +19,6 @@ export const transactionsAtom = createPrimitiveAtom<Array<TransactionData>>([])
 
 export const updateTransactionsAction = declareAloneAction(async store => {
 	const either = await getClientApi().transactions.getTransactions()
-
 	either
 		.mapRight(transactions => store.dispatch(transactionsAtom.set(transactions)))
 		.mapLeft(processStandardError)

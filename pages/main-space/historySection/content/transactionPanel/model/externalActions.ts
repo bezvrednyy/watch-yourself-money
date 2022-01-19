@@ -2,8 +2,7 @@ import {toast} from 'react-hot-toast'
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
 import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
 import {userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
-import {updateCategoriesAction} from '../../../../model/categoriesAtom'
-import {updateTransactionsAction} from '../../../../model/transactionsAtom'
+import {updateMainSpaceDataAction} from '../../../../model/updateMainSpaceDataAction'
 import {transactionPanelAtoms} from './transactionPanelAtoms'
 
 const saveData = declareAloneAction(async store => {
@@ -29,16 +28,16 @@ const saveData = declareAloneAction(async store => {
 		.mapRight(() => {
 			store.dispatch(statusesAtom.setNormal())
 			store.dispatch(showPanelAtom.close())
-			updateTransactionsAction(store)
+			updateMainSpaceDataAction(store, ['transactions', 'chart'])
 		})
 		.mapLeft(error => {
 			if (error.type === 'CATEGORY_NOT_FOUND') {
 				toast.error('Категория не найдена.')
-				updateCategoriesAction(store)
+				updateMainSpaceDataAction(store)
 			}
 			else if (error.type === 'TRANSACTION_NOT_FOUND') {
 				toast.error('Транзакция не найдена.')
-				updateCategoriesAction(store) //обновляем категории вместе с транзакциями
+				updateMainSpaceDataAction(store)
 			}
 			else {
 				processStandardError(error)
@@ -50,7 +49,6 @@ const saveData = declareAloneAction(async store => {
 
 const removeTransaction = declareAloneAction(async store => {
 	const {transactionIdAtom, statusesAtom, showPanelAtom} = transactionPanelAtoms
-
 	const either = await getClientApi().transactions.removeTransaction({
 		transactionId: store.getState(transactionIdAtom),
 	})
@@ -59,12 +57,12 @@ const removeTransaction = declareAloneAction(async store => {
 		.mapRight(() => {
 			store.dispatch(statusesAtom.setNormal())
 			store.dispatch(showPanelAtom.close())
-			updateTransactionsAction(store)
+			updateMainSpaceDataAction(store, ['transactions', 'chart'])
 		})
 		.mapLeft(error => {
 			if (error.type === 'TRANSACTION_NOT_FOUND') {
 				toast.error('Транзакция не найдена.')
-				updateCategoriesAction(store) //обновляем категории вместе с транзакциями
+				updateMainSpaceDataAction(store)
 			}
 			else {
 				processStandardError(error)

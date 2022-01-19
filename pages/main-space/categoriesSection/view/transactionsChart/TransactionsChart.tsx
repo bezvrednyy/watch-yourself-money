@@ -10,7 +10,7 @@ import {getColorById} from '../../../../../common/colors/theme'
 import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
 import {categoriesAtom} from '../../../model/categoriesAtom'
 import {selectedPeriodAtom} from '../../../model/selectedPeriodAtom'
-import {transactionChartExternalActions} from './model/externalActions'
+import {updateChartDataAction} from './model/externalActions'
 import {transactionChartAtoms} from './model/transactionChartAtoms'
 
 ChartJS.register(ArcElement, Tooltip)
@@ -26,7 +26,7 @@ export function TransactionsChart() {
 		return x.money
 	})
 
-	const handleUpdateExpenses = useAloneAction(transactionChartExternalActions.updateData)
+	const handleUpdateExpenses = useAloneAction(updateChartDataAction)
 
 	useEffect(() => {
 		//TODO:chart обновлять после изменения транзакций.
