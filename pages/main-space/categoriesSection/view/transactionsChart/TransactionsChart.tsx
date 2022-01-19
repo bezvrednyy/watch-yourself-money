@@ -8,6 +8,7 @@ import {useEffect, useRef} from 'react'
 import {useAtom} from '@reatom/react'
 import {getColorById} from '../../../../../common/colors/theme'
 import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
+import {getCurrencySymbolById, userSettingsAtom} from '../../../../../commonClient/environment/userSettingsAtom'
 import {categoriesAtom} from '../../../model/categoriesAtom'
 import {selectedPeriodAtom} from '../../../model/selectedPeriodAtom'
 import {updateChartDataAction} from './model/externalActions'
@@ -21,6 +22,8 @@ export function TransactionsChart() {
 	const [categories] = useAtom(categoriesAtom)
 	const [categoriesExpensesData] = useAtom(transactionChartAtoms.categoriesExpensesAtom)
 	const labels: Array<string> = []
+	const [userSettings] = useAtom(userSettingsAtom)
+	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 	const data = categoriesExpensesData.mainCategoriesExpenses.map(x => {
 		labels.push(`${x.name}`)
 		return x.money
@@ -53,6 +56,23 @@ export function TransactionsChart() {
 			}}
 			options={{
 				responsive: true,
+				plugins: {
+					tooltip: {
+						callbacks: {
+							title: tooltipItems => {
+								let total = 0
+								tooltipItems.map(x => (total += x.parsed))
+								//Погрешность ±1%
+								const percent = Math.round(total / categoriesExpensesData.totalAmount * 100)
+
+								return `Total: ${total} ${currencySymbol}\n`
+									+ `Percent: ${percent}%`
+							},
+							label: tooltipItem => tooltipItem.label,
+
+						},
+					},
+				},
 			}}
 			redraw={false}
 		/>
