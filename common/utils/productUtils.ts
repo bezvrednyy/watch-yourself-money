@@ -15,11 +15,10 @@ export function formatMoney(money: number): string {
 	if (str.length <= 3) {
 		return str
 	}
-	let formattedString = str[0]
-	for (let i = 1; i < str.length; i++) {
-		formattedString += i % 3 === 0 && i !== str.length - 1
-			? `${str[i]} `
-			: str[i]
+	const remains = str.length % 3
+	let formattedString = str.substring(0, remains)
+	for (let i = remains; i < str.length; i++) {
+		formattedString += (i - remains) % 3 === 0 ? ` ${str[i]}` : str[i]
 	}
 	return formattedString
 }
