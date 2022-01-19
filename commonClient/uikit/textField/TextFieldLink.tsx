@@ -1,12 +1,11 @@
 import {useState} from 'react'
 import {joinStrings} from '../../../common/utils/string'
 import {TextFieldInput} from './common/TextFieldInput'
-import {TextFieldLinkProps, TextFieldSize} from './textFieldProps'
+import {TextFieldLinkProps} from './textFieldProps'
 
 function TextFieldLink({
 	inputType = 'text',
 	inputClass,
-	size = 'normal',
 	createIcon,
 	...inputProps
 }: TextFieldLinkProps) {
@@ -24,10 +23,15 @@ function TextFieldLink({
 					'appearance-none relative block w-full placeholder-gray-500 text-gray-900',
 					'focus:outline-none',
 					inputClass,
-					getClassBySize(size),
 				)}
-				onFocus={() => setFocused(true)}
-				onBlur={() => setFocused(false)}
+				onFocus={() => {
+					inputProps.onFocus && inputProps.onFocus()
+					setFocused(true)
+				}}
+				onBlur={() => {
+					inputProps.onBlur && inputProps.onBlur()
+					setFocused(false)
+				}}
 			/>
 			{createIcon && (
 				<div className={joinStrings(
@@ -38,15 +42,6 @@ function TextFieldLink({
 				</div>
 			)}
 		</div>)
-}
-
-function getClassBySize(size: TextFieldSize) {
-	switch (size) {
-		case 'normal':
-			return 'px-1 text-normal'
-		case 'xLarge':
-			return 'px-1 text-xl'
-	}
 }
 
 export {

@@ -37,12 +37,11 @@ export function TransactionPanel() {
 				style='link'
 				value={`${sum}`}
 				onInput={value => handleSetSum(Number(value))}
-				size='xLarge'
 				placeholder='100'
 				required={true}
 				inputType='number'
 				inputClass={joinStrings(
-					'w-16',
+					'w-16 px-1 text-lg',
 					styles.sum,
 				)}
 				createIcon={() => <div className='text-xl'>{currencySymbol}</div>}

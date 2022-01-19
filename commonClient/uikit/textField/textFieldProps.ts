@@ -1,7 +1,6 @@
-type TextFieldStyle = 'default'|'link'
+type TextFieldStyle = 'default'|'link'|'simple'
 
 type TextFieldType = 'text'|'password'|'email'|'number'
-type TextFieldSize = 'normal'|'xLarge'
 
 type TextFieldInputProps = {
 	value: string,
@@ -10,6 +9,7 @@ type TextFieldInputProps = {
 	placeholder?: string,
 	required?: boolean,
 	inputType?: TextFieldType,
+	className?: string,
 	inputClass?: string,
 	onFocus?: () => void,
 	onBlur?: () => void,
@@ -17,7 +17,6 @@ type TextFieldInputProps = {
 
 type TextFieldDefaultProps = TextFieldInputProps & {
 	style: 'default',
-	size?: TextFieldSize,
 	label?: string,
 	description?: string,
 	errorMessage?: string,
@@ -25,17 +24,21 @@ type TextFieldDefaultProps = TextFieldInputProps & {
 
 type TextFieldLinkProps = TextFieldInputProps & {
 	style: 'link',
-	size?: TextFieldSize,
 	createIcon?: () => JSX.Element,
+}
+
+type TextFieldSimpleProps = TextFieldInputProps & {
+	style: 'simple'
 }
 
 type TextFieldProps = TextFieldDefaultProps
 	|TextFieldLinkProps
+	|TextFieldSimpleProps
 
 export type {
 	TextFieldProps,
-	TextFieldSize,
 	TextFieldDefaultProps,
 	TextFieldInputProps,
 	TextFieldLinkProps,
+	TextFieldSimpleProps,
 }
