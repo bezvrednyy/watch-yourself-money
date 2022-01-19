@@ -1,3 +1,5 @@
+import {formatMoney} from '../../../../../common/utils/productUtils'
+import styles from './TransactionsChart.module.css'
 import {Doughnut} from 'react-chartjs-2'
 import {
 	ArcElement,
@@ -32,7 +34,6 @@ export function TransactionsChart() {
 	const handleUpdateExpenses = useAloneAction(updateChartDataAction)
 
 	useEffect(() => {
-		//TODO:chart обновлять после изменения транзакций.
 		//Заиспользовал useEffect, вместо track.onChange чтобы иметь возможность задействовать aloneActions
 		handleUpdateExpenses({
 			selectedPeriod,
@@ -40,41 +41,41 @@ export function TransactionsChart() {
 	}, [handleUpdateExpenses, selectedPeriod])
 
 	return (
-		<Doughnut
-			ref={ref}
-			data={{
-				labels,
-				datasets: [{
-					data,
-					backgroundColor: categories.mainCategories.map(x => getColorById(x.colorId)),
-					spacing: 5,
-					borderColor: categories.mainCategories.map(x => getColorById(x.colorId, 1)),
-					borderWidth: 2,
-					borderRadius: 12,
-					borderAlign: 'center',
-				}],
-			}}
-			options={{
-				responsive: true,
-				plugins: {
-					tooltip: {
-						callbacks: {
-							title: tooltipItems => {
-								let total = 0
-								tooltipItems.map(x => (total += x.parsed))
-								//Погрешность ±1%
-								const percent = Math.round(total / categoriesExpensesData.totalAmount * 100)
+		<>
+			<div className={styles.total}>
+				{formatMoney(categoriesExpensesData.totalAmount) + ' ' + currencySymbol}
+			</div>
+			<Doughnut
+				ref={ref}
+				data={{
+					labels,
+					datasets: [{
+						data,
+						backgroundColor: categories.mainCategories.map(x => getColorById(x.colorId)),
+						spacing: 5,
+						borderColor: categories.mainCategories.map(x => getColorById(x.colorId, 1)),
+						borderWidth: 2,
+						borderRadius: 12,
+						borderAlign: 'center',
+					}],
+				}}
+				options={{
+					responsive: true,
+					plugins: { tooltip: { callbacks: {
+						title: tooltipItems => {
+							let total = 0
+							tooltipItems.map(x => (total += x.parsed))
+							//Погрешность ±1%
+							const percent = Math.round(total / categoriesExpensesData.totalAmount * 100)
 
-								return `Total: ${total} ${currencySymbol}\n`
-									+ `Percent: ${percent}%`
-							},
-							label: tooltipItem => tooltipItem.label,
-
+							return `Total: ${total} ${currencySymbol}\n`
+								+ `Percent: ${percent}%`
 						},
-					},
-				},
-			}}
-			redraw={false}
-		/>
+						label: tooltipItem => tooltipItem.label,
+					}}},
+				}}
+				redraw={false}
+			/>
+		</>
 	)
 }

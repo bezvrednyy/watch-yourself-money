@@ -1,0 +1,15 @@
+.total {
+    position: absolute;
+    margin: auto auto 50%;
+    padding-left: 3%;
+    width: min-content;
+    height: min-content;
+    font-size: 18pt;
+    max-width: 50%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
