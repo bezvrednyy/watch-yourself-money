@@ -1,11 +1,11 @@
 import {useAtom} from '@reatom/react'
-import {getColorById} from '../../../common/colors/theme'
-import {joinStrings} from '../../../common/utils/string'
-import {getCurrencySymbolById, userSettingsAtom} from '../../environment/userSettingsAtom'
-import {BankAccountData} from '../../../pages/main-space/model/bankAccountsAtom'
+import {getColorById} from '../../../../common/colors/theme'
+import {joinStrings} from '../../../../common/utils/string'
+import {getCurrencySymbolById, userSettingsAtom} from '../../../../commonClient/environment/userSettingsAtom'
+import {BankAccountData} from '../../model/bankAccountsAtom'
 import {TrashIcon} from '@heroicons/react/outline'
-import {TextField} from '../../uikit/textField/TextField'
-import {TextWithEllipsis} from '../../uikit/TextWithEllipsis'
+import {TextField} from '../../../../commonClient/uikit/textField/TextField'
+import {TextWithEllipsis} from '../../../../commonClient/uikit/TextWithEllipsis'
 import {useState} from 'react'
 
 function BankCard({
