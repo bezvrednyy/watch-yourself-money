@@ -1,5 +1,3 @@
-type TextFieldStyle = 'default'|'link'|'simple'
-
 type TextFieldType = 'text'|'password'|'email'|'number'
 
 type TextFieldInputProps = {

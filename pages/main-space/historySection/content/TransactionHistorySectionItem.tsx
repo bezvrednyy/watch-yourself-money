@@ -20,7 +20,6 @@ type TransitionHistorySectionItemProps = ViewTransactionInfo & {
 }
 
 function TransactionHistorySectionItem({
-	id,
 	bankCardName,
 	categoryId,
 	money,

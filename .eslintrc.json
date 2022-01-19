@@ -13,7 +13,12 @@
     "ecmaVersion": 2017,
     "sourceType": "module"
   },
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "rules": {
     "accessor-pairs": "error",
     "array-bracket-newline": "off",
@@ -234,6 +239,8 @@
       }
     ],
     "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "no-shadow-restricted-names": "error",
     "no-spaced-func": "error",
     "no-sync": "off",

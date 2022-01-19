@@ -29,7 +29,7 @@ const subcategoriesAtom = createAtom(
 		set: (value: Array<ClientCategoryData>) => value.map(x => ({ ...x, changeType: 'default'}) as EditCategoryPopupSubcategoryData),
 		add: (value: EditCategoryPopupSubcategoryData) => value,
 	},
-	({onAction, schedule, get}, state = [] as Array<EditCategoryPopupSubcategoryData>) => {
+	({ onAction }, state = [] as Array<EditCategoryPopupSubcategoryData>) => {
 		onAction('set', value => (state = value))
 		onAction('updateSubcategory', value => (state = state.map(
 			x => (x.id === value.id
