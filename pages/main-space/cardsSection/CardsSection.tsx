@@ -2,7 +2,7 @@ import styles from './CardsSection.module.css'
 import {useAtom} from '@reatom/react'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {joinStrings} from '../../../common/utils/string'
-import {BankCard} from '../../../commonClient/uikit/bankCard/BankCard'
+import {BankCard} from '../../../commonClient/components/bankCard/BankCard'
 import {CardsSectionDatePicker} from './view/CardsSectionDatePicker'
 
 function CardsSection() {
@@ -13,7 +13,10 @@ function CardsSection() {
 			<div className='flex justify-center items-center'>
 				<CardsSectionDatePicker />
 			</div>
-			<div className={joinStrings('flex flex-col space-y-4 overflow-auto items-center', styles['cards-section'])}>
+			<div className={joinStrings(
+				'flex flex-col space-y-4 pb-5 overflow-auto items-center px-7',
+				styles['cards-section'],
+			)}>
 				{cards.map(card => <BankCard key={card.id} {...card} />)}
 			</div>
 		</div>)

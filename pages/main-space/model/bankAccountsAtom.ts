@@ -4,8 +4,7 @@ import {ColorId} from '../../../common/colors/colors'
 export type BankAccountData = {
 	id: string,
 	name: string,
-	description?: string,
-	color: ColorId,
+	colorId: ColorId,
 	userId: string,
 	money: number,
 }
