@@ -50,7 +50,7 @@ function HistorySection() {
 
 	return (
 		<div className='flex flex-col w-4/12 bg-white'>
-			<div className='flex-grow overflow-auto py-5 shadow-[inset_0_-6px_9px_-9px_rgba(0,0,0,0.3)]'>
+			<div className='flex-grow overflow-auto scrollbar py-5 shadow-[inset_0_-6px_9px_-9px_rgba(0,0,0,0.3)]'>
 				{transactionsByDays.map(x => <DayTransactionsHistorySection
 					key={x.key}
 					timestamp={x.key}
