@@ -1,3 +1,4 @@
+import {randomUUID} from 'crypto'
 import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
@@ -20,7 +21,7 @@ export default async function createBankAccounts(req: CreateBankAccountRequest, 
 		const account = req.body.data
 		await prisma.bankAccount.create({
 			data: {
-				id: account.id,
+				id: randomUUID(),
 				name: account.name,
 				money: account.money,
 				userId: session.user.id,
