@@ -60,6 +60,7 @@ export function TransactionsChart() {
 					}],
 				}}
 				options={{
+					cutout: '60%',
 					responsive: true,
 					plugins: { tooltip: { callbacks: {
 						title: tooltipItems => {

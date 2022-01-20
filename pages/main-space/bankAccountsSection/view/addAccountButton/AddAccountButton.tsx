@@ -28,7 +28,6 @@ function AddAccountButton() {
 	}
 
 	function getWrapperStyles() {
-		console.log('update')
 		const hasError = [...errorsSet].length
 		if (hasError) {
 			return `shadow-lg shadow-red-200 bg-white ${styles['bank-account-error']}`
@@ -42,7 +41,7 @@ function AddAccountButton() {
 	return (
 		<div
 			className={joinStrings(
-				'group flex box-border w-full min-w-[284px] px-8 h-20 rounded-full items-center justify-center',
+				'group flex box-border w-full px-8 h-20 rounded-full items-center justify-center',
 				'cursor-pointer hover:bg-white',
 				getWrapperStyles()
 			)}
@@ -107,7 +106,7 @@ function AddAccountContent() {
 					onInput={onBalanceInput}
 					style='simple'
 					inputClass={joinStrings(
-						'bg-transparent leading-5 font-sans w-20 placeholder:text-slate-800',
+						'bg-transparent leading-5 font-sans w-[70px] placeholder:text-slate-800',
 						errorsSet.has('invalidBalance') ? 'placeholder:text-red-400' : 'text-slate-700',
 					)}
 					placeholder='0'

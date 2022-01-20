@@ -79,7 +79,7 @@ function BankAccount({
 	return (
 		<div
 			className={joinStrings(
-				'group flex box-border w-full min-w-[284px] px-8 h-20 rounded-full items-center',
+				'group flex box-border w-full px-8 h-20 rounded-full items-center',
 				'cursor-pointer hover:shadow-xl hover:bg-black transition duration-300',
 				focused ? 'bg-black shadow-xl' : 'bg-zinc-800 shadow-lg',
 			)}

@@ -10,12 +10,12 @@ function BankAccountsSection() {
 	const [bankAccounts] = useAtom(bankAccountsAtom)
 
 	return (
-		<div className='flex flex-col w-96 bg-green-100'>
+		<div className='flex flex-col min-w-[330px] max-w-[350px] bg-green-100'>
 			<div className='flex justify-center items-center'>
 				<PeriodDatePicker />
 			</div>
 			<div className={joinStrings(
-				'flex flex-col space-y-4 pb-5 overflow-auto items-center px-7',
+				'flex flex-col space-y-4 pb-5 overflow-y-auto items-center px-8',
 				styles.section,
 			)}>
 				<AddAccountButton />

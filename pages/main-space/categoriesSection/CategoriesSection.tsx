@@ -16,8 +16,9 @@ function CategoriesSection() {
 	const handleSetEditableCategoryId = useAction(editableCategoryIdAtom.set)
 	const [showAddCategoryPopup, setShowAddCategoryPopup] = useState(false)
 
+	//TODO:improvements Добавить ещё один chart
 	return (
-		<div className='flex flex-col w-6/12 bg-red-100'>
+		<div className='flex flex-col min-w-[530px] flex-grow bg-red-100'>
 			<EditCategoryPopup
 				show={editableCategoryId !== null}
 				onClose={() => handleSetEditableCategoryId(null)}
@@ -27,7 +28,7 @@ function CategoriesSection() {
 				onClose={() => setShowAddCategoryPopup(false)}
 			/>
 			<Tabs items={['Расходы']}/>
-			<div className='flex flex-wrap pt-10 mb-auto px-32'>
+			<div className='flex flex-wrap pt-10 mb-auto px-20'>
 				{categories.mainCategories.map(item => {
 					const Icon = getOutlineIconById(item.iconId)
 					return <RoundedSquare
@@ -48,7 +49,7 @@ function CategoriesSection() {
 					className='mx-2.5 my-2.5 w-12 h-12 opacity-90 transform transition hover:scale-105 cursor-pointer hover:opacity-100 shadow'
 				/>
 			</div>
-			<div className='relative w-5/12 self-center mb-20'>
+			<div className='relative w-[340px] self-center mb-14'>
 				<TransactionsChart />
 			</div>
 		</div>)
