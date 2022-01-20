@@ -2,8 +2,9 @@ import {useAtom} from '@reatom/react'
 import {joinStrings, trimAll} from '../../../../../common/utils/string'
 import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../commonClient/environment/userSettingsAtom'
+import {Preloader} from '../../../../../commonClient/uikit/preloader/Preloader'
 import {BankAccountData} from '../../../model/bankAccountsAtom'
-import {TrashIcon} from '@heroicons/react/outline'
+import {TrashIcon, XCircleIcon} from '@heroicons/react/outline'
 import {TextField} from '../../../../../commonClient/uikit/textField/TextField'
 import {TextWithEllipsis} from '../../../../../commonClient/uikit/TextWithEllipsis'
 import {useState} from 'react'
@@ -22,6 +23,7 @@ function BankAccount({
 	const [focused, setFocused] = useState(false)
 	const [title, setTitle] = useState(name)
 	const [hasTitleError, setHasTitleError] = useState(false)
+	const [loading, setLoading] = useState(false)
 	const [userSettings] = useAtom(userSettingsAtom)
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 	const handleEditBankAccount = useAloneAction(editBankAccountAction)
@@ -34,10 +36,11 @@ function BankAccount({
 			setHasTitleError(true)
 			return
 		}
+		setLoading(true)
 		handleEditBankAccount({
 			id,
 			name: preparedName
-		})
+		}).then(() => setLoading(false))
 	}
 
 	function getTextColorClass() {
@@ -45,6 +48,32 @@ function BankAccount({
 			return 'placeholder:text-red-400 text-red-400'
 		}
 		return focused ? 'text-white' : 'text-slate-100'
+	}
+
+	function getButton(): JSX.Element|null {
+		if (loading) {
+			return <Preloader />
+		}
+		if (focused) {
+			return <XCircleIcon
+				className='w-6 h-6 ml-2 shrink-0 text-white transition hover:text-blue-300'
+				onClick={() => {
+					setFocused(false)
+					setHasTitleError(false)
+					setTitle(name)
+				}}
+			/>
+		}
+		if (canRemove) {
+			return <TrashIcon
+				className={joinStrings(
+					'w-6 h-6 ml-2 shrink-0 transition hover:text-red-600',
+					focused ? 'text-white' : 'text-gray-50'
+				)}
+				onClick={() => {}} //TODO:bankAccounts
+			/>
+		}
+		return null
 	}
 
 	return (
@@ -80,10 +109,7 @@ function BankAccount({
 					text={`Balance: ${money} ${currencySymbol}`}
 				/>
 			</div>
-			{canRemove && <TrashIcon className={joinStrings( //TODO:bankAccounts 1. Заменить крестиком, при редактировании 2. Добавить прелоадер при запросе редактирования/удалении
-				'w-6 h-6 ml-2 shrink-0 transition hover:text-red-600',
-				focused ? 'text-white' : 'text-gray-50'
-			)}/>}
+			{getButton()}
 		</div>
 	)
 }
