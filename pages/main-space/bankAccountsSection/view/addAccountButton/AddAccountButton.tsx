@@ -42,7 +42,7 @@ function AddAccountButton() {
 	return (
 		<div
 			className={joinStrings(
-				'group flex box-border w-full px-8 h-20 rounded-full items-center justify-center',
+				'group flex box-border w-full min-w-[284px] px-8 h-20 rounded-full items-center justify-center',
 				'cursor-pointer hover:bg-white',
 				getWrapperStyles()
 			)}
@@ -56,6 +56,7 @@ function AddAccountButton() {
 function AddAccountContent() {
 	const [name, setName] = useState('')
 	const [balance, setBalance] = useState('')
+	const [focused, setFocused] = useState(false)
 	const [errorsSet] = useAtom(addAccountButtonAtoms.errorsSetAtom)
 	const handleSetNormal = useAction(addAccountButtonAtoms.statusesAtom.setNormal)
 	const handleClearErrors = useAction(addAccountButtonAtoms.errorsSetAtom.clear)
@@ -89,14 +90,16 @@ function AddAccountContent() {
 				onInput={onNameInput}
 				style={'simple'}
 				inputClass={joinStrings(
-				'bg-transparent leading-5 font-bold text-xl font-sans',
+				'bg-transparent leading-5 font-bold text-xl font-sans placeholder:text-slate-900',
 					errorsSet.has('invalidName') ? 'placeholder:text-red-400 text-red-400' : 'text-slate-900'
 				)}
-				placeholder='Tinkof'
+				onFocus={() => setFocused(true)}
+				onBlur={() => setFocused(false)}
+				placeholder={focused ? '' : 'Tinkof'}
 			/>
 			<div className={joinStrings(
 				'flex items-center leading-5 pl-2.5',
-				errorsSet.has('invalidBalance') ? 'text-red-400' : 'text-slate-700',
+				errorsSet.has('invalidBalance') ? 'text-red-400' : 'text-slate-800',
 			)}>
 				<span className='mr-1'>Balance:</span>
 				<TextField
@@ -104,7 +107,7 @@ function AddAccountContent() {
 					onInput={onBalanceInput}
 					style='simple'
 					inputClass={joinStrings(
-						'bg-transparent leading-5 font-sans',
+						'bg-transparent leading-5 font-sans w-20 placeholder:text-slate-800',
 						errorsSet.has('invalidBalance') ? 'placeholder:text-red-400' : 'text-slate-700',
 					)}
 					placeholder='0'
@@ -112,14 +115,14 @@ function AddAccountContent() {
 			</div>
 		</div>
 		<CheckCircleIcon
-			className='w-6 h-6 ml-2 shrink-0 text-green-400 transition hover:text-green-600'
+			className='w-6 h-6 ml-1.5 shrink-0 text-green-400 transition hover:text-green-600'
 			onClick={() => handleCreateAccount({
 				name,
 				balance,
 			})}
 		/>
 		<XCircleIcon
-			className='w-6 h-6 ml-2 shrink-0 text-red-400 transition hover:text-red-600'
+			className='w-6 h-6 ml-0.5 shrink-0 text-red-400 transition hover:text-red-600'
 			onClick={event => {
 				event.stopPropagation()
 				handleSetNormal()
