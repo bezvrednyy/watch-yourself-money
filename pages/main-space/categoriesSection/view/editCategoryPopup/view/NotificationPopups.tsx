@@ -20,10 +20,10 @@ function RemoveCategoryNotificationPopup() {
 
 	const additionalButtons: Array<JSX.Element> = []
 	subcategories.length && additionalButtons.push(<Button
-		key='turnInMain'
+		key='turnToMain'
 		style='blue-default'
 		structure='text'
-		text='Turn in main'
+		text='Turn to main'
 		onClick={() => handleRemoveCategory({ closeFn })}
 	/>)
 	additionalButtons.push(<Button
@@ -33,7 +33,7 @@ function RemoveCategoryNotificationPopup() {
 		text='Remove'
 		onClick={() => handleRemoveCategory({
 			closeFn,
-			removeSubcategories: true,
+			turnSubcategoriesToMain: true,
 		})}
 	/>)
 

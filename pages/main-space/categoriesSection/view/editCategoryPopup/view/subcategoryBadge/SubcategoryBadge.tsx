@@ -17,7 +17,7 @@ function getBgColorByType(type: SubcategoryChangeType): string {
 			return 'bg-green-300'
 		case 'removed':
 			return 'bg-red-300'
-		case 'turnInMain':
+		case 'turnToMain':
 			return 'bg-gray-300'
 		case 'edited':
 			return 'bg-blue-300'

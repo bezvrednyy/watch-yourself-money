@@ -24,7 +24,7 @@ export const editCategoryPopupSaveData = declareAloneAction<SaveDataParams>(asyn
 		if (x.changeType === 'edited') {
 			editedSubcategories.push(x)
 		}
-		else if (x.changeType === 'turnInMain') {
+		else if (x.changeType === 'turnToMain') {
 			editedSubcategories.push({...x, parentCategoryId: undefined})
 		}
 	})
@@ -68,20 +68,20 @@ export const editCategoryPopupSaveData = declareAloneAction<SaveDataParams>(asyn
 
 
 type RemoveCategoryParams = {
-	removeSubcategories?: boolean,
+	turnSubcategoriesToMain?: boolean,
 	closeFn: () => void,
 }
 
 export const editCategoryPopupRemoveCategory = declareAloneAction<RemoveCategoryParams>(async (store, {
 	closeFn,
-	removeSubcategories = false,
+	turnSubcategoriesToMain = false,
 }) => {
 	const {statusesAtom} = editCategoryPopupAtoms
 	store.dispatch(statusesAtom.setSaving())
 
 	const either = await getClientApi().categories.removeMainCategory({
 		categoryId: verify(store.getState(editableCategoryIdAtom)),
-		removeSubcategories,
+		turnSubcategoriesToMain,
 	})
 
 	either

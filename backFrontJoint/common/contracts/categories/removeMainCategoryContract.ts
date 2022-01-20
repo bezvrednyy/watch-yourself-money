@@ -3,7 +3,7 @@ import {StandardError, TypeErrorResponse} from '../../errors'
 
 export interface RemoveMainCategoryRequestData {
 	categoryId: string,
-	removeSubcategories: boolean,
+	turnSubcategoriesToMain: boolean,
 }
 
 export interface RemoveMainCategoryRequest extends NextApiRequest {
