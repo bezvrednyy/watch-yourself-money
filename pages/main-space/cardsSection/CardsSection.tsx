@@ -2,7 +2,7 @@ import styles from './CardsSection.module.css'
 import {useAtom} from '@reatom/react'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {joinStrings} from '../../../common/utils/string'
-import {AddAccountButton} from './view/AddAccountButton'
+import {AddAccountButton} from './view/addAccountButton/AddAccountButton'
 import {BankCard} from './view/BankCard'
 import {CardsSectionDatePicker} from './view/CardsSectionDatePicker'
 

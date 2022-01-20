@@ -1,8 +1,8 @@
-import {getClientApi, processStandardError} from '../../../../backFrontJoint/clientApi/clientApi'
-import {isNumber} from '../../../../common/utils/number'
-import {removeSpaces, trimAll} from '../../../../common/utils/string'
-import {declareAloneAction} from '../../../../commonClient/declareAloneAction'
-import {updateBankAccountsAction} from '../../model/bankAccountsAtom'
+import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
+import {isNumber} from '../../../../../../common/utils/number'
+import {removeSpaces, trimAll} from '../../../../../../common/utils/string'
+import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
+import {updateBankAccountsAction} from '../../../../model/bankAccountsAtom'
 import {addAccountButtonAtoms} from './addAccountButtonAtoms'
 
 type CreateBankCardPayload = {

@@ -1,15 +1,15 @@
 import styles from './AddAccountButton.module.css'
-import {isNumber} from '../../../../common/utils/number'
-import {formatMoney} from '../../../../common/utils/productUtils'
-import {joinStrings, removeSpaces} from '../../../../common/utils/string'
+import {isNumber} from '../../../../../common/utils/number'
+import {formatMoney} from '../../../../../common/utils/productUtils'
+import {joinStrings, removeSpaces} from '../../../../../common/utils/string'
 import {PlusIcon} from '@heroicons/react/solid'
 import {useCallback, useState} from 'react'
-import {useAloneAction} from '../../../../commonClient/declareAloneAction'
-import {TextField} from '../../../../commonClient/uikit/textField/TextField'
+import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
+import {TextField} from '../../../../../commonClient/uikit/textField/TextField'
 import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/outline'
 import {useAction, useAtom} from '@reatom/react'
-import {addAccountButtonAtoms} from '../model/addAccountButtonAtoms'
-import {cardsSectionExternalActions} from '../model/externalActions'
+import {addAccountButtonAtoms} from './model/addAccountButtonAtoms'
+import {cardsSectionExternalActions} from './model/externalActions'
 
 function AddAccountButton() {
 	const [status] = useAtom(addAccountButtonAtoms.statusesAtom)
