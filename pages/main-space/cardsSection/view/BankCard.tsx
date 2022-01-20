@@ -30,7 +30,7 @@ function BankCard({
 					onInput={setTitle}
 					style={'simple'}
 					inputClass={joinStrings(
-						'bg-transparent leading-5 font-bold text-xl text-slate-100 font-sans',
+						'bg-transparent leading-5 font-bold text-xl font-sans',
 						'group-hover:text-white',
 						focused ? 'text-white' : 'text-slate-100'
 					)}
