@@ -1,3 +1,5 @@
+import {joinStrings} from '../../../../common/utils/string'
+import styles from './TextFieldInput.module.css'
 import {useRef} from 'react'
 import {useEventHandler} from '../../../hooks/useEventHandler'
 import {TextFieldInputProps} from '../textFieldProps'
@@ -29,7 +31,10 @@ export function TextFieldInput({
 			onFocus={onFocus}
 			onBlur={onBlur}
 			required={required}
-			className={inputClass}
+			className={joinStrings(
+				inputClass,
+				inputType === 'number' && styles['number-input'],
+			)}
 			placeholder={placeholder}
 			maxLength={maxLength}
 			type={inputType}

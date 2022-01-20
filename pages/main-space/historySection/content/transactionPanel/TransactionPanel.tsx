@@ -40,10 +40,7 @@ export function TransactionPanel() {
 				placeholder='100'
 				required={true}
 				inputType='number'
-				inputClass={joinStrings(
-					'w-16 px-1 text-lg',
-					styles.sum,
-				)}
+				inputClass='w-16 px-1 text-lg'
 				createIcon={() => <div className='text-xl'>{currencySymbol}</div>}
 			/>
 		</div>
