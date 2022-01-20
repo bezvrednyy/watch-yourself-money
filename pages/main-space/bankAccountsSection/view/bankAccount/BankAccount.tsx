@@ -7,9 +7,9 @@ import {TrashIcon} from '@heroicons/react/outline'
 import {TextField} from '../../../../../commonClient/uikit/textField/TextField'
 import {TextWithEllipsis} from '../../../../../commonClient/uikit/TextWithEllipsis'
 import {useState} from 'react'
-import {editBankCardAction} from './model/externalActions'
+import {editBankAccountAction} from './model/externalActions'
 
-type BankCardProps = BankAccountData & {
+type BankAccountProps = BankAccountData & {
 	canRemove: boolean,
 }
 
@@ -18,13 +18,13 @@ function BankAccount({
 	name,
 	money,
 	canRemove,
-}: BankCardProps) {
+}: BankAccountProps) {
 	const [focused, setFocused] = useState(false)
 	const [title, setTitle] = useState(name)
 	const [hasTitleError, setHasTitleError] = useState(false)
 	const [userSettings] = useAtom(userSettingsAtom)
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
-	const handleEditBankAccount = useAloneAction(editBankCardAction)
+	const handleEditBankAccount = useAloneAction(editBankAccountAction)
 
 	function onBlur() {
 		setFocused(false)
@@ -80,7 +80,7 @@ function BankAccount({
 					text={`Balance: ${money} ${currencySymbol}`}
 				/>
 			</div>
-			{canRemove && <TrashIcon className={joinStrings( //TODO:cards 1. Заменить крестиком, при редактировании 2. Добавить прелоадер при запросе редактирования/удалении
+			{canRemove && <TrashIcon className={joinStrings( //TODO:bankAccounts 1. Заменить крестиком, при редактировании 2. Добавить прелоадер при запросе редактирования/удалении
 				'w-6 h-6 ml-2 shrink-0 transition hover:text-red-600',
 				focused ? 'text-white' : 'text-gray-50'
 			)}/>}

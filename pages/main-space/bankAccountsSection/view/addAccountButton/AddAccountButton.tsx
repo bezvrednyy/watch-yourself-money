@@ -9,7 +9,7 @@ import {TextField} from '../../../../../commonClient/uikit/textField/TextField'
 import {CheckCircleIcon, XCircleIcon} from '@heroicons/react/outline'
 import {useAction, useAtom} from '@reatom/react'
 import {addAccountButtonAtoms} from './model/addAccountButtonAtoms'
-import {cardsSectionExternalActions} from './model/externalActions'
+import {createBankAccountAction} from './model/externalActions'
 
 function AddAccountButton() {
 	const [status] = useAtom(addAccountButtonAtoms.statusesAtom)
@@ -31,7 +31,7 @@ function AddAccountButton() {
 		console.log('update')
 		const hasError = [...errorsSet].length
 		if (hasError) {
-			return `shadow-lg shadow-red-200 bg-white ${styles['card-error']}`
+			return `shadow-lg shadow-red-200 bg-white ${styles['bank-account-error']}`
 		}
 		return joinStrings(
 			status === 'normal' ? 'bg-slate-50 shadow-lg' : 'bg-white shadow-xl',
@@ -60,7 +60,7 @@ function AddAccountContent() {
 	const handleSetNormal = useAction(addAccountButtonAtoms.statusesAtom.setNormal)
 	const handleClearErrors = useAction(addAccountButtonAtoms.errorsSetAtom.clear)
 	const handleRemoveError = useAction(addAccountButtonAtoms.errorsSetAtom.removeError)
-	const handleCreateCard = useAloneAction(cardsSectionExternalActions.createBankCard)
+	const handleCreateAccount = useAloneAction(createBankAccountAction)
 
 	const onBalanceInput = useCallback((value: string) => {
 		if (value === '') {
@@ -113,7 +113,7 @@ function AddAccountContent() {
 		</div>
 		<CheckCircleIcon
 			className='w-6 h-6 ml-2 shrink-0 text-green-400 transition hover:text-green-600'
-			onClick={() => handleCreateCard({
+			onClick={() => handleCreateAccount({
 				name,
 				balance,
 			})}

@@ -10,7 +10,7 @@ import {getColorById} from '../../../../common/colors/theme'
 type ViewTransactionInfo = {
 	id: string,
 	categoryId: string,
-	bankCardName: string,
+	bankAccountName: string,
 	money: number,
 	comment?: string,
 }
@@ -20,7 +20,7 @@ type TransitionHistorySectionItemProps = ViewTransactionInfo & {
 }
 
 function TransactionHistorySectionItem({
-	bankCardName,
+	bankAccountName,
 	categoryId,
 	money,
 	comment,
@@ -50,7 +50,7 @@ function TransactionHistorySectionItem({
 				<p className={joinStrings('text-gray-800', titleClassName)}>
 					{category.title}
 				</p>
-				<p className={hintClassName}>{comment ? `${bankCardName} | ${comment}` : bankCardName}</p>
+				<p className={hintClassName}>{comment ? `${bankAccountName} | ${comment}` : bankAccountName}</p>
 			</div>
 			<p className={joinStrings('flex flex-row-reverse flex-grow shrink-0 text-purple-500 font-factor self-start ml-4', titleClassName)}>
 				{`${money} ${currencySymbol}`}

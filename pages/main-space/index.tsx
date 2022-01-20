@@ -8,7 +8,7 @@ import {BankAccountData, bankAccountsAtom} from './model/bankAccountsAtom'
 import {ClientCategoryData, MainCategoryData, SubCategoryData, categoriesAtom} from './model/categoriesAtom'
 import styles from './index.module.css'
 import {MainLayout} from '../../commonClient/uikit/layouts/MainLayout'
-import {CardsSection} from './cardsSection/CardsSection'
+import {BankAccountsSection} from './bankAccountsSection/BankAccountsSection'
 import {CategoriesSection} from './categoriesSection/CategoriesSection'
 import {HistorySection} from './historySection/HistorySection'
 import {joinStrings} from '../../common/utils/string'
@@ -40,7 +40,7 @@ export default function Index({
 
 	return (
 		<MainLayout title='Home page' className={joinStrings('flex', styles.container)}>
-			<CardsSection/>
+			<BankAccountsSection/>
 			<CategoriesSection />
 			<HistorySection/>
 		</MainLayout>)

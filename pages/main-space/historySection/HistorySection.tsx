@@ -29,7 +29,7 @@ function HistorySection() {
 			const newItem: ViewTransactionInfo = {
 				id: x.id,
 				categoryId: x.categoryId,
-				bankCardName: bankAccount.name,
+				bankAccountName: bankAccount.name,
 				money: x.money,
 				comment: x.comment,
 			}

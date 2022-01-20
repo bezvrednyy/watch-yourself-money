@@ -4,12 +4,12 @@ import {declareAloneAction} from '../../../../../../commonClient/declareAloneAct
 import {updateBankAccountsAction} from '../../../../model/bankAccountsAtom'
 import {updateMainSpaceDataAction} from '../../../../model/updateMainSpaceDataAction'
 
-type EditBankCardPayload = {
+type EditBankAccountPayload = {
 	id: string,
 	name: string,
 }
 
-export const editBankCardAction = declareAloneAction(async (store, payload: EditBankCardPayload) => {
+export const editBankAccountAction = declareAloneAction(async (store, payload: EditBankAccountPayload) => {
 	const either = await getClientApi().bankAccounts.editBankAccount({
 		id: payload.id,
 		name: payload.name,

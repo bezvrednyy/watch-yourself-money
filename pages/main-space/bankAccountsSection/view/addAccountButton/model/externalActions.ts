@@ -5,15 +5,15 @@ import {declareAloneAction} from '../../../../../../commonClient/declareAloneAct
 import {updateBankAccountsAction} from '../../../../model/bankAccountsAtom'
 import {addAccountButtonAtoms} from './addAccountButtonAtoms'
 
-type CreateBankCardPayload = {
+type CreateBankAccountPayload = {
 	name: string,
 	balance: string,
 }
 
-const createBankCard = declareAloneAction(async (store, {
+export const createBankAccountAction = declareAloneAction(async (store, {
 	name,
 	balance,
-}: CreateBankCardPayload) => {
+}: CreateBankAccountPayload) => {
 	const {statusesAtom, errorsSetAtom} = addAccountButtonAtoms
 	let hasError = false
 	const stringNumber = removeSpaces(balance)
@@ -41,7 +41,3 @@ const createBankCard = declareAloneAction(async (store, {
 		.mapLeft(processStandardError)
 
 })
-
-export const cardsSectionExternalActions = {
-	createBankCard,
-}

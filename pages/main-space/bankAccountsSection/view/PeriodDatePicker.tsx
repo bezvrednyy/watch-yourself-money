@@ -1,4 +1,4 @@
-import styles from './CardsSectionDatePicker.module.css'
+import styles from './PeriodDatePicker.module.css'
 import {useAction, useAtom } from '@reatom/react'
 import {useState} from 'react'
 import {DateRange, RangeKeyDict} from 'react-date-range'
@@ -10,7 +10,7 @@ import {Button} from '../../../../commonClient/uikit/button/Button'
 import {DateField} from '../../../../commonClient/uikit/datePicker/DateField'
 import {selectedPeriodAtom} from '../../model/selectedPeriodAtom'
 
-export function CardsSectionDatePicker() {
+export function PeriodDatePicker() {
 	return (
 		<ButtonWithPopover
 			className='my-4'
