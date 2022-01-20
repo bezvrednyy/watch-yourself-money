@@ -23,7 +23,6 @@ function remapBankAccountToBankAccountData(data: BankAccount): BankAccountData {
 	return {
 		id: data.id,
 		name: data.name,
-		colorId: data.color as ColorId,
 		money: data.money.toNumber(),
 		userId: data.userId,
 	}
