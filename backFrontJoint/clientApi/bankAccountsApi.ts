@@ -19,19 +19,19 @@ import {
 import {fetchPostData} from './clientApi'
 
 async function createBankAccount(data: CreateBankAccountRequestData): Promise<Either<CreateBankAccountLeftData, CreateBankAccountRightData>> {
-	const response = await fetchPostData('/api/transactions/create_transaction', data)
+	const response = await fetchPostData('/api/bank_accounts/create_bank_account', data)
 	const eitherObject: BackendEitherObject<CreateBankAccountLeftData, CreateBankAccountRightData> = await response.json()
 	return processBackendEither(eitherObject)
 }
 
 async function getBankAccounts(): Promise<Either<GetBankAccountLeftData, GetBankAccountRightData>> {
-	const response = await fetch('/api/transactions/get_transactions')
+	const response = await fetch('/api/bank_accounts/get_bank_accounts')
 	const eitherObject: BackendEitherObject<GetBankAccountLeftData, GetBankAccountRightData> = await response.json()
 	return processBackendEither(eitherObject)
 }
 
 async function removeBankAccount(data: RemoveBankAccountRequestData): Promise<Either<RemoveBankAccountLeftData, RemoveBankAccountRightData>> {
-	const response = await fetchPostData('/api/transactions/remove_transaction', data)
+	const response = await fetchPostData('/api/bank_accounts/remove_bank_account', data)
 	const eitherObject: BackendEitherObject<RemoveBankAccountLeftData, RemoveBankAccountRightData> = await response.json()
 	return processBackendEither(eitherObject)
 }

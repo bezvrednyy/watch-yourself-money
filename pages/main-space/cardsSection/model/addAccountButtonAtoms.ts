@@ -17,7 +17,6 @@ const errorsSetAtom = createAtom(
 		return state
 	},
 )
-//TODO:cards добавить errorsAtom, подсветку красным и вибрацию.
 
 export const addAccountButtonAtoms = {
 	statusesAtom,
