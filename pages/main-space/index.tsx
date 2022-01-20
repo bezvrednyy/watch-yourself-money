@@ -65,9 +65,10 @@ export async function getServerSideProps(context: NextPageContext): Promise<GetS
 		orderBy: { id: 'asc' }, //TODO:newFeature добавить возможность кастомной сортировки
 	})
 
-	const bankAccounts = await prisma.bankAccount.findMany({ where: { user: {
-		id: session.user.id,
-	}}})
+	const bankAccounts = await prisma.bankAccount.findMany({
+		where: { user: { id: session.user.id }},
+		orderBy: { id: 'asc' }, //TODO:newFeature добавить возможность кастомной сортировки
+	})
 
 	const transactions = await prisma.transaction.findMany({
 		where: { categoryId: { in: categories.map(x => x.id) } },

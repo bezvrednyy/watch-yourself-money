@@ -18,7 +18,8 @@ export default async function getBankAccounts(req: NextApiRequest, res: NextApiR
 
 	try {
 		const accounts = await prisma.bankAccount.findMany({
-			where: { userId: session.user.id }
+			where: { userId: session.user.id },
+			orderBy: { id: 'asc' }, //TODO:newFeature добавить возможность кастомной сортировки
 		})
 
 		if (accounts.length === 0) {
