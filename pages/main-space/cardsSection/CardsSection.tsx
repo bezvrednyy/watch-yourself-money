@@ -3,11 +3,11 @@ import {useAtom} from '@reatom/react'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {joinStrings} from '../../../common/utils/string'
 import {AddAccountButton} from './view/addAccountButton/AddAccountButton'
-import {BankCard} from './view/BankCard'
+import {BankAccount} from './view/bankAccount/BankAccount'
 import {CardsSectionDatePicker} from './view/CardsSectionDatePicker'
 
 function CardsSection() {
-	const [cards] = useAtom(bankAccountsAtom)
+	const [bankAccounts] = useAtom(bankAccountsAtom)
 
 	return (
 		<div className='flex flex-col w-96 bg-green-100'>
@@ -19,7 +19,7 @@ function CardsSection() {
 				styles['cards-section'],
 			)}>
 				<AddAccountButton />
-				{cards.map(card => <BankCard key={card.id} {...card} canRemove={cards.length > 1} />)}
+				{bankAccounts.map(card => <BankAccount key={card.id} {...card} canRemove={bankAccounts.length > 1} />)}
 			</div>
 		</div>)
 }

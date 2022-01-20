@@ -90,7 +90,7 @@ function AddAccountContent() {
 				style={'simple'}
 				inputClass={joinStrings(
 				'bg-transparent leading-5 font-bold text-xl font-sans',
-					errorsSet.has('invalidName') ? 'placeholder:text-red-400' : 'text-slate-900'
+					errorsSet.has('invalidName') ? 'placeholder:text-red-400 text-red-400' : 'text-slate-900'
 				)}
 				placeholder='Tinkof'
 			/>
