@@ -10,8 +10,8 @@ export function isSubcategory<T>(category: MainCategory<T> | Subcategory<T>): ca
 	return !!category.parentCategoryId
 }
 
-export function formatMoney(money: number): string {
-	const str = money.toString()
+export function formatMoney(money: number|string): string {
+	const str = typeof money === 'number' ? money.toString() : money
 	if (str.length <= 3) {
 		return str
 	}
