@@ -19,7 +19,7 @@ function CardsSection() {
 				styles['cards-section'],
 			)}>
 				<AddAccountButton />
-				{cards.map(card => <BankCard key={card.id} {...card} />)}
+				{cards.map(card => <BankCard key={card.id} {...card} canRemove={cards.length > 1} />)}
 			</div>
 		</div>)
 }

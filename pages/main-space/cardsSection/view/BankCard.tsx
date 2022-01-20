@@ -7,10 +7,15 @@ import {TextField} from '../../../../commonClient/uikit/textField/TextField'
 import {TextWithEllipsis} from '../../../../commonClient/uikit/TextWithEllipsis'
 import {useState} from 'react'
 
+type BankCardProps = BankAccountData & {
+	canRemove: boolean,
+}
+
 function BankCard({
 	name,
 	money,
-}: BankAccountData) {
+	canRemove,
+}: BankCardProps) {
 	const [focused, setFocused] = useState(false)
 	const [title, setTitle] = useState(name)
 	const [userSettings] = useAtom(userSettingsAtom)
@@ -48,10 +53,10 @@ function BankCard({
 					text={`Balance: ${money} ${currencySymbol}`}
 				/>
 			</div>
-			<TrashIcon className={joinStrings(
+			{canRemove && <TrashIcon className={joinStrings(
 				'w-6 h-6 ml-2 shrink-0 transition hover:text-red-600',
 				focused ? 'text-white' : 'text-gray-50'
-			)}/>
+			)}/>}
 		</div>
 	)
 }
