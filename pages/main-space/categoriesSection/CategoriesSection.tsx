@@ -27,7 +27,7 @@ function CategoriesSection() {
 				onClose={() => setShowAddCategoryPopup(false)}
 			/>
 			<Tabs items={['Расходы']}/>
-			<div className='flex flex-wrap flex-grow py-10 px-32'>
+			<div className='flex flex-wrap pt-10 mb-auto px-32'>
 				{categories.mainCategories.map(item => {
 					const Icon = getOutlineIconById(item.iconId)
 					return <RoundedSquare
