@@ -1,4 +1,6 @@
 import {createPrimitiveAtom} from '@reatom/core/primitives'
+import {getClientApi, processStandardError} from '../../../backFrontJoint/clientApi/clientApi'
+import {declareAloneAction} from '../../../commonClient/declareAloneAction'
 
 export type BankAccountData = {
 	id: string,
@@ -8,3 +10,10 @@ export type BankAccountData = {
 }
 
 export const bankAccountsAtom = createPrimitiveAtom<Array<BankAccountData>>([])
+
+export const updateBankAccountsAction = declareAloneAction(async store => {
+	const either = await getClientApi().bankAccounts.getBankAccounts()
+	either
+		.mapRight(data => store.dispatch(bankAccountsAtom.set(data)))
+		.mapLeft(processStandardError)
+})
