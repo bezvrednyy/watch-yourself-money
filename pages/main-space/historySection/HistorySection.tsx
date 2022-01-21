@@ -101,7 +101,7 @@ function ButtonsSection() {
 			</div>
 		)
 	}
-
+	//TODO:newFeature-incomes Сделать две кнопки: "Add expense", "Add income"
 	return (
 		<div
 			key='open'

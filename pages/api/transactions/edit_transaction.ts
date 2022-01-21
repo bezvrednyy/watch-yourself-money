@@ -21,8 +21,12 @@ export default async function editTransaction(req: EditTransactionRequest, res: 
 		const data = req.body.data
 		const currentTransactionData = await prisma.transaction.findUnique({
 			where: { id: data.id },
-			select: { category: {
-				select: { userId: true } },
+			select: {
+				category: { select: {
+					userId: true,
+					type: true,
+				}},
+				money: true,
 			},
 		})
 
@@ -35,18 +39,27 @@ export default async function editTransaction(req: EditTransactionRequest, res: 
 			return sendJsonLeftData<EditTransactionLeftData>(res, 403, createStandardError('FORBIDDEN'))
 		}
 
-		await prisma.transaction.update({
-			data: {
-				id: data.id,
-				categoryId: data.categoryId,
-				bankAccountId: data.bankAccountId,
-				currencyId: data.currencyId,
-				comment: data.comment,
-				money: new Prisma.Decimal(data.money),
-				date: data.date,
-			},
-			where: { id: data.id },
-		})
+		await prisma.$transaction([
+			prisma.bankAccount.update({
+				where: { id: data.bankAccountId },
+				data: { money: currentTransactionData.category.type === 'EXPENSES'
+					? { increment: currentTransactionData.money.sub(data.money) }
+					: { decrement: currentTransactionData.money.sub(data.money) },
+				},
+			}),
+			prisma.transaction.update({
+				where: { id: data.id },
+				data: {
+					id: data.id,
+					categoryId: data.categoryId,
+					bankAccountId: data.bankAccountId,
+					currencyId: data.currencyId,
+					comment: data.comment,
+					money: new Prisma.Decimal(data.money),
+					date: data.date,
+				},
+			}),
+		])
 		sendJsonRightData<EditTransactionRightData>(res, undefined)
 	}
 	catch (error) {

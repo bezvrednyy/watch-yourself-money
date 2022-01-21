@@ -1,5 +1,8 @@
 import {toast} from 'react-hot-toast'
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
+import {
+	CreateTransactionRequestData,
+} from '../../../../../../backFrontJoint/common/contracts/transactions/createTransactionContract'
 import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
 import {userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
 import {updateMainSpaceDataAction} from '../../../../model/updateMainSpaceDataAction'
@@ -10,7 +13,7 @@ const saveData = declareAloneAction(async store => {
 		transactionCommentAtom, selectedBankAccountId, sumAtom, statusesAtom, panelTypeAtom, showPanelAtom,
 	} = transactionPanelAtoms
 
-	const data = {
+	const data: CreateTransactionRequestData = {
 		id: store.getState(transactionIdAtom),
 		date: store.getState(transactionDateAtom),
 		categoryId: store.getState(selectedSubcategoryIdAtom) || store.getState(selectedCategoryIdAtom),
@@ -28,7 +31,7 @@ const saveData = declareAloneAction(async store => {
 		.mapRight(() => {
 			store.dispatch(statusesAtom.setNormal())
 			store.dispatch(showPanelAtom.close())
-			updateMainSpaceDataAction(store, ['transactions', 'chart'])
+			updateMainSpaceDataAction(store)
 		})
 		.mapLeft(error => {
 			if (error.type === 'CATEGORY_NOT_FOUND') {
@@ -57,7 +60,7 @@ const removeTransaction = declareAloneAction(async store => {
 		.mapRight(() => {
 			store.dispatch(statusesAtom.setNormal())
 			store.dispatch(showPanelAtom.close())
-			updateMainSpaceDataAction(store, ['transactions', 'chart'])
+			updateMainSpaceDataAction(store)
 		})
 		.mapLeft(error => {
 			if (error.type === 'TRANSACTION_NOT_FOUND') {
@@ -68,7 +71,6 @@ const removeTransaction = declareAloneAction(async store => {
 				processStandardError(error)
 			}
 			store.dispatch(statusesAtom.setNormal())
-			store.dispatch(showPanelAtom.close())
 		})
 })
 

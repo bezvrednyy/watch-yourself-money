@@ -17,6 +17,7 @@ const transactionCommentAtom = createPrimitiveAtom<string>('')
 const transactionDateAtom = createPrimitiveAtom<Date>(new Date())
 const selectedSubcategoryIdAtom = createPrimitiveAtom<string|null>(null)
 const panelTypeAtom = createEnumAtom(['create', 'edit'])
+const transactionTypeAtom = createEnumAtom(['expenses', 'incomes'])
 
 type ShowPanelArgs = {
 	type: 'create'
@@ -92,4 +93,5 @@ export const transactionPanelAtoms = {
 	showPanelAtom,
 	panelTypeAtom,
 	transactionIdAtom,
+	transactionTypeAtom,
 }
