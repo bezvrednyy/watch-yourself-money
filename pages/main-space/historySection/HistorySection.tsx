@@ -1,3 +1,4 @@
+import styles from './HistorySection.module.css'
 import {PlusIcon} from '@heroicons/react/solid'
 import {useAction, useAtom} from '@reatom/react'
 import {startOfDay} from 'date-fns'
@@ -55,7 +56,10 @@ function HistorySection() {
 
 	return (
 		<div className='flex flex-col min-w-[400px] max-w-[460px] flex-grow bg-white'>
-			<div className='flex-grow overflow-auto scrollbar py-5 shadow-[inset_0_-6px_9px_-9px_rgba(0,0,0,0.3)]'>
+			<div className={joinStrings(
+				'flex-grow overflow-auto py-5 shadow-[inset_0_-6px_9px_-9px_rgba(0,0,0,0.3)]',
+				styles.section,
+			)}>
 				{transactionsByDays.map(x => <DayTransactionsHistorySection
 					key={x.key}
 					timestamp={x.key}

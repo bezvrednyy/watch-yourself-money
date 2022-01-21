@@ -11,7 +11,7 @@ function BankAccountsSection() {
 	const [bankAccounts] = useAtom(bankAccountsAtom)
 
 	return (
-		<div className='flex flex-col min-w-[330px] max-w-[350px] bg-green-100'>
+		<div className='flex flex-col min-w-[330px] max-w-[350px] bg-white'>
 			<RemoveBankAccountPopup />
 			<div className='flex justify-center items-center'>
 				<PeriodDatePicker />

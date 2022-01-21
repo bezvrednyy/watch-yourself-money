@@ -18,7 +18,7 @@ function CategoriesSection() {
 
 	//TODO:improvements Добавить ещё один chart
 	return (
-		<div className='flex flex-col min-w-[530px] flex-grow bg-red-100'>
+		<div className='flex flex-col min-w-[530px] flex-grow bg-white'>
 			<EditCategoryPopup
 				show={editableCategoryId !== null}
 				onClose={() => handleSetEditableCategoryId(null)}
