@@ -18,6 +18,7 @@ export default async function editBankAccounts(req: RemoveBankAccountRequest, re
 
 	try {
 		const {id: accountId, movingTransactionsAccountId} = req.body.data
+		const moveTransactions = !!movingTransactionsAccountId
 		const [currentData, accountsCount, movingTransactionsAccount] = await Promise.all([
 			prisma.bankAccount.findUnique({
 				where: { id: accountId },
@@ -26,10 +27,11 @@ export default async function editBankAccounts(req: RemoveBankAccountRequest, re
 			prisma.bankAccount.count({ where: {
 				userId: session.user.id,
 			}}),
-			prisma.bankAccount.findUnique({
+			moveTransactions && prisma.bankAccount.findUnique({
 				where: { id: movingTransactionsAccountId },
 			}),
 		])
+		console.log(movingTransactionsAccountId)
 
 		if (!currentData) {
 			return sendJsonLeftData<RemoveBankAccountLeftData>(res, 400, createTypeError('BANK_ACCOUNT_NOT_FOUND'))
@@ -37,7 +39,7 @@ export default async function editBankAccounts(req: RemoveBankAccountRequest, re
 		if (accountsCount === 1) {
 			return sendJsonLeftData<RemoveBankAccountLeftData>(res, 400, createTypeError('LAST_BANK_ACCOUNT'))
 		}
-		if (!movingTransactionsAccount) {
+		if (moveTransactions && !movingTransactionsAccount) {
 			return sendJsonLeftData<RemoveBankAccountLeftData>(res, 400, createTypeError('ACCOUNT_FOR_MOVING_TRANSACTIONS_NOT_FOUND'))
 		}
 

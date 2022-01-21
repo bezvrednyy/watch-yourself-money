@@ -1,4 +1,4 @@
-import {useAtom} from '@reatom/react'
+import {useAction, useAtom} from '@reatom/react'
 import {joinStrings, trimAll} from '../../../../../common/utils/string'
 import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../commonClient/environment/userSettingsAtom'
@@ -9,6 +9,7 @@ import {TextField} from '../../../../../commonClient/uikit/textField/TextField'
 import {TextWithEllipsis} from '../../../../../commonClient/uikit/TextWithEllipsis'
 import {useState} from 'react'
 import {editBankAccountAction} from './model/externalActions'
+import {removeBankAccountPopupAtoms} from './model/removeBankAccountPopupAtoms'
 
 type BankAccountProps = BankAccountData & {
 	canRemove: boolean,
@@ -27,6 +28,7 @@ function BankAccount({
 	const [userSettings] = useAtom(userSettingsAtom)
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 	const handleEditBankAccount = useAloneAction(editBankAccountAction)
+	const handleSetRemovableAccountIdAtom = useAction(removeBankAccountPopupAtoms.removableBankAccountIdAtom.set)
 
 	function onBlur() {
 		setFocused(false)
@@ -70,7 +72,7 @@ function BankAccount({
 					'w-6 h-6 ml-2 shrink-0 transition hover:text-red-600',
 					focused ? 'text-white' : 'text-gray-50',
 				)}
-				onClick={() => {}} //TODO:bankAccounts
+				onClick={() => handleSetRemovableAccountIdAtom(id)}
 			/>
 		}
 		return null

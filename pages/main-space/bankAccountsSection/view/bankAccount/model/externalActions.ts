@@ -1,6 +1,7 @@
 import toast from 'react-hot-toast'
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
 import {StandardError} from '../../../../../../backFrontJoint/common/errors'
+import {verify} from '../../../../../../common/utils/verify'
 import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
 import {updateBankAccountsAction} from '../../../../model/bankAccountsAtom'
 import {updateMainSpaceDataAction} from '../../../../model/updateMainSpaceDataAction'
@@ -30,22 +31,17 @@ export const editBankAccountAction = declareAloneAction(async (store, payload: E
 		})
 })
 
-type RemoveBankAccountPayload = {
-	id: string,
-	movingTransactionsAccountId?: string,
-}
-
-export const removeBankAccountAction = declareAloneAction(async (store, payload: RemoveBankAccountPayload) => {
-	const {statusesAtom, removableBankAccountIdAtom} = removeBankAccountPopupAtoms
+export const removeBankAccountAction = declareAloneAction(async store => {
+	const {statusesAtom, removableBankAccountIdAtom, movingTransactionsAccountIdAtom} = removeBankAccountPopupAtoms
 	const close = () => store.dispatch(removableBankAccountIdAtom.set(null))
 	store.dispatch(statusesAtom.setSaving())
 	const either = await getClientApi().bankAccounts.removeBankAccount({
-		id: payload.id,
-		movingTransactionsAccountId: payload.movingTransactionsAccountId,
+		id: verify(store.getState(removableBankAccountIdAtom)),
+		movingTransactionsAccountId: store.getState(movingTransactionsAccountIdAtom) || undefined,
 	})
 	either
 		.mapRight(async () => {
-			await updateBankAccountsAction(store)
+			await updateMainSpaceDataAction(store)
 			store.dispatch(statusesAtom.setNormal())
 			close()
 		})
