@@ -39,7 +39,7 @@ function BankAccount({
 		setLoading(true)
 		handleEditBankAccount({
 			id,
-			name: preparedName
+			name: preparedName,
 		}).then(() => setLoading(false))
 	}
 
@@ -68,7 +68,7 @@ function BankAccount({
 			return <TrashIcon
 				className={joinStrings(
 					'w-6 h-6 ml-2 shrink-0 transition hover:text-red-600',
-					focused ? 'text-white' : 'text-gray-50'
+					focused ? 'text-white' : 'text-gray-50',
 				)}
 				onClick={() => {}} //TODO:bankAccounts
 			/>
@@ -103,8 +103,8 @@ function BankAccount({
 				/>
 				<TextWithEllipsis
 					className={joinStrings(
-					'leading-5 pl-2.5 group-hover:text-slate-50',
-						focused ? 'text-slate-50' : 'text-slate-100'
+						'leading-5 pl-2.5 group-hover:text-slate-50',
+						focused ? 'text-slate-50' : 'text-slate-100',
 					)}
 					text={`Balance: ${money} ${currencySymbol}`}
 				/>

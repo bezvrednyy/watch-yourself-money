@@ -6,9 +6,6 @@ import {
 	RemoveBankAccountRequest,
 	RemoveBankAccountRightData,
 } from '../../../backFrontJoint/common/contracts/bankAccounts/removeBankAccountContract'
-import {
-	RemoveMainCategoryLeftData
-} from '../../../backFrontJoint/common/contracts/categories/removeMainCategoryContract'
 import {createStandardError, createTypeError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 
@@ -48,7 +45,7 @@ export default async function editBankAccounts(req: RemoveBankAccountRequest, re
 			return sendJsonLeftData<RemoveBankAccountLeftData>(res, 403, createStandardError('FORBIDDEN'))
 		}
 		if (accountsCount < 1) {
-			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createStandardError('SERVER_ERROR', 'NO_BANK_ACCOUNTS_FOUND'))
+			return sendJsonLeftData<RemoveBankAccountLeftData>(res, 500, createStandardError('SERVER_ERROR', 'NO_BANK_ACCOUNTS_FOUND'))
 		}
 
 		if (movingTransactionsAccountId) {

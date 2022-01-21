@@ -10,7 +10,7 @@ const errorsSetAtom = createAtom(
 		removeError: (v: ErrorType) => v,
 		clear: () => {},
 	},
-	({ onAction } , state: Set<ErrorType> = new Set() ) => {
+	({ onAction }, state: Set<ErrorType> = new Set()) => {
 		onAction('addError', v => (state = new Set([...state, v])))
 		onAction('removeError', v => (state = new Set([...state].filter(x => x !== v))))
 		onAction('clear', () => (state = new Set()))

@@ -32,7 +32,7 @@ export default async function editBankAccounts(req: EditBankAccountRequest, res:
 
 		await prisma.bankAccount.update({
 			where: { id: account.id },
-			data: { name: account.name }
+			data: { name: account.name },
 		})
 		sendJsonRightData<EditBankAccountRightData>(res, undefined)
 	}

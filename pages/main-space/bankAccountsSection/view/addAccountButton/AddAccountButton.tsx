@@ -43,7 +43,7 @@ function AddAccountButton() {
 			className={joinStrings(
 				'group flex box-border w-full px-8 h-20 rounded-full items-center justify-center',
 				'cursor-pointer hover:bg-white',
-				getWrapperStyles()
+				getWrapperStyles(),
 			)}
 			onClick={handleSetOpened}
 		>
@@ -73,14 +73,14 @@ function AddAccountContent() {
 		const stringNumber = removeSpaces(value)
 		if (!isNumber(stringNumber)) return
 		setBalance(formatMoney(stringNumber))
-	}, [errorsSet])
+	}, [errorsSet, handleRemoveError])
 
-	const onNameInput =  useCallback((value: string) => {
+	const onNameInput = useCallback((value: string) => {
 		if (errorsSet.has('invalidName')) {
 			handleRemoveError('invalidName')
 		}
 		setName(value)
-	}, [errorsSet])
+	}, [errorsSet, handleRemoveError])
 
 	return (<>
 		<div className='flex flex-col flex-grow'>
@@ -89,8 +89,8 @@ function AddAccountContent() {
 				onInput={onNameInput}
 				style={'simple'}
 				inputClass={joinStrings(
-				'bg-transparent leading-5 font-bold text-xl font-sans placeholder:text-slate-900',
-					errorsSet.has('invalidName') ? 'placeholder:text-red-400 text-red-400' : 'text-slate-900'
+					'bg-transparent leading-5 font-bold text-xl font-sans placeholder:text-slate-900',
+					errorsSet.has('invalidName') ? 'placeholder:text-red-400 text-red-400' : 'text-slate-900',
 				)}
 				onFocus={() => setFocused(true)}
 				onBlur={() => setFocused(false)}

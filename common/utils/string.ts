@@ -7,7 +7,7 @@ function trimAll(str: string): string {
 }
 
 function removeSpaces(str: string): string {
-	return str.replace(/\s/g, '');
+	return str.replace(/\s/g, '')
 }
 
 export {

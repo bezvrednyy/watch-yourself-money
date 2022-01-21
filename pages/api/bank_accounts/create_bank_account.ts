@@ -25,7 +25,7 @@ export default async function createBankAccounts(req: CreateBankAccountRequest, 
 				name: account.name,
 				money: account.money,
 				userId: session.user.id,
-			}
+			},
 		})
 
 		sendJsonRightData<CreateBankAccountRightData>(res, undefined)
