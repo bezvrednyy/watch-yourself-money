@@ -31,7 +31,7 @@ export const createBankAccountAction = declareAloneAction(async (store, {
 	store.dispatch(statusesAtom.setSaving())
 	const either = await getClientApi().bankAccounts.createBankAccount({
 		name: preparedName,
-		money: Number(balance),
+		money: Number(stringNumber),
 	})
 	either
 		.mapRight(async () => {
