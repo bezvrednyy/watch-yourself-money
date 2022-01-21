@@ -4,9 +4,9 @@ import {startOfDay} from 'date-fns'
 import {useMemo} from 'react'
 import {mapToArray} from '../../../common/utils/array'
 import {defaultCompare} from '../../../common/utils/compare'
+import {Logger} from '../../../common/utils/Logger'
 import {useAloneAction} from '../../../commonClient/declareAloneAction'
 import {joinStrings} from '../../../common/utils/string'
-import {verify} from '../../../common/utils/verify'
 import {Button} from '../../../commonClient/uikit/button/Button'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
 import {transactionsAtom} from '../model/transactionsAtom'
@@ -25,11 +25,16 @@ function HistorySection() {
 		const result: Map<number, Array<ViewTransactionInfo>> = new Map()
 		transactions.forEach(x => {
 			const timestamp = startOfDay(x.timestamp).getTime()
-			const bankAccount = verify(bankAccounts.find(account => account.id === x.bankAccountId))
+			const bankAccount = bankAccounts.find(account => account.id === x.bankAccountId)
+			if (!bankAccount) {
+				Logger.error('No consistent data: bank account not found!')
+				//TODO:improvements Перенести бизнес логику в атомы и там обрабатывать ошибки.
+			}
+
 			const newItem: ViewTransactionInfo = {
 				id: x.id,
 				categoryId: x.categoryId,
-				bankAccountName: bankAccount.name,
+				bankAccountName: bankAccount ? bankAccount.name : '',
 				money: x.money,
 				comment: x.comment,
 			}
