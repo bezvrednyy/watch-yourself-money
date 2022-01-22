@@ -40,7 +40,7 @@ function TransactionHistorySectionItem({
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 
 	return (
-		<div className='flex items-center cursor-pointer px-4 py-1.5 hover:bg-gray-100' onClick={onClick}>
+		<div className='flex items-center cursor-pointer px-6 py-1.5 hover:bg-gray-100' onClick={onClick}>
 			<RoundedSquare
 				createIcon={() => <Icon className='m-2 w-7 h-7 overflow-hidden'/>}
 				bgHexColor={getColorById(category.colorId)}

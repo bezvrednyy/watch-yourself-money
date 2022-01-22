@@ -18,7 +18,7 @@ function CategoriesSection() {
 
 	//TODO:improvements Добавить ещё один chart
 	return (
-		<div className='flex flex-col min-w-[530px] flex-grow bg-white'>
+		<div className='flex flex-col w-[600px] shrink-0 bg-white'>
 			<EditCategoryPopup
 				show={editableCategoryId !== null}
 				onClose={() => handleSetEditableCategoryId(null)}
@@ -28,7 +28,7 @@ function CategoriesSection() {
 				onClose={() => setShowAddCategoryPopup(false)}
 			/>
 			<Tabs items={['Расходы']}/>
-			<div className='flex flex-wrap pt-10 mb-auto px-20'>
+			<div className='flex flex-wrap pt-10 mb-auto px-[62px]'>
 				{categories.mainCategories.map(item => {
 					const Icon = getOutlineIconById(item.iconId)
 					return <RoundedSquare

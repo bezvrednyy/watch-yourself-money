@@ -22,8 +22,8 @@ function DayTransactionsHistorySection({
 		: 'd MMMM yyyy'
 
 	return (
-		<div className='px-10 py-5'>
-			<h2 className='mb-5 px-4 font-medium' suppressHydrationWarning>
+		<div className='py-5 px-4'>
+			<h2 className='mb-5 px-6 font-medium' suppressHydrationWarning>
 				{format(timestamp, formatType)}
 			</h2>
 			<div className='flex flex-col'>

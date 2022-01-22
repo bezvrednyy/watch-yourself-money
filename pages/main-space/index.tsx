@@ -39,7 +39,7 @@ export default function Index({
 	handleSetTransactions(transactions)
 
 	return (
-		<MainLayout title='Home page' className={joinStrings('flex w-[1410px] mx-auto', styles.container)}>
+		<MainLayout title='Home page' className={joinStrings('flex w-[1394px] mx-auto', styles.container)}>
 			<BankAccountsSection/>
 			<CategoriesSection />
 			<HistorySection/>
