@@ -3,6 +3,7 @@ import {
 	GetExpensesDataRightData,
 	MainCategoryPercentExpenses,
 } from '../../../../backFrontJoint/common/contracts/chart/getExpensesDataContract'
+import {ColorId} from '../../../../common/colors/colors'
 import {MainCategoriesExpensesMap} from './index'
 
 type Args = {
@@ -16,14 +17,16 @@ export function prepareDataToResponse({
 }: Args): GetExpensesDataRightData {
 	const percentExpenses: Array<MainCategoryPercentExpenses> = []
 
-	mainExpensesMap.forEach((({id, subcategories, name, money}) => {
+	mainExpensesMap.forEach((({id, subcategories, name, money, color}) => {
 		percentExpenses.push({
 			categoryId: id,
 			money: money.toNumber(),
-			name: name,
+			name,
+			colorId: color as ColorId,
 			subcategoriesExpenses: subcategories.map(x => ({
 				categoryId: x.id,
 				name: x.name,
+				colorId: x.color as ColorId,
 				money: x.money.toNumber(),
 			})),
 		})

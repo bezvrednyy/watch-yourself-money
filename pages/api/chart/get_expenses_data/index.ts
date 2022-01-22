@@ -15,6 +15,7 @@ import {prepareDataToResponse} from './prepareDataToResponse'
 type CategoryMoneyExpenseData = {
 	id: string,
 	name: string,
+	color: string,
 	money: Prisma.Decimal,
 }
 
@@ -46,6 +47,7 @@ export default async function getExpensesData(req: GetExpensesDataRequest, res: 
 			select: {
 				id: true,
 				name: true,
+				color: true,
 				parentCategoryId: true,
 			},
 			//Сортируем любую выборку категорий одинаково, чтобы было соответствие в отображении: категорий и диаграммы

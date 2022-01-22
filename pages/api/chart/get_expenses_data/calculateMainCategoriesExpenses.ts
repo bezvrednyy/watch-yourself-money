@@ -6,6 +6,7 @@ import {MainCategoriesExpensesMap, MainCategoryMoneyExpenses} from './index'
 type CategoryData = {
 	id: string,
 	name: string,
+	color: string,
 	money: Prisma.Decimal,
 	parentCategoryId: string|null,
 }
@@ -80,6 +81,7 @@ function updateMainCategoryExpenses({
 				{
 					id: subcategoryData.id,
 					name: subcategoryData.name,
+					color: subcategoryData.color,
 					money: subcategoryData.money,
 				},
 			],
@@ -88,6 +90,7 @@ function updateMainCategoryExpenses({
 	return {
 		id: mainCategoryData.id,
 		name: mainCategoryData.name,
+		color: mainCategoryData.color,
 		money: subcategoryData.money, //Так как основной категории нет, её расходы равны расходам единственной подкатегории
 		subcategories: [subcategoryData],
 	}

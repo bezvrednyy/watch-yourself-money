@@ -1,4 +1,5 @@
 import {NextApiRequest} from 'next'
+import {ColorId} from '../../../../common/colors/colors'
 import {StandardError} from '../../errors'
 
 export type GetExpensesDataRequestData = {
@@ -15,6 +16,7 @@ type CategoryPercentExpenses = {
 	categoryId: string,
 	name: string,
 	money: number,
+	colorId: ColorId,
 }
 
 export type MainCategoryPercentExpenses = CategoryPercentExpenses & {

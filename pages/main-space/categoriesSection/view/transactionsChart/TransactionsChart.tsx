@@ -11,7 +11,6 @@ import {useAtom} from '@reatom/react'
 import {getColorById} from '../../../../../common/colors/theme'
 import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../commonClient/environment/userSettingsAtom'
-import {categoriesAtom} from '../../../model/categoriesAtom'
 import {selectedPeriodAtom} from '../../../model/selectedPeriodAtom'
 import {updateChartDataAction} from './model/externalActions'
 import {transactionChartAtoms} from './model/transactionChartAtoms'
@@ -21,7 +20,6 @@ ChartJS.register(ArcElement, Tooltip)
 export function TransactionsChart() {
 	const ref = useRef()
 	const [selectedPeriod] = useAtom(selectedPeriodAtom)
-	const [categories] = useAtom(categoriesAtom)
 	const [categoriesExpensesData] = useAtom(transactionChartAtoms.categoriesExpensesAtom)
 	const labels: Array<string> = []
 	const [userSettings] = useAtom(userSettingsAtom)
@@ -51,9 +49,9 @@ export function TransactionsChart() {
 					labels,
 					datasets: [{
 						data,
-						backgroundColor: categories.mainCategories.map(x => getColorById(x.colorId)),
+						backgroundColor: categoriesExpensesData.mainCategoriesExpenses.map(x => getColorById(x.colorId)),
 						spacing: 5,
-						borderColor: categories.mainCategories.map(x => getColorById(x.colorId, 1)),
+						borderColor: categoriesExpensesData.mainCategoriesExpenses.map(x => getColorById(x.colorId, 1)),
 						borderWidth: 2,
 						borderRadius: 12,
 						borderAlign: 'center',
