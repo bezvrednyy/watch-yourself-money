@@ -1,4 +1,5 @@
 import {useAction, useAtom} from '@reatom/react'
+import {formatMoney} from '../../../../../common/utils/productUtils'
 import {joinStrings, trimAll} from '../../../../../common/utils/string'
 import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../commonClient/environment/userSettingsAtom'
@@ -108,7 +109,7 @@ function BankAccount({
 						'leading-5 pl-2.5 group-hover:text-slate-50',
 						focused ? 'text-slate-50' : 'text-slate-100',
 					)}
-					text={`Balance: ${money} ${currencySymbol}`}
+					text={`Balance: ${formatMoney(money)} ${currencySymbol}`}
 				/>
 			</div>
 			{getButton()}

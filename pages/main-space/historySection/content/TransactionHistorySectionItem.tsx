@@ -1,3 +1,4 @@
+import {formatMoney} from '../../../../common/utils/productUtils'
 import {joinStrings} from '../../../../common/utils/string'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../commonClient/environment/userSettingsAtom'
 import {categoriesAtom} from '../../model/categoriesAtom'
@@ -53,7 +54,7 @@ function TransactionHistorySectionItem({
 				<p className={hintClassName}>{comment ? `${bankAccountName} | ${comment}` : bankAccountName}</p>
 			</div>
 			<p className={joinStrings('flex flex-row-reverse flex-grow shrink-0 text-purple-500 font-factor self-start ml-4', titleClassName)}>
-				{`${money} ${currencySymbol}`}
+				{`${formatMoney(money)} ${currencySymbol}`}
 			</p>
 		</div>
 	)

@@ -49,7 +49,7 @@ function CategoriesSection() {
 					className='mx-2.5 my-2.5 w-12 h-12 opacity-90 transform transition hover:scale-105 cursor-pointer hover:opacity-100 shadow'
 				/>
 			</div>
-			<div className='relative w-[340px] self-center mb-14'>
+			<div className='relative w-[340px] self-center mb-20'>
 				<TransactionsChart />
 			</div>
 		</div>)
