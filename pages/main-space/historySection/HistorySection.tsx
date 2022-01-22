@@ -57,7 +57,7 @@ function HistorySection() {
 	return (
 		<div className='flex flex-col min-w-[400px] max-w-[460px] flex-grow bg-white'>
 			<div className={joinStrings(
-				'flex-grow overflow-auto py-5 shadow-[inset_0_-6px_9px_-9px_rgba(0,0,0,0.3)]',
+				'flex-grow overflow-auto py-5',
 				styles.section,
 			)}>
 				{transactionsByDays.map(x => <DayTransactionsHistorySection
@@ -66,7 +66,7 @@ function HistorySection() {
 					transitions={x.value}
 				/>)}
 			</div>
-			<div className='px-5 pt-5 pb-5'>
+			<div className={`px-5 pt-5 pb-5 ${styles['panel-section']}`}>
 				{showPanel && <TransactionPanel />}
 				<ButtonsSection />
 			</div>
