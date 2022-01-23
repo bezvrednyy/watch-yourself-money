@@ -20,17 +20,12 @@ function remapCategoryToCategoryData(data: Category): ClientCategoryData {
 }
 
 function remapBankAccountToBankAccountData(data: BankAccount): BankAccountData {
-	const remappedValue: BankAccountData = {
+	return {
 		id: data.id,
 		name: data.name,
-		color: data.color as ColorId,
 		money: data.money.toNumber(),
 		userId: data.userId,
 	}
-	if (data.description) {
-		remappedValue.description = data.description
-	}
-	return remappedValue
 }
 
 function remapTransactionToTransactionData(data: Transaction): TransactionData {

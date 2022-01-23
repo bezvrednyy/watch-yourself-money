@@ -7,7 +7,6 @@ import {
 } from '../../../backFrontJoint/common/contracts/categories/getCategoriesContract'
 import {createStandardError} from '../../../backFrontJoint/common/errors'
 import {ColorId} from '../../../common/colors/colors'
-import {verify} from '../../../common/utils/verify'
 import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
 import prisma from '../../../prisma/prisma'
 import {ClientCategoryData} from '../../main-space/model/categoriesAtom'
@@ -20,9 +19,11 @@ export default async function getCategories(req: NextApiRequest, res: NextApiRes
 	}
 
 	try {
-		const categories = await prisma.category.findMany({where: {user: {
-			id: verify(session.user.id, 'Server error: email not found'),
-		}}})
+		//Сортируем любую выборку категорий одинаково, чтобы было соответствие в отображении: категорий и диаграммы
+		const categories = await prisma.category.findMany({
+			where: { user: { id: session.user.id } },
+			orderBy: { id: 'asc' }, //TODO:newFeature добавить возможность кастомной сортировки
+		})
 
 		if (categories.length === 0) {
 			sendJsonLeftData<GetCategoriesLeftData>(res, 500, createStandardError('SERVER_ERROR', 'NO_CATEGORIES_FOUND'))

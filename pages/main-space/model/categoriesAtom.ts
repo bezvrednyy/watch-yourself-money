@@ -4,7 +4,6 @@ import {ColorId} from '../../../common/colors/colors'
 import {devideArray} from '../../../common/utils/array'
 import {declareAloneAction} from '../../../commonClient/declareAloneAction'
 import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
-import {updateTransactionsAction} from './transactionsAtom'
 
 type CategoryType = 'EXPENSES'|'INCOMES'
 
@@ -17,9 +16,7 @@ export type ClientCategoryData = {
 	colorId: ColorId,
 }
 
-export type MainCategoryData = ClientCategoryData & {
-	parentCategoryId: undefined,
-}
+export type MainCategoryData = Omit<ClientCategoryData, 'parentCategoryId'>
 
 export type SubCategoryData = ClientCategoryData & {
 	parentCategoryId: string,
@@ -34,15 +31,12 @@ export const categoriesAtom = createPrimitiveAtom<CategoriesAtomData>({
 	mainCategories: [],
 	subCategories: [],
 })
-export const editableCategoryIdAtom = createPrimitiveAtom(<null|string>(null))
+export const editableCategoryIdAtom = createPrimitiveAtom<null|string>(null)
 
+//TODO:improvements мб сделать единый экшн обновления данных: категорий, транзакций, счетов?
 export const updateCategoriesAction = declareAloneAction(async store => {
-	const eithers = await Promise.all([
-		getClientApi().categories.getCategories(),
-		updateTransactionsAction(store),
-	])
-
-	eithers[0]
+	const either = await getClientApi().categories.getCategories()
+	either
 		.mapRight(categories => {
 			const [mainCategories, subCategories] = devideArray(categories, x => x.parentCategoryId === undefined)
 			store.dispatch(categoriesAtom.set({

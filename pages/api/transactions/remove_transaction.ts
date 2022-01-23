@@ -20,8 +20,13 @@ export default async function removeTransaction(req: RemoveTransactionRequest, r
 		const { transactionId } = req.body.data
 		const transactionData = await prisma.transaction.findUnique({
 			where: { id: transactionId },
-			select: { category: {
-				select: { userId: true } },
+			select: {
+				category: { select: {
+					userId: true,
+					type: true,
+				}},
+				money: true,
+				bankAccountId: true,
 			},
 		})
 
@@ -34,7 +39,16 @@ export default async function removeTransaction(req: RemoveTransactionRequest, r
 			return sendJsonLeftData<RemoveTransactionLeftData>(res, 403, createStandardError('FORBIDDEN'))
 		}
 
-		await prisma.transaction.delete({ where: { id: transactionId } })
+		await prisma.$transaction([
+			prisma.bankAccount.update({
+				where: { id: transactionData.bankAccountId },
+				data: { money: transactionData.category.type === 'EXPENSES'
+					? { increment: transactionData.money }
+					: { decrement: transactionData.money },
+				},
+			}),
+			prisma.transaction.delete({ where: { id: transactionId } }),
+		])
 		sendJsonRightData<RemoveTransactionRightData>(res, undefined)
 	}
 	catch (error) {

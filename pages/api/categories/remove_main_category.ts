@@ -17,7 +17,7 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 	}
 
 	try {
-		const {categoryId, removeSubcategories} = req.body.data
+		const {categoryId, turnSubcategoriesToMain} = req.body.data
 		const [categoryInfo, mainCategoriesCount] = await Promise.all([
 			prisma.category.findUnique({
 				where: { id: categoryId },
@@ -46,16 +46,18 @@ export default async function removeMainCategory(req: RemoveMainCategoryRequest,
 			return sendJsonLeftData<RemoveMainCategoryLeftData>(res, 500, createStandardError('SERVER_ERROR', 'NO_MAIN_CATEGORIES_FOUND'))
 		}
 
-		await prisma.$transaction([
-			removeSubcategories
-				? prisma.category.deleteMany({ where: { parentCategoryId: categoryId }})
-				: prisma.category.updateMany({
+		if (turnSubcategoriesToMain) {
+			await prisma.$transaction([
+				prisma.category.updateMany({
 					where: { parentCategoryId: categoryId },
 					data: { parentCategoryId: null },
 				}),
-			prisma.category.delete({where: { id: categoryId }}),
-		])
-
+				prisma.category.delete({where: { id: categoryId }}),
+			])
+		}
+		else {
+			await prisma.category.delete({where: { id: categoryId }})
+		}
 		sendJsonRightData<RemoveMainCategoryRightData>(res, undefined)
 	}
 	catch (error) {

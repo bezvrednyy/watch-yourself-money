@@ -1,39 +1,41 @@
+import styles from './HistorySection.module.css'
 import {PlusIcon} from '@heroicons/react/solid'
 import {useAction, useAtom} from '@reatom/react'
 import {startOfDay} from 'date-fns'
-import {useEffect, useMemo, useState} from 'react'
+import {useMemo} from 'react'
 import {mapToArray} from '../../../common/utils/array'
 import {defaultCompare} from '../../../common/utils/compare'
+import {Logger} from '../../../common/utils/Logger'
 import {useAloneAction} from '../../../commonClient/declareAloneAction'
 import {joinStrings} from '../../../common/utils/string'
-import {verify} from '../../../common/utils/verify'
 import {Button} from '../../../commonClient/uikit/button/Button'
 import {bankAccountsAtom} from '../model/bankAccountsAtom'
-import {categoriesAtom} from '../model/categoriesAtom'
 import {transactionsAtom} from '../model/transactionsAtom'
-import {AddTransactionPanel} from './content/addTransactionSection/AddTransactionPanel'
-import {
-	addTransaction,
-	addTransactionSectionAtoms,
-} from './content/addTransactionSection/model/addTransactionSectionAtoms'
+import {TransactionPanel} from './content/transactionPanel/TransactionPanel'
+import {transactionPanelAtoms} from './content/transactionPanel/model/transactionPanelAtoms'
+import {transactionPanelExternalActions} from './content/transactionPanel/model/externalActions'
 import {ViewTransactionInfo} from './content/TransactionHistorySectionItem'
 import {DayTransactionsHistorySection} from './content/DayTransactionsHistorySection'
 
 function HistorySection() {
-	useInitAtoms()
 	const [transactions] = useAtom(transactionsAtom)
 	const [bankAccounts] = useAtom(bankAccountsAtom)
-	const [open, setOpen] = useState(false)
+	const [showPanel] = useAtom(transactionPanelAtoms.showPanelAtom)
 
 	const transactionsByDays = useMemo(() => {
 		const result: Map<number, Array<ViewTransactionInfo>> = new Map()
 		transactions.forEach(x => {
 			const timestamp = startOfDay(x.timestamp).getTime()
-			const bankAccount = verify(bankAccounts.find(account => account.id === x.bankAccountId))
+			const bankAccount = bankAccounts.find(account => account.id === x.bankAccountId)
+			if (!bankAccount) {
+				Logger.error('No consistent data: bank account not found!')
+				//TODO:improvements Перенести бизнес логику в атомы и там обрабатывать ошибки.
+			}
+
 			const newItem: ViewTransactionInfo = {
 				id: x.id,
 				categoryId: x.categoryId,
-				bankCardName: bankAccount.name,
+				bankAccountName: bankAccount ? bankAccount.name : '',
 				money: x.money,
 				comment: x.comment,
 			}
@@ -53,71 +55,57 @@ function HistorySection() {
 	}, [bankAccounts, transactions])
 
 	return (
-		<div className='flex flex-col w-4/12 bg-white py-5'>
-			{transactionsByDays.map(x => <DayTransactionsHistorySection
-				key={x.key}
-				timestamp={x.key}
-				transitions={x.value}
-			/>)}
-			<div className='mt-auto px-5 pb-5'>
-				{open && <AddTransactionPanel />}
-				<ButtonsSection open={open} setOpen={setOpen} />
+		<div className='flex flex-col min-w-[400px] max-w-[460px] flex-grow bg-white'>
+			<div className={joinStrings(
+				'flex-grow overflow-auto py-5',
+				styles.section,
+			)}>
+				{transactionsByDays.map(x => <DayTransactionsHistorySection
+					key={x.key}
+					timestamp={x.key}
+					transitions={x.value}
+				/>)}
+			</div>
+			<div className={`px-5 pt-5 pb-5 ${styles['panel-section']}`}>
+				{showPanel && <TransactionPanel />}
+				<ButtonsSection />
 			</div>
 		</div>)
 }
 
-function useInitAtoms() {
-	const [categories] = useAtom(categoriesAtom)
-	const [bankAccounts] = useAtom(bankAccountsAtom)
-	const initCategoryId = verify(categories.mainCategories[0], 'Error: there must be at least one category').id
-	const initBankAccountId = verify(bankAccounts[0], 'Error: there must be at least one bank account').id
+function ButtonsSection() {
+	const [showPanel] = useAtom(transactionPanelAtoms.showPanelAtom)
+	const [panelType] = useAtom(transactionPanelAtoms.panelTypeAtom)
+	const handleShowPanel = useAction(transactionPanelAtoms.showPanelAtom.show)
+	const handleClosePanel = useAction(transactionPanelAtoms.showPanelAtom.close)
+	const handleSaveData = useAloneAction(transactionPanelExternalActions.saveData)
+	const handleRemoveTransaction = useAloneAction(transactionPanelExternalActions.removeTransaction)
 
-	const handleSetSelectCategoryId = useAction(addTransactionSectionAtoms.selectedCategoryIdAtom.set)
-	const handleSetSelectedBankAccountId = useAction(addTransactionSectionAtoms.selectedBankAccountId.set)
-
-	useEffect(() => {
-		handleSetSelectCategoryId(initCategoryId)
-		handleSetSelectedBankAccountId(initBankAccountId)
-	}, [
-		handleSetSelectCategoryId,
-		handleSetSelectedBankAccountId,
-		initBankAccountId,
-		initCategoryId,
-	])
-}
-
-type ButtonsSectionProps = {
-	open: boolean,
-	setOpen: (v: boolean) => void,
-}
-
-function ButtonsSection({
-	open,
-	setOpen,
-}: ButtonsSectionProps) {
-	const handleAddTransaction = useAloneAction(addTransaction)
-
-	if (open) {
+	if (showPanel) {
 		return (
 			<div className='flex space-x-3 mt-3'>
 				<Button
 					style='blue-default'
-					onClick={() => handleAddTransaction({
-						onClose: () => setOpen(false),
-					})}
+					onClick={() => handleSaveData()}
 					structure='text'
 					text='Save'
 				/>
+				{panelType === 'edit' && <Button
+					style='destructure'
+					onClick={() => handleRemoveTransaction()}
+					structure='text'
+					text='Remove'
+				/>}
 				<Button
 					style='secondary'
-					onClick={() => setOpen(false)}
+					onClick={handleClosePanel}
 					structure='text'
 					text='Cancel'
 				/>
 			</div>
 		)
 	}
-
+	//TODO:newFeature-incomes Сделать две кнопки: "Add expense", "Add income"
 	return (
 		<div
 			key='open'
@@ -125,7 +113,7 @@ function ButtonsSection({
 				'flex justify-between w-full px-4 py-2.5 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg',
 				'hover:bg-purple-200 cursor-pointer',
 			)}
-			onClick={() => setOpen(true)}
+			onClick={() => handleShowPanel({ type: 'create' })}
 		>
 			<span>Add new transaction</span>
 			<PlusIcon className='w-5 h-5 text-purple-500' />

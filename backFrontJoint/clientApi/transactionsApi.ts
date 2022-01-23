@@ -40,7 +40,7 @@ async function removeTransaction(data: RemoveTransactionRequestData): Promise<Ei
 }
 
 async function editTransaction(data: EditTransactionRequestData): Promise<Either<EditTransactionLeftData, EditTransactionRightData>> {
-	const response = await fetchPostData('/api/transactions/remove_transaction', data)
+	const response = await fetchPostData('/api/transactions/edit_transaction', data)
 	const eitherObject: BackendEitherObject<EditTransactionLeftData, EditTransactionRightData> = await response.json()
 	return processBackendEither(eitherObject)
 }

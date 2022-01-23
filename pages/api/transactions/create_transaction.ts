@@ -13,13 +13,14 @@ export default async function createTransaction(req: CreateTransactionRequest, r
 	const session = await getSession({ req })
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
+		return
 	}
 
 	try {
 		const data = req.body.data
 		const categoryInfo = await prisma.category.findUnique({
 			where: { id: data.categoryId },
-			select: { userId: true },
+			select: { userId: true, type: true },
 		})
 
 		if (!categoryInfo) {
@@ -29,17 +30,26 @@ export default async function createTransaction(req: CreateTransactionRequest, r
 			return sendJsonLeftData<CreateTransactionLeftData>(res, 403, createStandardError('FORBIDDEN'))
 		}
 
-		await prisma.transaction.create({
-			data: {
-				id: data.id,
-				categoryId: data.categoryId,
-				bankAccountId: data.bankAccountId,
-				currencyId: data.currencyId,
-				comment: data.comment,
-				money: new Prisma.Decimal(data.money),
-				date: data.date,
-			},
-		})
+		await prisma.$transaction([
+			prisma.bankAccount.update({
+				where: { id: data.bankAccountId },
+				data: { money: categoryInfo.type === 'INCOMES'
+					? { increment: data.money }
+					: { decrement: data.money },
+				},
+			}),
+			prisma.transaction.create({
+				data: {
+					id: data.id,
+					categoryId: data.categoryId,
+					bankAccountId: data.bankAccountId,
+					currencyId: data.currencyId,
+					comment: data.comment,
+					money: new Prisma.Decimal(data.money),
+					date: data.date,
+				},
+			}),
+		])
 		sendJsonRightData<CreateTransactionRightData>(res, undefined)
 	}
 	catch (error) {

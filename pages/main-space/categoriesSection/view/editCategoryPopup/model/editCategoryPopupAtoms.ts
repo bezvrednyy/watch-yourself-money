@@ -4,7 +4,7 @@ import {ClientCategoryData} from '../../../../model/categoriesAtom'
 import {createEnumAtom, createPrimitiveAtom, createStringAtom} from '@reatom/core/primitives'
 import {OutlineIconId} from '../../../../../../commonClient/uikit/icons/getOutlineIconById'
 
-export type SubcategoryChangeType = 'default'|'removed'|'turnInMain'|'new'|'edited'
+export type SubcategoryChangeType = 'default'|'removed'|'turnToMain'|'new'|'edited'
 
 export type EditCategoryPopupSubcategoryData = ClientCategoryData & {
 	changeType: SubcategoryChangeType,
@@ -25,11 +25,11 @@ const subcategoriesAtom = createAtom(
 	{
 		updateSubcategory: (value: EditCategoryPopupSubcategoryData) => value,
 		remove: (id: string) => id,
-		turnInMain: (id: string) => id,
+		turnToMain: (id: string) => id,
 		set: (value: Array<ClientCategoryData>) => value.map(x => ({ ...x, changeType: 'default'}) as EditCategoryPopupSubcategoryData),
 		add: (value: EditCategoryPopupSubcategoryData) => value,
 	},
-	({onAction, schedule, get}, state = [] as Array<EditCategoryPopupSubcategoryData>) => {
+	({ onAction }, state = [] as Array<EditCategoryPopupSubcategoryData>) => {
 		onAction('set', value => (state = value))
 		onAction('updateSubcategory', value => (state = state.map(
 			x => (x.id === value.id
@@ -39,8 +39,8 @@ const subcategoriesAtom = createAtom(
 		onAction('remove', id => (state = state.map(
 			x => (x.id === id ? { ...x, changeType: 'removed' } : x),
 		)))
-		onAction('turnInMain', id => (state = state.map(
-			x => (x.id === id ? { ...x, changeType: 'turnInMain' } : x),
+		onAction('turnToMain', id => (state = state.map(
+			x => (x.id === id ? { ...x, changeType: 'turnToMain' } : x),
 		)))
 		onAction('add', value => {
 			state = state.concat(value)

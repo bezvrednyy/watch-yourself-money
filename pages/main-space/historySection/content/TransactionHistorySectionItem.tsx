@@ -1,3 +1,4 @@
+import {formatMoney} from '../../../../common/utils/productUtils'
 import {joinStrings} from '../../../../common/utils/string'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../commonClient/environment/userSettingsAtom'
 import {categoriesAtom} from '../../model/categoriesAtom'
@@ -10,18 +11,17 @@ import {getColorById} from '../../../../common/colors/theme'
 type ViewTransactionInfo = {
 	id: string,
 	categoryId: string,
-	bankCardName: string,
+	bankAccountName: string,
 	money: number,
 	comment?: string,
 }
 
 type TransitionHistorySectionItemProps = ViewTransactionInfo & {
-	onClick: (id: string) => void,
+	onClick: () => void,
 }
 
 function TransactionHistorySectionItem({
-	id,
-	bankCardName,
+	bankAccountName,
 	categoryId,
 	money,
 	comment,
@@ -40,7 +40,7 @@ function TransactionHistorySectionItem({
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 
 	return (
-		<div className='flex items-center cursor-pointer px-4 py-1.5 hover:bg-gray-100' onClick={() => onClick(id)}>
+		<div className='flex items-center cursor-pointer px-6 py-1.5 hover:bg-gray-100' onClick={onClick}>
 			<RoundedSquare
 				createIcon={() => <Icon className='m-2 w-7 h-7 overflow-hidden'/>}
 				bgHexColor={getColorById(category.colorId)}
@@ -51,10 +51,10 @@ function TransactionHistorySectionItem({
 				<p className={joinStrings('text-gray-800', titleClassName)}>
 					{category.title}
 				</p>
-				<p className={hintClassName}>{comment ? `${bankCardName} | ${comment}` : bankCardName}</p>
+				<p className={hintClassName}>{comment ? `${bankAccountName} | ${comment}` : bankAccountName}</p>
 			</div>
 			<p className={joinStrings('flex flex-row-reverse flex-grow shrink-0 text-purple-500 font-factor self-start ml-4', titleClassName)}>
-				{`${money} ${currencySymbol}`}
+				{`${formatMoney(money)} ${currencySymbol}`}
 			</p>
 		</div>
 	)

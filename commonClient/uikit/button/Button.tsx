@@ -2,7 +2,7 @@ import {Logger} from '../../../common/utils/Logger'
 import type {ButtonProps} from './buttonProps'
 import {ButtonWithText} from './buttons/ButtonWithText'
 
-function Button(props: ButtonProps) {
+export function Button(props: ButtonProps) {
 	switch (props.structure) {
 		case 'text':
 			return ButtonWithText(props)
@@ -10,8 +10,4 @@ function Button(props: ButtonProps) {
 			Logger.error(`Unknown button structure: ${props.structure}`)
 			return null
 	}
-}
-
-export {
-	Button,
 }

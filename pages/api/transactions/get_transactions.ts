@@ -7,7 +7,6 @@ import {
 	GetTransactionsRightData,
 } from '../../../backFrontJoint/common/contracts/transactions/getTransactionsContract'
 import {createStandardError} from '../../../backFrontJoint/common/errors'
-import {verify} from '../../../common/utils/verify'
 import prisma from '../../../prisma/prisma'
 import {TransactionData} from '../../main-space/model/transactionsAtom'
 
@@ -20,7 +19,7 @@ export default async function getTransactions(req: NextApiRequest, res: NextApiR
 
 	try {
 		const categories = await prisma.category.findMany({where: {user: {
-			id: verify(session.user.id, 'Server error: email not found'),
+			id: session.user.id,
 		}}})
 
 		if (categories.length === 0) {

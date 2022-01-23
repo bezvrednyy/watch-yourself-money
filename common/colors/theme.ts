@@ -273,15 +273,18 @@ const theme: DefaultTheme = {
 	},
 }
 
-function getColorById(id: ColorId): string {
+function getColorById(id: ColorId, increment = 0): string {
 	if (id === 'white' || id === 'black' || id === 'transparent') {
 		return theme.colors[id]
 	}
 	const values = id.split(colorDelimiter)
 	const name = verify(values[0], 'Error, unknown ColorName') as ColorName
 	const variation = Number(verify(values[1], 'Error, unknown ColorsVariation')) as ColorsVariation
+	const resultVariation = increment > 0
+		? Math.min(variation + increment * 100, 900)
+		: (increment < 0 ? Math.max(variation + increment * 100, 50) : variation)
 
-	return theme.colors[name][variation]
+	return theme.colors[name][resultVariation as ColorsVariation]
 }
 
 export {

@@ -1,16 +1,20 @@
-import Link from 'next/link'
+import {useSession} from 'next-auth/react'
 import {LogoIcon} from '../icons/LogoIcon'
-import {AuthButtons} from './AuthButtons'
+import {LoginButton} from './LoginButton'
+import {ProfileButton} from './profileButton/ProfileButton'
 
 function NavigationPanel() {
-	return <nav className='header sticky top-0 bg-white shadow-md flex items-center justify-between py-3 px-8'>
-		<Link href='/main-space'>
-			<a className='flex align-middle'>
-				<LogoIcon size={36} />
-				<h1 className='text-2xl font-medium ml-2 py-1'>Сервис</h1>
-			</a>
-		</Link>
-		<AuthButtons/>
+	const {data: session} = useSession()
+	const buttonComponent = session
+		? <ProfileButton />
+		: <LoginButton />
+
+	return <nav className='header sticky top-0 bg-white flex items-center justify-between py-4 px-24 shadow-lg shadow-white z-10'>
+		<div className='flex align-middle cursor-default'>
+			<LogoIcon size={36} />
+			<h1 className='text-2xl font-medium ml-2 py-1'>Сервис</h1>
+		</div>
+		{buttonComponent}
 	</nav>
 }
 

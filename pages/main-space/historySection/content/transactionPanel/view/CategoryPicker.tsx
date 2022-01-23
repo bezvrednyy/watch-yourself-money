@@ -9,10 +9,10 @@ import {getOutlineIconById} from '../../../../../../commonClient/uikit/icons/get
 import {PopoverDefault} from '../../../../../../commonClient/uikit/popovers/PopoverDefault'
 import {RoundedSquare} from '../../../../../../commonClient/uikit/RoundedSquare'
 import {categoriesAtom} from '../../../../model/categoriesAtom'
-import {addTransactionSectionAtoms} from '../model/addTransactionSectionAtoms'
+import {transactionPanelAtoms} from '../model/transactionPanelAtoms'
 
 export function CategoryPicker() {
-	const [selectedCategoryId] = useAtom(addTransactionSectionAtoms.selectedCategoryIdAtom)
+	const [selectedCategoryId] = useAtom(transactionPanelAtoms.selectedCategoryIdAtom)
 	const [categories] = useAtom(categoriesAtom)
 	const selectedCategory = verify(categories.mainCategories.find(x => x.id === selectedCategoryId))
 	const IconFC = getOutlineIconById(selectedCategory.iconId)
@@ -33,7 +33,8 @@ function PopoverContent({
 	closeFn,
 }: PopoverContentProps) {
 	const [categories] = useAtom(categoriesAtom)
-	const handleSetSelectCategoryId = useAction(addTransactionSectionAtoms.selectedCategoryIdAtom.set)
+	const handleSetSelectedCategoryId = useAction(transactionPanelAtoms.selectedCategoryIdAtom.set)
+	const handleSetSelectedSubcategoryId = useAction(transactionPanelAtoms.selectedSubcategoryIdAtom.set)
 
 	return (
 		<div className='flex flex-wrap'>
@@ -44,7 +45,8 @@ function PopoverContent({
 					createIcon={() => <Icon className='m-1 w-6 h-6 overflow-hidden'/>}
 					title={item.title}
 					onClick={() => {
-						handleSetSelectCategoryId(item.id)
+						handleSetSelectedCategoryId(item.id)
+						handleSetSelectedSubcategoryId(null)
 						closeFn()
 					}}
 					bgHexColor={getColorById(item.colorId)}

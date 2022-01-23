@@ -8,19 +8,19 @@ import {getOutlineIconById} from '../../../../../commonClient/uikit/icons/getOut
 import {TextField} from '../../../../../commonClient/uikit/textField/TextField'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../commonClient/environment/userSettingsAtom'
 import {ClientCategoryData, categoriesAtom} from '../../../model/categoriesAtom'
-import styles from './AddTransactionPanel.module.css'
-import {addTransactionSectionAtoms} from './model/addTransactionSectionAtoms'
+import styles from './TransactionPanel.module.css'
+import {transactionPanelAtoms} from './model/transactionPanelAtoms'
 import {BankAccountMenu} from './view/BankAccountMenu'
 import {CategoryPicker} from './view/CategoryPicker'
 
-export function AddTransactionPanel() {
+export function TransactionPanel() {
 	const [userSettings] = useAtom(userSettingsAtom)
-	const [sum] = useAtom(addTransactionSectionAtoms.sumAtom)
-	const [comment] = useAtom(addTransactionSectionAtoms.transactionCommentAtom)
-	const [transactionDate] = useAtom(addTransactionSectionAtoms.transactionDateAtom)
-	const handleSetSum = useAction(addTransactionSectionAtoms.sumAtom.set)
-	const handleSetComment = useAction(addTransactionSectionAtoms.transactionCommentAtom.set)
-	const handleSetDate = useAction(addTransactionSectionAtoms.transactionDateAtom.set)
+	const [sum] = useAtom(transactionPanelAtoms.sumAtom)
+	const [comment] = useAtom(transactionPanelAtoms.transactionCommentAtom)
+	const [transactionDate] = useAtom(transactionPanelAtoms.transactionDateAtom)
+	const handleSetSum = useAction(transactionPanelAtoms.sumAtom.set)
+	const handleSetComment = useAction(transactionPanelAtoms.transactionCommentAtom.set)
+	const handleSetDate = useAction(transactionPanelAtoms.transactionDateAtom.set)
 
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 
@@ -37,14 +37,10 @@ export function AddTransactionPanel() {
 				style='link'
 				value={`${sum}`}
 				onInput={value => handleSetSum(Number(value))}
-				size='xLarge'
 				placeholder='100'
 				required={true}
 				inputType='number'
-				inputClass={joinStrings(
-					'w-16',
-					styles.sum,
-				)}
+				inputClass='w-16 px-1 text-lg'
 				createIcon={() => <div className='text-xl'>{currencySymbol}</div>}
 			/>
 		</div>
@@ -62,7 +58,7 @@ export function AddTransactionPanel() {
 }
 
 function SubcategoriesSection() {
-	const [selectedCategoryId] = useAtom(addTransactionSectionAtoms.selectedCategoryIdAtom)
+	const [selectedCategoryId] = useAtom(transactionPanelAtoms.selectedCategoryIdAtom)
 	const [categories] = useAtom(categoriesAtom)
 	const selectedCategory = verify(categories.mainCategories.find(x => x.id === selectedCategoryId))
 	const subcategories = useMemo(
@@ -86,8 +82,8 @@ function SubcategoryBadge({
 	title,
 	iconId,
 }: ClientCategoryData) {
-	const [selectedSubcategoryId] = useAtom(addTransactionSectionAtoms.selectedSubcategoryIdAtom)
-	const handleSetSelectedSubcategoryId = useAction(addTransactionSectionAtoms.selectedSubcategoryIdAtom.set)
+	const [selectedSubcategoryId] = useAtom(transactionPanelAtoms.selectedSubcategoryIdAtom)
+	const handleSetSelectedSubcategoryId = useAction(transactionPanelAtoms.selectedSubcategoryIdAtom.set)
 
 	return (
 		<Badge

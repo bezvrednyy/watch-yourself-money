@@ -33,6 +33,7 @@ export function NotificationPopup({
 		text='Cancel'
 	/>)
 
+	//TODO:improvements
 	return <PopupDefault
 		createContent={() => (
 			<div className=''>

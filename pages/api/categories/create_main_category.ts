@@ -17,10 +17,9 @@ export default async function createCategory(req: CreateCategoryRequest, res: Ne
 		return
 	}
 
-	const userId = session.user.id
-	const {subcategories, ...mainCategory} = req.body.data
-
 	try {
+		const userId = session.user.id
+		const {subcategories, ...mainCategory} = req.body.data
 		await prisma.category.createMany({data: [
 			{
 				id: mainCategory.id,

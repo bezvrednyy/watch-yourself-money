@@ -2,7 +2,7 @@ import {CreateCategoryRequestData} from '../../../../../../backFrontJoint/common
 import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
 import {verify} from '../../../../../../common/utils/verify'
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
-import {updateCategoriesAction} from '../../../../model/categoriesAtom'
+import {updateMainSpaceDataAction} from '../../../../model/updateMainSpaceDataAction'
 import {addCategoryPopupAtoms} from './addCategoryPopupAtoms'
 
 type SaveDataParams = {
@@ -34,7 +34,7 @@ export const addCategoryPopupSaveData = declareAloneAction<SaveDataParams>(async
 
 	either
 		.mapRight(async () => {
-			await updateCategoriesAction(store)
+			await updateMainSpaceDataAction(store, ['categories'])
 			store.dispatch(statusesAtom.setNormal())
 			onClose()
 		})

@@ -13,6 +13,7 @@ export default async function getUserSettings(req: NextApiRequest, res: NextApiR
 
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
+		return
 	}
 
 	try {

@@ -1,16 +1,16 @@
 import {Menu} from '@headlessui/react'
-import {useAtom} from '@reatom/react'
+import {useAction, useAtom} from '@reatom/react'
 import {joinStrings} from '../../../../../../common/utils/string'
 import {verify} from '../../../../../../common/utils/verify'
 import {MenuDefault} from '../../../../../../commonClient/uikit/MenuDefault'
 import {TextWithEllipsis} from '../../../../../../commonClient/uikit/TextWithEllipsis'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../../commonClient/environment/userSettingsAtom'
 import {bankAccountsAtom} from '../../../../model/bankAccountsAtom'
-import {addTransactionSectionAtoms} from '../model/addTransactionSectionAtoms'
+import {transactionPanelAtoms} from '../model/transactionPanelAtoms'
 
 export function BankAccountMenu() {
 	const [bankAccounts] = useAtom(bankAccountsAtom)
-	const [selectedBankAccountId] = useAtom(addTransactionSectionAtoms.selectedBankAccountId)
+	const [selectedBankAccountId] = useAtom(transactionPanelAtoms.selectedBankAccountId)
 	const selectedBankAccount = verify(bankAccounts.find(x => x.id === selectedBankAccountId))
 
 	return (
@@ -25,25 +25,28 @@ export function BankAccountMenu() {
 					{selectedBankAccount.name}
 				</div>
 			)}
-			items={bankAccounts.map(x => <BankAccountItem key='item' {...x}/>)}
+			items={bankAccounts.map(x => <BankAccountItem key={x.id} {...x}/>)}
 		/>
 	)
 }
 
 type MenuItemProps = {
+	id: string,
 	name: string,
 	money: number,
 }
 
 function BankAccountItem({
+	id,
 	name,
 	money,
 }: MenuItemProps) {
 	const [userSettings] = useAtom(userSettingsAtom)
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
+	const handleSetSelectedBankAccountId = useAction(transactionPanelAtoms.selectedBankAccountId.set)
 
 	return (
-		<Menu.Item>
+		<Menu.Item onClick={() => handleSetSelectedBankAccountId(id)}>
 			{({active}) => (
 				<button className={joinStrings(
 					'flex justify-between rounded-md items-center w-full px-3 py-1 text-sm',

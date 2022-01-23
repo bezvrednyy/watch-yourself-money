@@ -19,7 +19,7 @@ function MainLayout({
 			<meta name='keywords' content='ключевые слова'/>
 			<meta name='description' content='описание'/>
 		</Head>
-		<NavigationPanel/>
+		<NavigationPanel />
 		<main className={className}>
 			{children}
 		</main>

@@ -1,0 +1,13 @@
+.section::-webkit-scrollbar {
+    width: 0;
+}
+
+.section {
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+
+.panel-section {
+    z-index: 1;
+    box-shadow: 0 -35px 25px -25px white, 0 -15px 10px -10px white;
+}

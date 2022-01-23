@@ -8,24 +8,10 @@ export type SelectedPeriod = {
 
 export const selectedPeriodAtom = createAtom(
 	{
-		setStartDate: (v: Date) => v,
-		setEndDate: (v: Date) => v,
+		set: (v: SelectedPeriod) => v,
 	},
 	({onAction}, state = getInitPeriod()) => {
-		onAction('setStartDate', startDate => (state = {
-			...state,
-			startDate,
-			endDate: startDate > state.endDate
-				? startDate
-				: state.endDate,
-		}))
-		onAction('setEndDate', endDate => (state = {
-			...state,
-			endDate,
-			startDate: endDate < state.startDate
-				? endDate
-				: state.startDate,
-		}))
+		onAction('set', value => (state = value))
 		return state
 	},
 )

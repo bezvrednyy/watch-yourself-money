@@ -13,6 +13,7 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 	const session = await getSession({ req })
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
+		return
 	}
 	const {
 		removedSubcategoriesData,
