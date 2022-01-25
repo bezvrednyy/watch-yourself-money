@@ -33,7 +33,7 @@ function AddAccountButton() {
 			return `shadow-lg shadow-red-200 bg-white ${styles['bank-account-error']}`
 		}
 		return joinStrings(
-			status === 'normal' ? 'bg-slate-50 shadow-lg' : 'bg-white shadow-xl',
+			status === 'normal' ? 'bg-purple-50 shadow-lg' : 'shadow-xl',
 			'hover:shadow-xl transition duration-300',
 		)
 	}
@@ -42,7 +42,7 @@ function AddAccountButton() {
 		<div
 			className={joinStrings(
 				'group flex box-border w-full px-8 h-20 rounded-full items-center justify-center',
-				'cursor-pointer hover:bg-white',
+				'cursor-pointer',
 				getWrapperStyles(),
 			)}
 			onClick={handleSetOpened}

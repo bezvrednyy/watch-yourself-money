@@ -16,6 +16,7 @@ import {transactionPanelAtoms} from './content/transactionPanel/model/transactio
 import {transactionPanelExternalActions} from './content/transactionPanel/model/externalActions'
 import {ViewTransactionInfo} from './content/TransactionHistorySectionItem'
 import {DayTransactionsHistorySection} from './content/DayTransactionsHistorySection'
+import {SwitchHorizontalIcon} from '@heroicons/react/outline'
 
 function HistorySection() {
 	const [transactions] = useAtom(transactionsAtom)
@@ -53,24 +54,38 @@ function HistorySection() {
 				y.key,
 			))
 	}, [bankAccounts, transactions])
+	const content = transactionsByDays.length
+		? <div className={joinStrings('flex-grow overflow-auto py-5', styles.section)}>
+			{transactionsByDays.map(x => <DayTransactionsHistorySection
+				key={x.key}
+				timestamp={x.key}
+				transitions={x.value}
+			/>)}
+		</div>
+		: <EmptyContent />
 
 	return (
 		<div className='flex flex-col min-w-[400px] max-w-[460px] flex-grow bg-white'>
-			<div className={joinStrings(
-				'flex-grow overflow-auto py-5',
-				styles.section,
-			)}>
-				{transactionsByDays.map(x => <DayTransactionsHistorySection
-					key={x.key}
-					timestamp={x.key}
-					transitions={x.value}
-				/>)}
-			</div>
+			{content}
 			<div className={`px-5 pt-5 pb-5 ${styles['panel-section']}`}>
 				{showPanel && <TransactionPanel />}
 				<ButtonsSection />
 			</div>
 		</div>)
+}
+
+function EmptyContent() {
+	return (
+		<div className={joinStrings(
+			'flex flex-col flex-grow py-5 items-center justify-center text-gray-400',
+			styles['empty-content'],
+		)}>
+			<SwitchHorizontalIcon className='w-14 h-14' />
+			<p className='text-2xl font-semibold mt-4'>
+				Add your first transaction!
+			</p>
+		</div>
+	)
 }
 
 function ButtonsSection() {
