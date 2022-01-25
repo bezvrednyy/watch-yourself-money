@@ -21,13 +21,24 @@ export function TransactionsChart() {
 	const ref = useRef()
 	const [selectedPeriod] = useAtom(selectedPeriodAtom)
 	const [categoriesExpensesData] = useAtom(transactionChartAtoms.categoriesExpensesAtom)
-	const labels: Array<string> = []
 	const [userSettings] = useAtom(userSettingsAtom)
+
+	const expensesData = categoriesExpensesData.mainCategoriesExpenses
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
-	const data = categoriesExpensesData.mainCategoriesExpenses.map(x => {
-		labels.push(`${x.name}`)
-		return x.money
-	})
+	const labels: Array<string> = []
+	const data = expensesData.length
+		? expensesData.map(x => {
+			labels.push(`${x.name}`)
+			return x.money
+		})
+		: [1]
+	const backgroundColors = expensesData.length
+		? expensesData.map(x => getColorById(x.colorId))
+		: getColorById('gray#300')
+	const borderColors = expensesData.length
+		? categoriesExpensesData.mainCategoriesExpenses.map(x => getColorById(x.colorId, 1))
+		: getColorById('gray#300')
+
 
 	const handleUpdateExpenses = useAloneAction(updateChartDataAction)
 
@@ -49,9 +60,9 @@ export function TransactionsChart() {
 					labels,
 					datasets: [{
 						data,
-						backgroundColor: categoriesExpensesData.mainCategoriesExpenses.map(x => getColorById(x.colorId)),
+						backgroundColor: backgroundColors,
 						spacing: 5,
-						borderColor: categoriesExpensesData.mainCategoriesExpenses.map(x => getColorById(x.colorId, 1)),
+						borderColor: borderColors,
 						borderWidth: 2,
 						borderRadius: 12,
 						borderAlign: 'center',
