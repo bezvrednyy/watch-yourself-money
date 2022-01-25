@@ -6,7 +6,6 @@ import {AddCategoryPopup} from './view/addCategoryPopup/AddCategoryPopup'
 import {EditCategoryPopup} from './view/editCategoryPopup/EditCategoryPopup'
 import {getOutlineIconById} from '../../../commonClient/uikit/icons/getOutlineIconById'
 import {RoundedSquare} from '../../../commonClient/uikit/RoundedSquare'
-import {Tabs} from '../Tabs'
 import {categoriesAtom, editableCategoryIdAtom} from '../model/categoriesAtom'
 import {TransactionsChart} from './view/transactionsChart/TransactionsChart'
 
@@ -27,8 +26,7 @@ function CategoriesSection() {
 				show={showAddCategoryPopup}
 				onClose={() => setShowAddCategoryPopup(false)}
 			/>
-			<Tabs items={['Расходы']}/>
-			<div className='flex flex-wrap pt-10 mb-auto px-[62px]'>
+			<div className='flex flex-wrap pt-20 mb-auto px-[62px]'>
 				{categories.mainCategories.map(item => {
 					const Icon = getOutlineIconById(item.iconId)
 					return <RoundedSquare
