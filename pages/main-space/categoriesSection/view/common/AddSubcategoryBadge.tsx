@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {joinStrings} from '../../../../../common/utils/string'
 import {Badge} from '../../../../../commonClient/uikit/Badge'
 import {Button} from '../../../../../commonClient/uikit/button/Button'
@@ -22,6 +22,13 @@ export function AddSubcategoryBadge({
 	const [show, setShow] = useState(false)
 	const [iconId, setIconId] = useState<OutlineIconId>('outline-bookmark')
 	const [title, setTitle] = useState('')
+
+	useEffect(() => {
+		if (show) {
+			setTitle('')
+			setIconId('outline-bookmark')
+		}
+	}, [show])
 
 	return <>
 		<Badge
