@@ -2,6 +2,7 @@ import {Popover, Transition} from '@headlessui/react'
 import {useState} from 'react'
 import {usePopper} from 'react-popper'
 import {Portal} from 'next/dist/client/portal'
+import {joinStrings} from '../../../../../common/utils/string'
 
 export type PopoverContentProps = {
 	closeFn: () => void,
@@ -11,12 +12,14 @@ type ButtonWithPopoverProps = {
 	createButton: () => JSX.Element,
 	createPopover: (params: PopoverContentProps) => JSX.Element,
 	className?: string,
+	popoverClass?: string,
 }
 
 export function ButtonWithPopover({
 	createButton,
 	createPopover,
 	className,
+	popoverClass,
 }: ButtonWithPopoverProps) {
 	const [referenceElement, setReferenceElement] = useState<HTMLButtonElement|null>(null)
 	const [popperElement, setPopperElement] = useState<HTMLDivElement|null>()
@@ -38,7 +41,7 @@ export function ButtonWithPopover({
 			</Popover.Button>
 			<Portal type='popover-layer'>
 				<Popover.Panel
-					className='z-10'
+					className={joinStrings('z-10', popoverClass)}
 					ref={setPopperElement}
 					style={styles.popper}
 					{...attributes.popper}

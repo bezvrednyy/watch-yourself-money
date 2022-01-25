@@ -1,16 +1,17 @@
 import {Transaction} from '@prisma/client'
-import {NextApiRequest, NextApiResponse} from 'next'
+import {NextApiResponse} from 'next'
 import {getSession} from 'next-auth/react'
 import {sendJsonLeftData, sendJsonRightData} from '../../../backFrontJoint/backendApi/sendJsonData'
 import {
 	GetTransactionsLeftData,
+	GetTransactionsRequest,
 	GetTransactionsRightData,
 } from '../../../backFrontJoint/common/contracts/transactions/getTransactionsContract'
 import {createStandardError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
 import {TransactionData} from '../../main-space/model/transactionsAtom'
 
-export default async function getTransactions(req: NextApiRequest, res: NextApiResponse) {
+export default async function getTransactions(req: GetTransactionsRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
 	if (!session?.user) {
 		res.status(401).redirect('/api/auth/signin')
@@ -18,6 +19,7 @@ export default async function getTransactions(req: NextApiRequest, res: NextApiR
 	}
 
 	try {
+		const {startDate, endDate} = req.body.data
 		const categories = await prisma.category.findMany({where: {user: {
 			id: session.user.id,
 		}}})
@@ -28,7 +30,10 @@ export default async function getTransactions(req: NextApiRequest, res: NextApiR
 		}
 
 		const transactions = await prisma.transaction.findMany({
-			where: { categoryId: { in: categories.map(x => x.id) } },
+			where: {
+				categoryId: { in: categories.map(x => x.id) },
+				date: { gte: startDate, lte: endDate },
+			},
 			orderBy: { date: 'desc' },
 			take: 30,
 		})

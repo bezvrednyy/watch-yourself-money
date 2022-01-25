@@ -2,6 +2,7 @@ import {CurrencyId} from '@prisma/client'
 import {createPrimitiveAtom} from '@reatom/core/primitives'
 import {getClientApi, processStandardError} from '../../../backFrontJoint/clientApi/clientApi'
 import {declareAloneAction} from '../../../commonClient/declareAloneAction'
+import {selectedPeriodAtom} from './selectedPeriodAtom'
 
 export type TransactionData = {
 	id: string
@@ -18,7 +19,8 @@ export type TransactionData = {
 export const transactionsAtom = createPrimitiveAtom<Array<TransactionData>>([])
 
 export const updateTransactionsAction = declareAloneAction(async store => {
-	const either = await getClientApi().transactions.getTransactions()
+	const selectedPeriod = store.getState(selectedPeriodAtom)
+	const either = await getClientApi().transactions.getTransactions(selectedPeriod)
 	either
 		.mapRight(transactions => store.dispatch(transactionsAtom.set(transactions)))
 		.mapLeft(processStandardError)

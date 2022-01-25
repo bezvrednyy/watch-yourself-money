@@ -30,10 +30,10 @@ function AddAccountButton() {
 	function getWrapperStyles() {
 		const hasError = [...errorsSet].length
 		if (hasError) {
-			return `shadow-lg shadow-red-200 bg-white ${commonStyles['bank-account-shake']}`
+			return `shadow-lg shadow-red-200 ${commonStyles['bank-account-shake']}`
 		}
 		return joinStrings(
-			status === 'normal' ? 'bg-purple-50 shadow-lg' : 'shadow-xl',
+			status === 'normal' ? 'shadow-lg' : 'shadow-xl',
 			'hover:shadow-xl transition duration-300',
 		)
 	}
@@ -42,7 +42,7 @@ function AddAccountButton() {
 		<div
 			className={joinStrings(
 				'group flex box-border w-full px-8 h-20 rounded-full items-center justify-center',
-				'cursor-pointer',
+				'cursor-pointer bg-purple-50',
 				getWrapperStyles(),
 			)}
 			onClick={handleSetOpened}

@@ -82,7 +82,7 @@ function EmptyContent() {
 		)}>
 			<SwitchHorizontalIcon className='w-14 h-14' />
 			<p className='text-2xl font-semibold mt-4'>
-				Add your first transaction!
+				No transactions found
 			</p>
 		</div>
 	)

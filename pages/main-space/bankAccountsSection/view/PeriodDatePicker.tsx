@@ -14,6 +14,7 @@ export function PeriodDatePicker() {
 	return (
 		<ButtonWithPopover
 			className='my-4'
+			popoverClass='shadow-lg'
 			createButton={() => <PickerButton />}
 			createPopover={({closeFn}) => <Popover closeFn={closeFn} />}
 		/>

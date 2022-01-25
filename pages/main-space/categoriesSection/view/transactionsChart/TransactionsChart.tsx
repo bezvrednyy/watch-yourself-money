@@ -1,4 +1,5 @@
 import {formatMoney} from '../../../../../common/utils/productUtils'
+import {updateMainSpaceDataAction} from '../../../model/updateMainSpaceDataAction'
 import styles from './TransactionsChart.module.css'
 import {ChartProps, Doughnut} from 'react-chartjs-2'
 import {
@@ -13,7 +14,6 @@ import {getColorById} from '../../../../../common/colors/theme'
 import {useAloneAction} from '../../../../../commonClient/declareAloneAction'
 import {getCurrencySymbolById, userSettingsAtom} from '../../../../../commonClient/environment/userSettingsAtom'
 import {selectedPeriodAtom} from '../../../model/selectedPeriodAtom'
-import {updateChartDataAction} from './model/externalActions'
 import {transactionChartAtoms} from './model/transactionChartAtoms'
 
 ChartJS.register(ArcElement, Tooltip)
@@ -24,15 +24,13 @@ export function TransactionsChart() {
 	const [categoriesExpensesData] = useAtom(transactionChartAtoms.categoriesExpensesAtom)
 	const [userSettings] = useAtom(userSettingsAtom)
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
-	const handleUpdateExpenses = useAloneAction(updateChartDataAction)
+	const handleUpdateMainSpaceData = useAloneAction(updateMainSpaceDataAction)
 	const chartProps = useChartProps()
 
 	useEffect(() => {
 		//Заиспользовал useEffect, вместо track.onChange чтобы иметь возможность задействовать aloneActions
-		handleUpdateExpenses({
-			selectedPeriod,
-		})
-	}, [handleUpdateExpenses, selectedPeriod])
+		handleUpdateMainSpaceData()
+	}, [handleUpdateMainSpaceData, selectedPeriod])
 
 	return (
 		<>
