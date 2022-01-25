@@ -36,7 +36,7 @@ export function TransactionsChart() {
 		? expensesData.map(x => getColorById(x.colorId))
 		: getColorById('gray#300')
 	const borderColors = expensesData.length
-		? categoriesExpensesData.mainCategoriesExpenses.map(x => getColorById(x.colorId, 1))
+		? expensesData.map(x => getColorById(x.colorId, 1))
 		: getColorById('gray#300')
 
 

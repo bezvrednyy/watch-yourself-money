@@ -1,4 +1,4 @@
-import styles from './AddAccountButton.module.css'
+import commonStyles from '../common/common.module.css'
 import {isNumber} from '../../../../../common/utils/number'
 import {formatMoney} from '../../../../../common/utils/productUtils'
 import {joinStrings, removeSpaces} from '../../../../../common/utils/string'
@@ -30,7 +30,7 @@ function AddAccountButton() {
 	function getWrapperStyles() {
 		const hasError = [...errorsSet].length
 		if (hasError) {
-			return `shadow-lg shadow-red-200 bg-white ${styles['bank-account-error']}`
+			return `shadow-lg shadow-red-200 bg-white ${commonStyles['bank-account-shake']}`
 		}
 		return joinStrings(
 			status === 'normal' ? 'bg-purple-50 shadow-lg' : 'shadow-xl',
