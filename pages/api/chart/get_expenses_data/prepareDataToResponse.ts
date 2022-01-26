@@ -18,6 +18,9 @@ export function prepareDataToResponse({
 	const percentExpenses: Array<MainCategoryPercentExpenses> = []
 
 	mainExpensesMap.forEach((({id, subcategories, name, money, color}) => {
+		if (money.toNumber() === 0) {
+			return //Фильтруем. Пустые данные не нужны для графика.
+		}
 		percentExpenses.push({
 			categoryId: id,
 			money: money.toNumber(),
