@@ -13,7 +13,7 @@ import {CategoriesSection} from '../../pagesComponents/main-space/categoriesSect
 import {HistorySection} from '../../pagesComponents/main-space/historySection/HistorySection'
 import {joinStrings} from '../../common/utils/string'
 import {TransactionData, transactionsAtom} from '../../pagesComponents/main-space/model/transactionsAtom'
-import {remapBankAccountToBankAccountData, remapCategoryToCategoryData, remapTransactionToTransactionData} from './remapMainSpaceData'
+import {remapBankAccountToBankAccountData, remapCategoryToCategoryData, remapTransactionToTransactionData} from '../../pagesComponents/main-space/remapMainSpaceData'
 
 interface MainSpaceProps {
 	categories: Array<ClientCategoryData>,
