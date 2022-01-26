@@ -11,3 +11,7 @@
     z-index: 1;
     box-shadow: 0 -35px 25px -25px white, 0 -15px 10px -10px white;
 }
+
+.empty-content {
+    box-shadow: -6px 0 10px -10px lightgray, 6px 0 10px -10px lightgray;
+}

@@ -1,16 +1,10 @@
 import {getClientApi, processStandardError} from '../../../../../../backFrontJoint/clientApi/clientApi'
 import {declareAloneAction} from '../../../../../../commonClient/declareAloneAction'
-import {SelectedPeriod} from '../../../../model/selectedPeriodAtom'
+import {selectedPeriodAtom} from '../../../../model/selectedPeriodAtom'
 import {transactionChartAtoms} from './transactionChartAtoms'
 
-type UpdateDataPayload = {
-	selectedPeriod: SelectedPeriod,
-}
-
-export const updateChartDataAction = declareAloneAction(async (store, {
-	selectedPeriod,
-}: UpdateDataPayload) => {
-	//TODO:chart обновление всех данных: категорий, транзакций и т. п.
+export const updateChartDataAction = declareAloneAction(async store => {
+	const selectedPeriod = store.getState(selectedPeriodAtom)
 	const either = await getClientApi().chart.getExpensesData(selectedPeriod)
 	either
 		.mapRight(data => {

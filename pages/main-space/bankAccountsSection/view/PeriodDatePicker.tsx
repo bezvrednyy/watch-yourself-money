@@ -9,11 +9,13 @@ import {ButtonWithPopover} from '../../../../commonClient/uikit/button/buttons/b
 import {Button} from '../../../../commonClient/uikit/button/Button'
 import {DateField} from '../../../../commonClient/uikit/datePicker/DateField'
 import {selectedPeriodAtom} from '../../model/selectedPeriodAtom'
+import {CalendarIcon} from '@heroicons/react/solid'
 
 export function PeriodDatePicker() {
 	return (
 		<ButtonWithPopover
-			className='my-4'
+			className='mb-4 mt-7'
+			popoverClass='shadow-lg'
 			createButton={() => <PickerButton />}
 			createPopover={({closeFn}) => <Popover closeFn={closeFn} />}
 		/>
@@ -22,15 +24,17 @@ export function PeriodDatePicker() {
 
 function PickerButton() {
 	const [selectedPeriod] = useAtom(selectedPeriodAtom)
-	return <div className='flex justify-center items-center'>
+	const inputClass = joinStrings('text-gray-900 font-medium bg-transparent font-serif', styles['date-field'])
+
+	return <div className='flex justify-center items-center border-b-2 border-purple-200 rounded-lg'>
 		<DateField
 			date={verify(selectedPeriod.startDate)}
-			inputClass={joinStrings('bg-transparent', styles['date-picker'])}
+			inputClass={joinStrings(inputClass, 'ml-2')}
 		/>
-		{'—'}
+		<CalendarIcon className='w-6 h-6 text-gray-800' />
 		<DateField
 			date={verify(selectedPeriod.endDate)}
-			inputClass={joinStrings('bg-transparent', styles['date-picker'])}
+			inputClass={joinStrings(inputClass, 'mr-2')}
 		/>
 	</div>
 }

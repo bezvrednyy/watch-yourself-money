@@ -19,7 +19,7 @@ function DateField({
 				type='text'
 				readOnly
 				className={joinStrings(
-					'w-full p-2 leading-none rounded-lg text-gray-600 font-medium',
+					'w-full p-2 leading-none rounded-lg',
 					'cursor-pointer focus:outline-none',
 					inputClass,
 				)}

@@ -13,6 +13,11 @@ const saveData = declareAloneAction(async store => {
 		transactionCommentAtom, selectedBankAccountId, sumAtom, statusesAtom, panelTypeAtom, showPanelAtom,
 	} = transactionPanelAtoms
 
+	const money = store.getState(sumAtom)
+	if (money <= 0) {
+		return
+	}
+
 	const data: CreateTransactionRequestData = {
 		id: store.getState(transactionIdAtom),
 		date: store.getState(transactionDateAtom),
@@ -20,7 +25,7 @@ const saveData = declareAloneAction(async store => {
 		currencyId: store.getState(userSettingsAtom).currencyId,
 		comment: store.getState(transactionCommentAtom),
 		bankAccountId: store.getState(selectedBankAccountId),
-		money: store.getState(sumAtom),
+		money,
 	}
 
 	const either = store.getState(panelTypeAtom) === 'create'

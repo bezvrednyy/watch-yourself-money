@@ -1,5 +1,6 @@
 import {Either} from '@sweet-monads/either'
 import {BackendEitherObject, processBackendEither} from '../common/contracts/BackendEitherObject'
+import {GetExpensesDataRequestData} from '../common/contracts/chart/getExpensesDataContract'
 import {
 	CreateTransactionLeftData,
 	CreateTransactionRequestData,
@@ -27,8 +28,8 @@ async function createTransaction(data: CreateTransactionRequestData): Promise<Ei
 	return processBackendEither(eitherObject)
 }
 
-async function getTransactions(): Promise<Either<GetTransactionsLeftData, GetTransactionsRightData>> {
-	const response = await fetch('/api/transactions/get_transactions')
+async function getTransactions(data: GetExpensesDataRequestData): Promise<Either<GetTransactionsLeftData, GetTransactionsRightData>> {
+	const response = await fetchPostData('/api/transactions/get_transactions', data)
 	const eitherObject: BackendEitherObject<GetTransactionsLeftData, GetTransactionsRightData> = await response.json()
 	return processBackendEither(eitherObject)
 }

@@ -1,3 +1,4 @@
+import commonStyles from '../common/common.module.css'
 import {useAction, useAtom} from '@reatom/react'
 import {formatMoney} from '../../../../../common/utils/productUtils'
 import {joinStrings, trimAll} from '../../../../../common/utils/string'
@@ -8,7 +9,7 @@ import {BankAccountData} from '../../../model/bankAccountsAtom'
 import {TrashIcon, XCircleIcon} from '@heroicons/react/outline'
 import {TextField} from '../../../../../commonClient/uikit/textField/TextField'
 import {TextWithEllipsis} from '../../../../../commonClient/uikit/TextWithEllipsis'
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {editBankAccountAction} from './model/externalActions'
 import {removeBankAccountPopupAtoms} from './model/removeBankAccountPopupAtoms'
 
@@ -30,6 +31,7 @@ function BankAccount({
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
 	const handleEditBankAccount = useAloneAction(editBankAccountAction)
 	const handleSetRemovableAccountIdAtom = useAction(removeBankAccountPopupAtoms.removableBankAccountIdAtom.set)
+	const showShakeAnimation = useShakeAnimation(money)
 
 	function onBlur() {
 		setFocused(false)
@@ -85,6 +87,7 @@ function BankAccount({
 				'group flex box-border w-full px-8 h-20 rounded-full items-center',
 				'cursor-pointer hover:shadow-xl hover:bg-black transition duration-300',
 				focused ? 'bg-black shadow-xl' : 'bg-zinc-800 shadow-lg',
+				showShakeAnimation ? commonStyles['bank-account-shake'] : '',
 			)}
 		>
 			<div className={'flex flex-col flex-grow'}>
@@ -115,6 +118,25 @@ function BankAccount({
 			{getButton()}
 		</div>
 	)
+}
+
+function useShakeAnimation(currentMoney: number): boolean {
+	const [previousMoney, setPreviousMoney] = useState<number|null>(null)
+	const [showShake, setShowShake] = useState(false)
+
+	useEffect(() => {
+		if (previousMoney === currentMoney) {
+			return
+		}
+		if (previousMoney === null)	{
+			setPreviousMoney(currentMoney)
+			return
+		}
+		setShowShake(true)
+		setTimeout(() => setShowShake(false), 1000)
+	}, [previousMoney, currentMoney])
+
+	return showShake
 }
 
 export {
