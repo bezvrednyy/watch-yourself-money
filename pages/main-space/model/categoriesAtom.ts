@@ -16,7 +16,9 @@ export type ClientCategoryData = {
 	colorId: ColorId,
 }
 
-export type MainCategoryData = Omit<ClientCategoryData, 'parentCategoryId'>
+export type MainCategoryData = ClientCategoryData & {
+	parentCategoryId: undefined,
+}
 
 export type SubCategoryData = ClientCategoryData & {
 	parentCategoryId: string,
