@@ -1,5 +1,5 @@
 import {Either, left, right} from '@sweet-monads/either'
-import {getEnvType} from '../../../commonClient/environment/clientEnv'
+import {getEnvType} from '../../../pagesComponents/common/environment/clientEnv'
 
 type LeftEitherObject<L> = {
 	type: 'Left',

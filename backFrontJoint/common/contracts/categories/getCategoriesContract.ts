@@ -1,5 +1,5 @@
 import {ColorId} from '../../../../common/colors/colors'
-import {OutlineIconId} from '../../../../commonClient/uikit/icons/getOutlineIconById'
+import {OutlineIconId} from '../../../../pagesComponents/common/uikit/icons/getOutlineIconById'
 import {StandardError} from '../../errors'
 
 export type GetCategoriesCategoryData = {

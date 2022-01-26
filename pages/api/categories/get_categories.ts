@@ -7,9 +7,9 @@ import {
 } from '../../../backFrontJoint/common/contracts/categories/getCategoriesContract'
 import {createStandardError} from '../../../backFrontJoint/common/errors'
 import {ColorId} from '../../../common/colors/colors'
-import {OutlineIconId} from '../../../commonClient/uikit/icons/getOutlineIconById'
+import {OutlineIconId} from '../../../pagesComponents/common/uikit/icons/getOutlineIconById'
 import prisma from '../../../prisma/prisma'
-import {ClientCategoryData} from '../../main-space/model/categoriesAtom'
+import {ClientCategoryData} from '../../../pagesComponents/main-space/model/categoriesAtom'
 
 export default async function getCategories(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })

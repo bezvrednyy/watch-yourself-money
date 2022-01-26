@@ -1,6 +1,5 @@
 module.exports = {
-	content: ['./pages/**/*.tsx', './commonClient/**/*.tsx'],
-	darkMode: false, // or 'media' or 'class'
+	content: ['./pages/**/*.tsx', './pagesComponents/**/*.tsx'],
 	theme: {
 		fontFamily: {
 			'factor': ['"Factor IO"', 'Arial', 'sans-serif'],

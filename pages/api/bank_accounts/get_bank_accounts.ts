@@ -7,7 +7,7 @@ import {
 } from '../../../backFrontJoint/common/contracts/bankAccounts/getBankAccountsContract'
 import {createStandardError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
-import {remapBankAccountToBankAccountData} from '../../main-space/remapMainSpaceData'
+import {remapBankAccountToBankAccountData} from '../../../pagesComponents/main-space/remapMainSpaceData'
 
 export default async function getBankAccounts(req: NextApiRequest, res: NextApiResponse) {
 	const session = await getSession({ req })

@@ -1,6 +1,6 @@
 import {toast} from 'react-hot-toast'
 import {checkNever} from '../../common/utils/checkNever'
-import {getEnvType} from '../../commonClient/environment/clientEnv'
+import {getEnvType} from '../../pagesComponents/common/environment/clientEnv'
 import {StandardError} from '../common/errors'
 import {bankAccountsApi} from './bankAccountsApi'
 import {categoriesClientApi} from './categories/categoriesApi'

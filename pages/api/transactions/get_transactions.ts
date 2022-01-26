@@ -9,7 +9,7 @@ import {
 } from '../../../backFrontJoint/common/contracts/transactions/getTransactionsContract'
 import {createStandardError} from '../../../backFrontJoint/common/errors'
 import prisma from '../../../prisma/prisma'
-import {TransactionData} from '../../main-space/model/transactionsAtom'
+import {TransactionData} from '../../../pagesComponents/main-space/model/transactionsAtom'
 
 export default async function getTransactions(req: GetTransactionsRequest, res: NextApiResponse) {
 	const session = await getSession({ req })
