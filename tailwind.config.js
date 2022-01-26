@@ -1,5 +1,5 @@
 module.exports = {
-	content: ['./pages/**/*.tsx', './commonClient/**/*.tsx'],
+	content: ['./pages/**/*.tsx', './pagesComponents/**/*.tsx'],
 	theme: {
 		fontFamily: {
 			'factor': ['"Factor IO"', 'Arial', 'sans-serif'],

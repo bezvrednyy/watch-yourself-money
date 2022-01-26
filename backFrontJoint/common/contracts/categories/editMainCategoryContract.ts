@@ -1,7 +1,7 @@
 import {CategoryType} from '@prisma/client'
 import {NextApiRequest} from 'next'
 import {ColorId} from '../../../../common/colors/colors'
-import {OutlineIconId} from '../../../../commonClient/uikit/icons/getOutlineIconById'
+import {OutlineIconId} from '../../../../pagesComponents/common/uikit/icons/getOutlineIconById'
 import {StandardError, TypeErrorResponse} from '../../errors'
 
 //TODO:models

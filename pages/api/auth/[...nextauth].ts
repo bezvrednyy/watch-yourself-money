@@ -2,7 +2,7 @@ import {PrismaAdapter} from '@next-auth/prisma-adapter'
 import NextAuth from 'next-auth'
 import EmailProvider from 'next-auth/providers/email'
 import GithubProvider from 'next-auth/providers/github'
-import {getEnvType} from '../../../commonClient/environment/clientEnv'
+import {getEnvType} from '../../../pagesComponents/common/environment/clientEnv'
 import prisma from '../../../prisma/prisma'
 
 export default NextAuth({
