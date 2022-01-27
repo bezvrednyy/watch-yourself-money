@@ -76,7 +76,7 @@ export default async function editMainCategory(req: EditMainCategoryRequest, res
 					name: x.title,
 					iconId: x.iconId,
 					type: x.type,
-					parentCategoryId: x.parentCategoryId,
+					parentCategoryId: x.parentCategoryId || null,
 					userId,
 				},
 			})),

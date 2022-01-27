@@ -92,6 +92,9 @@ function useInitPopupAtoms(onClose: () => void) {
 			mainCategories.find(x => x.id === editableCategoryId),
 			`Unexpected error: category not found`,
 		)
+		if (!category) {
+			return
+		}
 		handleSetTitle(category.title)
 		handleSetSubcategories(
 			subCategories.filter(x => x.parentCategoryId === category.id),
