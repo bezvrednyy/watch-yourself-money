@@ -20,6 +20,7 @@ function ButtonWithText({
 				'flex-col',
 				getClassByStyle(style),
 				size && getClassBySize(size),
+				type === 'disabled' ? 'opacity-70' : '',
 			)}
 		>
 			<TextWithEllipsis text={text} className={type === 'preloader' ? 'h-0 invisible' : undefined} />

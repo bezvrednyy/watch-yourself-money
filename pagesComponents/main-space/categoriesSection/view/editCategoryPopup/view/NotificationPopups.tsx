@@ -21,7 +21,10 @@ function RemoveCategoryNotificationPopup() {
 		text='Turn to main'
 		onClick={() => {
 			handleCloseNotificationPopup()
-			handleRemoveCategory({ closeFn: externalHandlers.onClose })
+			handleRemoveCategory({
+				closeFn: externalHandlers.onClose,
+				turnSubcategoriesToMain: true,
+			})
 		}}
 	/>)
 	additionalButtons.push(<Button
@@ -33,7 +36,6 @@ function RemoveCategoryNotificationPopup() {
 			handleCloseNotificationPopup()
 			handleRemoveCategory({
 				closeFn: externalHandlers.onClose,
-				turnSubcategoriesToMain: true,
 			})
 		}}
 	/>)
