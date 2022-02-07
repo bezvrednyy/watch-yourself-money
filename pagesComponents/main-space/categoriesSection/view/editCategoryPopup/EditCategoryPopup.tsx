@@ -91,6 +91,7 @@ function useInitPopupAtoms(onClose: () => void) {
 	const handleSetColor = useAction(editCategoryPopupAtoms.colorIdAtom.set)
 	const handleSetIcon = useAction(editCategoryPopupAtoms.iconIdAtom.set)
 	const handleSetExternalHandlers = useAction(editCategoryPopupAtoms.externalHandlersAtom.set)
+	const handleSetCloseNotificationPopup = useAction(editCategoryPopupAtoms.openedNotificationPopupAtom.setClosed)
 
 	useEffect(() => {
 		if (editableCategoryId === null) {
@@ -111,6 +112,7 @@ function useInitPopupAtoms(onClose: () => void) {
 		handleSetColor(category.colorId)
 		handleSetIcon(category.iconId)
 		handleSetExternalHandlers({ onClose })
+		handleSetCloseNotificationPopup()
 	}, [
 		mainCategories,
 		subCategories,
@@ -120,6 +122,7 @@ function useInitPopupAtoms(onClose: () => void) {
 		handleSetSubcategories,
 		handleSetTitle,
 		handleSetExternalHandlers,
+		handleSetCloseNotificationPopup,
 		onClose,
 	])
 }
