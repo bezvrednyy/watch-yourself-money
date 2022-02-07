@@ -91,6 +91,7 @@ function EmptyContent() {
 function ButtonsSection() {
 	const [showPanel] = useAtom(transactionPanelAtoms.showPanelAtom)
 	const [panelType] = useAtom(transactionPanelAtoms.panelTypeAtom)
+	const [status] = useAtom(transactionPanelAtoms.statusesAtom)
 	const handleShowPanel = useAction(transactionPanelAtoms.showPanelAtom.show)
 	const handleClosePanel = useAction(transactionPanelAtoms.showPanelAtom.close)
 	const handleSaveData = useAloneAction(transactionPanelExternalActions.saveData)
@@ -100,12 +101,14 @@ function ButtonsSection() {
 		return (
 			<div className='flex space-x-3 mt-3'>
 				<Button
+					type={status === 'saving' ? 'preloader' : 'normal'}
 					style='blue-default'
 					onClick={() => handleSaveData()}
 					structure='text'
 					text='Save'
 				/>
 				{panelType === 'edit' && <Button
+					type={status === 'removing' ? 'preloader' : 'normal'}
 					style='destructure'
 					onClick={() => handleRemoveTransaction()}
 					structure='text'

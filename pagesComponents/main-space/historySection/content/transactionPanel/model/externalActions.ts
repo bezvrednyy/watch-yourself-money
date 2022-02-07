@@ -28,6 +28,7 @@ const saveData = declareAloneAction(async store => {
 		money,
 	}
 
+	store.dispatch(statusesAtom.setSaving())
 	const either = store.getState(panelTypeAtom) === 'create'
 		? await getClientApi().transactions.createTransaction(data)
 		: await getClientApi().transactions.editTransaction(data)
@@ -57,6 +58,7 @@ const saveData = declareAloneAction(async store => {
 
 const removeTransaction = declareAloneAction(async store => {
 	const {transactionIdAtom, statusesAtom, showPanelAtom} = transactionPanelAtoms
+	store.dispatch(statusesAtom.setRemoving())
 	const either = await getClientApi().transactions.removeTransaction({
 		transactionId: store.getState(transactionIdAtom),
 	})
