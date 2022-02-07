@@ -47,3 +47,4 @@
     По этой же причине getSession вызываемый внутри API возвращает нам null. Так как запрос ушёл с сервера, а не с клиента.
 
 15. Нужно аккуратно работать с onChange помощником в reatom, т. к. при стартовой инизиализации с помощью реакций, он тоже сработает и перезапишет данные.
+16. psql postgresql://jonedue:mysecretpassword@localhost:5432/money-test -f prisma/configureForeignKeys.sql
