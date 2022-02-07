@@ -1,4 +1,4 @@
-import {useAction} from '@reatom/react'
+import {useAction, useAtom} from '@reatom/react'
 import {useEffect} from 'react'
 import {useAloneAction} from '../../../../common/declareAloneAction'
 import {generateUuid} from '../../../../../common/utils/generateRandom'
@@ -19,6 +19,7 @@ export function AddCategoryPopup({
 	onClose,
 }: EditCategoryPopupProps) {
 	useInitPopupAtoms(show)
+	const [status] = useAtom(addCategoryPopupAtoms.statusesAtom)
 	const handleSaveData = useAloneAction(addCategoryPopupSaveData)
 
 	return <PopupDefault
@@ -31,6 +32,7 @@ export function AddCategoryPopup({
 				onClick={() => handleSaveData({ onClose })}
 				structure='text'
 				text='Save'
+				type={status === 'saving' ? 'preloader' : 'normal'}
 			/>,
 			<Button
 				key='cancel'
