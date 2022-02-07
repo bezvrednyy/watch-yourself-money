@@ -1,8 +1,11 @@
 import {checkNever} from '../../../../../common/utils/checkNever'
 import {joinStrings} from '../../../../../common/utils/string'
-import type {ButtonWithTextProps, ButtonWithTextStyle} from '../buttonProps'
+import {Preloader} from '../../preloader/Preloader'
+import type {ButtonSize, ButtonWithTextProps, ButtonWithTextStyle} from '../buttonProps'
 
 function ButtonWithText({
+	type = 'normal',
+	size = 'normal',
 	style,
 	text,
 	onClick,
@@ -11,10 +14,25 @@ function ButtonWithText({
 		<button
 			type='button'
 			onClick={onClick}
-			className={getClassByStyle(style)}
+			className={joinStrings(
+				getClassByStyle(style),
+				getClassBySize(size),
+			)}
 		>
-			{text}
+			{type === 'normal' ? text : <Preloader className='w-[18px] h-[18px]' />}
 		</button>)
+}
+
+function getClassBySize(size: ButtonSize): string {
+	switch (size) {
+		case 'normal':
+			return 'w-20'
+		case 'small':
+			return 'w-16'
+		default:
+			checkNever(size, `Unknown button size: ${size}`)
+			return 'w-20'
+	}
 }
 
 function getClassByStyle(style: ButtonWithTextStyle): string {
