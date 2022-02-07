@@ -3,7 +3,7 @@ import {StandardError} from '../../../../../../backFrontJoint/common/errors'
 import {declareAloneAction} from '../../../../../common/declareAloneAction'
 import {verify} from '../../../../../../common/utils/verify'
 import {editableCategoryIdAtom} from '../../../../model/categoriesAtom'
-import {updateMainSpaceDataAction} from '../../../../model/updateMainSpaceDataAction'
+import {simultaneousUpdateMainSpaceDataAction} from '../../../../model/asyncUpdateMainSpaceDataAction'
 import {EditCategoryPopupSubcategoryData, editCategoryPopupAtoms} from './editCategoryPopupAtoms'
 import {toast} from 'react-hot-toast'
 
@@ -48,7 +48,7 @@ export const editCategoryPopupSaveData = declareAloneAction<SaveDataParams>(asyn
 
 	either
 		.mapRight(async () => {
-			await updateMainSpaceDataAction(store)
+			await simultaneousUpdateMainSpaceDataAction(store)
 			toast.success('Категория успешно обновлена.')
 			closeFn()
 			store.dispatch(statusesAtom.setNormal())
@@ -56,7 +56,7 @@ export const editCategoryPopupSaveData = declareAloneAction<SaveDataParams>(asyn
 		.mapLeft(error => {
 			if (error.type === 'CATEGORY_NOT_FOUND') {
 				toast.error('Категория уже не существует.')
-				updateMainSpaceDataAction(store)
+				simultaneousUpdateMainSpaceDataAction(store)
 			}
 			else {
 				processStandardError(error)
@@ -86,14 +86,14 @@ export const editCategoryPopupRemoveCategory = declareAloneAction<RemoveCategory
 
 	either
 		.mapRight(async () => {
-			await updateMainSpaceDataAction(store)
+			await simultaneousUpdateMainSpaceDataAction(store)
 			closeFn()
 			store.dispatch(statusesAtom.setNormal())
 		})
 		.mapLeft(error => {
 			if (error.type === 'CATEGORY_NOT_FOUND') {
 				toast.error('Категория уже не существует.')
-				updateMainSpaceDataAction(store)
+				simultaneousUpdateMainSpaceDataAction(store)
 			}
 			else if (error.type === 'LAST_MAIN_CATEGORY') {
 				toast.error('Нельзя удалить последнюю категорию')
