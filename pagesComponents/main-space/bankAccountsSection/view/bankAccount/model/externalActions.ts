@@ -34,7 +34,7 @@ export const editBankAccountAction = declareAloneAction(async (store, payload: E
 export const removeBankAccountAction = declareAloneAction(async store => {
 	const {statusesAtom, removableBankAccountIdAtom, movingTransactionsAccountIdAtom} = removeBankAccountPopupAtoms
 	const close = () => store.dispatch(removableBankAccountIdAtom.set(null))
-	store.dispatch(statusesAtom.setSaving())
+	store.dispatch(statusesAtom.setRemoving())
 	const either = await getClientApi().bankAccounts.removeBankAccount({
 		id: verify(store.getState(removableBankAccountIdAtom)),
 		movingTransactionsAccountId: store.getState(movingTransactionsAccountIdAtom) || undefined,

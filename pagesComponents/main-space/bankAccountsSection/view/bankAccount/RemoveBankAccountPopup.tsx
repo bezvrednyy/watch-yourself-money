@@ -16,6 +16,7 @@ const REMOVE_ITEM_ID = 'remove'
 const REMOVE_ITEM_TEXT = 'Не сохранять'
 
 export function RemoveBankAccountPopup() {
+	const [status] = useAtom(removeBankAccountPopupAtoms.statusesAtom)
 	const [removableBankAccountId] = useAtom(removeBankAccountPopupAtoms.removableBankAccountIdAtom)
 	const handleSetRemovableAccountIdAtom = useAction(removeBankAccountPopupAtoms.removableBankAccountIdAtom.set)
 	const handleRemoveBankAccount = useAloneAction(removeBankAccountAction)
@@ -24,6 +25,7 @@ export function RemoveBankAccountPopup() {
 		createContent={() => <Content />}
 		buttons={[
 			<Button
+				type={status === 'removing' ? 'preloader' : 'normal'}
 				key='remove'
 				style='destructure'
 				onClick={handleRemoveBankAccount}
