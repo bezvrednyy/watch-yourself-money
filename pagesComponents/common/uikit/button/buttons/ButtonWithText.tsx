@@ -1,11 +1,12 @@
 import {checkNever} from '../../../../../common/utils/checkNever'
 import {joinStrings} from '../../../../../common/utils/string'
 import {Preloader} from '../../preloader/Preloader'
+import {TextWithEllipsis} from '../../TextWithEllipsis'
 import type {ButtonSize, ButtonWithTextProps, ButtonWithTextStyle} from '../buttonProps'
 
 function ButtonWithText({
 	type = 'normal',
-	size = 'normal',
+	size,
 	style,
 	text,
 	onClick,
@@ -15,11 +16,13 @@ function ButtonWithText({
 			type='button'
 			onClick={onClick}
 			className={joinStrings(
+				'flex-col',
 				getClassByStyle(style),
-				getClassBySize(size),
+				size && getClassBySize(size),
 			)}
 		>
-			{type === 'normal' ? text : <Preloader className='w-[18px] h-[18px]' />}
+			<TextWithEllipsis text={text} className={type === 'preloader' ? 'h-0 invisible' : undefined} />
+			{type === 'preloader' && <Preloader className='w-[18px] h-[18px] self-center' />}
 		</button>)
 }
 
