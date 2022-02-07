@@ -13,6 +13,7 @@ function ButtonWithText({
 }: ButtonWithTextProps) {
 	return (
 		<button
+			disabled={type === 'disabled'}
 			type='button'
 			onClick={onClick}
 			className={joinStrings(

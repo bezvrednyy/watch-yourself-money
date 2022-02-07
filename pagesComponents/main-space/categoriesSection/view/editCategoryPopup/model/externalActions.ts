@@ -77,7 +77,7 @@ export const editCategoryPopupRemoveCategory = declareAloneAction<RemoveCategory
 	turnSubcategoriesToMain = false,
 }) => {
 	const {statusesAtom} = editCategoryPopupAtoms
-	store.dispatch(statusesAtom.setSaving())
+	store.dispatch(statusesAtom.setRemoving())
 
 	const either = await getClientApi().categories.removeMainCategory({
 		categoryId: verify(store.getState(editableCategoryIdAtom)),

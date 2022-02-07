@@ -101,18 +101,24 @@ function ButtonsSection() {
 		return (
 			<div className='flex space-x-3 mt-3'>
 				<Button
-					type={status === 'saving' ? 'preloader' : 'normal'}
 					style='blue-default'
 					onClick={() => handleSaveData()}
 					structure='text'
 					text='Save'
+					type={status === 'saving'
+						? 'preloader'
+						: (status === 'removing' ? 'disabled' : 'normal')
+					}
 				/>
 				{panelType === 'edit' && <Button
-					type={status === 'removing' ? 'preloader' : 'normal'}
 					style='destructure'
 					onClick={() => handleRemoveTransaction()}
 					structure='text'
 					text='Remove'
+					type={status === 'removing'
+						? 'preloader'
+						: (status === 'saving' ? 'disabled' : 'normal')
+					}
 				/>}
 				<Button
 					style='secondary'

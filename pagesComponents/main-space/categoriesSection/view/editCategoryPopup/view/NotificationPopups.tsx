@@ -13,28 +13,29 @@ function RemoveCategoryNotificationPopup() {
 	const handleCloseNotificationPopup = useAction(editCategoryPopupAtoms.openedNotificationPopupAtom.setClosed)
 	const handleRemoveCategory = useAloneAction(editCategoryPopupRemoveCategory)
 
-	const closeFn = () => {
-		handleCloseNotificationPopup()
-		externalHandlers.onClose()
-	}
-
 	const additionalButtons: Array<JSX.Element> = []
 	subcategories.length && additionalButtons.push(<Button
 		key='turnToMain'
 		style='blue-default'
 		structure='text'
 		text='Turn to main'
-		onClick={() => handleRemoveCategory({ closeFn })}
+		onClick={() => {
+			handleCloseNotificationPopup()
+			handleRemoveCategory({ closeFn: externalHandlers.onClose })
+		}}
 	/>)
 	additionalButtons.push(<Button
 		key='remove'
 		style='destructure'
 		structure='text'
 		text='Remove'
-		onClick={() => handleRemoveCategory({
-			closeFn,
-			turnSubcategoriesToMain: true,
-		})}
+		onClick={() => {
+			handleCloseNotificationPopup()
+			handleRemoveCategory({
+				closeFn: externalHandlers.onClose,
+				turnSubcategoriesToMain: true,
+			})
+		}}
 	/>)
 
 	return <NotificationPopup

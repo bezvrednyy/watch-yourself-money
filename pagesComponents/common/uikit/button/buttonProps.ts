@@ -1,5 +1,5 @@
 type ButtonWithTextStyle = 'primary'|'blue-default'|'destructure'|'secondary'
-type ButtonType = 'normal'|'preloader'
+type ButtonType = 'normal'|'preloader'|'disabled'
 type ButtonSize = 'normal'|'small'
 
 type ButtonWithTextProps = {

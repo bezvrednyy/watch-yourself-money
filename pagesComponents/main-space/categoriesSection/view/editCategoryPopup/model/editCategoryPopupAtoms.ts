@@ -14,7 +14,7 @@ type EditCategoryPopupExternalHandlers = {
 	onClose: () => void,
 }
 
-const statusesAtom = createEnumAtom(['normal', 'saving'])
+const statusesAtom = createEnumAtom(['normal', 'saving', 'removing'])
 const openedNotificationPopupAtom = createEnumAtom(['closed', 'removeCategory', 'removeSubcategory'])
 const externalHandlersAtom = createPrimitiveAtom<EditCategoryPopupExternalHandlers>({} as EditCategoryPopupExternalHandlers)
 

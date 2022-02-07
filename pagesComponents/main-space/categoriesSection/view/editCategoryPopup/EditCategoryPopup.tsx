@@ -35,10 +35,11 @@ export function EditCategoryPopup({
 }
 
 function useEditCategoryPopupButtons(onClose: () => void): Array<JSX.Element> {
+	const [subcategories] = useAtom(editCategoryPopupAtoms.subcategoriesAtom)
+	const [status] = useAtom(editCategoryPopupAtoms.statusesAtom)
 	const handleSaveData = useAloneAction(editCategoryPopupSaveData)
 	const handleOpenRemoveCategoryPopup = useAction(editCategoryPopupAtoms.openedNotificationPopupAtom.setRemoveCategory)
 	const handleOpenRemoveSubcategoryPopup = useAction(editCategoryPopupAtoms.openedNotificationPopupAtom.setRemoveSubcategory)
-	const [subcategories] = useAtom(editCategoryPopupAtoms.subcategoriesAtom)
 	const hasRemovedSubcategories = !!subcategories.filter(x => x.changeType === 'removed').map(x => x.id).length
 
 	return [
@@ -55,6 +56,10 @@ function useEditCategoryPopupButtons(onClose: () => void): Array<JSX.Element> {
 			}}
 			structure='text'
 			text='Save'
+			type={status === 'saving'
+				? 'preloader'
+				: (status === 'removing' ? 'disabled' : 'normal')
+			}
 		/>,
 		<Button
 			key='remove'
@@ -62,6 +67,10 @@ function useEditCategoryPopupButtons(onClose: () => void): Array<JSX.Element> {
 			onClick={() => handleOpenRemoveCategoryPopup()}
 			structure='text'
 			text='Remove'
+			type={status === 'removing'
+				? 'preloader'
+				: (status === 'saving' ? 'disabled' : 'normal')
+			}
 		/>,
 		<Button
 			key='close'
