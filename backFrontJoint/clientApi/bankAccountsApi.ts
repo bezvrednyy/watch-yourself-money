@@ -16,7 +16,7 @@ import {
 	RemoveBankAccountRequestData,
 	RemoveBankAccountRightData,
 } from '../common/contracts/bankAccounts/removeBankAccountContract'
-import {fetchPostData} from './clientApi'
+import {fetchGetData, fetchPostData} from './clientApi'
 
 async function createBankAccount(data: CreateBankAccountRequestData): Promise<Either<CreateBankAccountLeftData, CreateBankAccountRightData>> {
 	const response = await fetchPostData('/api/bank_accounts/create_bank_account', data)
@@ -25,7 +25,7 @@ async function createBankAccount(data: CreateBankAccountRequestData): Promise<Ei
 }
 
 async function getBankAccounts(): Promise<Either<GetBankAccountLeftData, GetBankAccountRightData>> {
-	const response = await fetch('/api/bank_accounts/get_bank_accounts')
+	const response = await fetchGetData('/api/bank_accounts/get_bank_accounts')
 	const eitherObject: BackendEitherObject<GetBankAccountLeftData, GetBankAccountRightData> = await response.json()
 	return processBackendEither(eitherObject)
 }

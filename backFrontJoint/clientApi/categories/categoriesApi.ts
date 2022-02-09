@@ -15,7 +15,7 @@ import {
 	RemoveMainCategoryRequestData,
 	RemoveMainCategoryRightData,
 } from '../../common/contracts/categories/removeMainCategoryContract'
-import {fetchPostData} from '../clientApi'
+import {fetchGetData, fetchPostData} from '../clientApi'
 import {Either} from '@sweet-monads/either'
 
 async function createCategory(data: CreateCategoryRequestData): Promise<Either<CreateCategoryLeftData, CreateCategoryRightData>> {
@@ -25,7 +25,7 @@ async function createCategory(data: CreateCategoryRequestData): Promise<Either<C
 }
 
 async function getCategories(): Promise<Either<GetCategoriesLeftData, GetCategoriesRightData>> {
-	const response = await fetch('/api/categories/get_categories')
+	const response = await fetchGetData('/api/categories/get_categories')
 	const eitherObject: BackendEitherObject<GetCategoriesLeftData, GetCategoriesRightData> = await response.json()
 	return processBackendEither(eitherObject)
 }

@@ -16,11 +16,11 @@ export default function MyApp({
 }: AppProps) {
 	const store = createStore()
 
-	initEnvironment(store)
 	useEffect(() => {
+		initEnvironment(store)
 		const rootElement = document.getElementById('__next')
 		rootElement && rootElement.classList.add('h-full') //tailwind-css
-	}, [])
+	}, [store])
 
 	const toastBgStyle = {
 		background: 'black',

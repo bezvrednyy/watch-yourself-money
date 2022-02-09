@@ -22,7 +22,7 @@ export async function fetchPostData<DATA>(url: string, data: DATA): Promise<Resp
 	if (getEnvType() === 'development') {
 		console.log(url, data)
 	}
-	const result = await fetch(url, {
+	const result = await fetch(`http://localhost:3000${url}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json;charset=utf-8',
@@ -33,6 +33,15 @@ export async function fetchPostData<DATA>(url: string, data: DATA): Promise<Resp
 	})
 	return result
 }
+
+export async function fetchGetData(url: string): Promise<Response> {
+	if (getEnvType() === 'development') {
+		console.log(url)
+	}
+	const result = await fetch(`http://localhost:3000${url}`)
+	return result
+}
+
 
 export function processStandardError(error: StandardError) {
 	switch (error.type) {
