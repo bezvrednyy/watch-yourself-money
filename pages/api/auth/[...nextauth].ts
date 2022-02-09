@@ -3,7 +3,6 @@ import NextAuth from 'next-auth'
 import EmailProvider from 'next-auth/providers/email'
 import GithubProvider from 'next-auth/providers/github'
 import {getEnvType} from '../../../pagesComponents/common/environment/clientEnv'
-//import {initDataBase} from '../../../prisma/initDataBase'
 import prisma from '../../../prisma/prisma'
 
 export default NextAuth({
@@ -35,8 +34,7 @@ export default NextAuth({
 	},
 	events: {
 		createUser: async ({user}) => {
-			//База данных должна быть проинициализирована ВСЕМИ дефолтными данными. Напр: language, currency...
-			//await initDataBase()
+			//База данных должна быть проинициализирована ВСЕМИ дефолтными данными: ./prisma/configuredb.configuredb
 			await Promise.all([
 				prisma.category.createMany({
 					data: [
