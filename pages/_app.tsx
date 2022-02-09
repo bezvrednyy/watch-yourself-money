@@ -22,11 +22,23 @@ export default function MyApp({
 		rootElement && rootElement.classList.add('h-full') //tailwind-css
 	}, [])
 
+	const toastBgStyle = {
+		background: 'black',
+		color: 'white',
+	}
+
 	return <>
 		<SessionProvider session={session}>
 			<reatomContext.Provider value={store}>
 				<Component {...pageProps} />
-				<Toaster position='bottom-center' />
+				<Toaster
+					position='top-center'
+					toastOptions={{
+						success: { style: toastBgStyle },
+						error: { style: toastBgStyle },
+						loading: { style: toastBgStyle },
+					}}
+				/>
 			</reatomContext.Provider>
 		</SessionProvider>
 	</>

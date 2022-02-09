@@ -39,10 +39,6 @@ export default async function getExpensesData(req: GetExpensesDataRequest, res: 
 		const allCategoriesData = await prisma.category.findMany({
 			where: {
 				userId: session.user.id,
-				transactions: { some: { date: {
-					gte: startDate,
-					lte: endDate,
-				}}},
 			},
 			select: {
 				id: true,

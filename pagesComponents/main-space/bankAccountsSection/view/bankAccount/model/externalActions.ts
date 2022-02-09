@@ -4,7 +4,7 @@ import {StandardError} from '../../../../../../backFrontJoint/common/errors'
 import {verify} from '../../../../../../common/utils/verify'
 import {declareAloneAction} from '../../../../../common/declareAloneAction'
 import {updateBankAccountsAction} from '../../../../model/bankAccountsAtom'
-import {updateMainSpaceDataAction} from '../../../../model/updateMainSpaceDataAction'
+import {simultaneousUpdateMainSpaceDataAction} from '../../../../model/asyncUpdateMainSpaceDataAction'
 import {removeBankAccountPopupAtoms} from './removeBankAccountPopupAtoms'
 
 type EditBankAccountPayload = {
@@ -24,7 +24,7 @@ export const editBankAccountAction = declareAloneAction(async (store, payload: E
 		.mapLeft(error => {
 			if (error.type === 'BANK_ACCOUNT_NOT_FOUND') {
 				toast.error('Данный счёт не найден.')
-				updateMainSpaceDataAction(store)
+				simultaneousUpdateMainSpaceDataAction(store)
 				return
 			}
 			processStandardError(error)
@@ -34,14 +34,14 @@ export const editBankAccountAction = declareAloneAction(async (store, payload: E
 export const removeBankAccountAction = declareAloneAction(async store => {
 	const {statusesAtom, removableBankAccountIdAtom, movingTransactionsAccountIdAtom} = removeBankAccountPopupAtoms
 	const close = () => store.dispatch(removableBankAccountIdAtom.set(null))
-	store.dispatch(statusesAtom.setSaving())
+	store.dispatch(statusesAtom.setRemoving())
 	const either = await getClientApi().bankAccounts.removeBankAccount({
 		id: verify(store.getState(removableBankAccountIdAtom)),
 		movingTransactionsAccountId: store.getState(movingTransactionsAccountIdAtom) || undefined,
 	})
 	either
 		.mapRight(async () => {
-			await updateMainSpaceDataAction(store)
+			await simultaneousUpdateMainSpaceDataAction(store)
 			store.dispatch(statusesAtom.setNormal())
 			close()
 		})
@@ -49,18 +49,18 @@ export const removeBankAccountAction = declareAloneAction(async store => {
 			if (error.type === 'BANK_ACCOUNT_NOT_FOUND') {
 				toast.error('Данный счёт не найден.')
 				close()
-				updateMainSpaceDataAction(store)
+				simultaneousUpdateMainSpaceDataAction(store)
 				return
 			}
 			if (error.type === 'LAST_BANK_ACCOUNT') {
 				toast.error('Последний счёт нельзя удалить')
 				close()
-				updateMainSpaceDataAction(store)
+				simultaneousUpdateMainSpaceDataAction(store)
 				return
 			}
 			if (error.type === 'ACCOUNT_FOR_MOVING_TRANSACTIONS_NOT_FOUND') {
 				toast.error('Не найден счёт, указанный для перемещения транзакций')
-				updateMainSpaceDataAction(store)
+				simultaneousUpdateMainSpaceDataAction(store)
 				return
 			}
 			processStandardError(error as StandardError)

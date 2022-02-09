@@ -1,5 +1,5 @@
 import {formatMoney} from '../../../../../common/utils/productUtils'
-import {updateMainSpaceDataAction} from '../../../model/updateMainSpaceDataAction'
+import {simultaneousUpdateMainSpaceDataAction} from '../../../model/asyncUpdateMainSpaceDataAction'
 import styles from './TransactionsChart.module.css'
 import {ChartProps, Doughnut} from 'react-chartjs-2'
 import {
@@ -24,7 +24,7 @@ export function TransactionsChart() {
 	const [categoriesExpensesData] = useAtom(transactionChartAtoms.categoriesExpensesAtom)
 	const [userSettings] = useAtom(userSettingsAtom)
 	const currencySymbol = getCurrencySymbolById(userSettings.currencyId)
-	const handleUpdateMainSpaceData = useAloneAction(updateMainSpaceDataAction)
+	const handleUpdateMainSpaceData = useAloneAction(simultaneousUpdateMainSpaceDataAction)
 	const chartProps = useChartProps()
 
 	useEffect(() => {

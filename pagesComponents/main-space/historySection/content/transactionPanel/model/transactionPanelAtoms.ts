@@ -9,7 +9,7 @@ import {transactionsAtom} from '../../../../model/transactionsAtom'
 const INIT_CATEGORY_ID = ''
 
 const transactionIdAtom = createPrimitiveAtom<string>('')
-const statusesAtom = createEnumAtom(['normal', 'saving'])
+const statusesAtom = createEnumAtom(['normal', 'saving', 'removing'])
 const selectedCategoryIdAtom = createPrimitiveAtom<string>(INIT_CATEGORY_ID)
 const sumAtom = createPrimitiveAtom<number>(0)
 const selectedBankAccountId = createPrimitiveAtom<string>('')

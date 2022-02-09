@@ -1,20 +1,43 @@
 import {checkNever} from '../../../../../common/utils/checkNever'
 import {joinStrings} from '../../../../../common/utils/string'
-import type {ButtonWithTextProps, ButtonWithTextStyle} from '../buttonProps'
+import {Preloader} from '../../preloader/Preloader'
+import {TextWithEllipsis} from '../../TextWithEllipsis'
+import type {ButtonSize, ButtonWithTextProps, ButtonWithTextStyle} from '../buttonProps'
 
 function ButtonWithText({
+	type = 'normal',
+	size,
 	style,
 	text,
 	onClick,
 }: ButtonWithTextProps) {
 	return (
 		<button
+			disabled={type === 'disabled'}
 			type='button'
 			onClick={onClick}
-			className={getClassByStyle(style)}
+			className={joinStrings(
+				'flex-col',
+				getClassByStyle(style),
+				size && getClassBySize(size),
+				type === 'disabled' ? 'opacity-70' : '',
+			)}
 		>
-			{text}
+			<TextWithEllipsis text={text} className={type === 'preloader' ? 'h-0 invisible' : undefined} />
+			{type === 'preloader' && <Preloader className='w-[18px] h-[18px] self-center' />}
 		</button>)
+}
+
+function getClassBySize(size: ButtonSize): string {
+	switch (size) {
+		case 'normal':
+			return 'w-20'
+		case 'small':
+			return 'w-16'
+		default:
+			checkNever(size, `Unknown button size: ${size}`)
+			return 'w-20'
+	}
 }
 
 function getClassByStyle(style: ButtonWithTextStyle): string {

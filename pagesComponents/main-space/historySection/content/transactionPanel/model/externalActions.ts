@@ -5,7 +5,7 @@ import {
 } from '../../../../../../backFrontJoint/common/contracts/transactions/createTransactionContract'
 import {declareAloneAction} from '../../../../../common/declareAloneAction'
 import {userSettingsAtom} from '../../../../../common/environment/userSettingsAtom'
-import {updateMainSpaceDataAction} from '../../../../model/updateMainSpaceDataAction'
+import {simultaneousUpdateMainSpaceDataAction} from '../../../../model/asyncUpdateMainSpaceDataAction'
 import {transactionPanelAtoms} from './transactionPanelAtoms'
 
 const saveData = declareAloneAction(async store => {
@@ -28,6 +28,7 @@ const saveData = declareAloneAction(async store => {
 		money,
 	}
 
+	store.dispatch(statusesAtom.setSaving())
 	const either = store.getState(panelTypeAtom) === 'create'
 		? await getClientApi().transactions.createTransaction(data)
 		: await getClientApi().transactions.editTransaction(data)
@@ -36,16 +37,16 @@ const saveData = declareAloneAction(async store => {
 		.mapRight(() => {
 			store.dispatch(statusesAtom.setNormal())
 			store.dispatch(showPanelAtom.close())
-			updateMainSpaceDataAction(store)
+			simultaneousUpdateMainSpaceDataAction(store)
 		})
 		.mapLeft(error => {
 			if (error.type === 'CATEGORY_NOT_FOUND') {
 				toast.error('Категория не найдена.')
-				updateMainSpaceDataAction(store)
+				simultaneousUpdateMainSpaceDataAction(store)
 			}
 			else if (error.type === 'TRANSACTION_NOT_FOUND') {
 				toast.error('Транзакция не найдена.')
-				updateMainSpaceDataAction(store)
+				simultaneousUpdateMainSpaceDataAction(store)
 			}
 			else {
 				processStandardError(error)
@@ -57,6 +58,7 @@ const saveData = declareAloneAction(async store => {
 
 const removeTransaction = declareAloneAction(async store => {
 	const {transactionIdAtom, statusesAtom, showPanelAtom} = transactionPanelAtoms
+	store.dispatch(statusesAtom.setRemoving())
 	const either = await getClientApi().transactions.removeTransaction({
 		transactionId: store.getState(transactionIdAtom),
 	})
@@ -65,12 +67,12 @@ const removeTransaction = declareAloneAction(async store => {
 		.mapRight(() => {
 			store.dispatch(statusesAtom.setNormal())
 			store.dispatch(showPanelAtom.close())
-			updateMainSpaceDataAction(store)
+			simultaneousUpdateMainSpaceDataAction(store)
 		})
 		.mapLeft(error => {
 			if (error.type === 'TRANSACTION_NOT_FOUND') {
 				toast.error('Транзакция не найдена.')
-				updateMainSpaceDataAction(store)
+				simultaneousUpdateMainSpaceDataAction(store)
 			}
 			else {
 				processStandardError(error)

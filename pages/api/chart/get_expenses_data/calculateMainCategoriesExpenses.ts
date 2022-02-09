@@ -47,6 +47,14 @@ export function calculateMainCategoriesExpenses({
 			mainCategoriesExpensesMap.set(mainCategory.id, mainCategoryData)
 		}
 		else {
+			const currentExpensesData = mainCategoriesExpensesMap.get(category.id)
+			if (currentExpensesData) {
+				mainCategoriesExpensesMap.set(category.id, {
+					...currentExpensesData,
+					money: Prisma.Decimal.add(currentExpensesData.money, category.money),
+				})
+				return
+			}
 			mainCategoriesExpensesMap.set(category.id, {
 				...category,
 				subcategories: [],

@@ -1,3 +1,4 @@
+import {Preloader} from '../../../../common/uikit/preloader/Preloader'
 import commonStyles from '../common/common.module.css'
 import {isNumber} from '../../../../../common/utils/number'
 import {formatMoney} from '../../../../../common/utils/productUtils'
@@ -23,8 +24,10 @@ function AddAccountButton() {
 				'group-hover:text-green-500 transition',
 			)}/>
 		}
-		//TODO:improvements Добавить preloader при 'saving'
-		return <AddAccountContent/>
+		if (status === 'saving') {
+			return <Preloader />
+		}
+		return <AddAccountContent />
 	}
 
 	function getWrapperStyles() {
@@ -41,7 +44,7 @@ function AddAccountButton() {
 	return (
 		<div
 			className={joinStrings(
-				'group flex box-border w-full px-8 h-20 rounded-full items-center justify-center',
+				'group flex box-border w-full px-8 h-20 rounded-full items-center justify-center shrink-0',
 				'cursor-pointer bg-purple-50',
 				getWrapperStyles(),
 			)}
@@ -115,10 +118,13 @@ function AddAccountContent() {
 		</div>
 		<CheckCircleIcon
 			className='w-6 h-6 ml-1.5 shrink-0 text-green-400 transition hover:text-green-600'
-			onClick={() => handleCreateAccount({
-				name,
-				balance,
-			})}
+			onClick={event => {
+				event.stopPropagation()
+				handleCreateAccount({
+					name,
+					balance,
+				})
+			}}
 		/>
 		<XCircleIcon
 			className='w-6 h-6 ml-0.5 shrink-0 text-red-400 transition hover:text-red-600'

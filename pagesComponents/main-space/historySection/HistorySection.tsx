@@ -91,6 +91,7 @@ function EmptyContent() {
 function ButtonsSection() {
 	const [showPanel] = useAtom(transactionPanelAtoms.showPanelAtom)
 	const [panelType] = useAtom(transactionPanelAtoms.panelTypeAtom)
+	const [status] = useAtom(transactionPanelAtoms.statusesAtom)
 	const handleShowPanel = useAction(transactionPanelAtoms.showPanelAtom.show)
 	const handleClosePanel = useAction(transactionPanelAtoms.showPanelAtom.close)
 	const handleSaveData = useAloneAction(transactionPanelExternalActions.saveData)
@@ -104,12 +105,20 @@ function ButtonsSection() {
 					onClick={() => handleSaveData()}
 					structure='text'
 					text='Save'
+					type={status === 'saving'
+						? 'preloader'
+						: (status === 'removing' ? 'disabled' : 'normal')
+					}
 				/>
 				{panelType === 'edit' && <Button
 					style='destructure'
 					onClick={() => handleRemoveTransaction()}
 					structure='text'
 					text='Remove'
+					type={status === 'removing'
+						? 'preloader'
+						: (status === 'saving' ? 'disabled' : 'normal')
+					}
 				/>}
 				<Button
 					style='secondary'
